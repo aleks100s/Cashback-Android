@@ -1,4 +1,4 @@
-package com.alextos.cashback.ui.theme
+package com.alextos.cashback.common.theme
 
 import androidx.compose.ui.graphics.Color
 

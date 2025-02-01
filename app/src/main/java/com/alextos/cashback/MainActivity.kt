@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.alextos.cashback.ui.theme.CashbackTheme
+import com.alextos.cashback.common.theme.CashbackTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,12 +33,12 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
-        text = "Hello $name!",
+        text = "Hello, $name!",
         modifier = modifier
     )
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "App preview", device = "spec:width=411dp,height=891dp")
 @Composable
 fun GreetingPreview() {
     CashbackTheme {
