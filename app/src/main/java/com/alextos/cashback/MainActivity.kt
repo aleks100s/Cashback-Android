@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.alextos.cashback.common.theme.CashbackTheme
 import com.alextos.cashback.features.cards.cards_list.presentation.CardsListScreen
+import com.alextos.cashback.features.cards.cards_list.presentation.CardsListViewModel
+import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +23,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             CashbackTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    CardsListScreen(modifier = Modifier.padding(innerPadding)) {
+                    CardsListScreen(
+                        modifier = Modifier.padding(innerPadding),
+                        viewModel = koinViewModel()
+                    ) {
 
                     }
                 }

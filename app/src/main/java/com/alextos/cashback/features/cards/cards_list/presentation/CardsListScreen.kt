@@ -19,7 +19,7 @@ import com.alextos.cashback.core.domain.Card
 @Composable
 fun CardsListScreen(
     modifier: Modifier,
-    viewModel: CardsListViewModel = CardsListViewModel(),
+    viewModel: CardsListViewModel,
     onCardSelect: (Card) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
