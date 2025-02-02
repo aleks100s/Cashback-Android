@@ -12,7 +12,7 @@ import com.alextos.cashback.features.cards.cards_list.presentation.CardsListScre
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun CardsFeature(modifier: Modifier = Modifier) {
+fun CardsRoot(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     NavHost(
         modifier = modifier,
