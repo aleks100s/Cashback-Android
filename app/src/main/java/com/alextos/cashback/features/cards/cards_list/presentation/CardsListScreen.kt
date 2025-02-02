@@ -1,5 +1,6 @@
 package com.alextos.cashback.features.cards.cards_list.presentation
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -51,11 +52,11 @@ fun CardsListView(
     ) {
         LazyColumn(
             modifier = Modifier.padding(horizontal = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
             state =  scrollState
         ) {
             items(state.allCards) { card ->
                 CardItemView(
-                    modifier = Modifier.padding(vertical = 4.dp),
                     card = card
                 )
             }
