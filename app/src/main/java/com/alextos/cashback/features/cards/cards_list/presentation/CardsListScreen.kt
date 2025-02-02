@@ -2,6 +2,7 @@ package com.alextos.cashback.features.cards.cards_list.presentation
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -13,8 +14,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.core.domain.Card
+import com.alextos.cashback.features.cards.cards_list.presentation.components.CardItemView
 
 @Composable
 fun CardsListScreen(
@@ -47,10 +50,14 @@ fun CardsListView(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         LazyColumn(
+            modifier = Modifier.padding(horizontal = 12.dp),
             state =  scrollState
         ) {
             items(state.allCards) { card ->
-                Text(text = card.name)
+                CardItemView(
+                    modifier = Modifier.padding(vertical = 4.dp),
+                    card = card
+                )
             }
         }
     }

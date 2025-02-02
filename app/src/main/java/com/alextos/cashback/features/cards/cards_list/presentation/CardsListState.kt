@@ -8,6 +8,18 @@ data class CardsListState(
     val allCards: List<Card> = listOf(
         generateMockCard(),
         generateMockCard(),
+        generateMockCard(),
+        generateMockCard(),
+        generateMockCard(),
+        generateMockCard(),
+        generateMockCard(),
+        generateMockCard(),
+        generateMockCard(),
+        generateMockCard(),
+        generateMockCard(),
+        generateMockCard(),
+        generateMockCard(),
+        generateMockCard(),
         generateMockCard()
     ),
     val filteredCards: List<Card> = listOf()
