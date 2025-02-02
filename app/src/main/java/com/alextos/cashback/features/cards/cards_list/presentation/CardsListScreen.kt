@@ -1,15 +1,20 @@
 package com.alextos.cashback.features.cards.cards_list.presentation
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -20,20 +25,35 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.core.domain.Card
 import com.alextos.cashback.features.cards.cards_list.presentation.components.CardItemView
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardsListScreen(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     viewModel: CardsListViewModel,
     onCardSelect: (Card) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    CardsListView(modifier, state) { action ->
-        when(action) {
-            is CardsListAction.CardSelect -> onCardSelect(action.card)
-            else -> Unit
+    Scaffold(
+        modifier = modifier,
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text("Мои карты")
+                }
+            )
         }
-        viewModel.onAction(action)
+    ) { innerPaddings ->
+        CardsListView(
+            modifier = Modifier.padding(top = innerPaddings.calculateTopPadding()),
+            state = state
+        ) { action ->
+            when(action) {
+                is CardsListAction.CardSelect -> onCardSelect(action.card)
+                else -> Unit
+            }
+            viewModel.onAction(action)
+        }
     }
 }
 
@@ -46,8 +66,7 @@ fun CardsListView(
     val scrollState: LazyListState = rememberLazyListState()
 
     Column(
-        modifier = modifier.fillMaxSize()
-            .statusBarsPadding(),
+        modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         LazyColumn(
@@ -57,8 +76,14 @@ fun CardsListView(
         ) {
             items(state.allCards) { card ->
                 CardItemView(
+                    modifier = Modifier.clickable {
+                        onAction(CardsListAction.CardSelect(card))
+                    },
                     card = card
                 )
+            }
+            item {
+                Spacer(modifier = Modifier.height(8.dp))
             }
         }
     }
