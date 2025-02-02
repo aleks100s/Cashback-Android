@@ -1,4 +1,4 @@
-package com.alextos.cashback
+package com.alextos.cashback.app.navigation.tabbar
 
 import kotlinx.serialization.Serializable
 

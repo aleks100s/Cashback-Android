@@ -14,6 +14,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun CardsRoot(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
+
     NavHost(
         modifier = modifier,
         navController = navController,

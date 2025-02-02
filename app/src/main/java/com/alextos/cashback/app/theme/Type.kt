@@ -1,4 +1,4 @@
-package com.alextos.cashback.common.theme
+package com.alextos.cashback.app.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

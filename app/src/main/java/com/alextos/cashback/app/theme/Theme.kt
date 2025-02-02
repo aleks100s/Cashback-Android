@@ -1,4 +1,4 @@
-package com.alextos.cashback.common.theme
+package com.alextos.cashback.app.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

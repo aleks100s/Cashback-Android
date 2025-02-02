@@ -1,4 +1,4 @@
-package com.alextos.cashback
+package com.alextos.cashback.app
 
 import android.app.Application
 import com.alextos.cashback.features.cards.di.cardsModule
