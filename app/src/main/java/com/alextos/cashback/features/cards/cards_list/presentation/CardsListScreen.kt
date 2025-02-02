@@ -58,21 +58,21 @@ fun CardsListScreen(
 }
 
 @Composable
-fun CardsListView(
+private fun CardsListView(
     modifier: Modifier = Modifier,
     state: CardsListState,
     onAction: (CardsListAction) -> Unit
 ) {
-    val scrollState: LazyListState = rememberLazyListState()
+    if (state.allCards.isEmpty()) {
+        Text(text = "Нет сохраненных карт")
+    } else {
+        val scrollState: LazyListState = rememberLazyListState()
 
-    Column(
-        modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
         LazyColumn(
-            modifier = Modifier.padding(horizontal = 12.dp),
+            modifier = modifier
+                .padding(horizontal = 12.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
-            state =  scrollState
+            state = scrollState
         ) {
             items(state.allCards) { card ->
                 CardItemView(

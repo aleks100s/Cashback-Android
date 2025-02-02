@@ -58,7 +58,9 @@ fun CardItemView(
         }
 
         Surface(
-            modifier = Modifier.clip(RoundedCornerShape(8.dp)),
+            modifier = Modifier
+                .clip(RoundedCornerShape(8.dp))
+                .fillMaxWidth(),
             tonalElevation = 8.dp,
             shadowElevation = 8.dp
         ) {

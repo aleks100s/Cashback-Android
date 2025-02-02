@@ -6,7 +6,7 @@ import com.alextos.cashback.core.domain.generateMockCard
 data class CardsListState(
     val searchQuery: String = "",
     val allCards: List<Card> = listOf(
-        generateMockCard(),
+        generateMockCard(isEmpty = true),
         generateMockCard(),
         generateMockCard(),
         generateMockCard(),
