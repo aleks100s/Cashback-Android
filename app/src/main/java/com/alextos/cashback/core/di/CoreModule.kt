@@ -15,4 +15,6 @@ val coreModule = module {
 
     factory { get<Database>().categoryDao() }
     factory { get<Database>().placeDao() }
+    factory { get<Database>().cashbackDao() }
+    factory { get<Database>().cardDao() }
 }

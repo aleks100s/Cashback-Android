@@ -25,6 +25,6 @@ fun generateMockCategory(): Category {
         emoji = emojis[index],
         synonyms = synonymsList[index],
         priority = Random.nextInt(1, 101), // Генерируем случайный приоритет от 1 до 100
-        isArchived = Random.nextBoolean() // Случайно выбираем заархивированность
+        isArchived = false
     )
 }

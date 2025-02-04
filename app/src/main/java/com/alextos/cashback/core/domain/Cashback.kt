@@ -18,10 +18,10 @@ data class Cashback(
     }
 }
 
-fun generateMockCashback(): Cashback {
+fun generateMockCashback(category: Category? = null): Cashback {
     return Cashback(
         id = UUID.randomUUID(),
-        category = generateMockCategory(), // Генерируем случайную категорию
+        category = category ?: generateMockCategory(), // Генерируем случайную категорию
         percent = Random.nextDouble(0.01, 0.2) // Генерируем процент от 1.0 до 20.0
     )
 }
