@@ -1,8 +1,8 @@
 package com.alextos.cashback.core.data.dao
 
 import androidx.room.Dao
-import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Upsert
 import com.alextos.cashback.core.data.entities.CategoryEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -11,9 +11,6 @@ interface CategoryDao {
     @Query("SELECT * FROM categories WHERE isArchived = 0")
     fun getAll(): Flow<List<CategoryEntity>>
 
-    @Insert
-    suspend fun inset(categoryEntity: CategoryEntity)
-
-    @Query("SELECT * FROM categories WHERE name = :name")
-    suspend fun getCategory(name: String): CategoryEntity
+    @Upsert
+    suspend fun insert(categoryEntity: CategoryEntity)
 }

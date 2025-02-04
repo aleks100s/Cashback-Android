@@ -14,4 +14,5 @@ val coreModule = module {
     }
 
     factory { get<Database>().categoryDao() }
+    factory { get<Database>().placeDao() }
 }
