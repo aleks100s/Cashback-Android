@@ -1,4 +1,4 @@
-package com.alextos.cashback.features.cards.cards_list.presentation.components
+package com.alextos.cashback.features.cards.presentation.cards_list.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.offset
@@ -7,7 +7,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.times
 import androidx.compose.ui.zIndex
 import com.alextos.cashback.core.domain.Category
 import com.alextos.cashback.core.domain.generateMockCategory

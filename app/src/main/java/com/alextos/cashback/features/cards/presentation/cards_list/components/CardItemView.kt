@@ -1,4 +1,4 @@
-package com.alextos.cashback.features.cards.cards_list.presentation.components
+package com.alextos.cashback.features.cards.presentation.cards_list.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

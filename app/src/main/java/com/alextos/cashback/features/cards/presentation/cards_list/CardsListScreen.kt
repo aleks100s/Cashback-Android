@@ -1,10 +1,8 @@
-package com.alextos.cashback.features.cards.cards_list.presentation
+package com.alextos.cashback.features.cards.presentation.cards_list
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,13 +15,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.core.domain.Card
-import com.alextos.cashback.features.cards.cards_list.presentation.components.CardItemView
+import com.alextos.cashback.features.cards.presentation.cards_list.components.CardItemView
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

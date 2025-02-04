@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.alextos.cashback.features.cards.cards_list.presentation.CardsListScreen
+import com.alextos.cashback.features.cards.presentation.cards_list.CardsListScreen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

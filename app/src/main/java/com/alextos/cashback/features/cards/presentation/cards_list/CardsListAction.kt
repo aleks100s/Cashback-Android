@@ -1,4 +1,4 @@
-package com.alextos.cashback.features.cards.cards_list.presentation
+package com.alextos.cashback.features.cards.presentation.cards_list
 
 import com.alextos.cashback.core.domain.Card
 
