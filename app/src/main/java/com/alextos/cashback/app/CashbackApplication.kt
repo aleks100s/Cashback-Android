@@ -11,7 +11,7 @@ class CashbackApplication: Application() {
         super.onCreate()
         startKoin {
             androidContext(this@CashbackApplication)
-            modules(coreModule, cardsModule)
+            modules(appModule, coreModule, cardsModule)
         }
     }
 }

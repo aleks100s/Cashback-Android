@@ -17,7 +17,7 @@ val PredefinedCategory.emoji: String
         PredefinedCategory.CAR_SHARING -> "🚙"
         PredefinedCategory.AUTO_SERVICES -> "🔧"
         PredefinedCategory.PHARMACIES -> "💊"
-        PredefinedCategory.BEAUTY_AND_SPA -> "💆‍"
+        PredefinedCategory.BEAUTY_AND_SPA -> "💆‍♀"
         PredefinedCategory.COSMETICS_AND_PARFUME -> "💄"
         PredefinedCategory.HOUSE_AND_RENOVATION -> "🏠"
         PredefinedCategory.ART -> "🎨"

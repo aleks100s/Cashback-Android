@@ -1,6 +1,7 @@
 package com.alextos.cashback.core.data.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Upsert
 import com.alextos.cashback.core.data.entities.CategoryEntity
@@ -13,4 +14,7 @@ interface CategoryDao {
 
     @Upsert
     suspend fun insert(categoryEntity: CategoryEntity)
+
+    @Insert
+    suspend fun insertAll(categories: List<CategoryEntity>)
 }

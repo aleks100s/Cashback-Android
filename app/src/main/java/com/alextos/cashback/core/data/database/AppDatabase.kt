@@ -21,7 +21,7 @@ import com.alextos.cashback.core.data.entities.PlaceEntity
                 PaymentEntity::class],
     version = 1
 )
-abstract class Database : RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
     abstract fun categoryDao(): CategoryDao
     abstract fun placeDao(): PlaceDao
     abstract fun cashbackDao(): CashbackDao
