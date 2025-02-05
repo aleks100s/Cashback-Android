@@ -9,6 +9,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.alextos.cashback.features.settings.presentation.settings.SettingsScreen
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SettingsRoot(modifier: Modifier = Modifier) {
@@ -23,9 +25,7 @@ fun SettingsRoot(modifier: Modifier = Modifier) {
             startDestination = SettingsRoute.Settings
         ) {
             composable<SettingsRoute.Settings> {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    Text("Настройки")
-                }
+                SettingsScreen(viewModel = koinViewModel())
             }
         }
     }

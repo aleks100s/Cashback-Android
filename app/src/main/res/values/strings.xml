@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Cashback</string>
+    <string name="app_name">Кэшбэк</string>
+    <string name="app_version">Версия: %1$s</string>
+    <string name="app_build">Сборка: %1$s</string>
 </resources>

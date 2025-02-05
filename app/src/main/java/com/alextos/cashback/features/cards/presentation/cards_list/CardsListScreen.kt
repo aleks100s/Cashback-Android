@@ -2,7 +2,9 @@ package com.alextos.cashback.features.cards.presentation.cards_list
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -61,13 +64,17 @@ private fun CardsListView(
     onAction: (CardsListAction) -> Unit
 ) {
     if (state.allCards.isEmpty()) {
-        Text(text = "Нет сохраненных карт")
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(text = "Нет сохраненных карт")
+        }
     } else {
         val scrollState: LazyListState = rememberLazyListState()
 
         LazyColumn(
-            modifier = modifier
-                .padding(horizontal = 12.dp),
+            modifier = modifier.padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             state = scrollState
         ) {
