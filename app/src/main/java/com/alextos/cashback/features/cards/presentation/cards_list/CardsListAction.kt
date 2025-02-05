@@ -5,4 +5,5 @@ import com.alextos.cashback.core.domain.Card
 sealed interface CardsListAction {
     data class SearchQueryChange(val query: String): CardsListAction
     data class CardSelect(val card: Card): CardsListAction
+    data class ToggleFavourite(val card: Card): CardsListAction
 }

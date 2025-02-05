@@ -78,13 +78,17 @@ private fun CardsListView(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             state = scrollState
         ) {
-            items(state.allCards) { card ->
+            items(state.allCards, key = { it.id }) { card ->
                 CardItemView(
-                    modifier = Modifier.clickable {
-                        onAction(CardsListAction.CardSelect(card))
-                    },
+                    modifier = Modifier
+                        .animateItem()
+                        .clickable {
+                            onAction(CardsListAction.CardSelect(card))
+                        },
                     card = card
-                )
+                ) {
+                    onAction(CardsListAction.ToggleFavourite(card))
+                }
             }
             item {
                 Spacer(modifier = Modifier.height(8.dp))

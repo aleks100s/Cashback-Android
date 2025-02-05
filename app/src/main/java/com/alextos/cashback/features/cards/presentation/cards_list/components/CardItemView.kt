@@ -30,7 +30,8 @@ import com.alextos.cashback.core.domain.generateMockCard
 @Composable
 fun CardItemView(
     modifier: Modifier = Modifier,
-    card: Card
+    card: Card,
+    onFavouriteTap: () -> Unit
 ) {
     Column(
         modifier = modifier,
@@ -83,7 +84,7 @@ fun CardItemView(
                                     .size(24.dp)
                                     .minimumInteractiveComponentSize()
                                     .clickable {
-                                        // TODO: Toggle isFavourite
+                                        onFavouriteTap()
                                     },
                                 imageVector = if (card.isFavourite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                                 contentDescription = "Иконка карты",
@@ -103,6 +104,6 @@ fun CardItemView(
 @Composable
 private fun CardItemPreview() {
     Surface(modifier = Modifier.padding(8.dp)) {
-        CardItemView(card = generateMockCard())
+        CardItemView(card = generateMockCard()) {}
     }
 }

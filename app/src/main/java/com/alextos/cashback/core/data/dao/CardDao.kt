@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CardDao {
-    @Query("SELECT * FROM cards WHERE isArchived = 0")
+    @Query("SELECT * FROM cards WHERE isArchived = 0 ORDER BY isFavourite DESC, name ASC")
     fun getAll(): Flow<List<CardEntity>>
 
     @Upsert
