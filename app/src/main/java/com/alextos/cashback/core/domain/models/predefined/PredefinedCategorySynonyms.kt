@@ -1,4 +1,4 @@
-package com.alextos.cashback.core.domain.predefined
+package com.alextos.cashback.core.domain.models.predefined
 
 val PredefinedCategory.synonyms: List<String>
     get() = when (this) {

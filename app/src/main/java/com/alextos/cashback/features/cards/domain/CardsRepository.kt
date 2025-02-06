@@ -1,6 +1,6 @@
 package com.alextos.cashback.features.cards.domain
 
-import com.alextos.cashback.core.domain.Card
+import com.alextos.cashback.core.domain.models.Card
 import kotlinx.coroutines.flow.Flow
 
 interface CardsRepository {

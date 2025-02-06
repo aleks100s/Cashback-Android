@@ -1,4 +1,4 @@
-package com.alextos.cashback.core.domain
+package com.alextos.cashback.core.domain.models
 
 import java.util.UUID
 import kotlin.random.Random

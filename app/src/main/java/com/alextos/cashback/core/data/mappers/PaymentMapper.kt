@@ -2,8 +2,8 @@ package com.alextos.cashback.core.data.mappers
 
 import com.alextos.cashback.core.data.combined_entities.PaymentWithCard
 import com.alextos.cashback.core.data.entities.PaymentEntity
-import com.alextos.cashback.core.domain.Cashback
-import com.alextos.cashback.core.domain.Payment
+import com.alextos.cashback.core.domain.models.Cashback
+import com.alextos.cashback.core.domain.models.Payment
 import java.time.LocalDate
 import java.util.UUID
 

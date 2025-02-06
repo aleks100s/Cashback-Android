@@ -8,8 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.alextos.cashback.core.domain.Category
-import com.alextos.cashback.core.domain.generateMockCategory
+import com.alextos.cashback.core.domain.models.Category
+import com.alextos.cashback.core.domain.models.generateMockCategory
 import com.alextos.cashback.core.presentation.views.CategoryIconView
 
 @Composable

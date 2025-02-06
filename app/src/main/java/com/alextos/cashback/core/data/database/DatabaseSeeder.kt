@@ -4,11 +4,11 @@ import android.content.Context
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.alextos.cashback.core.data.mappers.toEntity
-import com.alextos.cashback.core.domain.Category
-import com.alextos.cashback.core.domain.predefined.PredefinedCategory
-import com.alextos.cashback.core.domain.predefined.emoji
-import com.alextos.cashback.core.domain.predefined.localization
-import com.alextos.cashback.core.domain.predefined.synonyms
+import com.alextos.cashback.core.domain.models.Category
+import com.alextos.cashback.core.domain.models.predefined.PredefinedCategory
+import com.alextos.cashback.core.domain.models.predefined.emoji
+import com.alextos.cashback.core.domain.models.predefined.localization
+import com.alextos.cashback.core.domain.models.predefined.synonyms
 import java.util.UUID
 import java.util.concurrent.Executors
 

@@ -2,7 +2,7 @@ package com.alextos.cashback.core.data.mappers
 
 import com.alextos.cashback.core.data.combined_entities.PlaceWithCategory
 import com.alextos.cashback.core.data.entities.PlaceEntity
-import com.alextos.cashback.core.domain.Place
+import com.alextos.cashback.core.domain.models.Place
 import java.util.UUID
 
 fun Place.toEntity(): PlaceEntity {

@@ -1,4 +1,4 @@
-package com.alextos.cashback.core.domain.predefined
+package com.alextos.cashback.core.domain.models.predefined
 
 enum class PredefinedCategory {
     ALL_PURCHASES,

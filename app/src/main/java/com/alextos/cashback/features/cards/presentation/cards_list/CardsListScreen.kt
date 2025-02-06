@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.alextos.cashback.core.domain.Card
+import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.features.cards.presentation.cards_list.components.CardItemView
 
 @OptIn(ExperimentalMaterial3Api::class)

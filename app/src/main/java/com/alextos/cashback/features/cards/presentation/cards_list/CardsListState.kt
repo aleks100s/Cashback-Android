@@ -1,6 +1,6 @@
 package com.alextos.cashback.features.cards.presentation.cards_list
 
-import com.alextos.cashback.core.domain.Card
+import com.alextos.cashback.core.domain.models.Card
 
 data class CardsListState(
     val searchQuery: String = "",

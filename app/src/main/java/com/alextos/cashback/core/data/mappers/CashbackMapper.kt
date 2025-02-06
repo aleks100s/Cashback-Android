@@ -2,8 +2,8 @@ package com.alextos.cashback.core.data.mappers
 
 import com.alextos.cashback.core.data.combined_entities.CashbackWithCategory
 import com.alextos.cashback.core.data.entities.CashbackEntity
-import com.alextos.cashback.core.domain.Card
-import com.alextos.cashback.core.domain.Cashback
+import com.alextos.cashback.core.domain.models.Card
+import com.alextos.cashback.core.domain.models.Cashback
 import java.util.UUID
 
 fun Cashback.toEntity(card: Card): CashbackEntity {

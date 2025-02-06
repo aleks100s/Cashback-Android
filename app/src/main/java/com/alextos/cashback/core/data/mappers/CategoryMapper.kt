@@ -1,7 +1,7 @@
 package com.alextos.cashback.core.data.mappers
 
 import com.alextos.cashback.core.data.entities.CategoryEntity
-import com.alextos.cashback.core.domain.Category
+import com.alextos.cashback.core.domain.models.Category
 import java.util.UUID
 
 fun Category.toEntity(): CategoryEntity {
