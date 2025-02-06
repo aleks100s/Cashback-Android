@@ -36,7 +36,9 @@ fun CardsRoot(modifier: Modifier = Modifier) {
                 val args = navBackStackEntry.toRoute<CardsRoute.CardDetail>()
                 val id = args.cardId
 
-                CardDetailScreen(viewModel = koinViewModel())
+                CardDetailScreen(viewModel = koinViewModel()) {
+
+                }
             }
         }
     }

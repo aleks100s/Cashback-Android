@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
 import com.alextos.cashback.core.presentation.Screen
-import com.alextos.cashback.features.settings.presentation.settings.components.SettingsSectionView
+import com.alextos.cashback.core.presentation.views.SectionView
 
 @Composable
 fun SettingsScreen(
@@ -50,7 +50,7 @@ private fun SettingsView(
         modifier = modifier.padding(horizontal = 16.dp)
     ) {
         item {
-            SettingsSectionView(title = stringResource(R.string.settings_app_about)) {
+            SectionView(title = stringResource(R.string.settings_app_about)) {
                 Column {
                     ClickableItem(
                         title = stringResource(R.string.settings_app_version),
@@ -83,7 +83,7 @@ private fun ClickableItem(
             .clickable {
                 onAction(SettingsAction.CopyValue(label = title, text = value))
             }
-            .padding(vertical = 8.dp, horizontal = 16.dp),
+            .padding(vertical = 12.dp, horizontal = 16.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(title)

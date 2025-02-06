@@ -35,6 +35,9 @@ class CardDetailViewModel(
             is CardDetailAction.ToggleEditMode -> {
                 _state.update { it.copy(isEditMode = !it.isEditMode) }
             }
+            is CardDetailAction.AddCashback -> {
+
+            }
         }
     }
 }

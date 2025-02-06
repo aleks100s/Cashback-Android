@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.alextos.cashback.core.domain.models.Category
 import com.alextos.cashback.core.domain.models.generateMockCategory
+import com.alextos.cashback.core.presentation.views.CategoryIconSize
 import com.alextos.cashback.core.presentation.views.CategoryIconView
 
 @Composable
@@ -24,7 +25,8 @@ fun CategoriesStackView(
         categories.forEachIndexed { index, category ->
             CategoryIconView(
                 modifier = modifier.offset(x = (-12).dp * index).zIndex(index.toFloat()),
-                category = category
+                category = category,
+                size = CategoryIconSize.Small
             )
         }
     }

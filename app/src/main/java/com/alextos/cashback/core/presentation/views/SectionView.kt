@@ -1,4 +1,4 @@
-package com.alextos.cashback.features.settings.presentation.settings.components
+package com.alextos.cashback.core.presentation.views
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,7 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SettingsSectionView(
+fun SectionView(
     title: String,
     content: @Composable () -> Unit
 ) {

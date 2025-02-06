@@ -52,7 +52,7 @@ fun CardItemView(
                 Icon(
                     modifier = Modifier.size(16.dp),
                     imageVector = Icons.Default.MailOutline,
-                    contentDescription = "Иконка карты",
+                    contentDescription = stringResource(R.string.cards_list_card_icon),
                     tint = Color(android.graphics.Color.parseColor(card.color ?: "#E7E7E7"))
                 )
 
@@ -64,7 +64,7 @@ fun CardItemView(
 
         Surface(
             modifier = Modifier
-                .clip(RoundedCornerShape(8.dp))
+                .clip(RoundedCornerShape(12.dp))
                 .fillMaxWidth(),
             tonalElevation = 8.dp,
             shadowElevation = 8.dp

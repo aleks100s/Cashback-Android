@@ -17,14 +17,47 @@ import androidx.compose.ui.unit.dp
 import com.alextos.cashback.core.domain.models.Category
 import com.alextos.cashback.core.domain.models.generateMockCategory
 
+sealed interface CategoryIconSize {
+    data object Small: CategoryIconSize
+    data object Medium: CategoryIconSize
+}
+
 @Composable
 fun CategoryIconView(
     modifier: Modifier = Modifier,
-    category: Category
+    category: Category,
+    size: CategoryIconSize
 ) {
+    val circleSize = when (size) {
+        is CategoryIconSize.Small -> {
+            44.dp
+        }
+        is CategoryIconSize.Medium -> {
+            56.dp
+        }
+    }
+
+    val borderWidth = when (size) {
+        is CategoryIconSize.Small -> {
+            2.dp
+        }
+        is CategoryIconSize.Medium -> {
+            0.dp
+        }
+    }
+
+    val textStyle = when (size) {
+        is CategoryIconSize.Small -> {
+            MaterialTheme.typography.headlineSmall
+        }
+        is CategoryIconSize.Medium -> {
+            MaterialTheme.typography.headlineMedium
+        }
+    }
+
     Box(
         modifier = modifier
-            .size(44.dp)
+            .size(circleSize)
             .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(Color.Red.copy(red = 0.9f, green = 0.4f), Color.Red.copy(red = 0.7f, green = 0.2f))
@@ -32,7 +65,7 @@ fun CategoryIconView(
                 shape = CircleShape
             )
             .border(
-                width = 2.dp,
+                width = borderWidth,
                 color = MaterialTheme.colorScheme.background,
                 shape = CircleShape
             ),
@@ -40,7 +73,7 @@ fun CategoryIconView(
     ) {
         Text(
             text = category.emoji,
-            style = MaterialTheme.typography.headlineSmall
+            style = textStyle
         )
     }
 }
@@ -48,5 +81,5 @@ fun CategoryIconView(
 @Preview
 @Composable
 private fun CategoryIconPreview() {
-    CategoryIconView(category = generateMockCategory())
+    CategoryIconView(category = generateMockCategory(), size = CategoryIconSize.Small)
 }

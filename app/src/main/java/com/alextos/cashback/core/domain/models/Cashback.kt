@@ -16,6 +16,14 @@ data class Cashback(
             String.format(locale = Locale.forLanguageTag("ru_RU"), "%s %.1f%%", category.name, percent * 100)
         }
     }
+
+    fun percentString(): String {
+        return if (percent * 1000 % 10 == 0.0) {
+            String.format(locale = Locale.forLanguageTag("ru_RU"), "%.0f%%", percent * 100)
+        } else {
+            String.format(locale = Locale.forLanguageTag("ru_RU"), "%.1f%%", percent * 100)
+        }
+    }
 }
 
 fun generateMockCashback(category: Category? = null): Cashback {
