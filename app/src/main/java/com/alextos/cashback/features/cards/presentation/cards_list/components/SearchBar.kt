@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -32,6 +33,13 @@ fun SearchBar(
             Text(text = stringResource(R.string.cards_list_search_placeholder))
         },
         singleLine = true,
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Default.Search,
+                contentDescription = stringResource(R.string.cards_list_search),
+                tint = MaterialTheme.colorScheme.primary
+            )
+        },
         trailingIcon = {
             AnimatedVisibility(
                 visible = value.isNotEmpty(),

@@ -94,7 +94,7 @@ private fun CardsListView(
         ) {
             stickyHeader {
                 AnimatedVisibility(
-                    visible = scrollState.lastScrolledBackward,
+                    visible = scrollState.lastScrolledBackward || !scrollState.canScrollBackward,
                     enter = fadeIn() + expandVertically(),
                     exit = fadeOut() + shrinkVertically()
                 ) {
@@ -106,20 +106,32 @@ private fun CardsListView(
                 }
             }
 
-            items(state.filteredCards, key = { it.id }) { card ->
-                CardItemView(
-                    modifier = Modifier
-                        .animateItem()
-                        .clickable {
-                            onAction(CardsListAction.CardSelect(card))
-                        },
-                    card = card
-                ) {
-                    onAction(CardsListAction.ToggleFavourite(card))
+            if (state.filteredCards.isEmpty()) {
+                item {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(stringResource(R.string.cards_list_no_search_results))
+                    }
                 }
-            }
-            item {
-                Spacer(modifier = Modifier.height(8.dp))
+            } else {
+                items(state.filteredCards, key = { it.id }) { card ->
+                    CardItemView(
+                        modifier = Modifier
+                            .animateItem()
+                            .clickable {
+                                onAction(CardsListAction.CardSelect(card))
+                            },
+                        card = card
+                    ) {
+                        onAction(CardsListAction.ToggleFavourite(card))
+                    }
+                }
+
+                item {
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
             }
         }
     }
