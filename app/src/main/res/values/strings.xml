@@ -16,4 +16,5 @@
     <string name="card_detail_cashback_list_title">Кэшбэк на карте</string>
     <string name="card_detail_cashback_currency_form">Форма выплаты кэшбэка: %1$s</string>
     <string name="cards_list_card_icon">Иконка карты</string>
+    <string name="cards_list_add_new_card">Добавить новую карту</string>
 </resources>

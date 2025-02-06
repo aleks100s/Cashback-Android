@@ -45,9 +45,6 @@ class CardsListViewModel(
                     )
                 }
             }
-            is CardsListAction.CardSelect -> {
-                //
-            }
             is CardsListAction.ToggleFavourite -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     val card = action.card
@@ -63,6 +60,17 @@ class CardsListViewModel(
                     )
                 )
             }
+            is CardsListAction.AddCard -> {
+                _state.update {
+                    it.copy(isAddCardSheetShown = true)
+                }
+            }
+            is CardsListAction.DismissAddCardSheet -> {
+                _state.update {
+                    it.copy(isAddCardSheetShown = false)
+                }
+            }
+            is CardsListAction.CardSelect -> {}
         }
     }
 }

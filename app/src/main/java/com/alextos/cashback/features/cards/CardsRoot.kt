@@ -1,6 +1,5 @@
 package com.alextos.cashback.features.cards
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -26,10 +25,11 @@ fun CardsRoot(modifier: Modifier = Modifier) {
         ) {
             composable<CardsRoute.CardsList> {
                 CardsListScreen(
-                    viewModel = koinViewModel()
-                ) { card ->
-                    navController.navigate(CardsRoute.CardDetail(card.id.toString()))
-                }
+                    viewModel = koinViewModel(),
+                    onCardSelect = { card ->
+                        navController.navigate(CardsRoute.CardDetail(card.id.toString()))
+                    }
+                )
             }
 
             composable<CardsRoute.CardDetail> { navBackStackEntry ->

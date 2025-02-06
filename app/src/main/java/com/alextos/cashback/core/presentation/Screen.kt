@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 fun Screen(
     modifier: Modifier,
     title: String,
+    floatingActionButton: @Composable () -> Unit = {},
     content: @Composable (Modifier) -> Unit
 ) {
     Scaffold(
@@ -23,7 +24,8 @@ fun Screen(
                     Text(title)
                 }
             )
-        }
+        },
+        floatingActionButton = floatingActionButton
     ) { innerPaddings ->
         content(Modifier.padding(top = innerPaddings.calculateTopPadding()))
     }

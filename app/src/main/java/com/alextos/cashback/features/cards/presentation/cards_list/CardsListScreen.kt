@@ -17,6 +17,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,6 +40,7 @@ import com.alextos.cashback.core.presentation.Screen
 import com.alextos.cashback.features.cards.presentation.cards_list.components.CardItemView
 import com.alextos.cashback.features.cards.presentation.cards_list.components.SearchBar
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardsListScreen(
     modifier: Modifier = Modifier,
@@ -43,7 +51,14 @@ fun CardsListScreen(
 
     Screen(
         modifier = modifier,
-        title = stringResource(R.string.cards_list_title)
+        title = stringResource(R.string.cards_list_title),
+        floatingActionButton = {
+            FloatingActionButton(onClick = {
+                viewModel.onAction(CardsListAction.AddCard)
+            }) {
+                Icon(Icons.Filled.Add, stringResource(R.string.cards_list_add_new_card))
+            }
+        }
     ) {
         CardsListView(modifier = it, state = state) { action ->
             when(action) {
@@ -51,6 +66,14 @@ fun CardsListScreen(
                 else -> Unit
             }
             viewModel.onAction(action)
+        }
+
+        if (state.isAddCardSheetShown) {
+            ModalBottomSheet(onDismissRequest = {
+                viewModel.onAction(CardsListAction.DismissAddCardSheet)
+            }) {
+                Box(modifier = Modifier.height(300.dp))
+            }
         }
     }
 }
