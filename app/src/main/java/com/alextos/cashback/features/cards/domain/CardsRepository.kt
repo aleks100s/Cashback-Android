@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface CardsRepository {
     fun getAllCards(): Flow<List<Card>>
     fun update(card: Card)
+    fun getCard(id: String): Flow<Card?>
 }
