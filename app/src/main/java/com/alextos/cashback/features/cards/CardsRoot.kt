@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.alextos.cashback.features.cards.presentation.card_detail.CardDetailScreen
 import com.alextos.cashback.features.cards.presentation.cards_list.CardsListScreen
 import org.koin.androidx.compose.koinViewModel
 
@@ -35,7 +36,7 @@ fun CardsRoot(modifier: Modifier = Modifier) {
                 val args = navBackStackEntry.toRoute<CardsRoute.CardDetail>()
                 val id = args.cardId
 
-                Text(text = id)
+                CardDetailScreen(viewModel = koinViewModel())
             }
         }
     }
