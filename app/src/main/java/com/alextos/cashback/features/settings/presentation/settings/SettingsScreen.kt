@@ -36,7 +36,7 @@ fun SettingsScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Настройки")
+                    Text(stringResource(R.string.settings_title))
                 }
             )
         }
@@ -59,10 +59,10 @@ private fun SettingsView(
         modifier = modifier.padding(horizontal = 16.dp)
     ) {
         item {
-            SettingsSectionView(title = stringResource(R.string.app_about)) {
+            SettingsSectionView(title = stringResource(R.string.settings_app_about)) {
                 Column {
                     ClickableItem(
-                        title = stringResource(R.string.app_version),
+                        title = stringResource(R.string.settings_app_version),
                         value = state.appVersion,
                         onAction = onAction
                     )
@@ -70,7 +70,7 @@ private fun SettingsView(
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
 
                     ClickableItem(
-                        title = stringResource(R.string.app_build),
+                        title = stringResource(R.string.settings_app_build),
                         value = "${state.buildVersion}",
                         onAction = onAction
                     )

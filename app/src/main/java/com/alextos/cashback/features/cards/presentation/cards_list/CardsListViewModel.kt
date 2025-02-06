@@ -3,15 +3,16 @@ package com.alextos.cashback.features.cards.presentation.cards_list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alextos.cashback.features.cards.domain.CardsRepository
+import com.alextos.cashback.features.cards.domain.use_cases.FilterUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class CardsListViewModel(
-    private val repository: CardsRepository
+    private val repository: CardsRepository,
+    private val filterUseCase: FilterUseCase
 ): ViewModel() {
     private val _state = MutableStateFlow(CardsListState())
     val state = _state.asStateFlow()
@@ -21,7 +22,10 @@ class CardsListViewModel(
             repository.getAllCards()
                 .collect { list ->
                     _state.update {
-                        it.copy(allCards = list)
+                        it.copy(
+                            allCards = list,
+                            filteredCards = filterUseCase.execute(list, it.searchQuery)
+                        )
                     }
                 }
         }
@@ -31,7 +35,10 @@ class CardsListViewModel(
         when (action) {
             is CardsListAction.SearchQueryChange -> {
                 _state.update {
-                    it.copy(searchQuery = action.query)
+                    it.copy(
+                        searchQuery = action.query,
+                        filteredCards = filterUseCase.execute(it.allCards, action.query)
+                    )
                 }
             }
             is CardsListAction.CardSelect -> {

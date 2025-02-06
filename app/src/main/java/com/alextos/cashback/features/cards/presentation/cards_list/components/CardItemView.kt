@@ -22,8 +22,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.domain.models.generateMockCard
 
@@ -38,7 +40,9 @@ fun CardItemView(
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 4.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Row(
@@ -87,7 +91,7 @@ fun CardItemView(
                                         onFavouriteTap()
                                     },
                                 imageVector = if (card.isFavourite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                                contentDescription = "Иконка карты",
+                                contentDescription = stringResource(R.string.cards_list_item_favourite),
                                 tint = if (card.isFavourite) Color.Red else Color.Gray
                             )
                         }

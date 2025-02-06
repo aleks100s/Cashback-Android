@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Кэшбэк</string>
-    <string name="app_version">Версия приложения</string>
-    <string name="app_build">Номер сборки</string>
-    <string name="app_about">О приложении</string>
+    <string name="settings_app_version">Версия приложения</string>
+    <string name="settings_app_build">Номер сборки</string>
+    <string name="settings_app_about">О приложении</string>
+    <string name="cards_list_empty">Нет сохраненных карт</string>
+    <string name="cards_list_title">Мои карты</string>
+    <string name="settings_title">Настройки</string>
+    <string name="cards_list_search_placeholder">Категория кэшбэка</string>
+    <string name="cards_list_search_clear">Очистить поиск</string>
+    <string name="cards_list_item_favourite">Иконка карты</string>
 </resources>
