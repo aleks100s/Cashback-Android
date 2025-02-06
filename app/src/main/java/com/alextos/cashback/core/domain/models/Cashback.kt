@@ -10,7 +10,7 @@ data class Cashback(
     val percent: Double
 ) {
     override fun toString(): String {
-        return if (percent * 1000 % 10 == 0.0) {
+        return if (showFloatingPoint()) {
             String.format(locale = Locale.forLanguageTag("ru_RU"), "%s %.0f%%", category.name, percent * 100)
         } else {
             String.format(locale = Locale.forLanguageTag("ru_RU"), "%s %.1f%%", category.name, percent * 100)
@@ -18,11 +18,15 @@ data class Cashback(
     }
 
     fun percentString(): String {
-        return if (percent * 1000 % 10 == 0.0) {
+        return if (showFloatingPoint()) {
             String.format(locale = Locale.forLanguageTag("ru_RU"), "%.0f%%", percent * 100)
         } else {
             String.format(locale = Locale.forLanguageTag("ru_RU"), "%.1f%%", percent * 100)
         }
+    }
+
+    private fun showFloatingPoint(): Boolean {
+        return (percent * 100) % 10 < 0.1
     }
 }
 
