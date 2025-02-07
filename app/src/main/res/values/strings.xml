@@ -17,4 +17,11 @@
     <string name="card_detail_cashback_currency_form">Форма выплаты кэшбэка: %1$s</string>
     <string name="cards_list_card_icon">Иконка карты</string>
     <string name="cards_list_add_new_card">Добавить новую карту</string>
+    <string name="dialog_cancel">Отмена</string>
+    <string name="dialog_delete">Удалить</string>
+    <string name="dialog_delete_cashback">Удалить кэшбэк?</string>
+    <string name="dialog_cannot_undo">Это действие нельзя отменить</string>
+    <string name="card_detail_no_cashback">Нет сохраненных кэшбэков</string>
+    <string name="card_detail_cashback_added">Кэшбэк добавлен</string>
+    <string name="card_detail_cashback_removed">Кэшбэк удален</string>
 </resources>

@@ -6,12 +6,12 @@ import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.domain.models.Cashback
 import java.util.UUID
 
-fun Cashback.toEntity(card: Card): CashbackEntity {
+fun Cashback.toEntity(cardId: String): CashbackEntity {
     return CashbackEntity(
         id = id.toString(),
         categoryId = category.id.toString(),
         percent = percent,
-        cardId = card.id.toString()
+        cardId = cardId
     )
 }
 

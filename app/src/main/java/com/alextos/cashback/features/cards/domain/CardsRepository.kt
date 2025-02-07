@@ -1,10 +1,13 @@
 package com.alextos.cashback.features.cards.domain
 
 import com.alextos.cashback.core.domain.models.Card
+import com.alextos.cashback.core.domain.models.Cashback
 import kotlinx.coroutines.flow.Flow
 
 interface CardsRepository {
     fun getAllCards(): Flow<List<Card>>
-    fun update(card: Card)
-    fun getCard(id: String): Flow<Card?>
+    suspend fun update(card: Card)
+    fun getCardFlow(id: String): Flow<Card?>
+    suspend fun getCard(id: String): Card?
+    suspend fun delete(cashback: Cashback, cardId: String)
 }

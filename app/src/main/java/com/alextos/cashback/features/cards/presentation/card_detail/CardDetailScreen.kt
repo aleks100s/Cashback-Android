@@ -1,13 +1,13 @@
 package com.alextos.cashback.features.cards.presentation.card_detail
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.LazyScopeMarker
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
@@ -26,6 +27,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.Cashback
 import com.alextos.cashback.core.presentation.Screen
+import com.alextos.cashback.core.presentation.views.Dialog
 import com.alextos.cashback.features.cards.presentation.card_detail.components.CashbackView
 
 @Composable
@@ -52,6 +54,19 @@ fun CardDetailScreen(
             }
         }
     }
+    state.cashbackToDelete?.let {
+        Dialog(
+            title = stringResource(R.string.dialog_delete_cashback),
+            text = stringResource(R.string.dialog_cannot_undo),
+            actionTitle = stringResource(R.string.dialog_delete),
+            onConfirm = {
+                viewModel.onAction(CardDetailAction.DeleteCashback(it))
+            },
+            onDismiss = {
+                viewModel.onAction(CardDetailAction.DismissDeleteCashbackDialog)
+            }
+        )
+    }
 }
 
 @Composable
@@ -60,7 +75,8 @@ private fun CardDetailView(
     state: CardDetailState,
     onAction: (CardDetailAction) -> Unit
 ) {
-    if (state.card != null) {
+    val cashback = state.card?.cashback
+    if (!cashback.isNullOrEmpty()) {
         LazyColumn(
             modifier = modifier
                 .fillMaxSize()
@@ -75,7 +91,9 @@ private fun CardDetailView(
                 )
             }
 
-            cashbackListView(cashback = state.card.cashback)
+            cashbackListView(cashback = cashback) {
+                onAction(CardDetailAction.ShowDeleteCashbackDialog(it))
+            }
 
             item {
                 Text(
@@ -92,23 +110,41 @@ private fun CardDetailView(
             }
         }
     } else {
-        Box(modifier = Modifier.fillMaxSize()) {
-            Text(text = "Нет сохраненных кэшбэков")
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(text = stringResource(R.string.card_detail_no_cashback))
         }
     }
 }
 
-private fun LazyListScope.cashbackListView(cashback: List<Cashback>) {
+@OptIn(ExperimentalFoundationApi::class)
+private fun LazyListScope.cashbackListView(
+    cashback: List<Cashback>,
+    onLongPress: (Cashback) -> Unit
+) {
     itemsIndexed(cashback) { index, item ->
-        val shape = when (index) {
-            0 -> RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp) // Первый элемент
-            cashback.lastIndex -> RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp) // Последний элемент
-            else -> RectangleShape // Все остальные
+        val topCornersShape = when (index) {
+            0 -> RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
+            else -> RectangleShape
+        }
+        val bottomCornersShape = when (index) {
+            cashback.lastIndex -> RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp)
+            else -> RectangleShape
         }
         CashbackView(
             modifier = Modifier
-                .clickable { }
-                .clip(shape)
+                .combinedClickable(
+                    onClick = {
+
+                    },
+                    onLongClick = {
+                        onLongPress(item)
+                    }
+                )
+                .clip(topCornersShape)
+                .clip(bottomCornersShape)
                 .background(MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp))
                 .padding(vertical = 12.dp, horizontal = 16.dp),
             cashback = item

@@ -15,8 +15,8 @@ interface CashbackDao {
     suspend fun getAllBy(cardId: String): List<CashbackWithCategory>
 
     @Insert
-    fun insert(cashback: CashbackEntity)
+    suspend fun insert(cashback: CashbackEntity)
 
     @Delete
-    fun delete(cashback: CashbackEntity)
+    suspend fun delete(cashback: CashbackEntity)
 }

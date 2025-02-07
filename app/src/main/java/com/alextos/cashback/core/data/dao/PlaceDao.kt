@@ -16,8 +16,8 @@ interface PlaceDao {
     fun getAll(): Flow<List<PlaceWithCategory>>
 
     @Upsert
-    fun insert(place: PlaceEntity)
+    suspend fun insert(place: PlaceEntity)
 
     @Delete
-    fun delete(place: PlaceEntity)
+    suspend fun delete(place: PlaceEntity)
 }

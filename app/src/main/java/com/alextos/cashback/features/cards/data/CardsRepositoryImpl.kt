@@ -6,6 +6,7 @@ import com.alextos.cashback.core.data.entities.CardEntity
 import com.alextos.cashback.core.data.mappers.toDomain
 import com.alextos.cashback.core.data.mappers.toEntity
 import com.alextos.cashback.core.domain.models.Card
+import com.alextos.cashback.core.domain.models.Cashback
 import com.alextos.cashback.features.cards.domain.CardsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -21,14 +22,24 @@ class CardsRepositoryImpl(
         }
     }
 
-    override fun update(card: Card) {
+    override suspend fun update(card: Card) {
         cardDao.insert(card.toEntity())
     }
 
-    override fun getCard(id: String): Flow<Card?> {
-        return cardDao.getCard(id)
+    override fun getCardFlow(id: String): Flow<Card?> {
+        return cardDao.getCardFlow(id)
             .mapNotNull { it.firstOrNull() }
             .map { constructCard(it) }
+    }
+
+    override suspend fun getCard(id: String): Card? {
+        return cardDao.getCard(id).firstOrNull()?.let {
+            constructCard(it)
+        }
+    }
+
+    override suspend fun delete(cashback: Cashback, cardId: String) {
+        cashbackDao.delete(cashback.toEntity(cardId))
     }
 
     private suspend fun constructCard(entity: CardEntity): Card {

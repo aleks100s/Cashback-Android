@@ -12,8 +12,11 @@ interface CardDao {
     fun getAll(): Flow<List<CardEntity>>
 
     @Upsert
-    fun insert(card: CardEntity)
+    suspend fun insert(card: CardEntity)
 
     @Query("SELECT * FROM cards WHERE id = :id LIMIT 1")
-    fun getCard(id: String): Flow<List<CardEntity>>
+    fun getCardFlow(id: String): Flow<List<CardEntity>>
+
+    @Query("SELECT * FROM cards WHERE id = :id LIMIT 1")
+    suspend fun getCard(id: String): List<CardEntity>
 }
