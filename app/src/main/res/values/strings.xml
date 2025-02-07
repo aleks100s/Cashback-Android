@@ -24,4 +24,8 @@
     <string name="card_detail_no_cashback">Нет сохраненных кэшбэков</string>
     <string name="card_detail_cashback_added">Кэшбэк добавлен</string>
     <string name="card_detail_cashback_removed">Кэшбэк удален</string>
+    <string name="add_card_sheet_title">Добавить новую карту</string>
+    <string name="add_card_sheet_placeholder">Название карты</string>
+    <string name="common_save">Сохранить</string>
+    <string name="cards_list_card_added">Карта добавлена</string>
 </resources>

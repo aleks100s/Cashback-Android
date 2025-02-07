@@ -22,8 +22,8 @@ class CardsRepositoryImpl(
         }
     }
 
-    override suspend fun update(card: Card) {
-        cardDao.insert(card.toEntity())
+    override suspend fun createOrUpdate(card: Card) {
+        cardDao.upsert(card.toEntity())
     }
 
     override fun getCardFlow(id: String): Flow<Card?> {

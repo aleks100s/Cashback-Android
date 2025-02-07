@@ -6,5 +6,6 @@ data class CardsListState(
     val searchQuery: String = "",
     val allCards: List<Card> = listOf(),
     val filteredCards: List<Card> = listOf(),
-    val isAddCardSheetShown: Boolean = false
+    val isAddCardSheetShown: Boolean = false,
+    val newCardName: String = ""
 )

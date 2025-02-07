@@ -3,6 +3,7 @@ package com.alextos.cashback.features.cards.presentation.cards_list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alextos.cashback.R
+import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.domain.services.ToastService
 import com.alextos.cashback.features.cards.domain.CardsRepository
 import com.alextos.cashback.features.cards.domain.use_cases.FilterUseCase
@@ -48,7 +49,7 @@ class CardsListViewModel(
             is CardsListAction.ToggleFavourite -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     val card = action.card
-                    repository.update(card.copy(isFavourite = !card.isFavourite))
+                    repository.createOrUpdate(card.copy(isFavourite = !card.isFavourite))
                 }
                 toastService.showToast(
                     UiText.StringResourceId(
@@ -68,6 +69,21 @@ class CardsListViewModel(
             is CardsListAction.DismissAddCardSheet -> {
                 _state.update {
                     it.copy(isAddCardSheetShown = false)
+                }
+            }
+            is CardsListAction.CardNameChange -> {
+                _state.update {
+                    it.copy(newCardName = action.name)
+                }
+            }
+            is CardsListAction.SaveButtonTapped -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    val card = Card(name = state.value.newCardName)
+                    repository.createOrUpdate(card)
+                    _state.update { it.copy(newCardName = "", isAddCardSheetShown = false) }
+                    viewModelScope.launch(Dispatchers.Main) {
+                        toastService.showToast(UiText.StringResourceId(R.string.cards_list_card_added))
+                    }
                 }
             }
             is CardsListAction.CardSelect -> {}

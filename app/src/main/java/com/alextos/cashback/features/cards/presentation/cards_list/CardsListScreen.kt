@@ -23,7 +23,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,6 +36,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.presentation.Screen
+import com.alextos.cashback.features.cards.presentation.cards_list.components.AddCardSheet
 import com.alextos.cashback.features.cards.presentation.cards_list.components.CardItemView
 import com.alextos.cashback.features.cards.presentation.cards_list.components.SearchBar
 
@@ -72,7 +72,15 @@ fun CardsListScreen(
             ModalBottomSheet(onDismissRequest = {
                 viewModel.onAction(CardsListAction.DismissAddCardSheet)
             }) {
-                Box(modifier = Modifier.height(300.dp))
+                AddCardSheet(
+                    cardName = state.newCardName,
+                    onValueChange = { name ->
+                        viewModel.onAction(CardsListAction.CardNameChange(name))
+                    },
+                    onSaveTapped = {
+                        viewModel.onAction(CardsListAction.SaveButtonTapped)
+                    }
+                )
             }
         }
     }

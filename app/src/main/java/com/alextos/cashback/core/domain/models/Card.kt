@@ -4,14 +4,14 @@ import java.util.UUID
 import kotlin.random.Random
 
 data class Card(
-    val id: UUID,
+    val id: UUID = UUID.randomUUID(),
     var name: String,
-    val cashback: List<Cashback>,
-    var color: String?,
-    var isArchived: Boolean,
-    var isFavourite: Boolean,
-    var currency: String,
-    var currencySymbol: String
+    val cashback: List<Cashback> = listOf(),
+    var color: String? = null,
+    var isArchived: Boolean = false,
+    var isFavourite: Boolean = false,
+    var currency: String = "Рубли",
+    var currencySymbol: String = "₽"
 ) {
     override fun toString(): String {
         if (isEmpty()) {

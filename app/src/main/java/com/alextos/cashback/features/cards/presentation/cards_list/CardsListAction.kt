@@ -8,4 +8,6 @@ sealed interface CardsListAction {
     data class ToggleFavourite(val card: Card): CardsListAction
     data object AddCard: CardsListAction
     data object DismissAddCardSheet: CardsListAction
+    data class CardNameChange(val name: String): CardsListAction
+    data object SaveButtonTapped: CardsListAction
 }

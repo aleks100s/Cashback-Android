@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface CardsRepository {
     fun getAllCards(): Flow<List<Card>>
-    suspend fun update(card: Card)
+    suspend fun createOrUpdate(card: Card)
     fun getCardFlow(id: String): Flow<Card?>
     suspend fun getCard(id: String): Card?
     suspend fun delete(cashback: Cashback, cardId: String)
