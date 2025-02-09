@@ -7,9 +7,9 @@
     <string name="cards_list_title">Мои карты</string>
     <string name="settings_title">Настройки</string>
     <string name="cards_list_search_placeholder">Категория кэшбэка</string>
-    <string name="cards_list_search_clear">Очистить поиск</string>
+    <string name="common_clear_search">Очистить поиск</string>
     <string name="cards_list_item_favourite">Иконка карты</string>
-    <string name="cards_list_search">Поиск</string>
+    <string name="common_search">Поиск</string>
     <string name="cards_list_no_search_results">Такой кэшбэк не найден. Попробуйте изменить запрос</string>
     <string name="cards_list_added_to_favourite">Добавлено в избранное</string>
     <string name="cards_list_removed_from_favourite">Удалено из избранного</string>
@@ -27,6 +27,7 @@
     <string name="add_card_sheet_title">Добавить новую карту</string>
     <string name="add_card_sheet_placeholder">Название карты</string>
     <string name="common_save">Сохранить</string>
+    <string name="common_ok">Ок</string>
     <string name="cards_list_card_added">Карта добавлена</string>
     <string name="card_detail_add_cashback">Добавить кэшбэк</string>
     <string name="add_cashback_select_category">Выбрать категорию</string>
@@ -35,4 +36,6 @@
     <string name="category_list_add_new_category">Добавить свою категорию</string>
     <string name="category_list_no_search_results">Категории не найдены. Попробуйте изменить запрос или добавьте свою категорию</string>
     <string name="category_list_title">Категории кэшбэка</string>
+    <string name="category_list_item_info">Информация о категории</string>
+    <string name="category_list_placeholder">Категория кэшбэка</string>
 </resources>

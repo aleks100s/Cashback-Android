@@ -38,7 +38,7 @@ import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.presentation.Screen
 import com.alextos.cashback.features.cards.presentation.cards_list.components.AddCardSheet
 import com.alextos.cashback.features.cards.presentation.cards_list.components.CardItemView
-import com.alextos.cashback.features.cards.presentation.cards_list.components.SearchBar
+import com.alextos.cashback.core.presentation.views.SearchBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -114,10 +114,11 @@ private fun CardsListView(
                     enter = fadeIn() + expandVertically(),
                     exit = fadeOut() + shrinkVertically()
                 ) {
-                    Surface(modifier = Modifier.padding(bottom = 8.dp)) {
-                        SearchBar(state.searchQuery) {
-                            onAction(CardsListAction.SearchQueryChange(it))
-                        }
+                    SearchBar(
+                        value = state.searchQuery,
+                        placeholder = stringResource(R.string.cards_list_search_placeholder)
+                    ) {
+                        onAction(CardsListAction.SearchQueryChange(it))
                     }
                 }
             }

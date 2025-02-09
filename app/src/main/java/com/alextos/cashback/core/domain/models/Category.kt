@@ -1,10 +1,11 @@
 package com.alextos.cashback.core.domain.models
 
+import com.alextos.cashback.core.presentation.views.ListElement
 import java.util.UUID
 import kotlin.random.Random
 
 data class Category(
-    val id: UUID,
+    override val id: UUID = UUID.randomUUID(),
     val name: String,
     val emoji: String,
     val synonyms: String?,
@@ -12,7 +13,7 @@ data class Category(
     val isArchived: Boolean,
     val info: String?,
     val isNative: Boolean
-)
+): ListElement
 
 fun generateMockCategory(): Category {
     val names = listOf("Books", "Music", "Cinema", "Fitness", "Pharmacy", "Electronics", "Restaurants")

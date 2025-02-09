@@ -36,13 +36,12 @@ class DatabaseSeeder(private val context: Context) : RoomDatabase.Callback() {
                     isNative = true
                 ).toEntity()
             }
-            val command = categories
-                .map { entity ->
-                    val synonyms = entity.synonyms?.let { "'${it}'" }
-                    val isArchived = if (entity.isArchived) 1 else 0
-                    "('${entity.id}', '${entity.name}', '${entity.emoji}', $synonyms, ${entity.priority}, $isArchived, '${entity.info}', ${entity.isNative})"
-                }
-                .joinToString(separator = ", ")
+            val command = categories.joinToString(separator = ", ") { entity ->
+                val synonyms = entity.synonyms?.let { "'$it'" }
+                val info = entity.info?.let { "'$it'" }
+                val isArchived = if (entity.isArchived) 1 else 0
+                "('${entity.id}', '${entity.name}', '${entity.emoji}', $synonyms, ${entity.priority}, $isArchived, $info, ${entity.isNative})"
+            }
         db.execSQL("INSERT INTO categories (id, name, emoji, synonyms, priority, isArchived, info, isNative) VALUES $command;")
     }
 }

@@ -43,6 +43,7 @@ class CategoryListViewModel(
                 }
             }
             is CategoryListAction.CreateCategory -> {}
+            is CategoryListAction.SelectCategory -> {}
         }
     }
 }
