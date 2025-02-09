@@ -38,5 +38,4 @@
     <string name="category_list_title">Категории кэшбэка</string>
     <string name="category_list_item_info">Информация о категории</string>
     <string name="category_list_placeholder">Категория кэшбэка</string>
-    <string name="category_list_item_description">Описание категории %1$s</string>
 </resources>

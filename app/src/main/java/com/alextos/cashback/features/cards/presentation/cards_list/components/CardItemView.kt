@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -50,8 +51,8 @@ fun CardItemView(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    modifier = Modifier.size(16.dp),
-                    imageVector = Icons.Default.MailOutline,
+                    modifier = Modifier.size(20.dp),
+                    painter = painterResource(R.drawable.credit_card),
                     contentDescription = stringResource(R.string.cards_list_card_icon),
                     tint = Color(android.graphics.Color.parseColor(card.color ?: "#E7E7E7"))
                 )

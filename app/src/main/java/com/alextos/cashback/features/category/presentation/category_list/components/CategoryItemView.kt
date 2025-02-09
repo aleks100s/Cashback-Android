@@ -54,7 +54,7 @@ fun CategoryItemView(
 
         if (isDialogShown) {
             Dialog(
-                title = stringResource(R.string.category_list_item_description, category.name),
+                title = category.name,
                 text = category.info ?: "",
                 actionTitle = stringResource(R.string.common_ok),
                 onConfirm = {
