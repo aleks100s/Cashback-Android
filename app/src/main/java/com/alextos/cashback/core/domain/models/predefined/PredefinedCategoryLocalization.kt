@@ -49,4 +49,5 @@ val PredefinedCategory.localization: String
         PredefinedCategory.GAS_STATION -> "Заправки"
         PredefinedCategory.COMMUNAL_SERVICES -> "Коммунальные услуги"
         PredefinedCategory.ACCESSORIES -> "Аксессуары"
+        PredefinedCategory.SBER -> "Сервисы Сбера"
     }

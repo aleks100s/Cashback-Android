@@ -44,9 +44,10 @@ val PredefinedCategory.emoji: String
         PredefinedCategory.CLOTHES_AND_SHOES -> "👠"
         PredefinedCategory.SBP -> "🤳🏻"
         PredefinedCategory.DIGITAL_GOODS -> "👾"
-        PredefinedCategory.YANDEX -> "Я"
+        PredefinedCategory.YANDEX -> "\uD83D\uDFE0"
         PredefinedCategory.BURGER_KING -> "🍔"
         PredefinedCategory.GAS_STATION -> "⛽"
         PredefinedCategory.COMMUNAL_SERVICES -> "🚰"
         PredefinedCategory.ACCESSORIES -> "💍"
+        PredefinedCategory.SBER -> "\uD83D\uDFE2"
     }

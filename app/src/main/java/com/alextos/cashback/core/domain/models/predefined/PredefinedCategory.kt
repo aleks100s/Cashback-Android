@@ -47,5 +47,6 @@ enum class PredefinedCategory {
     BURGER_KING,
     GAS_STATION,
     COMMUNAL_SERVICES,
-    ACCESSORIES;
+    ACCESSORIES,
+    SBER;
 }

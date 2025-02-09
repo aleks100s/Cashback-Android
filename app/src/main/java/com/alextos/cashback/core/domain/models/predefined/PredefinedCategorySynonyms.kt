@@ -86,4 +86,5 @@ val PredefinedCategory.synonyms: List<String>
         PredefinedCategory.GAS_STATION -> listOf("Топливо", "Автозаправки", "АЗС", "Бензин")
         PredefinedCategory.COMMUNAL_SERVICES -> listOf("ЖКУ")
         PredefinedCategory.ACCESSORIES -> emptyList()
+        PredefinedCategory.SBER -> listOf("Сбербанк", "Самокат", "Okko", "Звук", "Купер")
     }
