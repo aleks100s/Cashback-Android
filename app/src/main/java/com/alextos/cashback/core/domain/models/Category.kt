@@ -9,7 +9,9 @@ data class Category(
     val emoji: String,
     val synonyms: String?,
     val priority: Int,
-    val isArchived: Boolean
+    val isArchived: Boolean,
+    val info: String?,
+    val isNative: Boolean
 )
 
 fun generateMockCategory(): Category {
@@ -25,6 +27,8 @@ fun generateMockCategory(): Category {
         emoji = emojis[index],
         synonyms = synonymsList[index],
         priority = Random.nextInt(1, 101), // Генерируем случайный приоритет от 1 до 100
-        isArchived = false
+        isArchived = false,
+        info = null,
+        isNative = true
     )
 }
