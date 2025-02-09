@@ -10,7 +10,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
@@ -40,19 +44,20 @@ fun CardDetailScreen(
 
     Screen(
         modifier = modifier,
-        title = state.card?.name ?: ""
+        title = state.card?.name ?: "",
+        floatingActionButton = {
+            FloatingActionButton(onClick = {
+                onAddCashback()
+            }) {
+                Icon(Icons.Filled.Add, stringResource(R.string.card_detail_add_cashback))
+            }
+        }
     ) {
         CardDetailView(
             modifier = it,
-            state = state
-        ) { action ->
-            when (action) {
-                is CardDetailAction.AddCashback -> {
-                    onAddCashback()
-                }
-                else -> viewModel.onAction(action)
-            }
-        }
+            state = state,
+            onAction = viewModel::onAction
+        )
     }
     state.cashbackToDelete?.let {
         Dialog(
