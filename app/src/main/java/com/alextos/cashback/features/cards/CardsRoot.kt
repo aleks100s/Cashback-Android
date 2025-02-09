@@ -3,10 +3,6 @@ package com.alextos.cashback.features.cards
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -16,6 +12,7 @@ import androidx.navigation.toRoute
 import com.alextos.cashback.features.cards.presentation.add_cashback.AddCashbackScreen
 import com.alextos.cashback.features.cards.presentation.card_detail.CardDetailScreen
 import com.alextos.cashback.features.cards.presentation.cards_list.CardsListScreen
+import com.alextos.cashback.features.category.CategoryRoot
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,21 +41,29 @@ fun CardsRoot(modifier: Modifier = Modifier) {
                 val args = navBackStackEntry.toRoute<CardsRoute.CardDetail>()
                 val id = args.cardId
 
-                var isAddCashbackSheetShown by remember { mutableStateOf(false) }
-
                 CardDetailScreen(viewModel = koinViewModel()) {
-                    isAddCashbackSheetShown = true
+                    navController.navigate(CardsRoute.AddCashback(id))
                 }
+            }
 
-                if (isAddCashbackSheetShown) {
-                    ModalBottomSheet(onDismissRequest = {
-                        isAddCashbackSheetShown = false
-                    }) {
-                        AddCashbackScreen(viewModel = koinViewModel()) {
-
+            composable<CardsRoute.AddCashback> {
+                ModalBottomSheet(onDismissRequest = {
+                    navController.popBackStack()
+                }) {
+                    AddCashbackScreen(
+                        viewModel = koinViewModel(),
+                        selectCategory = {
+                            navController.navigate(CardsRoute.SelectCategory)
+                        },
+                        onSave = {
+                            navController.popBackStack()
                         }
-                    }
+                    )
                 }
+            }
+
+            composable<CardsRoute.SelectCategory> {
+                CategoryRoot()
             }
         }
     }

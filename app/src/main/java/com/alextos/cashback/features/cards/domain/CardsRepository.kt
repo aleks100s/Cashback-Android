@@ -9,5 +9,6 @@ interface CardsRepository {
     suspend fun createOrUpdate(card: Card)
     fun getCardFlow(id: String): Flow<Card?>
     suspend fun getCard(id: String): Card?
-    suspend fun delete(cashback: Cashback, cardId: String)
+    suspend fun deleteCashback(cashback: Cashback, cardId: String)
+    suspend fun createCashback(cashback: Cashback, cardId: String)
 }

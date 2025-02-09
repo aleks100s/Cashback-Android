@@ -11,4 +11,10 @@ sealed interface CardsRoute {
 
     @Serializable
     data class CardDetail(val cardId: String)
+
+    @Serializable
+    data class AddCashback(val cardId: String)
+
+    @Serializable
+    data object SelectCategory
 }

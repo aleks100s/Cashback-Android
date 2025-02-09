@@ -32,4 +32,7 @@
     <string name="add_cashback_select_category">Выбрать категорию</string>
     <string name="add_cashback_percent">Процент кэшбэка</string>
     <string name="add_cashback_title">Добавить кэшбэк</string>
+    <string name="category_list_add_new_category">Добавить свою категорию</string>
+    <string name="category_list_no_search_results">Категории не найдены. Попробуйте изменить запрос или добавьте свою категорию</string>
+    <string name="category_list_title">Категории кэшбэка</string>
 </resources>

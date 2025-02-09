@@ -2,7 +2,7 @@ package com.alextos.cashback.features.cards.domain.use_cases
 
 import com.alextos.cashback.core.domain.models.Card
 
-class FilterUseCase {
+class FilterCardsUseCase {
     fun execute(cards: List<Card>, query: String): List<Card> {
         val query = query.lowercase()
         return cards.filter { card ->

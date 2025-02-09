@@ -38,8 +38,12 @@ class CardsRepositoryImpl(
         }
     }
 
-    override suspend fun delete(cashback: Cashback, cardId: String) {
+    override suspend fun deleteCashback(cashback: Cashback, cardId: String) {
         cashbackDao.delete(cashback.toEntity(cardId))
+    }
+
+    override suspend fun createCashback(cashback: Cashback, cardId: String) {
+        cashbackDao.insert(cashback.toEntity(cardId))
     }
 
     private suspend fun constructCard(entity: CardEntity): Card {

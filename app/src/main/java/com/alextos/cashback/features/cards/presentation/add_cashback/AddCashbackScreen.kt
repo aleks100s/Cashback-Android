@@ -25,11 +25,19 @@ import com.alextos.cashback.core.presentation.views.SectionView
 @Composable
 fun AddCashbackScreen(
     viewModel: AddCashbackViewModel,
-    selectCategory: () -> Unit
+    selectCategory: () -> Unit,
+    onSave: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    AddCashbackView(state = state, onAction = viewModel::onAction)
+    AddCashbackView(state = state, onAction = {
+        when (it) {
+            is AddCashbackAction.SaveCashback -> onSave()
+            is AddCashbackAction.SelectCategory -> selectCategory()
+            else -> {}
+        }
+        viewModel.onAction(it)
+    })
 }
 
 @Composable

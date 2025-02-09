@@ -6,7 +6,7 @@ import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.domain.services.ToastService
 import com.alextos.cashback.features.cards.domain.CardsRepository
-import com.alextos.cashback.features.cards.domain.use_cases.FilterUseCase
+import com.alextos.cashback.features.cards.domain.use_cases.FilterCardsUseCase
 import com.alextos.cashback.util.UiText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 class CardsListViewModel(
     private val repository: CardsRepository,
-    private val filterUseCase: FilterUseCase,
+    private val filterUseCase: FilterCardsUseCase,
     private val toastService: ToastService
 ): ViewModel() {
     private val _state = MutableStateFlow(CardsListState())

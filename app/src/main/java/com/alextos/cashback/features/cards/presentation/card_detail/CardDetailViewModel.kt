@@ -48,7 +48,7 @@ class CardDetailViewModel(
             is CardDetailAction.DeleteCashback -> {
                 _state.update { it.copy(cashbackToDelete = null) }
                 viewModelScope.launch(Dispatchers.IO) {
-                    repository.delete(action.cashback, cardId)
+                    repository.deleteCashback(action.cashback, cardId)
                     repository.getCard(cardId)?.let { card ->
                         _state.update { it.copy(card = card) }
                         viewModelScope.launch(Dispatchers.Main) {
