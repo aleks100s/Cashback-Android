@@ -51,7 +51,6 @@ private fun CategoryListView(
 ) {
     Column(
         modifier = modifier.padding(horizontal = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         SearchBar(
             value = state.searchQuery,

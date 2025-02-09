@@ -40,9 +40,7 @@ class AddCashbackViewModel(
 
         viewModelScope.launch(Dispatchers.IO) {
             categoryMediator.selectedCategory.collect { category ->
-                category?.let {
-                    onAction(AddCashbackAction.CategorySelected(it))
-                }
+                onAction(AddCashbackAction.CategorySelected(category))
             }
         }
     }
@@ -68,6 +66,9 @@ class AddCashbackViewModel(
                     val cashback = Cashback(category = category, percent = state.value.percent)
                     viewModelScope.launch(Dispatchers.IO) {
                         cardsRepository.createCashback(cashback = cashback, cardId = cardId)
+                        state.value.card?.let {
+                            cardsRepository.createOrUpdate(it)
+                        }
                     }
                     toastService.showToast(UiText.StringResourceId(R.string.add_cashback_added))
                 }

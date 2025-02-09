@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.alextos.cashback.features.category.CategoryMediator
 import com.alextos.cashback.features.category.domain.CategoryRepository
 import com.alextos.cashback.features.category.domain.FilterCategoryUseCase
+import com.alextos.cashback.features.category.domain.IncreaseCategoryPriorityUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,6 +14,7 @@ import kotlinx.coroutines.launch
 
 class CategoryListViewModel(
     private val filterUseCase: FilterCategoryUseCase,
+    private val increaseCategoryPriorityUseCase: IncreaseCategoryPriorityUseCase,
     private val categoryRepository: CategoryRepository,
     private val categoryMediator: CategoryMediator
 ): ViewModel() {
@@ -47,6 +49,7 @@ class CategoryListViewModel(
             is CategoryListAction.SelectCategory -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     categoryMediator.setSelectedCategory(action.category)
+                    increaseCategoryPriorityUseCase.execute(action.category)
                 }
             }
             is CategoryListAction.CreateCategory -> {}

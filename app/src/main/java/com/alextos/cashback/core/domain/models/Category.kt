@@ -12,48 +12,11 @@ data class Category(
     val name: String,
     val emoji: String,
     val synonyms: String?,
-    val priority: Int,
+    var priority: Int,
     val isArchived: Boolean,
     val info: String?,
     val isNative: Boolean
-): ListElement, Parcelable {
-    constructor(parcel: Parcel) : this(
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString(),
-        parcel.readInt(),
-        parcel.readByte() != 0.toByte(),
-        parcel.readString(),
-        parcel.readByte() != 0.toByte()
-    ) {
-    }
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(id)
-        parcel.writeString(name)
-        parcel.writeString(emoji)
-        parcel.writeString(synonyms)
-        parcel.writeInt(priority)
-        parcel.writeByte(if (isArchived) 1 else 0)
-        parcel.writeString(info)
-        parcel.writeByte(if (isNative) 1 else 0)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<Category> {
-        override fun createFromParcel(parcel: Parcel): Category {
-            return Category(parcel)
-        }
-
-        override fun newArray(size: Int): Array<Category?> {
-            return arrayOfNulls(size)
-        }
-    }
-}
+): ListElement
 
 fun generateMockCategory(): Category {
     val names = listOf("Books", "Music", "Cinema", "Fitness", "Pharmacy", "Electronics", "Restaurants")

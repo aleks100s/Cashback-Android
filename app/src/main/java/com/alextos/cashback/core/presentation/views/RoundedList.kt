@@ -29,6 +29,10 @@ fun <Element: ListElement> RoundedList(
     onClick: (Element) -> Unit
 ) {
     LazyColumn(modifier = modifier) {
+        item {
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+
         items(items = list, key = { it.id }) { item ->
             val topCornersShape = if (item == list.firstOrNull()) {
                 RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
@@ -53,9 +57,11 @@ fun <Element: ListElement> RoundedList(
 
             if (list.lastOrNull() != item) {
                 HorizontalDivider()
-            } else {
-                Spacer(modifier = Modifier.height(16.dp))
             }
+        }
+
+        item {
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }
