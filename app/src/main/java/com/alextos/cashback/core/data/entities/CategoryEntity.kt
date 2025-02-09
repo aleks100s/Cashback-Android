@@ -11,5 +11,7 @@ data class CategoryEntity(
     val emoji: String,
     val synonyms: String?,
     val priority: Int,
-    val isArchived: Boolean
+    val isArchived: Boolean,
+    val info: String?,
+    val isNative: Boolean
 )

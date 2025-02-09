@@ -11,7 +11,9 @@ fun Category.toEntity(): CategoryEntity {
         emoji = emoji,
         synonyms = synonyms,
         priority = priority,
-        isArchived = isArchived
+        isArchived = isArchived,
+        info = info,
+        isNative = isNative
     )
 }
 
@@ -22,6 +24,8 @@ fun CategoryEntity.toDomain(): Category {
         emoji = emoji,
         synonyms = synonyms,
         priority = priority,
-        isArchived = isArchived
+        isArchived = isArchived,
+        info = info,
+        isNative = isNative
     )
 }
