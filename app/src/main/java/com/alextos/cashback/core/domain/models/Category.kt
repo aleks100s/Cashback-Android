@@ -1,9 +1,6 @@
 package com.alextos.cashback.core.domain.models
 
-import android.os.Parcel
-import android.os.Parcelable
 import com.alextos.cashback.core.presentation.views.ListElement
-import kotlinx.serialization.Serializable
 import java.util.UUID
 import kotlin.random.Random
 

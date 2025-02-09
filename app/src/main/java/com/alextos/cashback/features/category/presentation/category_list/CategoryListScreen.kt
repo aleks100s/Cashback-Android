@@ -49,17 +49,21 @@ private fun CategoryListView(
     state: CategoryListState,
     onAction: (CategoryListAction) -> Unit
 ) {
-    Column(
+    RoundedList(
         modifier = modifier.padding(horizontal = 16.dp),
-    ) {
-        SearchBar(
-            value = state.searchQuery,
-            placeholder = stringResource(R.string.category_list_placeholder)
-        ) {
-            onAction(CategoryListAction.SearchQueryChanged(it))
-        }
-
-        if (state.filteredCategories.isEmpty()) {
+        list = state.filteredCategories,
+        itemView = { modifier, category ->
+            CategoryItemView(modifier = modifier, category = category)
+        },
+        stickyHeader = {
+            SearchBar(
+                value = state.searchQuery,
+                placeholder = stringResource(R.string.category_list_placeholder)
+            ) {
+                onAction(CategoryListAction.SearchQueryChanged(it))
+            }
+        },
+        emptyView = {
             Column(
                 modifier = modifier,
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -73,16 +77,9 @@ private fun CategoryListView(
                     Text(text = stringResource(R.string.category_list_add_new_category))
                 }
             }
-        } else {
-            RoundedList(
-                list = state.filteredCategories,
-                itemView = { modifier, category ->
-                    CategoryItemView(modifier = modifier, category = category)
-                },
-                onClick = {
-                    onAction(CategoryListAction.SelectCategory(it))
-                }
-            )
+        },
+        onClick = {
+            onAction(CategoryListAction.SelectCategory(it))
         }
-    }
+    )
 }
