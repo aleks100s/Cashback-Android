@@ -8,8 +8,8 @@ import java.util.UUID
 
 fun Cashback.toEntity(cardId: String): CashbackEntity {
     return CashbackEntity(
-        id = id.toString(),
-        categoryId = category.id.toString(),
+        id = id,
+        categoryId = category.id,
         percent = percent,
         cardId = cardId
     )
@@ -17,7 +17,7 @@ fun Cashback.toEntity(cardId: String): CashbackEntity {
 
 fun CashbackWithCategory.toDomain(): Cashback {
     return Cashback(
-        id = UUID.fromString(cashbackEntity.id),
+        id = cashbackEntity.id,
         category = categoryEntity.toDomain(),
         percent = cashbackEntity.percent
     )

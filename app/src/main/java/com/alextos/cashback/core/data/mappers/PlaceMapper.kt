@@ -7,16 +7,16 @@ import java.util.UUID
 
 fun Place.toEntity(): PlaceEntity {
     return PlaceEntity(
-        id = id.toString(),
+        id = id,
         name = name,
-        categoryId = category.id.toString(),
+        categoryId = category.id,
         isFavourite = isFavourite
     )
 }
 
 fun PlaceWithCategory.toDomain(): Place {
     return Place(
-        id = UUID.fromString(place.id),
+        id = place.id,
         name = place.name,
         category = category.toDomain(),
         isFavourite = place.isFavourite

@@ -9,7 +9,7 @@ import java.util.UUID
 
 fun Payment.toEntity(): PaymentEntity {
     return PaymentEntity(
-        id = id.toString(),
+        id = id,
         amount = amount,
         cardId = card?.id.toString(),
         date = date.toEpochDay()
@@ -18,7 +18,7 @@ fun Payment.toEntity(): PaymentEntity {
 
 fun PaymentWithCard.toDomain(cashback: List<Cashback>): Payment {
     return Payment(
-        id = UUID.fromString(payment.id),
+        id = payment.id,
         amount = payment.amount,
         card = card.toDomain(cashback),
         date = LocalDate.ofEpochDay(payment.date)

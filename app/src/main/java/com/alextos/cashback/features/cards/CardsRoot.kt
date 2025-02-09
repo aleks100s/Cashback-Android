@@ -28,11 +28,12 @@ fun CardsRoot(modifier: Modifier = Modifier) {
         navigation<CardsRoute.CardsGraph>(
             startDestination = CardsRoute.CardsList
         ) {
+
             composable<CardsRoute.CardsList> {
                 CardsListScreen(
                     viewModel = koinViewModel(),
                     onCardSelect = { card ->
-                        navController.navigate(CardsRoute.CardDetail(card.id.toString()))
+                        navController.navigate(CardsRoute.CardDetail(card.id))
                     }
                 )
             }
@@ -63,7 +64,9 @@ fun CardsRoot(modifier: Modifier = Modifier) {
             }
 
             composable<CardsRoute.SelectCategory> {
-                CategoryRoot()
+                CategoryRoot {
+                    navController.popBackStack()
+                }
             }
         }
     }

@@ -5,7 +5,7 @@ import java.util.UUID
 import kotlin.random.Random
 
 data class Card(
-    override val id: UUID = UUID.randomUUID(),
+    val id: String = UUID.randomUUID().toString(),
     var name: String,
     val cashback: List<Cashback> = listOf(),
     var color: String? = null,
@@ -13,7 +13,7 @@ data class Card(
     var isFavourite: Boolean = false,
     var currency: String = "Рубли",
     var currencySymbol: String = "₽"
-): ListElement {
+) {
     override fun toString(): String {
         if (isEmpty()) {
             return "Нет кэшбэка"
@@ -37,7 +37,7 @@ fun generateMockCard(isEmpty: Boolean = false): Card {
     val (currency, symbol) = currencies.random() // Выбираем случайную валюту
 
     return Card(
-        id = UUID.randomUUID(),
+        id = UUID.randomUUID().toString(),
         name = cardNames.random(), // Случайное название карты
         cashback = if (isEmpty) emptyList() else List(Random.nextInt(3, 5)) { generateMockCashback() },
         color = colors.random(), // Случайный цвет или null

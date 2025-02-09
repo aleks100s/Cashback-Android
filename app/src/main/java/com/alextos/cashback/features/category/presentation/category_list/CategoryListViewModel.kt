@@ -2,6 +2,7 @@ package com.alextos.cashback.features.category.presentation.category_list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.alextos.cashback.features.category.CategoryMediator
 import com.alextos.cashback.features.category.domain.CategoryRepository
 import com.alextos.cashback.features.category.domain.FilterCategoryUseCase
 import kotlinx.coroutines.Dispatchers
@@ -12,7 +13,8 @@ import kotlinx.coroutines.launch
 
 class CategoryListViewModel(
     private val filterUseCase: FilterCategoryUseCase,
-    private val categoryRepository: CategoryRepository
+    private val categoryRepository: CategoryRepository,
+    private val categoryMediator: CategoryMediator
 ): ViewModel() {
     private val _state = MutableStateFlow(CategoryListState())
     val state = _state.asStateFlow()
@@ -42,8 +44,12 @@ class CategoryListViewModel(
                     )
                 }
             }
+            is CategoryListAction.SelectCategory -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    categoryMediator.setSelectedCategory(action.category)
+                }
+            }
             is CategoryListAction.CreateCategory -> {}
-            is CategoryListAction.SelectCategory -> {}
         }
     }
 }

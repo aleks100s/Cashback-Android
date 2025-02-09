@@ -1,5 +1,7 @@
 package com.alextos.cashback.features.category.di
 
+import com.alextos.cashback.features.category.CategoryMediator
+import com.alextos.cashback.features.category.CategoryMediatorImpl
 import com.alextos.cashback.features.category.data.CategoryRepositoryImpl
 import com.alextos.cashback.features.category.domain.CategoryRepository
 import com.alextos.cashback.features.category.domain.FilterCategoryUseCase
@@ -11,4 +13,5 @@ val categoryModule = module {
     viewModelOf(::CategoryListViewModel)
     factory<CategoryRepository> { CategoryRepositoryImpl(get()) }
     factory { FilterCategoryUseCase() }
+    single<CategoryMediator> { CategoryMediatorImpl() }
 }

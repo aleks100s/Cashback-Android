@@ -26,7 +26,6 @@ class DatabaseSeeder(private val context: Context) : RoomDatabase.Callback() {
         val categories = PredefinedCategory.entries
             .map { predefinedCategory ->
                 Category(
-                    id = UUID.randomUUID(),
                     name = predefinedCategory.localization,
                     emoji = predefinedCategory.emoji,
                     synonyms = predefinedCategory.synonyms.joinToString(","),

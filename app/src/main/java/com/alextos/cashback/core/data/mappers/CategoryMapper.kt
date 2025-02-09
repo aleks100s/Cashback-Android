@@ -6,7 +6,7 @@ import java.util.UUID
 
 fun Category.toEntity(): CategoryEntity {
     return CategoryEntity(
-        id = id.toString(),
+        id = id,
         name = name,
         emoji = emoji,
         synonyms = synonyms,
@@ -19,7 +19,7 @@ fun Category.toEntity(): CategoryEntity {
 
 fun CategoryEntity.toDomain(): Category {
     return Category(
-        id = UUID.fromString(id),
+        id = id,
         name = name,
         emoji = emoji,
         synonyms = synonyms,

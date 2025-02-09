@@ -12,7 +12,7 @@ import com.alextos.cashback.features.category.presentation.category_list.Categor
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun CategoryRoot(modifier: Modifier = Modifier) {
+fun CategoryRoot(modifier: Modifier = Modifier, onSelectCategory: () -> Unit) {
     val navController = rememberNavController()
 
     NavHost(
@@ -24,9 +24,13 @@ fun CategoryRoot(modifier: Modifier = Modifier) {
             startDestination = CategoryRoute.CategoryList
         ) {
             composable<CategoryRoute.CategoryList> {
-                CategoryListScreen(viewModel = koinViewModel()) {
-                    navController.navigate(CategoryRoute.CreateCategory(it))
-                }
+                CategoryListScreen(
+                    viewModel = koinViewModel(),
+                    onSelectCategory = onSelectCategory,
+                    onCreateCategory = {
+                        navController.navigate(CategoryRoute.CreateCategory(it))
+                    }
+                )
             }
 
             composable<CategoryRoute.CreateCategory> {

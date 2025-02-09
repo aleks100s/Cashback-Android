@@ -7,7 +7,7 @@ import java.util.UUID
 
 fun Card.toEntity(): CardEntity {
     return CardEntity(
-        id = id.toString(),
+        id = id,
         name = name,
         color = color,
         isArchived = isArchived,
@@ -19,7 +19,7 @@ fun Card.toEntity(): CardEntity {
 
 fun CardEntity.toDomain(cashback: List<Cashback>): Card {
     return Card(
-        id = UUID.fromString(id),
+        id = id,
         name = name,
         cashback = cashback,
         color = color,

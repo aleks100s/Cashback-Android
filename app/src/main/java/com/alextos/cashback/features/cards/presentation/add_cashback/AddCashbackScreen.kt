@@ -30,13 +30,15 @@ fun AddCashbackScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+
     AddCashbackView(state = state, onAction = {
+        viewModel.onAction(it)
+
         when (it) {
             is AddCashbackAction.SaveCashback -> onSave()
             is AddCashbackAction.SelectCategory -> selectCategory()
             else -> {}
         }
-        viewModel.onAction(it)
     })
 }
 
@@ -92,7 +94,7 @@ private fun AddCashbackView(state: AddCashbackState, onAction: (AddCashbackActio
             onClick = {
                 onAction(AddCashbackAction.SaveCashback)
             },
-            enabled = state.isVaild()
+            enabled = state.isValid
         ) {
             Text(text = stringResource(R.string.common_save))
         }

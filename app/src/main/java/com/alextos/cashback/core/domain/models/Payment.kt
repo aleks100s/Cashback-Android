@@ -5,7 +5,7 @@ import java.util.UUID
 import kotlin.random.Random
 
 data class Payment(
-    val id: UUID,
+    val id: String = UUID.randomUUID().toString(),
     val amount: Int,
     val date: LocalDate,
     val card: Card?
@@ -13,7 +13,7 @@ data class Payment(
 
 fun generateMockPayment(card: Card? = null): Payment {
     return Payment(
-        id = UUID.randomUUID(),
+        id = UUID.randomUUID().toString(),
         amount = Random.nextInt(),
         date = LocalDate.now(),
         card = card ?: generateMockCard()

@@ -5,7 +5,7 @@ import java.util.UUID
 import kotlin.random.Random
 
 data class Cashback(
-    val id: UUID,
+    val id: String = UUID.randomUUID().toString(),
     val category: Category,
     val percent: Double
 ) {
@@ -32,7 +32,7 @@ data class Cashback(
 
 fun generateMockCashback(category: Category? = null): Cashback {
     return Cashback(
-        id = UUID.randomUUID(),
+        id = UUID.randomUUID().toString(),
         category = category ?: generateMockCategory(), // Генерируем случайную категорию
         percent = Random.nextDouble(0.01, 0.2) // Генерируем процент от 1.0 до 20.0
     )

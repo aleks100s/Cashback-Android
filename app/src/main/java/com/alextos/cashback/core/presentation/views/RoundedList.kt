@@ -16,10 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import java.util.UUID
 
 interface ListElement {
-    val id: UUID
+    val id: String
 }
 
 @Composable

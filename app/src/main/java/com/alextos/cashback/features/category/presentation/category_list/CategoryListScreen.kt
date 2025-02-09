@@ -22,19 +22,23 @@ import com.alextos.cashback.features.category.presentation.category_list.compone
 fun CategoryListScreen(
     modifier: Modifier = Modifier,
     viewModel: CategoryListViewModel,
+    onSelectCategory: () -> Unit,
     onCreateCategory: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     Screen(modifier = modifier, title = stringResource(R.string.category_list_title)) {
         CategoryListView(modifier = it, state = state) { action ->
+            viewModel.onAction(action)
             when (action) {
                 is CategoryListAction.CreateCategory -> {
                     onCreateCategory(action.name)
                 }
+                is CategoryListAction.SelectCategory -> {
+                    onSelectCategory()
+                }
                 else -> {}
             }
-            viewModel.onAction(action)
         }
     }
 }
@@ -45,32 +49,32 @@ private fun CategoryListView(
     state: CategoryListState,
     onAction: (CategoryListAction) -> Unit
 ) {
-    if (state.filteredCategories.isEmpty()) {
-        Column(
-            modifier = modifier,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top
+    Column(
+        modifier = modifier.padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        SearchBar(
+            value = state.searchQuery,
+            placeholder = stringResource(R.string.category_list_placeholder)
         ) {
-            Text(text = stringResource(R.string.category_list_no_search_results))
-
-            Button(onClick = {
-                onAction(CategoryListAction.CreateCategory(name = state.searchQuery))
-            }) {
-                Text(text = stringResource(R.string.category_list_add_new_category))
-            }
+            onAction(CategoryListAction.SearchQueryChanged(it))
         }
-    } else {
-        Column(
-            modifier = modifier.padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            SearchBar(
-                value = state.searchQuery,
-                placeholder = stringResource(R.string.category_list_placeholder)
-            ) {
-                onAction(CategoryListAction.SearchQueryChanged(it))
-            }
 
+        if (state.filteredCategories.isEmpty()) {
+            Column(
+                modifier = modifier,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Top
+            ) {
+                Text(text = stringResource(R.string.category_list_no_search_results))
+
+                Button(onClick = {
+                    onAction(CategoryListAction.CreateCategory(name = state.searchQuery))
+                }) {
+                    Text(text = stringResource(R.string.category_list_add_new_category))
+                }
+            }
+        } else {
             RoundedList(
                 list = state.filteredCategories,
                 itemView = { modifier, category ->

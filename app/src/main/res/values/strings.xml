@@ -22,7 +22,6 @@
     <string name="dialog_delete_cashback">Удалить кэшбэк?</string>
     <string name="dialog_cannot_undo">Это действие нельзя отменить</string>
     <string name="card_detail_no_cashback">Нет сохраненных кэшбэков</string>
-    <string name="card_detail_cashback_added">Кэшбэк добавлен</string>
     <string name="card_detail_cashback_removed">Кэшбэк удален</string>
     <string name="add_card_sheet_title">Добавить новую карту</string>
     <string name="add_card_sheet_placeholder">Название карты</string>
@@ -33,6 +32,7 @@
     <string name="add_cashback_select_category">Выбрать категорию</string>
     <string name="add_cashback_percent">Процент кэшбэка</string>
     <string name="add_cashback_title">Добавить кэшбэк</string>
+    <string name="add_cashback_added">Кэшбэк добавлен</string>
     <string name="category_list_add_new_category">Добавить свою категорию</string>
     <string name="category_list_no_search_results">Категории не найдены. Попробуйте изменить запрос или добавьте свою категорию</string>
     <string name="category_list_title">Категории кэшбэка</string>
