@@ -11,6 +11,13 @@ import kotlinx.coroutines.flow.map
 class CategoryRepositoryImpl(
     private val categoryDao: CategoryDao
 ): CategoryRepository {
+    override fun getUnarchivedCategories(): Flow<List<Category>> {
+        return categoryDao.getAllUnarchived()
+            .map { list ->
+                list.map { it.toDomain() }
+            }
+    }
+
     override fun getAllCategories(): Flow<List<Category>> {
         return categoryDao.getAll().map { list ->
             list.map { it.toDomain() }

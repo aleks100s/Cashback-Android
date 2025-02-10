@@ -29,7 +29,7 @@ class CategoryListViewModel(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            categoryRepository.getAllCategories()
+            categoryRepository.getUnarchivedCategories()
                 .collect { list ->
                     _state.update { state ->
                         state.copy(

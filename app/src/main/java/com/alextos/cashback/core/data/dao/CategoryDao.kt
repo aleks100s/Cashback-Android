@@ -10,8 +10,11 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CategoryDao {
-    @Query("SELECT * FROM categories WHERE isArchived = 0 ORDER BY priority DESC, name ASC")
+    @Query("SELECT * FROM categories ORDER BY priority DESC, name ASC")
     fun getAll(): Flow<List<CategoryEntity>>
+
+    @Query("SELECT * FROM categories WHERE isArchived = 0 ORDER BY priority DESC, name ASC")
+    fun getAllUnarchived(): Flow<List<CategoryEntity>>
 
     @Upsert
     suspend fun upsert(categoryEntity: CategoryEntity)
