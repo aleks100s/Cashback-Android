@@ -7,8 +7,12 @@ class ValidateCashbackUseCase {
     fun execute(
         card: Card,
         percent: Double,
-        selectedCategory: Category?
+        selectedCategory: Category?,
+        initialCategory: Category?
     ): Boolean {
-        return percent > 0 && selectedCategory != null && !card.cashback.map { it.category }.contains(selectedCategory)
+        val cardHasSameCategory = card.cashback.map { it.category }.contains(selectedCategory)
+        return (!cardHasSameCategory || initialCategory == selectedCategory)
+                && percent > 0
+                && selectedCategory != null
     }
 }

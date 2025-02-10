@@ -77,7 +77,7 @@ class CashbackDetailViewModel(
                 .collect { state ->
                     state.card?.let { card ->
                         val percent = (state.percent.toDoubleOrNull() ?: 0.0) / 100
-                        val isValid = validateCashbackUseCase.execute(card, percent, state.selectedCategory)
+                        val isValid = validateCashbackUseCase.execute(card, percent, state.selectedCategory, cashback?.category)
                         _state.update { it.copy(isValid = isValid) }
                     }
                 }
@@ -92,23 +92,34 @@ class CashbackDetailViewModel(
                 }
             }
             is CashbackDetailAction.SaveCashbackDetail -> {
-                state.value.selectedCategory?.let { category ->
-                    val percent = (state.value.percent.toDoubleOrNull() ?: 0.0) / 100
-                    val cashback = this.cashback?.copy(
-                        percent = percent,
-                        category = category
-                    ) ?: Cashback(category = category, percent = percent)
-                    viewModelScope.launch(Dispatchers.IO) {
-                        cardsRepository.createCashback(cashback = cashback, cardId = cardId)
-                        state.value.card?.let {
-                            cardsRepository.createOrUpdate(it)
+                val selectedCategory = state.value.selectedCategory
+                val card = state.value.card
+                if (selectedCategory == null || card == null) {
+                    return
+                }
+
+                val percent = (state.value.percent.toDoubleOrNull() ?: 0.0) / 100
+                viewModelScope.launch(Dispatchers.IO) {
+                    this@CashbackDetailViewModel.cashback?.let { oldCashback ->
+                        viewModelScope.launch(Dispatchers.IO) {
+                            cardsRepository.deleteCashback(oldCashback, cardId)
                         }
                     }
-                    if (cashbackId != null) {
-                        toastService.showToast(UiText.StringResourceId(R.string.add_cashback_changed))
-                    } else {
-                        toastService.showToast(UiText.StringResourceId(R.string.add_cashback_added))
+
+                    val newCashback = Cashback(
+                        percent = percent,
+                        category = selectedCategory
+                    )
+                    cardsRepository.createCashback(newCashback, cardId)
+                    state.value.card?.let { card ->
+                        cardsRepository.createOrUpdate(card)
                     }
+                }
+
+                if (cashbackId != null) {
+                    toastService.showToast(UiText.StringResourceId(R.string.add_cashback_changed))
+                } else {
+                    toastService.showToast(UiText.StringResourceId(R.string.add_cashback_added))
                 }
             }
             is CashbackDetailAction.CategorySelected -> {
