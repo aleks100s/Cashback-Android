@@ -17,7 +17,7 @@ interface CategoryDao {
     fun getAllUnarchived(): Flow<List<CategoryEntity>>
 
     @Query("SELECT * FROM categories WHERE id = :categoryId ORDER BY priority DESC, name ASC LIMIT 1")
-    fun getCategory(categoryId: String): Flow<List<CategoryEntity>>
+    suspend fun getCategory(categoryId: String): List<CategoryEntity>
 
     @Upsert
     suspend fun upsert(categoryEntity: CategoryEntity)

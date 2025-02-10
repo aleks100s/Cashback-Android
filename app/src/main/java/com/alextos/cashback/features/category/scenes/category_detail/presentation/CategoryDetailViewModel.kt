@@ -34,13 +34,12 @@ class CategoryDetailViewModel(
             onAction(CategoryDetailAction.ChangeCategoryDetailName(name))
         } else if (categoryId != null) {
            viewModelScope.launch(Dispatchers.IO) {
-               repository.getCategory(categoryId)
-                   .collect { category ->
-                       _state.update { state ->
-                           state.copy(categoryName = category.name, emoji = category.emoji, description = category.info ?: "")
-                       }
-                       this@CategoryDetailViewModel.category = category
+               repository.getCategory(categoryId)?.let { category ->
+                   _state.update { state ->
+                       state.copy(categoryName = category.name, emoji = category.emoji, description = category.info ?: "")
                    }
+                   this@CategoryDetailViewModel.category = category
+               }
            }
         }
 
