@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.alextos.cashback.features.cards.presentation.add_cashback.AddCashbackScreen
+import com.alextos.cashback.features.cards.presentation.cashback_detail.CashbackDetailScreen
 import com.alextos.cashback.features.cards.presentation.card_detail.CardDetailScreen
 import com.alextos.cashback.features.cards.presentation.cards_list.CardsListScreen
 import com.alextos.cashback.features.category.CategoryRoot
@@ -42,16 +42,16 @@ fun CardsRoot(modifier: Modifier = Modifier) {
                 CardDetailScreen(
                     viewModel = koinViewModel(),
                     onAddCashback = {
-                        navController.navigate(CardsRoute.AddCashback(id, null))
+                        navController.navigate(CardsRoute.CashbackDetail(id, null))
                     },
                     onEditCashback = {
-                        navController.navigate(CardsRoute.AddCashback(id, it))
+                        navController.navigate(CardsRoute.CashbackDetail(id, it))
                     }
                 )
             }
 
-            composable<CardsRoute.AddCashback> {
-                AddCashbackScreen(
+            composable<CardsRoute.CashbackDetail> {
+                CashbackDetailScreen(
                     viewModel = koinViewModel(),
                     selectCategory = {
                         navController.navigate(CardsRoute.SelectCategory)

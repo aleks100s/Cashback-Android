@@ -13,7 +13,7 @@ sealed interface CardsRoute {
     data class CardDetail(val cardId: String)
 
     @Serializable
-    data class AddCashback(val cardId: String, val cashbackId: String?)
+    data class CashbackDetail(val cardId: String, val cashbackId: String?)
 
     @Serializable
     data object SelectCategory

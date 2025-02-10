@@ -1,4 +1,4 @@
-package com.alextos.cashback.features.cards.presentation.add_cashback
+package com.alextos.cashback.features.cards.presentation.cashback_detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -20,19 +20,19 @@ import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class AddCashbackViewModel(
+class CashbackDetailViewModel(
     savedStateHandle: SavedStateHandle,
     private val validateCashbackUseCase: ValidateCashbackUseCase,
     private val cardsRepository: CardsRepository,
     private val categoryMediator: CategoryMediator,
     private val toastService: ToastService
 ): ViewModel() {
-    private val cardId = savedStateHandle.toRoute<CardsRoute.AddCashback>().cardId
-    private val cashbackId = savedStateHandle.toRoute<CardsRoute.AddCashback>().cashbackId
+    private val cardId = savedStateHandle.toRoute<CardsRoute.CashbackDetail>().cardId
+    private val cashbackId = savedStateHandle.toRoute<CardsRoute.CashbackDetail>().cashbackId
 
     private var cashback: Cashback? = null
 
-    private val _state = MutableStateFlow(AddCashbackState())
+    private val _state = MutableStateFlow(CashbackDetailState())
     val state = _state.asStateFlow()
 
     init {
@@ -44,7 +44,7 @@ class AddCashbackViewModel(
 
                     cashbackId?.let { cashbackId ->
                         cardsRepository.getCashback(cashbackId)?.let { cashback ->
-                            this@AddCashbackViewModel.cashback = cashback
+                            this@CashbackDetailViewModel.cashback = cashback
                             _state.update { state ->
                                 state.copy(
                                     card = card,
@@ -65,7 +65,7 @@ class AddCashbackViewModel(
 
         viewModelScope.launch(Dispatchers.IO) {
             categoryMediator.selectedCategory.collect { category ->
-                onAction(AddCashbackAction.CategorySelected(category))
+                onAction(CashbackDetailAction.CategorySelected(category))
             }
         }
 
@@ -84,14 +84,14 @@ class AddCashbackViewModel(
         }
     }
 
-    fun onAction(action: AddCashbackAction) {
+    fun onAction(action: CashbackDetailAction) {
         when(action) {
-            is AddCashbackAction.ChangePercent -> {
+            is CashbackDetailAction.ChangePercent -> {
                 _state.update { state ->
                     state.copy(percent = action.value)
                 }
             }
-            is AddCashbackAction.SaveCashback -> {
+            is CashbackDetailAction.SaveCashbackDetail -> {
                 state.value.selectedCategory?.let { category ->
                     val percent = (state.value.percent.toDoubleOrNull() ?: 0.0) / 100
                     val cashback = this.cashback?.copy(
@@ -111,12 +111,12 @@ class AddCashbackViewModel(
                     }
                 }
             }
-            is AddCashbackAction.CategorySelected -> {
+            is CashbackDetailAction.CategorySelected -> {
                 _state.update { state ->
                     state.copy(selectedCategory = action.category)
                 }
             }
-            is AddCashbackAction.SelectCategory -> {}
+            is CashbackDetailAction.SelectCategory -> {}
         }
     }
 }

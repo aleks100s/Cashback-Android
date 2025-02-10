@@ -1,4 +1,4 @@
-package com.alextos.cashback.features.cards.presentation.add_cashback
+package com.alextos.cashback.features.cards.presentation.cashback_detail
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,9 +25,9 @@ import com.alextos.cashback.util.views.CustomWideButton
 import com.alextos.cashback.util.views.SectionView
 
 @Composable
-fun AddCashbackScreen(
+fun CashbackDetailScreen(
     modifier: Modifier = Modifier,
-    viewModel: AddCashbackViewModel,
+    viewModel: CashbackDetailViewModel,
     selectCategory: () -> Unit,
     onSave: () -> Unit
 ) {
@@ -41,8 +41,8 @@ fun AddCashbackScreen(
             viewModel.onAction(action)
 
             when (action) {
-                is AddCashbackAction.SaveCashback -> onSave()
-                is AddCashbackAction.SelectCategory -> selectCategory()
+                is CashbackDetailAction.SaveCashbackDetail -> onSave()
+                is CashbackDetailAction.SelectCategory -> selectCategory()
                 else -> {}
             }
         })
@@ -52,8 +52,8 @@ fun AddCashbackScreen(
 @Composable
 private fun AddCashbackView(
     modifier: Modifier = Modifier,
-    state: AddCashbackState,
-    onAction: (AddCashbackAction) -> Unit
+    state: CashbackDetailState,
+    onAction: (CashbackDetailAction) -> Unit
 ) {
     Column(
         modifier = modifier.padding(horizontal = 16.dp),
@@ -61,7 +61,7 @@ private fun AddCashbackView(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         CustomWideButton(title = state.selectedCategory?.name ?: stringResource(R.string.add_cashback_select_category)) {
-            onAction(AddCashbackAction.SelectCategory)
+            onAction(CashbackDetailAction.SelectCategory)
         }
 
         SectionView(title = stringResource(R.string.add_cashback_percent)) {
@@ -72,7 +72,7 @@ private fun AddCashbackView(
                         .fillMaxWidth(),
                     value = state.percent,
                     onValueChange = {
-                        onAction(AddCashbackAction.ChangePercent(it))
+                        onAction(CashbackDetailAction.ChangePercent(it))
                     },
                     label = {
                         Text(text = stringResource(R.string.add_cashback_percent))
@@ -90,7 +90,7 @@ private fun AddCashbackView(
                 ) {
                     state.percentOptions.forEach {
                         CustomButton("$it%") {
-                            onAction(AddCashbackAction.ChangePercent(it.toString()))
+                            onAction(CashbackDetailAction.ChangePercent(it.toString()))
                         }
                     }
                 }
@@ -99,7 +99,7 @@ private fun AddCashbackView(
 
         Button(
             onClick = {
-                onAction(AddCashbackAction.SaveCashback)
+                onAction(CashbackDetailAction.SaveCashbackDetail)
             },
             enabled = state.isValid
         ) {
@@ -111,5 +111,5 @@ private fun AddCashbackView(
 @Preview
 @Composable
 fun AddCashbackPreview() {
-    AddCashbackView(state = AddCashbackState()) {}
+    AddCashbackView(state = CashbackDetailState()) {}
 }
