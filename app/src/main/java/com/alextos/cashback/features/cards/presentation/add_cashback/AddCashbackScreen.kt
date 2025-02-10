@@ -35,7 +35,7 @@ fun AddCashbackScreen(
 
     Screen(
         modifier = modifier,
-        title = stringResource(R.string.add_cashback_title)
+        title = state.title.asString()
     ) {
         AddCashbackView(modifier = it, state = state, onAction = { action ->
             viewModel.onAction(action)

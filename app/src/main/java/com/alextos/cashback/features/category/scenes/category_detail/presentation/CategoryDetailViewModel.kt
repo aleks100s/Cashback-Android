@@ -1,13 +1,17 @@
 package com.alextos.cashback.features.category.scenes.category_detail.presentation
 
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.Category
+import com.alextos.cashback.core.domain.services.ToastService
 import com.alextos.cashback.features.category.CategoryRoute
 import com.alextos.cashback.features.category.scenes.category_list.domain.CategoryRepository
 import com.alextos.cashback.features.category.scenes.category_detail.domain.ValidateCategoryUseCase
+import com.alextos.cashback.util.UiText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,10 +23,11 @@ import kotlinx.coroutines.launch
 class CategoryDetailViewModel(
     savedStateHandle: SavedStateHandle,
     private val repository: CategoryRepository,
-    private val validateCategoryUseCase: ValidateCategoryUseCase
+    private val validateCategoryUseCase: ValidateCategoryUseCase,
+    private val toastService: ToastService
 ): ViewModel() {
-    private val categoryId = savedStateHandle.toRoute<CategoryRoute.CreateCategory>().categoryId
-    private val name = savedStateHandle.toRoute<CategoryRoute.CreateCategory>().name
+    private val categoryId = savedStateHandle.toRoute<CategoryRoute.CategoryDetail>().categoryId
+    private val name = savedStateHandle.toRoute<CategoryRoute.CategoryDetail>().name
 
     private val _state = MutableStateFlow(CategoryDetailState())
     val state = _state.asStateFlow()
@@ -31,9 +36,11 @@ class CategoryDetailViewModel(
 
     init {
         if (name != null) {
+            _state.update { it.copy(title = UiText.StringResourceId(R.string.category_detail_title)) }
             onAction(CategoryDetailAction.ChangeCategoryDetailName(name))
         } else if (categoryId != null) {
-           viewModelScope.launch(Dispatchers.IO) {
+            _state.update { it.copy(title = UiText.StringResourceId(R.string.category_detail_edit_title)) }
+            viewModelScope.launch(Dispatchers.IO) {
                repository.getCategory(categoryId)?.let { category ->
                    _state.update { state ->
                        state.copy(categoryName = category.name, emoji = category.emoji, description = category.info ?: "")
@@ -91,6 +98,11 @@ class CategoryDetailViewModel(
                         isNative = false
                     )
                     repository.createOrUpdate(category)
+                    if (categoryId != null) {
+                        toastService.showToast(UiText.StringResourceId(R.string.category_detail_changeded))
+                    } else {
+                        toastService.showToast(UiText.StringResourceId(R.string.category_detail_added))
+                    }
                 }
             }
         }

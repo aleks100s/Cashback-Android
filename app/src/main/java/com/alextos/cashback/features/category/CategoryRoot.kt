@@ -28,15 +28,15 @@ fun CategoryRoot(modifier: Modifier = Modifier, onSelectCategory: () -> Unit) {
                     viewModel = koinViewModel(),
                     onSelectCategory = onSelectCategory,
                     onCreateCategory = {
-                        navController.navigate(CategoryRoute.CreateCategory(it, null))
+                        navController.navigate(CategoryRoute.CategoryDetail(it, null))
                     },
                     onEditCategory = {
-                        navController.navigate(CategoryRoute.CreateCategory(null, it))
+                        navController.navigate(CategoryRoute.CategoryDetail(null, it))
                     }
                 )
             }
 
-            composable<CategoryRoute.CreateCategory> {
+            composable<CategoryRoute.CategoryDetail> {
                 CategoryDetailScreen(viewModel = koinViewModel()) {
                     navController.popBackStack()
                 }

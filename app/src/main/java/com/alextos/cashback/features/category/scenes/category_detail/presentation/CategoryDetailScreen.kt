@@ -27,7 +27,7 @@ fun CategoryDetailScreen(
 
     Screen(
         modifier = modifier,
-        title = stringResource(R.string.category_detail_title)
+        title = state.title.asString()
     ) {
         CategoryDetailView(modifier = it, state = state) { action ->
             viewModel.onAction(action)

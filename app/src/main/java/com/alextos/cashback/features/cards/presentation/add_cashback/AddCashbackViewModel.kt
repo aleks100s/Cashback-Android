@@ -36,25 +36,31 @@ class AddCashbackViewModel(
     val state = _state.asStateFlow()
 
     init {
-        cashbackId?.let { cashbackId ->
-            viewModelScope.launch(Dispatchers.IO) {
-                cardsRepository.getCashback(cashbackId)?.let { cashback ->
-                    this@AddCashbackViewModel.cashback = cashback
-                    cardsRepository.getCardFlow(cardId)
-                        .mapNotNull { it }
-                        .collect { card ->
-                            val isValid = validateCashbackUseCase.execute(card, cashback.percent, cashback.category)
+        viewModelScope.launch(Dispatchers.IO) {
+            cardsRepository.getCardFlow(cardId)
+                .mapNotNull { it }
+                .collect { card ->
+                    _state.update { it.copy(card = card) }
+
+                    cashbackId?.let { cashbackId ->
+                        cardsRepository.getCashback(cashbackId)?.let { cashback ->
+                            this@AddCashbackViewModel.cashback = cashback
                             _state.update { state ->
                                 state.copy(
                                     card = card,
                                     percent = (cashback.percent * 100).toString(),
                                     selectedCategory = cashback.category,
-                                    isValid = isValid
+                                    isValid = true,
+                                    title = UiText.StringResourceId(R.string.cashback_detail_edit_title)
                                 )
                             }
                         }
+                    } ?: run {
+                        _state.update {
+                            it.copy(title = UiText.StringResourceId(R.string.add_cashback_title))
+                        }
+                    }
                 }
-            }
         }
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -98,7 +104,11 @@ class AddCashbackViewModel(
                             cardsRepository.createOrUpdate(it)
                         }
                     }
-                    toastService.showToast(UiText.StringResourceId(R.string.add_cashback_added))
+                    if (cashbackId != null) {
+                        toastService.showToast(UiText.StringResourceId(R.string.add_cashback_changed))
+                    } else {
+                        toastService.showToast(UiText.StringResourceId(R.string.add_cashback_added))
+                    }
                 }
             }
             is AddCashbackAction.CategorySelected -> {

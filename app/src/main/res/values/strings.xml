@@ -32,7 +32,9 @@
     <string name="add_cashback_select_category">Выбрать категорию</string>
     <string name="add_cashback_percent">Процент кэшбэка</string>
     <string name="add_cashback_title">Добавить кэшбэк</string>
+    <string name="cashback_detail_edit_title">Редактировать кэшбэк</string>
     <string name="add_cashback_added">Кэшбэк добавлен</string>
+    <string name="add_cashback_changed">Кэшбэк изменен</string>
     <string name="category_list_add_new_category">Добавить свою категорию</string>
     <string name="category_list_no_search_results">Категории не найдены. Попробуйте изменить запрос или добавьте свою категорию</string>
     <string name="category_list_title">Категории кэшбэка</string>
@@ -50,4 +52,7 @@
     <string name="category_detail_emoji">Emoji</string>
     <string name="category_detail_description">Описание категории</string>
     <string name="category_detail_optional">Необязательно</string>
+    <string name="category_detail_edit_title">Редактировать категорию</string>
+    <string name="category_detail_added">Категория добавлена</string>
+    <string name="category_detail_changeded">Категория изменена</string>
 </resources>
