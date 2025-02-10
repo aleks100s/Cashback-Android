@@ -44,10 +44,10 @@
     <string name="category_list_delete_category">Удалить категорию</string>
     <string name="category_list_category_removed">Категория удалена</string>
     <string name="common_remove">Удалить</string>
-    <string name="create_category_title">Создать категорию</string>
+    <string name="category_detail_title">Создать категорию</string>
     <string name="category_list_create_category">Создать категорию</string>
-    <string name="create_category_name">Название категории</string>
-    <string name="create_category_emoji">Emoji</string>
-    <string name="create_category_description">Описание категории</string>
-    <string name="create_category_optional">Необязательно</string>
+    <string name="category_detail_name">Название категории</string>
+    <string name="category_detail_emoji">Emoji</string>
+    <string name="category_detail_description">Описание категории</string>
+    <string name="category_detail_optional">Необязательно</string>
 </resources>

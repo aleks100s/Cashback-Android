@@ -1,19 +1,14 @@
 package com.alextos.cashback.features.category.scenes.category_list.presentation
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -25,17 +20,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
-import com.alextos.cashback.core.domain.models.Category
 import com.alextos.cashback.core.domain.models.generateMockCategory
 import com.alextos.cashback.util.views.Screen
 import com.alextos.cashback.util.views.ContextMenuItem
 import com.alextos.cashback.util.views.RoundedList
 import com.alextos.cashback.util.views.SearchBar
 import com.alextos.cashback.features.category.scenes.category_list.presentation.components.CategoryItemView
-import com.alextos.cashback.features.category.scenes.create_category.presentation.CreateCategoryScreen
 import com.alextos.cashback.util.UiText
-import com.alextos.cashback.util.views.CustomWideButton
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun CategoryListScreen(

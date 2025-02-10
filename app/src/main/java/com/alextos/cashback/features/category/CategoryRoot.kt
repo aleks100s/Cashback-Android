@@ -6,9 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.alextos.cashback.core.domain.models.generateMockCategory
 import com.alextos.cashback.features.category.scenes.category_list.presentation.CategoryListScreen
-import com.alextos.cashback.features.category.scenes.create_category.presentation.CreateCategoryScreen
+import com.alextos.cashback.features.category.scenes.category_detail.presentation.CategoryDetailScreen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -38,7 +37,7 @@ fun CategoryRoot(modifier: Modifier = Modifier, onSelectCategory: () -> Unit) {
             }
 
             composable<CategoryRoute.CreateCategory> {
-                CreateCategoryScreen(viewModel = koinViewModel()) {
+                CategoryDetailScreen(viewModel = koinViewModel()) {
                     navController.popBackStack()
                 }
             }

@@ -1,13 +1,11 @@
-package com.alextos.cashback.features.category.scenes.create_category.presentation
+package com.alextos.cashback.features.category.scenes.category_detail.presentation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,25 +15,24 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
 import com.alextos.cashback.util.views.CustomTextField
-import com.alextos.cashback.util.views.CustomWideButton
 import com.alextos.cashback.util.views.Screen
 
 @Composable
-fun CreateCategoryScreen(
+fun CategoryDetailScreen(
     modifier: Modifier = Modifier,
-    viewModel: CreateCategoryViewModel,
+    viewModel: CategoryDetailViewModel,
     onSaved: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     Screen(
         modifier = modifier,
-        title = stringResource(R.string.create_category_title)
+        title = stringResource(R.string.category_detail_title)
     ) {
-        CreateCategoryView(modifier = it, state = state) { action ->
+        CategoryDetailView(modifier = it, state = state) { action ->
             viewModel.onAction(action)
             when (action) {
-                is CreateCategoryAction.SaveButtonTapped -> {
+                is CategoryDetailAction.SaveButtonTapped -> {
                     onSaved()
                 }
                 else -> {}
@@ -45,10 +42,10 @@ fun CreateCategoryScreen(
 }
 
 @Composable
-private fun CreateCategoryView(
+private fun CategoryDetailView(
     modifier: Modifier = Modifier,
-    state: CreateCategoryState,
-    onAction: (CreateCategoryAction) -> Unit
+    state: CategoryDetailState,
+    onAction: (CategoryDetailAction) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -59,32 +56,32 @@ private fun CreateCategoryView(
         CustomTextField(
             value = state.categoryName,
             onValueChange = {
-                onAction(CreateCategoryAction.ChangeCategoryName(it))
+                onAction(CategoryDetailAction.ChangeCategoryDetailName(it))
             },
-            label = stringResource(R.string.create_category_name)
+            label = stringResource(R.string.category_detail_name)
         )
 
         CustomTextField(
             value = state.emoji,
             onValueChange = {
-                onAction(CreateCategoryAction.ChangeCategoryEmoji(it))
+                onAction(CategoryDetailAction.ChangeCategoryDetailEmoji(it))
             },
-            label = stringResource(R.string.create_category_emoji),
-            footer = stringResource(R.string.create_category_optional)
+            label = stringResource(R.string.category_detail_emoji),
+            footer = stringResource(R.string.category_detail_optional)
         )
 
         CustomTextField(
             value = state.description,
             onValueChange = {
-                onAction(CreateCategoryAction.ChangeCategoryDescription(it))
+                onAction(CategoryDetailAction.ChangeCategoryDetailDescription(it))
             },
-            label = stringResource(R.string.create_category_description),
-            footer = stringResource(R.string.create_category_optional)
+            label = stringResource(R.string.category_detail_description),
+            footer = stringResource(R.string.category_detail_optional)
         )
 
         Button(
             onClick = {
-                onAction(CreateCategoryAction.SaveButtonTapped)
+                onAction(CategoryDetailAction.SaveButtonTapped)
             },
             enabled = state.isValid
         ) {
@@ -95,6 +92,6 @@ private fun CreateCategoryView(
 
 @Preview
 @Composable
-private fun CreateCategoryPreview() {
-    CreateCategoryView(state = CreateCategoryState()) { }
+private fun CategoryDetailPreview() {
+    CategoryDetailView(state = CategoryDetailState()) { }
 }

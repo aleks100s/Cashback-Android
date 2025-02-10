@@ -8,14 +8,14 @@ import com.alextos.cashback.features.category.scenes.category_list.domain.Archiv
 import com.alextos.cashback.features.category.scenes.category_list.domain.FilterCategoryUseCase
 import com.alextos.cashback.features.category.scenes.category_list.domain.IncreaseCategoryPriorityUseCase
 import com.alextos.cashback.features.category.scenes.category_list.presentation.CategoryListViewModel
-import com.alextos.cashback.features.category.scenes.create_category.domain.ValidateCategoryUseCase
-import com.alextos.cashback.features.category.scenes.create_category.presentation.CreateCategoryViewModel
+import com.alextos.cashback.features.category.scenes.category_detail.domain.ValidateCategoryUseCase
+import com.alextos.cashback.features.category.scenes.category_detail.presentation.CategoryDetailViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val categoryModule = module {
     viewModelOf(::CategoryListViewModel)
-    viewModelOf(::CreateCategoryViewModel)
+    viewModelOf(::CategoryDetailViewModel)
     factory<CategoryRepository> { CategoryRepositoryImpl(get()) }
     factory { FilterCategoryUseCase() }
     factory { IncreaseCategoryPriorityUseCase(get()) }
