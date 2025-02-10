@@ -22,7 +22,7 @@ import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.Category
 import com.alextos.cashback.core.presentation.views.CategoryIconSize
 import com.alextos.cashback.core.presentation.views.CategoryIconView
-import com.alextos.cashback.core.presentation.views.Dialog
+import com.alextos.cashback.util.views.Dialog
 
 @Composable
 fun CategoryItemView(

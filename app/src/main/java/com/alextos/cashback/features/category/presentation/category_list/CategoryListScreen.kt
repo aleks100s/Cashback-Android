@@ -13,11 +13,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
-import com.alextos.cashback.core.presentation.Screen
-import com.alextos.cashback.core.presentation.views.ContextMenu
-import com.alextos.cashback.core.presentation.views.ContextMenuItem
-import com.alextos.cashback.core.presentation.views.RoundedList
-import com.alextos.cashback.core.presentation.views.SearchBar
+import com.alextos.cashback.util.views.Screen
+import com.alextos.cashback.util.views.ContextMenuItem
+import com.alextos.cashback.util.views.RoundedList
+import com.alextos.cashback.util.views.SearchBar
 import com.alextos.cashback.features.category.presentation.category_list.components.CategoryItemView
 
 @Composable
@@ -97,6 +96,9 @@ private fun CategoryListView(
                     onAction(CategoryListAction.DeleteCategory(it))
                 }
             )
-        )
+        ),
+        onDelete = {
+            onAction(CategoryListAction.DeleteCategory(it))
+        }
     )
 }

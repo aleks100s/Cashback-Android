@@ -1,4 +1,4 @@
-package com.alextos.cashback.core.presentation.views
+package com.alextos.cashback.util.views
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn

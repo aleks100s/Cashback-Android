@@ -1,9 +1,6 @@
 package com.alextos.cashback.features.cards.presentation.card_detail
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -13,7 +10,6 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -32,11 +28,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.Cashback
-import com.alextos.cashback.core.presentation.Screen
-import com.alextos.cashback.core.presentation.views.ContextMenu
-import com.alextos.cashback.core.presentation.views.ContextMenuItem
-import com.alextos.cashback.core.presentation.views.Dialog
+import com.alextos.cashback.util.views.Screen
+import com.alextos.cashback.util.views.ContextMenu
+import com.alextos.cashback.util.views.ContextMenuItem
+import com.alextos.cashback.util.views.Dialog
 import com.alextos.cashback.features.cards.presentation.card_detail.components.CashbackView
+import com.alextos.cashback.util.views.SwipeableItem
 
 @Composable
 fun CardDetailScreen(
@@ -140,35 +137,46 @@ private fun LazyListScope.cashbackListView(
             else -> RectangleShape
         }
 
-        ContextMenu(
-            element = item,
+        SwipeableItem(
+            modifier = Modifier
+                .clip(topCornersShape)
+                .clip(bottomCornersShape),
             content = {
-                CashbackView(
-                    modifier = Modifier
-                        .clip(topCornersShape)
-                        .clip(bottomCornersShape)
-                        .background(MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp))
-                        .padding(vertical = 12.dp, horizontal = 16.dp),
-                    cashback = item
+                ContextMenu(
+                    element = item,
+                    content = {
+                        CashbackView(
+                            modifier = Modifier
+                                .clip(topCornersShape)
+                                .clip(bottomCornersShape)
+                                .background(MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp))
+                                .padding(vertical = 12.dp, horizontal = 16.dp),
+                            cashback = item
+                        )
+                    },
+                    actions = listOf(
+                        ContextMenuItem(
+                            title = stringResource(R.string.card_detail_edit_cashback),
+                            action = {
+                                onAction(CardDetailAction.EditCashback(item))
+                            }
+                        ),
+                        ContextMenuItem(
+                            title = stringResource(R.string.card_detail_delete_cashback),
+                            isDestructive = true,
+                            action = {
+                                onAction(CardDetailAction.DeleteCashback(item))
+                            }
+                        )
+                    ),
+                    onClick = {
+                        onAction(CardDetailAction.EditCashback(it))
+                    }
                 )
             },
-            actions = listOf(
-                ContextMenuItem(
-                    title = stringResource(R.string.card_detail_edit_cashback),
-                    action = {
-                        onAction(CardDetailAction.EditCashback(item))
-                    }
-                ),
-                ContextMenuItem(
-                    title = stringResource(R.string.card_detail_delete_cashback),
-                    isDestructive = true,
-                    action = {
-                        onAction(CardDetailAction.DeleteCashback(item))
-                    }
-                )
-            ),
-            onClick = {
-                onAction(CardDetailAction.EditCashback(it))
+            onDelete = {
+                onAction(CardDetailAction.DeleteCashback(item))
+                return@SwipeableItem true
             }
         )
 

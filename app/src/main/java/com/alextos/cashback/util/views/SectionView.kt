@@ -1,4 +1,4 @@
-package com.alextos.cashback.core.presentation.views
+package com.alextos.cashback.util.views
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

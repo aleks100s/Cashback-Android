@@ -1,4 +1,4 @@
-package com.alextos.cashback.core.presentation.views
+package com.alextos.cashback.util.views
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
@@ -37,7 +37,8 @@ fun <Element: ListElement> RoundedList(
     stickyHeader: @Composable () -> Unit = {},
     emptyView: @Composable () -> Unit,
     onItemClick: (Element) -> Unit,
-    contextMenuActions: List<ContextMenuItem<Element>>
+    contextMenuActions: List<ContextMenuItem<Element>>,
+    onDelete: (Element) -> Unit
 ) {
     val scrollState: LazyListState = rememberLazyListState()
 
@@ -66,21 +67,32 @@ fun <Element: ListElement> RoundedList(
                     RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp)
                 } else RectangleShape
 
-                ContextMenu(
-                    element = item,
+                SwipeableItem(
+                    modifier = Modifier
+                        .clip(topCornersShape)
+                        .clip(bottomCornersShape),
                     content = {
-                        itemView(
-                            Modifier
-                                .animateItem()
-                                .clip(topCornersShape)
-                                .clip(bottomCornersShape)
-                                .background(MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp))
-                                .padding(vertical = 12.dp, horizontal = 16.dp),
-                            item
+                        ContextMenu(
+                            element = item,
+                            content = {
+                                itemView(
+                                    Modifier
+                                        .animateItem()
+                                        .clip(topCornersShape)
+                                        .clip(bottomCornersShape)
+                                        .background(MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp))
+                                        .padding(vertical = 12.dp, horizontal = 16.dp),
+                                    item
+                                )
+                            },
+                            actions = contextMenuActions,
+                            onClick = onItemClick
                         )
                     },
-                    actions = contextMenuActions,
-                    onClick = onItemClick
+                    onDelete = {
+                        onDelete(item)
+                        true
+                    }
                 )
 
                 if (list.lastOrNull() != item) {

@@ -23,7 +23,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,10 +34,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.Card
-import com.alextos.cashback.core.presentation.Screen
+import com.alextos.cashback.util.views.Screen
 import com.alextos.cashback.features.cards.presentation.cards_list.components.AddCardSheet
 import com.alextos.cashback.features.cards.presentation.cards_list.components.CardItemView
-import com.alextos.cashback.core.presentation.views.SearchBar
+import com.alextos.cashback.util.views.SearchBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

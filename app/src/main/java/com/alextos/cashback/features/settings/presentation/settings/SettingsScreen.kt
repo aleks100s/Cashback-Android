@@ -18,8 +18,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
-import com.alextos.cashback.core.presentation.Screen
-import com.alextos.cashback.core.presentation.views.SectionView
+import com.alextos.cashback.util.views.Screen
+import com.alextos.cashback.util.views.SectionView
 
 @Composable
 fun SettingsScreen(
