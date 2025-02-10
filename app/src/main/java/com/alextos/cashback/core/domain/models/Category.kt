@@ -10,7 +10,7 @@ data class Category(
     val emoji: String,
     val synonyms: String?,
     var priority: Int,
-    val isArchived: Boolean,
+    var isArchived: Boolean,
     val info: String?,
     val isNative: Boolean
 ): ListElement

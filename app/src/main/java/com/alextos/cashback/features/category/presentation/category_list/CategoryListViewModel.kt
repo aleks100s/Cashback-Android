@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.services.ToastService
 import com.alextos.cashback.features.category.CategoryMediator
+import com.alextos.cashback.features.category.domain.ArchiveCategoryUseCase
 import com.alextos.cashback.features.category.domain.CategoryRepository
 import com.alextos.cashback.features.category.domain.FilterCategoryUseCase
 import com.alextos.cashback.features.category.domain.IncreaseCategoryPriorityUseCase
@@ -18,6 +19,7 @@ import kotlinx.coroutines.launch
 class CategoryListViewModel(
     private val filterUseCase: FilterCategoryUseCase,
     private val increaseCategoryPriorityUseCase: IncreaseCategoryPriorityUseCase,
+    private val archiveCategoryUseCase: ArchiveCategoryUseCase,
     private val categoryRepository: CategoryRepository,
     private val categoryMediator: CategoryMediator,
     private val toastService: ToastService
@@ -59,7 +61,7 @@ class CategoryListViewModel(
             is CategoryListAction.CreateCategory -> {}
             is CategoryListAction.DeleteCategory -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    categoryRepository.deleteCategory(action.category)
+                    archiveCategoryUseCase.execute(action.category)
                     viewModelScope.launch(Dispatchers.Main) {
                         toastService.showToast(UiText.StringResourceId(R.string.category_list_category_removed))
                     }
