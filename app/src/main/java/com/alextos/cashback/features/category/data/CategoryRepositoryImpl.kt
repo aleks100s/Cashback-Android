@@ -20,4 +20,8 @@ class CategoryRepositoryImpl(
     override suspend fun createOrUpdate(category: Category) {
         categoryDao.upsert(category.toEntity())
     }
+
+    override suspend fun deleteCategory(category: Category) {
+        categoryDao.delete(category.toEntity())
+    }
 }

@@ -14,6 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
 import com.alextos.cashback.core.presentation.Screen
+import com.alextos.cashback.core.presentation.views.ContextMenu
+import com.alextos.cashback.core.presentation.views.ContextMenuItem
 import com.alextos.cashback.core.presentation.views.RoundedList
 import com.alextos.cashback.core.presentation.views.SearchBar
 import com.alextos.cashback.features.category.presentation.category_list.components.CategoryItemView
@@ -78,8 +80,23 @@ private fun CategoryListView(
                 }
             }
         },
-        onClick = {
+        onItemClick = {
             onAction(CategoryListAction.SelectCategory(it))
-        }
+        },
+        contextMenuActions = listOf(
+            ContextMenuItem(
+                title = stringResource(R.string.category_list_edit_category),
+                action = {
+                    onAction(CategoryListAction.EditCategory(it))
+                }
+            ),
+            ContextMenuItem(
+                title = stringResource(R.string.category_list_delete_category),
+                isDestructive = true,
+                action = {
+                    onAction(CategoryListAction.DeleteCategory(it))
+                }
+            )
+        )
     )
 }

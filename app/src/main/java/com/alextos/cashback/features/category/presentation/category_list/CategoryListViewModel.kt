@@ -2,10 +2,13 @@ package com.alextos.cashback.features.category.presentation.category_list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.alextos.cashback.R
+import com.alextos.cashback.core.domain.services.ToastService
 import com.alextos.cashback.features.category.CategoryMediator
 import com.alextos.cashback.features.category.domain.CategoryRepository
 import com.alextos.cashback.features.category.domain.FilterCategoryUseCase
 import com.alextos.cashback.features.category.domain.IncreaseCategoryPriorityUseCase
+import com.alextos.cashback.util.UiText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,7 +19,8 @@ class CategoryListViewModel(
     private val filterUseCase: FilterCategoryUseCase,
     private val increaseCategoryPriorityUseCase: IncreaseCategoryPriorityUseCase,
     private val categoryRepository: CategoryRepository,
-    private val categoryMediator: CategoryMediator
+    private val categoryMediator: CategoryMediator,
+    private val toastService: ToastService
 ): ViewModel() {
     private val _state = MutableStateFlow(CategoryListState())
     val state = _state.asStateFlow()
@@ -53,6 +57,15 @@ class CategoryListViewModel(
                 }
             }
             is CategoryListAction.CreateCategory -> {}
+            is CategoryListAction.DeleteCategory -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    categoryRepository.deleteCategory(action.category)
+                    viewModelScope.launch(Dispatchers.Main) {
+                        toastService.showToast(UiText.StringResourceId(R.string.category_list_category_removed))
+                    }
+                }
+            }
+            is CategoryListAction.EditCategory -> {}
         }
     }
 }

@@ -48,19 +48,15 @@ fun CardsRoot(modifier: Modifier = Modifier) {
             }
 
             composable<CardsRoute.AddCashback> {
-                ModalBottomSheet(onDismissRequest = {
-                    navController.popBackStack()
-                }) {
-                    AddCashbackScreen(
-                        viewModel = koinViewModel(),
-                        selectCategory = {
-                            navController.navigate(CardsRoute.SelectCategory)
-                        },
-                        onSave = {
-                            navController.popBackStack()
-                        }
-                    )
-                }
+                AddCashbackScreen(
+                    viewModel = koinViewModel(),
+                    selectCategory = {
+                        navController.navigate(CardsRoute.SelectCategory)
+                    },
+                    onSave = {
+                        navController.popBackStack()
+                    }
+                )
             }
 
             composable<CardsRoute.SelectCategory> {

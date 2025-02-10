@@ -38,4 +38,9 @@
     <string name="category_list_title">Категории кэшбэка</string>
     <string name="category_list_item_info">Информация о категории</string>
     <string name="category_list_placeholder">Категория кэшбэка</string>
+    <string name="card_detail_delete_cashback">Удалить кэшбэк</string>
+    <string name="card_detail_edit_cashback">Редактировать кэшбэк</string>
+    <string name="category_list_edit_category">Редактировать категорию</string>
+    <string name="category_list_delete_category">Удалить категорию</string>
+    <string name="category_list_category_removed">Категория удалена</string>
 </resources>

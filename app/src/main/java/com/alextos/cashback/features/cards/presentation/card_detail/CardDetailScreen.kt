@@ -2,6 +2,7 @@ package com.alextos.cashback.features.cards.presentation.card_detail
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,6 +13,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -31,6 +33,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.Cashback
 import com.alextos.cashback.core.presentation.Screen
+import com.alextos.cashback.core.presentation.views.ContextMenu
+import com.alextos.cashback.core.presentation.views.ContextMenuItem
 import com.alextos.cashback.core.presentation.views.Dialog
 import com.alextos.cashback.features.cards.presentation.card_detail.components.CashbackView
 
@@ -96,9 +100,7 @@ private fun CardDetailView(
                 )
             }
 
-            cashbackListView(cashback = cashback) {
-                onAction(CardDetailAction.ShowDeleteCashbackDialog(it))
-            }
+            cashbackListView(cashback = cashback, onAction = onAction)
 
             item {
                 Text(
@@ -124,10 +126,9 @@ private fun CardDetailView(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 private fun LazyListScope.cashbackListView(
     cashback: List<Cashback>,
-    onLongPress: (Cashback) -> Unit
+    onAction: (CardDetailAction) -> Unit
 ) {
     itemsIndexed(cashback) { index, item ->
         val topCornersShape = when (index) {
@@ -138,22 +139,39 @@ private fun LazyListScope.cashbackListView(
             cashback.lastIndex -> RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp)
             else -> RectangleShape
         }
-        CashbackView(
-            modifier = Modifier
-                .combinedClickable(
-                    onClick = {
 
-                    },
-                    onLongClick = {
-                        onLongPress(item)
+        ContextMenu(
+            element = item,
+            content = {
+                CashbackView(
+                    modifier = Modifier
+                        .clip(topCornersShape)
+                        .clip(bottomCornersShape)
+                        .background(MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp))
+                        .padding(vertical = 12.dp, horizontal = 16.dp),
+                    cashback = item
+                )
+            },
+            actions = listOf(
+                ContextMenuItem(
+                    title = stringResource(R.string.card_detail_edit_cashback),
+                    action = {
+                        onAction(CardDetailAction.EditCashback(item))
+                    }
+                ),
+                ContextMenuItem(
+                    title = stringResource(R.string.card_detail_delete_cashback),
+                    isDestructive = true,
+                    action = {
+                        onAction(CardDetailAction.DeleteCashback(item))
                     }
                 )
-                .clip(topCornersShape)
-                .clip(bottomCornersShape)
-                .background(MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp))
-                .padding(vertical = 12.dp, horizontal = 16.dp),
-            cashback = item
+            ),
+            onClick = {
+                onAction(CardDetailAction.EditCashback(it))
+            }
         )
+
         if (cashback.lastIndex != index) {
             HorizontalDivider()
         }

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,42 +17,47 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
+import com.alextos.cashback.core.presentation.Screen
 import com.alextos.cashback.core.presentation.views.CustomButton
 import com.alextos.cashback.core.presentation.views.CustomWideButton
 import com.alextos.cashback.core.presentation.views.SectionView
 
 @Composable
 fun AddCashbackScreen(
+    modifier: Modifier = Modifier,
     viewModel: AddCashbackViewModel,
     selectCategory: () -> Unit,
     onSave: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+    Screen(
+        modifier = modifier,
+        title = stringResource(R.string.add_cashback_title)
+    ) {
+        AddCashbackView(modifier = it, state = state, onAction = { action ->
+            viewModel.onAction(action)
 
-    AddCashbackView(state = state, onAction = {
-        viewModel.onAction(it)
-
-        when (it) {
-            is AddCashbackAction.SaveCashback -> onSave()
-            is AddCashbackAction.SelectCategory -> selectCategory()
-            else -> {}
-        }
-    })
+            when (action) {
+                is AddCashbackAction.SaveCashback -> onSave()
+                is AddCashbackAction.SelectCategory -> selectCategory()
+                else -> {}
+            }
+        })
+    }
 }
 
 @Composable
-private fun AddCashbackView(state: AddCashbackState, onAction: (AddCashbackAction) -> Unit) {
+private fun AddCashbackView(
+    modifier: Modifier = Modifier,
+    state: AddCashbackState,
+    onAction: (AddCashbackAction) -> Unit
+) {
     Column(
-        modifier = Modifier.padding(horizontal = 16.dp),
+        modifier = modifier.padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(32.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = stringResource(R.string.add_cashback_title),
-            style = MaterialTheme.typography.headlineSmall
-        )
-
         CustomWideButton(state.selectedCategory?.name ?: stringResource(R.string.add_cashback_select_category)) {
             onAction(AddCashbackAction.SelectCategory)
         }

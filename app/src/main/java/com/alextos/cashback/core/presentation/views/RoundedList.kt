@@ -7,7 +7,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -37,7 +36,8 @@ fun <Element: ListElement> RoundedList(
     itemView: @Composable (Modifier, Element) -> Unit,
     stickyHeader: @Composable () -> Unit = {},
     emptyView: @Composable () -> Unit,
-    onClick: (Element) -> Unit
+    onItemClick: (Element) -> Unit,
+    contextMenuActions: List<ContextMenuItem<Element>>
 ) {
     val scrollState: LazyListState = rememberLazyListState()
 
@@ -66,17 +66,21 @@ fun <Element: ListElement> RoundedList(
                     RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp)
                 } else RectangleShape
 
-                itemView(
-                    Modifier
-                        .animateItem()
-                        .clickable {
-                            onClick(item)
-                        }
-                        .clip(topCornersShape)
-                        .clip(bottomCornersShape)
-                        .background(MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp))
-                        .padding(vertical = 12.dp, horizontal = 16.dp),
-                    item
+                ContextMenu(
+                    element = item,
+                    content = {
+                        itemView(
+                            Modifier
+                                .animateItem()
+                                .clip(topCornersShape)
+                                .clip(bottomCornersShape)
+                                .background(MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp))
+                                .padding(vertical = 12.dp, horizontal = 16.dp),
+                            item
+                        )
+                    },
+                    actions = contextMenuActions,
+                    onClick = onItemClick
                 )
 
                 if (list.lastOrNull() != item) {

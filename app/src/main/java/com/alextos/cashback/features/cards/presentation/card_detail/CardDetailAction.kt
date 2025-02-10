@@ -7,4 +7,5 @@ sealed interface CardDetailAction {
     data class ShowDeleteCashbackDialog(val cashback: Cashback): CardDetailAction
     data object DismissDeleteCashbackDialog: CardDetailAction
     data class DeleteCashback(val cashback: Cashback): CardDetailAction
+    data class EditCashback(val cashback: Cashback): CardDetailAction
 }

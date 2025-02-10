@@ -1,6 +1,7 @@
 package com.alextos.cashback.core.data.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Upsert
@@ -17,4 +18,7 @@ interface CategoryDao {
 
     @Insert
     suspend fun insertAll(categories: List<CategoryEntity>)
+
+    @Delete
+    suspend fun delete(categoryEntity: CategoryEntity)
 }

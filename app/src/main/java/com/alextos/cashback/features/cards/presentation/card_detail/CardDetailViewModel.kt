@@ -57,6 +57,7 @@ class CardDetailViewModel(
                     }
                 }
             }
+            is CardDetailAction.EditCashback -> {}
         }
     }
 }
