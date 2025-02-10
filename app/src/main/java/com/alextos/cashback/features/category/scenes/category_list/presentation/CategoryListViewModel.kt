@@ -58,11 +58,6 @@ class CategoryListViewModel(
                     increaseCategoryPriorityUseCase.execute(action.category)
                 }
             }
-            is CategoryListAction.CreateCategory -> {
-                _state.update {
-                    it.copy(isCreateCategorySheetShown = true)
-                }
-            }
             is CategoryListAction.DeleteCategory -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     archiveCategoryUseCase.execute(action.category)
@@ -71,12 +66,8 @@ class CategoryListViewModel(
                     }
                 }
             }
+            is CategoryListAction.CreateCategory -> {}
             is CategoryListAction.EditCategory -> {}
-            is CategoryListAction.DismissCreateCategorySheet -> {
-                _state.update {
-                    it.copy(isCreateCategorySheetShown = false)
-                }
-            }
         }
     }
 }

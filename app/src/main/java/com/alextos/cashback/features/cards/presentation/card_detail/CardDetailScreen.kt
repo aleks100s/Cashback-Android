@@ -23,6 +23,7 @@ import com.alextos.cashback.util.views.Screen
 import com.alextos.cashback.util.views.ContextMenuItem
 import com.alextos.cashback.util.views.Dialog
 import com.alextos.cashback.features.cards.presentation.card_detail.components.CashbackView
+import com.alextos.cashback.util.UiText
 import com.alextos.cashback.util.views.RoundedList
 
 @Composable
@@ -107,21 +108,23 @@ private fun CardDetailView(
         onDelete = {
             onAction(CardDetailAction.DeleteCashback(it))
         },
-        contextMenuActions = listOf<ContextMenuItem<Cashback>>(
-            ContextMenuItem(
-                title = stringResource(R.string.card_detail_edit_cashback),
-                action = {
-                    onAction(CardDetailAction.EditCashback(it))
-                }
-            ),
-            ContextMenuItem(
-                title = stringResource(R.string.card_detail_delete_cashback),
-                isDestructive = true,
-                action = {
-                    onAction(CardDetailAction.DeleteCashback(it))
-                }
+        contextMenuActions = {
+            listOf(
+                ContextMenuItem(
+                    title = UiText.StringResourceId(R.string.card_detail_edit_cashback),
+                    action = {
+                        onAction(CardDetailAction.EditCashback(it))
+                    }
+                ),
+                ContextMenuItem(
+                    title = UiText.StringResourceId(R.string.card_detail_delete_cashback),
+                    isDestructive = true,
+                    action = {
+                        onAction(CardDetailAction.DeleteCashback(it))
+                    }
+                )
             )
-        )
+        }
     )
 }
 

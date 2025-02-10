@@ -46,4 +46,8 @@
     <string name="common_remove">Удалить</string>
     <string name="create_category_title">Создать категорию</string>
     <string name="category_list_create_category">Создать категорию</string>
+    <string name="create_category_name">Название категории</string>
+    <string name="create_category_emoji">Emoji</string>
+    <string name="create_category_description">Описание категории</string>
+    <string name="create_category_optional">Необязательно</string>
 </resources>

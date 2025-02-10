@@ -39,7 +39,7 @@ fun <Element: ListElement> RoundedList(
     bottomView: @Composable () -> Unit = {},
     emptyView: @Composable () -> Unit,
     onItemClick: (Element) -> Unit,
-    contextMenuActions: List<ContextMenuItem<Element>>,
+    contextMenuActions: (Element) -> List<ContextMenuItem<Element>>,
     onDelete: (Element) -> Unit
 ) {
     val scrollState: LazyListState = rememberLazyListState()
@@ -91,7 +91,7 @@ fun <Element: ListElement> RoundedList(
                                     item
                                 )
                             },
-                            actions = contextMenuActions,
+                            actions = contextMenuActions(item),
                             onClick = onItemClick
                         )
                     },

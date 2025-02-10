@@ -13,9 +13,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.alextos.cashback.util.UiText
 
 data class ContextMenuItem<Element>(
-    val title: String,
+    val title: UiText,
     val isDestructive: Boolean = false,
     val action: (Element) -> Unit
 )
@@ -55,7 +56,7 @@ fun <Element> ContextMenu(
                     DropdownMenuItem(
                         text = {
                             Text(
-                                text = it.title,
+                                text = it.title.asString(),
                                 color = if (it.isDestructive) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.secondary
                             )
                         },

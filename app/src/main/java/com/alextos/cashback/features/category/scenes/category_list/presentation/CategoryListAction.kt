@@ -8,5 +8,4 @@ sealed interface CategoryListAction {
     data class SelectCategory(val category: Category): CategoryListAction
     data class DeleteCategory(val category: Category): CategoryListAction
     data class EditCategory(val category: Category): CategoryListAction
-    data object DismissCreateCategorySheet: CategoryListAction
 }

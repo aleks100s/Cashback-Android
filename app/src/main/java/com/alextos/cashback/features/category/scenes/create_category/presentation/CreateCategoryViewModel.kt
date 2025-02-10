@@ -1,8 +1,11 @@
 package com.alextos.cashback.features.category.scenes.create_category.presentation
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import com.alextos.cashback.core.domain.models.Category
+import com.alextos.cashback.features.category.CategoryRoute
 import com.alextos.cashback.features.category.scenes.category_list.domain.CategoryRepository
 import com.alextos.cashback.features.category.scenes.create_category.domain.ValidateCategoryUseCase
 import kotlinx.coroutines.Dispatchers
@@ -14,6 +17,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class CreateCategoryViewModel(
+    savedStateHandle: SavedStateHandle,
     private val repository: CategoryRepository,
     private val validateCategoryUseCase: ValidateCategoryUseCase
 ): ViewModel() {
@@ -21,6 +25,9 @@ class CreateCategoryViewModel(
     val state = _state.asStateFlow()
 
     init {
+        val name = savedStateHandle.toRoute<CategoryRoute.CreateCategory>().name
+        onAction(CreateCategoryAction.ChangeCategoryName(name))
+
         viewModelScope.launch(Dispatchers.IO) {
             _state
                 .distinctUntilChanged { old, new ->
@@ -57,7 +64,13 @@ class CreateCategoryViewModel(
             is CreateCategoryAction.SaveButtonTapped -> {
                 val state = state.value
                 viewModelScope.launch(Dispatchers.IO) {
-                    val category = Category(name = state.categoryName, emoji = state.emoji, info = state.description, isNative = false)
+                    val emoji = state.emoji.firstOrNull() ?: state.categoryName.firstOrNull() ?: "?"
+                    val category = Category(
+                        name = state.categoryName,
+                        emoji = emoji.toString(),
+                        info = state.description,
+                        isNative = false
+                    )
                     repository.createOrUpdate(category)
                 }
             }

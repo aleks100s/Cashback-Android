@@ -13,20 +13,30 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun SectionView(
-    title: String,
+    title: String? = null,
+    footer: String? = null,
     content: @Composable () -> Unit
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(
-            modifier = Modifier.padding(start = 8.dp),
-            text = title
-        )
+        title?.let {
+            Text(
+                modifier = Modifier.padding(start = 8.dp),
+                text = title
+            )
+        }
 
         Surface(
             modifier = Modifier.clip(shape = RoundedCornerShape(16.dp)),
             tonalElevation = 4.dp
         ) {
             content()
+        }
+
+        footer?.let {
+            Text(
+                modifier = Modifier.padding(start = 8.dp),
+                text = footer
+            )
         }
     }
 }

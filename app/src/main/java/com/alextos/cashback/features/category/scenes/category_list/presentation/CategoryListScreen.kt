@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -19,6 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -30,15 +32,16 @@ import com.alextos.cashback.util.views.RoundedList
 import com.alextos.cashback.util.views.SearchBar
 import com.alextos.cashback.features.category.scenes.category_list.presentation.components.CategoryItemView
 import com.alextos.cashback.features.category.scenes.create_category.presentation.CreateCategoryScreen
+import com.alextos.cashback.util.UiText
 import com.alextos.cashback.util.views.CustomWideButton
 import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategoryListScreen(
     modifier: Modifier = Modifier,
     viewModel: CategoryListViewModel,
-    onSelectCategory: () -> Unit
+    onSelectCategory: () -> Unit,
+    onCreateCategory: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -47,7 +50,7 @@ fun CategoryListScreen(
         title = stringResource(R.string.category_list_title),
         floatingActionButton = {
             FloatingActionButton(onClick = {
-                viewModel.onAction(CategoryListAction.CreateCategory(state.searchQuery))
+                onCreateCategory(state.searchQuery)
             }) {
                 Icon(Icons.Filled.Add, stringResource(R.string.category_list_create_category))
             }
@@ -59,16 +62,10 @@ fun CategoryListScreen(
                 is CategoryListAction.SelectCategory -> {
                     onSelectCategory()
                 }
+                is CategoryListAction.CreateCategory -> {
+                    onCreateCategory(action.name)
+                }
                 else -> {}
-            }
-        }
-
-        if (state.isCreateCategorySheetShown) {
-            ModalBottomSheet(onDismissRequest = { viewModel.onAction(CategoryListAction.DismissCreateCategorySheet) }) {
-                CreateCategoryScreen(
-                    viewModel = koinViewModel(),
-                    initialName = state.searchQuery
-                )
             }
         }
     }
@@ -96,11 +93,14 @@ private fun CategoryListView(
         },
         emptyView = {
             Column(
-                modifier = modifier,
+                modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
-                Text(text = stringResource(R.string.category_list_no_search_results))
+                Text(
+                    text = stringResource(R.string.category_list_no_search_results),
+                    textAlign = TextAlign.Center
+                )
 
                 Button(onClick = {
                     onAction(CategoryListAction.CreateCategory(name = state.searchQuery))
@@ -112,21 +112,34 @@ private fun CategoryListView(
         onItemClick = {
             onAction(CategoryListAction.SelectCategory(it))
         },
-        contextMenuActions = listOf(
-            ContextMenuItem(
-                title = stringResource(R.string.category_list_edit_category),
-                action = {
-                    onAction(CategoryListAction.EditCategory(it))
-                }
-            ),
-            ContextMenuItem(
-                title = stringResource(R.string.category_list_delete_category),
-                isDestructive = true,
-                action = {
-                    onAction(CategoryListAction.DeleteCategory(it))
-                }
-            )
-        ),
+        contextMenuActions = { category ->
+            if (category.isNative) {
+                listOf(
+                    ContextMenuItem(
+                        title = UiText.StringResourceId(R.string.category_list_edit_category),
+                        action = {
+                            onAction(CategoryListAction.EditCategory(it))
+                        }
+                    )
+                )
+            } else {
+                listOf(
+                    ContextMenuItem(
+                        title = UiText.StringResourceId(R.string.category_list_edit_category),
+                        action = {
+                            onAction(CategoryListAction.EditCategory(it))
+                        }
+                    ),
+                    ContextMenuItem(
+                        title = UiText.StringResourceId(R.string.category_list_delete_category),
+                        isDestructive = true,
+                        action = {
+                            onAction(CategoryListAction.DeleteCategory(it))
+                        }
+                    )
+                )
+            }
+        },
         onDelete = {
             onAction(CategoryListAction.DeleteCategory(it))
         }
