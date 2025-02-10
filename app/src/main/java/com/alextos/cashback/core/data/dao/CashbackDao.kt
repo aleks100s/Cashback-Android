@@ -14,6 +14,9 @@ interface CashbackDao {
     @Query("SELECT * FROM cashback WHERE cardId = :cardId")
     suspend fun getAllBy(cardId: String): List<CashbackWithCategory>
 
+    @Query("SELECT * FROM cashback WHERE id = :cashbackId LIMIT 1")
+    suspend fun getCashback(cashbackId: String): List<CashbackWithCategory>
+
     @Insert
     suspend fun insert(cashback: CashbackEntity)
 

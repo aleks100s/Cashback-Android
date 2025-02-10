@@ -18,7 +18,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
-import com.alextos.cashback.core.domain.models.Cashback
 import com.alextos.cashback.util.views.Screen
 import com.alextos.cashback.util.views.ContextMenuItem
 import com.alextos.cashback.util.views.Dialog
@@ -30,7 +29,8 @@ import com.alextos.cashback.util.views.RoundedList
 fun CardDetailScreen(
     modifier: Modifier = Modifier,
     viewModel: CardDetailViewModel,
-    onAddCashback: () -> Unit
+    onAddCashback: () -> Unit,
+    onEditCashback: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -48,7 +48,15 @@ fun CardDetailScreen(
         CardDetailView(
             modifier = it,
             state = state,
-            onAction = viewModel::onAction
+            onAction = { action ->
+                viewModel.onAction(action)
+                when (action) {
+                    is CardDetailAction.EditCashback -> {
+                        onEditCashback(action.cashback.id)
+                    }
+                    else -> {}
+                }
+            }
         )
     }
     state.cashbackToDelete?.let {

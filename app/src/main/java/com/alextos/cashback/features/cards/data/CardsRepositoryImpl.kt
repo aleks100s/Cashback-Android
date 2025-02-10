@@ -46,6 +46,10 @@ class CardsRepositoryImpl(
         cashbackDao.insert(cashback.toEntity(cardId))
     }
 
+    override suspend fun getCashback(id: String): Cashback? {
+        return cashbackDao.getCashback(id).firstOrNull()?.toDomain()
+    }
+
     private suspend fun constructCard(entity: CardEntity): Card {
         val cashback = cashbackDao.getAllBy(entity.id)
             .map { it.toDomain() }

@@ -16,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -27,16 +28,33 @@ class AddCashbackViewModel(
     private val toastService: ToastService
 ): ViewModel() {
     private val cardId = savedStateHandle.toRoute<CardsRoute.AddCashback>().cardId
+    private val cashbackId = savedStateHandle.toRoute<CardsRoute.AddCashback>().cashbackId
+
+    private var cashback: Cashback? = null
 
     private val _state = MutableStateFlow(AddCashbackState())
     val state = _state.asStateFlow()
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
-            cardsRepository.getCardFlow(cardId)
-                .collect { card ->
-                    _state.update { it.copy(card = card) }
+        cashbackId?.let { cashbackId ->
+            viewModelScope.launch(Dispatchers.IO) {
+                cardsRepository.getCashback(cashbackId)?.let { cashback ->
+                    this@AddCashbackViewModel.cashback = cashback
+                    cardsRepository.getCardFlow(cardId)
+                        .mapNotNull { it }
+                        .collect { card ->
+                            val isValid = validateCashbackUseCase.execute(card, cashback.percent, cashback.category)
+                            _state.update { state ->
+                                state.copy(
+                                    card = card,
+                                    percent = (cashback.percent * 100).toString(),
+                                    selectedCategory = cashback.category,
+                                    isValid = isValid
+                                )
+                            }
+                        }
                 }
+            }
         }
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -70,7 +88,10 @@ class AddCashbackViewModel(
             is AddCashbackAction.SaveCashback -> {
                 state.value.selectedCategory?.let { category ->
                     val percent = (state.value.percent.toDoubleOrNull() ?: 0.0) / 100
-                    val cashback = Cashback(category = category, percent = percent)
+                    val cashback = this.cashback?.copy(
+                        percent = percent,
+                        category = category
+                    ) ?: Cashback(category = category, percent = percent)
                     viewModelScope.launch(Dispatchers.IO) {
                         cardsRepository.createCashback(cashback = cashback, cardId = cardId)
                         state.value.card?.let {

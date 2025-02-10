@@ -39,9 +39,15 @@ fun CardsRoot(modifier: Modifier = Modifier) {
                 val args = navBackStackEntry.toRoute<CardsRoute.CardDetail>()
                 val id = args.cardId
 
-                CardDetailScreen(viewModel = koinViewModel()) {
-                    navController.navigate(CardsRoute.AddCashback(id))
-                }
+                CardDetailScreen(
+                    viewModel = koinViewModel(),
+                    onAddCashback = {
+                        navController.navigate(CardsRoute.AddCashback(id, null))
+                    },
+                    onEditCashback = {
+                        navController.navigate(CardsRoute.AddCashback(id, it))
+                    }
+                )
             }
 
             composable<CardsRoute.AddCashback> {
