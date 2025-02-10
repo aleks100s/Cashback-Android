@@ -15,6 +15,7 @@ import com.alextos.cashback.util.UiText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -43,27 +44,32 @@ class AddCashbackViewModel(
                 onAction(AddCashbackAction.CategorySelected(category))
             }
         }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            _state
+                .distinctUntilChanged { old, new ->
+                    old.selectedCategory == new.selectedCategory && old.percent == new.percent
+                }.collect { state ->
+                    state.card?.let { card ->
+                        val percent = (state.percent.toDoubleOrNull() ?: 0.0) / 100
+                        val isValid = validateCashbackUseCase.execute(card, percent, state.selectedCategory)
+                        _state.update { it.copy(isValid = isValid) }
+                    }
+                }
+        }
     }
 
     fun onAction(action: AddCashbackAction) {
         when(action) {
             is AddCashbackAction.ChangePercent -> {
                 _state.update { state ->
-                    state.copy(
-                        percent = action.value,
-                        isValid = state.card?.let { card ->
-                            validateCashbackUseCase.execute(
-                                card = card,
-                                percent = state.percent,
-                                selectedCategory = state.selectedCategory
-                            )
-                        } ?: false
-                    )
+                    state.copy(percent = action.value)
                 }
             }
             is AddCashbackAction.SaveCashback -> {
                 state.value.selectedCategory?.let { category ->
-                    val cashback = Cashback(category = category, percent = state.value.percent)
+                    val percent = (state.value.percent.toDoubleOrNull() ?: 0.0) / 100
+                    val cashback = Cashback(category = category, percent = percent)
                     viewModelScope.launch(Dispatchers.IO) {
                         cardsRepository.createCashback(cashback = cashback, cardId = cardId)
                         state.value.card?.let {
@@ -75,16 +81,7 @@ class AddCashbackViewModel(
             }
             is AddCashbackAction.CategorySelected -> {
                 _state.update { state ->
-                    state.copy(
-                        selectedCategory = action.category,
-                        isValid = state.card?.let { card ->
-                            validateCashbackUseCase.execute(
-                                card = card,
-                                percent = state.percent,
-                                selectedCategory = action.category
-                            )
-                        } ?: false
-                    )
+                    state.copy(selectedCategory = action.category)
                 }
             }
             is AddCashbackAction.SelectCategory -> {}

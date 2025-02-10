@@ -4,9 +4,9 @@ import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.domain.models.Category
 
 data class AddCashbackState(
-    val percent: Double = 0.05,
+    val percent: String = "5",
     val selectedCategory: Category? = null,
-    val percentOptions: List<Double> = listOf(0.01, 0.03, 0.05, 0.1),
+    val percentOptions: List<Int> = listOf(1, 3, 5, 10),
     val card: Card? = null,
     val isValid: Boolean = false
 )
