@@ -10,5 +10,5 @@ interface CategoryRoute {
     data object CategoryList
 
     @Serializable
-    data class CreateCategory(val name: String)
+    data class CreateCategory(val name: String?, val categoryId: String?)
 }

@@ -7,6 +7,7 @@ import com.alextos.cashback.core.domain.models.Category
 import com.alextos.cashback.features.category.scenes.category_list.domain.CategoryRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 
 class CategoryRepositoryImpl(
     private val categoryDao: CategoryDao
@@ -22,6 +23,12 @@ class CategoryRepositoryImpl(
         return categoryDao.getAll().map { list ->
             list.map { it.toDomain() }
         }
+    }
+
+    override fun getCategory(id: String): Flow<Category> {
+        return categoryDao
+            .getCategory(id)
+            .mapNotNull { it.firstOrNull()?.toDomain() }
     }
 
     override suspend fun createOrUpdate(category: Category) {

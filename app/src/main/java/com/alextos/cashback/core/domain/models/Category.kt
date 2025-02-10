@@ -1,6 +1,7 @@
 package com.alextos.cashback.core.domain.models
 
 import com.alextos.cashback.util.views.ListElement
+import kotlinx.serialization.Serializable
 import java.util.UUID
 import kotlin.random.Random
 

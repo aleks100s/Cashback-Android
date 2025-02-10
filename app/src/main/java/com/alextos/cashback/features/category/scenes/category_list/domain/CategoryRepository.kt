@@ -6,5 +6,6 @@ import kotlinx.coroutines.flow.Flow
 interface CategoryRepository {
     fun getUnarchivedCategories(): Flow<List<Category>>
     fun getAllCategories(): Flow<List<Category>>
+    fun getCategory(id: String): Flow<Category>
     suspend fun createOrUpdate(category: Category)
 }

@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.alextos.cashback.core.domain.models.generateMockCategory
 import com.alextos.cashback.features.category.scenes.category_list.presentation.CategoryListScreen
 import com.alextos.cashback.features.category.scenes.create_category.presentation.CreateCategoryScreen
 import org.koin.androidx.compose.koinViewModel
@@ -28,7 +29,10 @@ fun CategoryRoot(modifier: Modifier = Modifier, onSelectCategory: () -> Unit) {
                     viewModel = koinViewModel(),
                     onSelectCategory = onSelectCategory,
                     onCreateCategory = {
-                        navController.navigate(CategoryRoute.CreateCategory(it))
+                        navController.navigate(CategoryRoute.CreateCategory(it, null))
+                    },
+                    onEditCategory = {
+                        navController.navigate(CategoryRoute.CreateCategory(null, it))
                     }
                 )
             }

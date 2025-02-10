@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
+import com.alextos.cashback.core.domain.models.Category
 import com.alextos.cashback.core.domain.models.generateMockCategory
 import com.alextos.cashback.util.views.Screen
 import com.alextos.cashback.util.views.ContextMenuItem
@@ -41,7 +42,8 @@ fun CategoryListScreen(
     modifier: Modifier = Modifier,
     viewModel: CategoryListViewModel,
     onSelectCategory: () -> Unit,
-    onCreateCategory: (String) -> Unit
+    onCreateCategory: (String) -> Unit,
+    onEditCategory: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -64,6 +66,9 @@ fun CategoryListScreen(
                 }
                 is CategoryListAction.CreateCategory -> {
                     onCreateCategory(action.name)
+                }
+                is CategoryListAction.EditCategory -> {
+                    onEditCategory(action.category.id)
                 }
                 else -> {}
             }
@@ -116,9 +121,10 @@ private fun CategoryListView(
             if (category.isNative) {
                 listOf(
                     ContextMenuItem(
-                        title = UiText.StringResourceId(R.string.category_list_edit_category),
+                        title = UiText.StringResourceId(R.string.category_list_delete_category),
+                        isDestructive = true,
                         action = {
-                            onAction(CategoryListAction.EditCategory(it))
+                            onAction(CategoryListAction.DeleteCategory(it))
                         }
                     )
                 )

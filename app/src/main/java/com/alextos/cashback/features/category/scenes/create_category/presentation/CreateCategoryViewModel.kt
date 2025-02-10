@@ -21,12 +21,28 @@ class CreateCategoryViewModel(
     private val repository: CategoryRepository,
     private val validateCategoryUseCase: ValidateCategoryUseCase
 ): ViewModel() {
+    private val categoryId = savedStateHandle.toRoute<CategoryRoute.CreateCategory>().categoryId
+    private val name = savedStateHandle.toRoute<CategoryRoute.CreateCategory>().name
+
     private val _state = MutableStateFlow(CreateCategoryState())
     val state = _state.asStateFlow()
 
+    private var category: Category? = null
+
     init {
-        val name = savedStateHandle.toRoute<CategoryRoute.CreateCategory>().name
-        onAction(CreateCategoryAction.ChangeCategoryName(name))
+        if (name != null) {
+            onAction(CreateCategoryAction.ChangeCategoryName(name))
+        } else if (categoryId != null) {
+           viewModelScope.launch(Dispatchers.IO) {
+               repository.getCategory(categoryId)
+                   .collect { category ->
+                       _state.update { state ->
+                           state.copy(categoryName = category.name, emoji = category.emoji, description = category.info ?: "")
+                       }
+                       this@CreateCategoryViewModel.category = category
+                   }
+           }
+        }
 
         viewModelScope.launch(Dispatchers.IO) {
             _state
@@ -65,7 +81,11 @@ class CreateCategoryViewModel(
                 val state = state.value
                 viewModelScope.launch(Dispatchers.IO) {
                     val emoji = state.emoji.firstOrNull() ?: state.categoryName.firstOrNull() ?: "?"
-                    val category = Category(
+                    val category = this@CreateCategoryViewModel.category?.copy(
+                        name = state.categoryName,
+                        emoji = emoji.toString(),
+                        info = state.description
+                    ) ?: Category(
                         name = state.categoryName,
                         emoji = emoji.toString(),
                         info = state.description,
