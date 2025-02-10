@@ -1,6 +1,7 @@
 package com.alextos.cashback.util.views
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -40,7 +41,8 @@ fun SwipeableItem(
                     .fillMaxSize()
                     .background(Color.Red)
                     .padding(16.dp),
-                horizontalAlignment = Alignment.End
+                horizontalAlignment = Alignment.End,
+                verticalArrangement = Arrangement.Center
             ) {
                 Text(text = stringResource(R.string.common_remove))
             }

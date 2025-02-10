@@ -35,6 +35,8 @@ fun <Element: ListElement> RoundedList(
     list: List<Element>,
     itemView: @Composable (Modifier, Element) -> Unit,
     stickyHeader: @Composable () -> Unit = {},
+    topView: @Composable () -> Unit = {},
+    bottomView: @Composable () -> Unit = {},
     emptyView: @Composable () -> Unit,
     onItemClick: (Element) -> Unit,
     contextMenuActions: List<ContextMenuItem<Element>>,
@@ -58,6 +60,10 @@ fun <Element: ListElement> RoundedList(
         }
 
         if (list.isNotEmpty()) {
+            item {
+                topView()
+            }
+
             items(items = list, key = { it.id }) { item ->
                 val topCornersShape = if (item == list.firstOrNull()) {
                     RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
@@ -98,6 +104,10 @@ fun <Element: ListElement> RoundedList(
                 if (list.lastOrNull() != item) {
                     HorizontalDivider()
                 }
+            }
+
+            item {
+                bottomView()
             }
         } else {
             item {

@@ -1,14 +1,15 @@
 package com.alextos.cashback.core.domain.models
 
+import com.alextos.cashback.util.views.ListElement
 import java.util.Locale
 import java.util.UUID
 import kotlin.random.Random
 
 data class Cashback(
-    val id: String = UUID.randomUUID().toString(),
+    override val id: String = UUID.randomUUID().toString(),
     val category: Category,
     val percent: Double
-) {
+): ListElement {
     override fun toString(): String {
         return if (showFloatingPoint()) {
             String.format(locale = Locale.forLanguageTag("ru_RU"), "%s %.0f%%", category.name, percent * 100)
