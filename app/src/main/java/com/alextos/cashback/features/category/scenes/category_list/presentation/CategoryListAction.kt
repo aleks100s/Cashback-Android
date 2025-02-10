@@ -1,4 +1,4 @@
-package com.alextos.cashback.features.category.presentation.category_list
+package com.alextos.cashback.features.category.scenes.category_list.presentation
 
 import com.alextos.cashback.core.domain.models.Category
 
@@ -8,4 +8,5 @@ sealed interface CategoryListAction {
     data class SelectCategory(val category: Category): CategoryListAction
     data class DeleteCategory(val category: Category): CategoryListAction
     data class EditCategory(val category: Category): CategoryListAction
+    data object DismissCreateCategorySheet: CategoryListAction
 }

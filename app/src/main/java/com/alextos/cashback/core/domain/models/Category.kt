@@ -8,9 +8,9 @@ data class Category(
     override val id: String = UUID.randomUUID().toString(),
     val name: String,
     val emoji: String,
-    val synonyms: String?,
-    var priority: Int,
-    var isArchived: Boolean,
+    val synonyms: String? = null,
+    var priority: Int = 0,
+    var isArchived: Boolean = false,
     val info: String?,
     val isNative: Boolean
 ): ListElement

@@ -60,7 +60,7 @@ private fun AddCashbackView(
         verticalArrangement = Arrangement.spacedBy(32.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        CustomWideButton(state.selectedCategory?.name ?: stringResource(R.string.add_cashback_select_category)) {
+        CustomWideButton(title = state.selectedCategory?.name ?: stringResource(R.string.add_cashback_select_category)) {
             onAction(AddCashbackAction.SelectCategory)
         }
 

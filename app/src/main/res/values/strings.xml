@@ -44,4 +44,6 @@
     <string name="category_list_delete_category">Удалить категорию</string>
     <string name="category_list_category_removed">Категория удалена</string>
     <string name="common_remove">Удалить</string>
+    <string name="create_category_title">Создать категорию</string>
+    <string name="category_list_create_category">Создать категорию</string>
 </resources>

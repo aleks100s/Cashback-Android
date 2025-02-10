@@ -15,11 +15,12 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun CustomWideButton(
+    modifier: Modifier = Modifier,
     title: String,
     onTap: () -> Unit
 ) {
     Text(
-        modifier = Modifier
+        modifier = modifier
             .clickable { onTap() }
             .clip(RoundedCornerShape(8.dp))
             .background(MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp))

@@ -49,7 +49,8 @@ class AddCashbackViewModel(
             _state
                 .distinctUntilChanged { old, new ->
                     old.selectedCategory == new.selectedCategory && old.percent == new.percent
-                }.collect { state ->
+                }
+                .collect { state ->
                     state.card?.let { card ->
                         val percent = (state.percent.toDoubleOrNull() ?: 0.0) / 100
                         val isValid = validateCashbackUseCase.execute(card, percent, state.selectedCategory)

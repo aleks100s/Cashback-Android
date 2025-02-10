@@ -73,7 +73,7 @@ private fun CardDetailView(
 ) {
     val list = state.card?.cashback ?: emptyList()
 
-    RoundedList<Cashback>(
+    RoundedList(
         modifier = modifier.padding(horizontal = 16.dp),
         list = list,
         itemView = { modifier, cashback ->

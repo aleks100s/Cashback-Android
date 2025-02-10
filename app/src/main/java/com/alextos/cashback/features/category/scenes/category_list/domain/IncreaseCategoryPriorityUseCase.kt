@@ -1,4 +1,4 @@
-package com.alextos.cashback.features.category.domain
+package com.alextos.cashback.features.category.scenes.category_list.domain
 
 import com.alextos.cashback.core.domain.models.Category
 

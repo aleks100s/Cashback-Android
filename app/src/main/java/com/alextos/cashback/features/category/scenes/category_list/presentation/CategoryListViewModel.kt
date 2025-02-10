@@ -1,14 +1,14 @@
-package com.alextos.cashback.features.category.presentation.category_list
+package com.alextos.cashback.features.category.scenes.category_list.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.services.ToastService
 import com.alextos.cashback.features.category.CategoryMediator
-import com.alextos.cashback.features.category.domain.ArchiveCategoryUseCase
-import com.alextos.cashback.features.category.domain.CategoryRepository
-import com.alextos.cashback.features.category.domain.FilterCategoryUseCase
-import com.alextos.cashback.features.category.domain.IncreaseCategoryPriorityUseCase
+import com.alextos.cashback.features.category.scenes.category_list.domain.ArchiveCategoryUseCase
+import com.alextos.cashback.features.category.scenes.category_list.domain.CategoryRepository
+import com.alextos.cashback.features.category.scenes.category_list.domain.FilterCategoryUseCase
+import com.alextos.cashback.features.category.scenes.category_list.domain.IncreaseCategoryPriorityUseCase
 import com.alextos.cashback.util.UiText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -58,7 +58,11 @@ class CategoryListViewModel(
                     increaseCategoryPriorityUseCase.execute(action.category)
                 }
             }
-            is CategoryListAction.CreateCategory -> {}
+            is CategoryListAction.CreateCategory -> {
+                _state.update {
+                    it.copy(isCreateCategorySheetShown = true)
+                }
+            }
             is CategoryListAction.DeleteCategory -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     archiveCategoryUseCase.execute(action.category)
@@ -68,6 +72,11 @@ class CategoryListViewModel(
                 }
             }
             is CategoryListAction.EditCategory -> {}
+            is CategoryListAction.DismissCreateCategorySheet -> {
+                _state.update {
+                    it.copy(isCreateCategorySheetShown = false)
+                }
+            }
         }
     }
 }
