@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.alextos.cashback.R
@@ -26,6 +27,7 @@ fun Screen(
     modifier: Modifier,
     title: String,
     goBack: (() -> Unit)? = null,
+    backButtonIcon: ImageVector = Icons.AutoMirrored.Filled.ArrowBack,
     floatingActionButton: @Composable () -> Unit = {},
     actions: @Composable RowScope.() -> Unit = {},
     content: @Composable (Modifier) -> Unit
@@ -46,7 +48,7 @@ fun Screen(
                             }
                         ) {
                             Icon(
-                                Icons.AutoMirrored.Filled.ArrowBack,
+                                backButtonIcon,
                                 stringResource(R.string.comon_go_back)
                             )
                         }

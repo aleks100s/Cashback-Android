@@ -90,10 +90,10 @@ fun CardsRoot(modifier: Modifier = Modifier) {
             }
 
             composable<CardsRoute.SelectCategory>(
-                enterTransition = { slideInHorizontally(animationSpec = tween(500)) { it } },
+                enterTransition = { slideInVertically(animationSpec = tween(500)) { it } },
                 exitTransition = { fadeOut(animationSpec = tween(500)) },
                 popEnterTransition = { fadeIn(animationSpec = tween(500)) },
-                popExitTransition = { slideOutHorizontally(animationSpec = tween(500)) { it } }
+                popExitTransition = { slideOutVertically(animationSpec = tween(500)) { it } }
             ) {
                 CategoryRoot {
                     navController.popBackStack()

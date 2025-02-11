@@ -27,12 +27,7 @@ fun CategoryRoot(modifier: Modifier = Modifier, onSelectCategory: () -> Unit) {
         navigation<CategoryRoute.CategoryGraph>(
             startDestination = CategoryRoute.CategoryList
         ) {
-            composable<CategoryRoute.CategoryList>(
-                enterTransition = { slideInHorizontally(animationSpec = tween(500)) { it } },
-                exitTransition = { fadeOut(animationSpec = tween(500)) },
-                popEnterTransition = { fadeIn(animationSpec = tween(500)) },
-                popExitTransition = { slideOutHorizontally(animationSpec = tween(500)) { it } }
-            ) {
+            composable<CategoryRoute.CategoryList> {
                 CategoryListScreen(
                     viewModel = koinViewModel(),
                     onSelectCategory = onSelectCategory,

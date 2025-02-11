@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -44,6 +45,7 @@ fun CategoryListScreen(
         modifier = modifier,
         title = stringResource(R.string.category_list_title),
         goBack = goBack,
+        backButtonIcon = Icons.Default.Close,
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 onCreateCategory(state.searchQuery)
