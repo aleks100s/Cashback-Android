@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.generateMockCategory
 import com.alextos.cashback.common.views.Screen
@@ -32,6 +33,7 @@ import com.alextos.cashback.common.UiText
 fun CategoryListScreen(
     modifier: Modifier = Modifier,
     viewModel: CategoryListViewModel,
+    navController: NavController,
     onSelectCategory: () -> Unit,
     onCreateCategory: (String) -> Unit,
     onEditCategory: (String) -> Unit
@@ -41,6 +43,7 @@ fun CategoryListScreen(
     Screen(
         modifier = modifier,
         title = stringResource(R.string.category_list_title),
+        navController = navController,
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 onCreateCategory(state.searchQuery)

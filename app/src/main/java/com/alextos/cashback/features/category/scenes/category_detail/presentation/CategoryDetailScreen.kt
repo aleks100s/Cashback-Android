@@ -13,6 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import com.alextos.cashback.R
 import com.alextos.cashback.common.views.CustomTextField
 import com.alextos.cashback.common.views.Screen
@@ -21,13 +22,15 @@ import com.alextos.cashback.common.views.Screen
 fun CategoryDetailScreen(
     modifier: Modifier = Modifier,
     viewModel: CategoryDetailViewModel,
+    navController: NavController,
     onSaved: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     Screen(
         modifier = modifier,
-        title = state.title.asString()
+        title = state.title.asString(),
+        navController = navController
     ) {
         CategoryDetailView(modifier = it, state = state) { action ->
             viewModel.onAction(action)

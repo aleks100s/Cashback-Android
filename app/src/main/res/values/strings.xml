@@ -72,4 +72,5 @@
     <string name="card_detail_delete_card_warning">Удаленную карту можно востановить в разделе Настроек</string>
     <string name="card_detail_color">Цвет карты</string>
     <string name="card_detail_change_color">Изменить</string>
+    <string name="comon_go_back">Назад</string>
 </resources>

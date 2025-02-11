@@ -18,6 +18,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import com.alextos.cashback.R
 import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.common.views.CustomButton
@@ -28,6 +29,7 @@ import com.alextos.cashback.common.views.SectionView
 fun CashbackDetailScreen(
     modifier: Modifier = Modifier,
     viewModel: CashbackDetailViewModel,
+    navController: NavController,
     selectCategory: () -> Unit,
     onSave: () -> Unit
 ) {
@@ -35,7 +37,8 @@ fun CashbackDetailScreen(
 
     Screen(
         modifier = modifier,
-        title = state.title.asString()
+        title = state.title.asString(),
+        navController = navController
     ) {
         AddCashbackView(modifier = it, state = state, onAction = { action ->
             viewModel.onAction(action)

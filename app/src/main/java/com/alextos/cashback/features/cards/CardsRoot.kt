@@ -41,6 +41,7 @@ fun CardsRoot(modifier: Modifier = Modifier) {
 
                 CardDetailScreen(
                     viewModel = koinViewModel(),
+                    navController = navController,
                     onAddCashback = {
                         navController.navigate(CardsRoute.CashbackDetail(id, null))
                     },
@@ -56,6 +57,7 @@ fun CardsRoot(modifier: Modifier = Modifier) {
             composable<CardsRoute.CashbackDetail> {
                 CashbackDetailScreen(
                     viewModel = koinViewModel(),
+                    navController = navController,
                     selectCategory = {
                         navController.navigate(CardsRoute.SelectCategory)
                     },

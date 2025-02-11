@@ -27,6 +27,7 @@ fun CategoryRoot(modifier: Modifier = Modifier, onSelectCategory: () -> Unit) {
                 CategoryListScreen(
                     viewModel = koinViewModel(),
                     onSelectCategory = onSelectCategory,
+                    navController = navController,
                     onCreateCategory = {
                         navController.navigate(CategoryRoute.CategoryDetail(it, null))
                     },
@@ -37,7 +38,7 @@ fun CategoryRoot(modifier: Modifier = Modifier, onSelectCategory: () -> Unit) {
             }
 
             composable<CategoryRoute.CategoryDetail> {
-                CategoryDetailScreen(viewModel = koinViewModel()) {
+                CategoryDetailScreen(viewModel = koinViewModel(), navController = navController) {
                     navController.popBackStack()
                 }
             }

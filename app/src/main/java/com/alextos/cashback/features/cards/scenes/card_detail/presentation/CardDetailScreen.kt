@@ -36,6 +36,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.currency.Currency
 import com.alextos.cashback.core.domain.models.currency.localization
@@ -60,6 +61,7 @@ import com.github.skydoves.colorpicker.compose.rememberColorPickerController
 fun CardDetailScreen(
     modifier: Modifier = Modifier,
     viewModel: CardDetailViewModel,
+    navController: NavController,
     onAddCashback: () -> Unit,
     onEditCashback: (String) -> Unit,
     onDelete: () -> Unit
@@ -69,6 +71,7 @@ fun CardDetailScreen(
     Screen(
         modifier = modifier,
         title = state.cardName,
+        navController = navController,
         floatingActionButton = {
             if (!state.isEditMode) {
                 FloatingActionButton(onClick = {
