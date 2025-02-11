@@ -28,6 +28,7 @@
     <string name="common_save">Сохранить</string>
     <string name="common_ok">Ок</string>
     <string name="cards_list_card_added">Карта добавлена</string>
+    <string name="card_list_card_changed">Карта обновлена</string>
     <string name="card_detail_add_cashback">Добавить кэшбэк</string>
     <string name="add_cashback_select_category">Выбрать категорию</string>
     <string name="add_cashback_percent">Процент кэшбэка</string>
@@ -55,4 +56,18 @@
     <string name="category_detail_edit_title">Редактировать категорию</string>
     <string name="category_detail_added">Категория добавлена</string>
     <string name="category_detail_changeded">Категория изменена</string>
+    <string name="card_detail_edit">Редактировать</string>
+    <string name="card_detail_edit_card_info">Редактировать данные карты</string>
+    <string name="card_detail_card_name">Название карты</string>
+    <string name="card_detail_in_favourites">В избранном</string>
+    <string name="card_detail_add_to_favourites">Добавить в избранное</string>
+    <string name="card_detail_cashback_currency">Выплата кэшбэка</string>
+    <string name="card_detail_for_brave_users">Для отважных пользователей</string>
+    <string name="card_detail_this_action_cannot_be_undone">Эти действия нельзя отменить</string>
+    <string name="card_detail_delete_all_cashback">Удалить все кэшбэки с карты</string>
+    <string name="card_detail_all_cashback_deleted">Все кэшбэки удалены</string>
+    <string name="card_detail_delete_card">Удалить карту</string>
+    <string name="card_detail_card_deleted">Карта удалена</string>
+    <string name="common_are_you_sure">Вы уверены?</string>
+    <string name="card_detail_delete_card_warning">Удаленную карту можно востановить в разделе Настроек</string>
 </resources>

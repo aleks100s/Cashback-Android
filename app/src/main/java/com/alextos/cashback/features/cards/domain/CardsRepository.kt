@@ -12,4 +12,5 @@ interface CardsRepository {
     suspend fun deleteCashback(cashback: Cashback, cardId: String)
     suspend fun createCashback(cashback: Cashback, cardId: String)
     suspend fun getCashback(id: String): Cashback?
+    suspend fun archiveCard(card: Card)
 }

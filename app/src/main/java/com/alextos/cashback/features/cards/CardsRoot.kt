@@ -46,6 +46,9 @@ fun CardsRoot(modifier: Modifier = Modifier) {
                     },
                     onEditCashback = {
                         navController.navigate(CardsRoute.CashbackDetail(id, it))
+                    },
+                    onDelete = {
+                        navController.popBackStack()
                     }
                 )
             }

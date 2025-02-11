@@ -4,8 +4,13 @@ import com.alextos.cashback.core.domain.models.Cashback
 
 sealed interface CardDetailAction {
     data object ToggleEditMode: CardDetailAction
-    data class ShowDeleteCashbackDialog(val cashback: Cashback): CardDetailAction
-    data object DismissDeleteCashbackDialog: CardDetailAction
     data class DeleteCashback(val cashback: Cashback): CardDetailAction
     data class EditCashback(val cashback: Cashback): CardDetailAction
+    data class ChangeCardName(val name: String): CardDetailAction
+    data object ToggleFavourite: CardDetailAction
+    data class ChangeCurrency(val currency: String): CardDetailAction
+    data object DeleteAllCashback: CardDetailAction
+    data object ShowDeleteCardDialog: CardDetailAction
+    data object DismissDeleteCardDialog: CardDetailAction
+    data object DeleteCard: CardDetailAction
 }

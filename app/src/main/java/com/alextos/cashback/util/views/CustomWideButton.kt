@@ -11,12 +11,14 @@ import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun CustomWideButton(
     modifier: Modifier = Modifier,
     title: String,
+    color: Color = MaterialTheme.colorScheme.primary,
     onTap: () -> Unit
 ) {
     Text(
@@ -27,6 +29,6 @@ fun CustomWideButton(
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 12.dp),
         text = title,
-        color = MaterialTheme.colorScheme.primary
+        color = color
     )
 }

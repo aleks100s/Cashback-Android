@@ -1,5 +1,6 @@
 package com.alextos.cashback.util.views
 
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -14,6 +15,7 @@ fun Screen(
     modifier: Modifier,
     title: String,
     floatingActionButton: @Composable () -> Unit = {},
+    actions: @Composable RowScope.() -> Unit = {},
     content: @Composable (Modifier) -> Unit
 ) {
     Scaffold(
@@ -22,7 +24,8 @@ fun Screen(
             TopAppBar(
                 title = {
                     Text(title)
-                }
+                },
+                actions = actions
             )
         },
         floatingActionButton = floatingActionButton

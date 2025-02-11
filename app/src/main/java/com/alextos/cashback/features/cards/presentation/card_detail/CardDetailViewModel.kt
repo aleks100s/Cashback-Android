@@ -29,7 +29,14 @@ class CardDetailViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             repository.getCardFlow(cardId)
                 .collect { card ->
-                    _state.update { it.copy(card = card) }
+                    _state.update { state ->
+                        state.copy(
+                            card = card,
+                            cardName = card?.name ?: "",
+                            isFavourite = card?.isFavourite ?: false,
+                            currency = card?.currency ?: ""
+                        )
+                    }
                 }
         }
     }
@@ -38,21 +45,70 @@ class CardDetailViewModel(
         when (action) {
             is CardDetailAction.ToggleEditMode -> {
                 _state.update { it.copy(isEditMode = !it.isEditMode) }
-            }
-            is CardDetailAction.ShowDeleteCashbackDialog -> {
-                _state.update { it.copy(cashbackToDelete = action.cashback) }
-            }
-            is CardDetailAction.DismissDeleteCashbackDialog -> {
-                _state.update { it.copy(cashbackToDelete = null) }
+                val state = state.value
+                val card = state.card?.copy(
+                    name = state.cardName,
+                    isFavourite = state.isFavourite,
+                    currency = state.currency
+                )
+                if (!state.isEditMode && card != null) {
+                    viewModelScope.launch(Dispatchers.IO) {
+                        repository.createOrUpdate(card)
+                    }
+                    toastService.showToast(UiText.StringResourceId(R.string.card_list_card_changed))
+                }
             }
             is CardDetailAction.DeleteCashback -> {
-                _state.update { it.copy(cashbackToDelete = null) }
                 viewModelScope.launch(Dispatchers.IO) {
                     repository.deleteCashback(action.cashback, cardId)
                     repository.getCard(cardId)?.let { card ->
                         _state.update { it.copy(card = card) }
                         viewModelScope.launch(Dispatchers.Main) {
                             toastService.showToast(UiText.StringResourceId(R.string.card_detail_cashback_removed))
+                        }
+                    }
+                }
+            }
+            is CardDetailAction.ChangeCardName -> {
+                _state.update { it.copy(cardName = action.name) }
+            }
+            is CardDetailAction.ToggleFavourite -> {
+                _state.update { it.copy(isFavourite = !it.isFavourite) }
+            }
+            is CardDetailAction.ChangeCurrency -> {
+                _state.update { it.copy(currency = action.currency) }
+            }
+            is CardDetailAction.DeleteAllCashback -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    val card = state.value.card
+                    if (card != null) {
+                        card.cashback.forEach {
+                            repository.deleteCashback(cashback = it, cardId = card.id)
+                        }
+                        repository.createOrUpdate(card)
+                        viewModelScope.launch(Dispatchers.Main) {
+                            _state.update { it.copy(card = card.copy(cashback = emptyList())) }
+                            toastService.showToast(UiText.StringResourceId(R.string.card_detail_all_cashback_deleted))
+                        }
+                    }
+                }
+            }
+            is CardDetailAction.ShowDeleteCardDialog -> {
+                _state.update { it.copy(isDeleteCardDialogShown = true) }
+            }
+            is CardDetailAction.DismissDeleteCardDialog -> {
+                _state.update { it.copy(isDeleteCardDialogShown = false) }
+            }
+            is CardDetailAction.DeleteCard -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    val card = state.value.card?.copy(cashback = emptyList(), isArchived = true)
+                    if (card != null) {
+                        card.cashback.forEach {
+                            repository.deleteCashback(cashback = it, cardId = card.id)
+                        }
+                        repository.archiveCard(card)
+                        viewModelScope.launch(Dispatchers.Main) {
+                            toastService.showToast(UiText.StringResourceId(R.string.card_detail_card_deleted))
                         }
                     }
                 }

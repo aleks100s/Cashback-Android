@@ -1,74 +1,122 @@
 package com.alextos.cashback.features.cards.presentation.card_detail
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
+import com.alextos.cashback.core.domain.models.currency.Currency
+import com.alextos.cashback.core.domain.models.currency.localization
 import com.alextos.cashback.util.views.Screen
 import com.alextos.cashback.util.views.ContextMenuItem
-import com.alextos.cashback.util.views.Dialog
 import com.alextos.cashback.features.cards.presentation.card_detail.components.CashbackView
 import com.alextos.cashback.util.UiText
+import com.alextos.cashback.util.views.CustomTextField
+import com.alextos.cashback.util.views.CustomWideButton
+import com.alextos.cashback.util.views.Dialog
+import com.alextos.cashback.util.views.PickerDropdown
 import com.alextos.cashback.util.views.RoundedList
+import com.alextos.cashback.util.views.SectionView
 
 @Composable
 fun CardDetailScreen(
     modifier: Modifier = Modifier,
     viewModel: CardDetailViewModel,
     onAddCashback: () -> Unit,
-    onEditCashback: (String) -> Unit
+    onEditCashback: (String) -> Unit,
+    onDelete: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     Screen(
         modifier = modifier,
-        title = state.card?.name ?: "",
+        title = state.cardName,
         floatingActionButton = {
-            FloatingActionButton(onClick = {
-                onAddCashback()
-            }) {
-                Icon(Icons.Filled.Add, stringResource(R.string.card_detail_add_cashback))
+            if (!state.isEditMode) {
+                FloatingActionButton(onClick = {
+                    onAddCashback()
+                }) {
+                    Icon(Icons.Filled.Add, stringResource(R.string.card_detail_add_cashback))
+                }
+            }
+        },
+        actions = {
+            IconButton(
+                onClick = {
+                    viewModel.onAction(CardDetailAction.ToggleEditMode)
+                }
+            ) {
+                if (state.isEditMode) {
+                    Icon(Icons.Filled.Check, stringResource(R.string.common_save))
+                } else {
+                    Icon(Icons.Filled.Edit, stringResource(R.string.card_detail_edit))
+                }
             }
         }
     ) {
-        CardDetailView(
-            modifier = it,
-            state = state,
-            onAction = { action ->
-                viewModel.onAction(action)
-                when (action) {
-                    is CardDetailAction.EditCashback -> {
-                        onEditCashback(action.cashback.id)
+        if (state.isEditMode) {
+            EditCardView(
+                modifier = it,
+                state = state,
+                onAction = viewModel::onAction
+            )
+        } else {
+            CardDetailView(
+                modifier = it,
+                state = state,
+                onAction = { action ->
+                    viewModel.onAction(action)
+                    when (action) {
+                        is CardDetailAction.EditCashback -> {
+                            onEditCashback(action.cashback.id)
+                        }
+
+                        else -> {}
                     }
-                    else -> {}
                 }
-            }
-        )
+            )
+        }
     }
-    state.cashbackToDelete?.let {
+
+    if (state.isDeleteCardDialogShown) {
         Dialog(
-            title = stringResource(R.string.dialog_delete_cashback),
-            text = stringResource(R.string.dialog_cannot_undo),
-            actionTitle = stringResource(R.string.dialog_delete),
+            title = stringResource(R.string.common_are_you_sure),
+            text = stringResource(R.string.card_detail_delete_card_warning),
+            actionTitle = stringResource(R.string.common_remove),
             onConfirm = {
-                viewModel.onAction(CardDetailAction.DeleteCashback(it))
+                viewModel.onAction(CardDetailAction.DeleteCard)
+                onDelete()
             },
             onDismiss = {
-                viewModel.onAction(CardDetailAction.DismissDeleteCashbackDialog)
+                viewModel.onAction(CardDetailAction.DismissDeleteCardDialog)
             }
         )
     }
@@ -93,18 +141,25 @@ private fun CardDetailView(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = stringResource(R.string.card_detail_no_cashback))
+                Text(
+                    text = stringResource(R.string.card_detail_no_cashback),
+                    style = MaterialTheme.typography.headlineSmall
+                )
             }
         },
         topView = {
             Text(
-                modifier = Modifier.padding(start = 8.dp).padding(vertical = 4.dp),
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .padding(vertical = 4.dp),
                 text = stringResource(R.string.card_detail_cashback_list_title)
             )
         },
         bottomView = {
             Text(
-                modifier = Modifier.padding(start = 8.dp).padding(vertical = 4.dp),
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .padding(vertical = 4.dp),
                 text = stringResource(R.string.card_detail_cashback_currency_form, state.card?.currency ?: ""),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.secondary
@@ -134,6 +189,113 @@ private fun CardDetailView(
             )
         }
     )
+}
+
+@Composable
+private fun EditCardView(
+    modifier: Modifier = Modifier,
+    state: CardDetailState,
+    onAction: (CardDetailAction) -> Unit
+) {
+    Column(
+        modifier = modifier.padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(32.dp)
+    ) {
+        SectionView(title = stringResource(R.string.card_detail_edit_card_info)) {
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp, vertical = 12.dp)
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                CustomTextField(
+                    value = state.cardName,
+                    onValueChange = {
+                        onAction(CardDetailAction.ChangeCardName(it))
+                    },
+                    label = stringResource(R.string.card_detail_card_name)
+                )
+
+                HorizontalDivider()
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(text = stringResource(R.string.card_detail_cashback_currency))
+
+                    PickerDropdown(
+                        content = {
+                            Text(
+                                modifier = Modifier.padding(horizontal = 16.dp),
+                                text = state.currency,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                        },
+                        options = Currency.entries.map { it.localization },
+                        onSelect = {
+                            onAction(CardDetailAction.ChangeCurrency(it))
+                        }
+                    )
+                }
+
+                HorizontalDivider()
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = if (state.isFavourite) {
+                            stringResource(R.string.card_detail_in_favourites)
+                        } else {
+                            stringResource(R.string.card_detail_add_to_favourites)
+                        }
+                    )
+
+                    Icon(
+                        modifier = Modifier
+                            .size(24.dp)
+                            .minimumInteractiveComponentSize()
+                            .clickable {
+                                onAction(CardDetailAction.ToggleFavourite)
+                            },
+                        imageVector = if (state.isFavourite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                        contentDescription = stringResource(R.string.cards_list_item_favourite),
+                        tint = if (state.isFavourite) Color.Red else Color.Gray
+                    )
+                }
+            }
+        }
+
+        SectionView(
+            title = stringResource(R.string.card_detail_for_brave_users),
+            footer = stringResource(R.string.card_detail_this_action_cannot_be_undone)
+        ) {
+            Column(
+                modifier = Modifier.padding(vertical = 8.dp).fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                if (state.card?.cashback?.isNotEmpty() == true) {
+                    CustomWideButton(
+                        title = stringResource(R.string.card_detail_delete_all_cashback),
+                        color = MaterialTheme.colorScheme.error
+                    ) {
+                        onAction(CardDetailAction.DeleteAllCashback)
+                    }
+
+                    HorizontalDivider()
+                }
+
+                CustomWideButton(
+                    title = stringResource(R.string.card_detail_delete_card),
+                    color = MaterialTheme.colorScheme.error
+                ) {
+                    onAction(CardDetailAction.ShowDeleteCardDialog)
+                }
+            }
+        }
+    }
 }
 
 @Preview
