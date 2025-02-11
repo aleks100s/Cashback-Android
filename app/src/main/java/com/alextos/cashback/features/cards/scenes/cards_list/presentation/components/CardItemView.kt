@@ -28,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.alextos.cashback.R
+import com.alextos.cashback.common.makeColor
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.domain.models.generateMockCard
 
@@ -57,7 +58,7 @@ fun CardItemView(
                     modifier = Modifier.size(20.dp),
                     painter = painterResource(R.drawable.credit_card),
                     contentDescription = stringResource(R.string.cards_list_card_icon),
-                    tint = Color(android.graphics.Color.parseColor(card.color ?: "#E7E7E7"))
+                    tint = makeColor(card.color)
                 )
 
                 Text(text = card.name)

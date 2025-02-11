@@ -16,19 +16,16 @@ import androidx.compose.ui.Modifier
 @Composable
 fun PickerDropdown(
     modifier: Modifier = Modifier,
-    content: @Composable () -> Unit,
+    title: String,
     options: List<String>,
     onSelect: (String) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
 
-    Box(
-        modifier = modifier
-            .clickable {
-                expanded = true
-            }
-    ) {
-        content()
+    Box(modifier = modifier) {
+        CustomButton(title) {
+            expanded = true
+        }
 
         if (options.isNotEmpty()) {
             DropdownMenu(

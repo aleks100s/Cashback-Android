@@ -9,6 +9,9 @@ sealed interface CardDetailAction {
     data class ChangeCardName(val name: String): CardDetailAction
     data object ToggleFavourite: CardDetailAction
     data class ChangeCurrency(val currency: String): CardDetailAction
+    data object PickColor: CardDetailAction
+    data object DismissColorPicker: CardDetailAction
+    data class ChangeColor(val color: String): CardDetailAction
     data object DeleteAllCashback: CardDetailAction
     data object ShowDeleteCardDialog: CardDetailAction
     data object DismissDeleteCardDialog: CardDetailAction

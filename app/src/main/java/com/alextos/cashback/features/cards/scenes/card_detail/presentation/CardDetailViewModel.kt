@@ -38,7 +38,8 @@ class CardDetailViewModel(
                             card = card,
                             cardName = card?.name ?: "",
                             isFavourite = card?.isFavourite ?: false,
-                            currency = card?.currency ?: ""
+                            currency = card?.currency ?: "",
+                            color = card?.color ?: "#E7E7E7"
                         )
                     }
                 }
@@ -53,7 +54,8 @@ class CardDetailViewModel(
                 val card = state.card?.copy(
                     name = state.cardName,
                     isFavourite = state.isFavourite,
-                    currency = state.currency
+                    currency = state.currency,
+                    color = state.color
                 )
                 if (!state.isEditMode && card != null) {
                     viewModelScope.launch(Dispatchers.IO) {
@@ -81,6 +83,15 @@ class CardDetailViewModel(
             }
             is CardDetailAction.ChangeCurrency -> {
                 _state.update { it.copy(currency = action.currency) }
+            }
+            is CardDetailAction.PickColor -> {
+                _state.update { it.copy(isPickColorSheetShown = true) }
+            }
+            is CardDetailAction.DismissColorPicker -> {
+                _state.update { it.copy(isPickColorSheetShown = false) }
+            }
+            is CardDetailAction.ChangeColor -> {
+                _state.update { it.copy(color = "#${action.color}") }
             }
             is CardDetailAction.DeleteAllCashback -> {
                 viewModelScope.launch(Dispatchers.IO) {

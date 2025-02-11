@@ -7,19 +7,24 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
@@ -38,13 +43,19 @@ import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.common.views.ContextMenuItem
 import com.alextos.cashback.features.cards.scenes.card_detail.presentation.components.CashbackView
 import com.alextos.cashback.common.UiText
+import com.alextos.cashback.common.makeColor
+import com.alextos.cashback.common.views.CustomButton
 import com.alextos.cashback.common.views.CustomTextField
 import com.alextos.cashback.common.views.CustomWideButton
 import com.alextos.cashback.common.views.Dialog
 import com.alextos.cashback.common.views.PickerDropdown
 import com.alextos.cashback.common.views.RoundedList
 import com.alextos.cashback.common.views.SectionView
+import com.github.skydoves.colorpicker.compose.ColorEnvelope
+import com.github.skydoves.colorpicker.compose.HsvColorPicker
+import com.github.skydoves.colorpicker.compose.rememberColorPickerController
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardDetailScreen(
     modifier: Modifier = Modifier,
@@ -118,6 +129,37 @@ fun CardDetailScreen(
                 viewModel.onAction(CardDetailAction.DismissDeleteCardDialog)
             }
         )
+    }
+
+    if (state.isPickColorSheetShown) {
+        ModalBottomSheet(onDismissRequest = {
+            viewModel.onAction(CardDetailAction.DismissColorPicker)
+        }) {
+            val controller = rememberColorPickerController()
+
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(32.dp)
+            ) {
+                HsvColorPicker(
+                    modifier = Modifier
+                        .size(300.dp)
+                        .padding(16.dp),
+                    controller = controller,
+                    onColorChanged = { colorEnvelope: ColorEnvelope ->
+                        viewModel.onAction(CardDetailAction.ChangeColor(colorEnvelope.hexCode))
+                    },
+                    initialColor = makeColor(state.color)
+                )
+
+                Button(onClick = {
+                    viewModel.onAction(CardDetailAction.DismissColorPicker)
+                }) {
+                    Text(text = stringResource(R.string.common_ok))
+                }
+            }
+        }
     }
 }
 
@@ -196,101 +238,119 @@ private fun EditCardView(
     state: CardDetailState,
     onAction: (CardDetailAction) -> Unit
 ) {
-    Column(
+    LazyColumn(
         modifier = modifier.padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(32.dp)
     ) {
-        SectionView(title = stringResource(R.string.card_detail_edit_card_info)) {
-            Column(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp, vertical = 12.dp)
-                    .fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                CustomTextField(
-                    value = state.cardName,
-                    onValueChange = {
-                        onAction(CardDetailAction.ChangeCardName(it))
-                    },
-                    label = stringResource(R.string.card_detail_card_name)
-                )
-
-                HorizontalDivider()
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
+        item {
+            SectionView(title = stringResource(R.string.card_detail_edit_card_info)) {
+                Column(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp, vertical = 12.dp)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    Text(text = stringResource(R.string.card_detail_cashback_currency))
-
-                    PickerDropdown(
-                        content = {
-                            Text(
-                                modifier = Modifier.padding(horizontal = 16.dp),
-                                text = state.currency,
-                                color = MaterialTheme.colorScheme.primary
-                            )
+                    CustomTextField(
+                        value = state.cardName,
+                        onValueChange = {
+                            onAction(CardDetailAction.ChangeCardName(it))
                         },
-                        options = Currency.entries.map { it.localization },
-                        onSelect = {
-                            onAction(CardDetailAction.ChangeCurrency(it))
+                        label = stringResource(R.string.card_detail_card_name)
+                    )
+
+                    HorizontalDivider()
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(text = stringResource(R.string.card_detail_cashback_currency))
+
+                        PickerDropdown(
+                            title = state.currency,
+                            options = Currency.entries.map { it.localization },
+                            onSelect = {
+                                onAction(CardDetailAction.ChangeCurrency(it))
+                            }
+                        )
+                    }
+
+                    HorizontalDivider()
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(text = stringResource(R.string.card_detail_color))
+
+                        CustomButton(
+                            title = stringResource(R.string.card_detail_change_color),
+                            color = makeColor(state.color)
+                        ) {
+                            onAction(CardDetailAction.PickColor)
                         }
-                    )
-                }
+                    }
 
-                HorizontalDivider()
+                    HorizontalDivider()
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = if (state.isFavourite) {
-                            stringResource(R.string.card_detail_in_favourites)
-                        } else {
-                            stringResource(R.string.card_detail_add_to_favourites)
-                        }
-                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = if (state.isFavourite) {
+                                stringResource(R.string.card_detail_in_favourites)
+                            } else {
+                                stringResource(R.string.card_detail_add_to_favourites)
+                            }
+                        )
 
-                    Icon(
-                        modifier = Modifier
-                            .size(24.dp)
-                            .minimumInteractiveComponentSize()
-                            .clickable {
-                                onAction(CardDetailAction.ToggleFavourite)
-                            },
-                        imageVector = if (state.isFavourite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                        contentDescription = stringResource(R.string.cards_list_item_favourite),
-                        tint = if (state.isFavourite) Color.Red else Color.Gray
-                    )
+                        Icon(
+                            modifier = Modifier
+                                .size(24.dp)
+                                .minimumInteractiveComponentSize()
+                                .clickable {
+                                    onAction(CardDetailAction.ToggleFavourite)
+                                },
+                            imageVector = if (state.isFavourite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                            contentDescription = stringResource(R.string.cards_list_item_favourite),
+                            tint = if (state.isFavourite) Color.Red else Color.Gray
+                        )
+                    }
                 }
             }
         }
 
-        SectionView(
-            title = stringResource(R.string.card_detail_for_brave_users),
-            footer = stringResource(R.string.card_detail_this_action_cannot_be_undone)
-        ) {
-            Column(
-                modifier = Modifier.padding(vertical = 8.dp).fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+        item {
+            SectionView(
+                title = stringResource(R.string.card_detail_for_brave_users),
+                footer = stringResource(R.string.card_detail_this_action_cannot_be_undone)
             ) {
-                if (state.card?.cashback?.isNotEmpty() == true) {
-                    CustomWideButton(
-                        title = stringResource(R.string.card_detail_delete_all_cashback),
-                        color = MaterialTheme.colorScheme.error
-                    ) {
-                        onAction(CardDetailAction.DeleteAllCashback)
+                Column(
+                    modifier = Modifier
+                        .padding(vertical = 8.dp)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    if (state.card?.cashback?.isNotEmpty() == true) {
+                        CustomWideButton(
+                            title = stringResource(R.string.card_detail_delete_all_cashback),
+                            color = MaterialTheme.colorScheme.error
+                        ) {
+                            onAction(CardDetailAction.DeleteAllCashback)
+                        }
+
+                        HorizontalDivider()
                     }
 
-                    HorizontalDivider()
-                }
-
-                CustomWideButton(
-                    title = stringResource(R.string.card_detail_delete_card),
-                    color = MaterialTheme.colorScheme.error
-                ) {
-                    onAction(CardDetailAction.ShowDeleteCardDialog)
+                    CustomWideButton(
+                        title = stringResource(R.string.card_detail_delete_card),
+                        color = MaterialTheme.colorScheme.error
+                    ) {
+                        onAction(CardDetailAction.ShowDeleteCardDialog)
+                    }
                 }
             }
         }

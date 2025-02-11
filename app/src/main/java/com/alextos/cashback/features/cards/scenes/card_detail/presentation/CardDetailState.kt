@@ -6,7 +6,9 @@ data class CardDetailState(
     val isEditMode: Boolean = false,
     val card: Card? = null,
     val cardName: String = "",
+    val color: String = "#E7E7E7",
     val isFavourite: Boolean = false,
     val currency: String = "",
-    val isDeleteCardDialogShown: Boolean = false
+    val isDeleteCardDialogShown: Boolean = false,
+    val isPickColorSheetShown: Boolean = false
 )
