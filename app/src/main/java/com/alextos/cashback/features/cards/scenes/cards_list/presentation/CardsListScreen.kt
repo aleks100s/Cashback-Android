@@ -34,10 +34,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.Card
-import com.alextos.cashback.util.views.Screen
+import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.features.cards.scenes.cards_list.presentation.components.AddCardSheet
 import com.alextos.cashback.features.cards.scenes.cards_list.presentation.components.CardItemView
-import com.alextos.cashback.util.views.SearchBar
+import com.alextos.cashback.common.views.SearchBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

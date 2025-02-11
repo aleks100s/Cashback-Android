@@ -1,4 +1,4 @@
-package com.alextos.cashback.util.views
+package com.alextos.cashback.common.views
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text

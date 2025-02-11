@@ -3,7 +3,7 @@ package com.alextos.cashback.core.data.services
 import android.content.Context
 import android.widget.Toast
 import com.alextos.cashback.core.domain.services.ToastService
-import com.alextos.cashback.util.UiText
+import com.alextos.cashback.common.UiText
 
 class ToastServiceImpl(private val context: Context): ToastService {
     override fun showToast(text: UiText) {

@@ -21,6 +21,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,6 +37,8 @@ fun CardItemView(
     card: Card,
     onFavouriteTap: () -> Unit
 ) {
+    val haptic = LocalHapticFeedback.current
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -89,6 +93,7 @@ fun CardItemView(
                                     .minimumInteractiveComponentSize()
                                     .clickable {
                                         onFavouriteTap()
+                                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                                     },
                                 imageVector = if (card.isFavourite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                                 contentDescription = stringResource(R.string.cards_list_item_favourite),

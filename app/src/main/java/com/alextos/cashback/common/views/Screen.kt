@@ -1,4 +1,4 @@
-package com.alextos.cashback.util.views
+package com.alextos.cashback.common.views
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding

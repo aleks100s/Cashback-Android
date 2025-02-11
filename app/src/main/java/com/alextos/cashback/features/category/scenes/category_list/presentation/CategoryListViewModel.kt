@@ -9,7 +9,7 @@ import com.alextos.cashback.features.category.scenes.category_list.domain.Archiv
 import com.alextos.cashback.features.category.scenes.category_list.domain.CategoryRepository
 import com.alextos.cashback.features.category.scenes.category_list.domain.FilterCategoryUseCase
 import com.alextos.cashback.features.category.scenes.category_list.domain.IncreaseCategoryPriorityUseCase
-import com.alextos.cashback.util.UiText
+import com.alextos.cashback.common.UiText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

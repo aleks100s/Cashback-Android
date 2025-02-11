@@ -21,12 +21,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.generateMockCategory
-import com.alextos.cashback.util.views.Screen
-import com.alextos.cashback.util.views.ContextMenuItem
-import com.alextos.cashback.util.views.RoundedList
-import com.alextos.cashback.util.views.SearchBar
+import com.alextos.cashback.common.views.Screen
+import com.alextos.cashback.common.views.ContextMenuItem
+import com.alextos.cashback.common.views.RoundedList
+import com.alextos.cashback.common.views.SearchBar
 import com.alextos.cashback.features.category.scenes.category_list.presentation.components.CategoryItemView
-import com.alextos.cashback.util.UiText
+import com.alextos.cashback.common.UiText
 
 @Composable
 fun CategoryListScreen(

@@ -1,4 +1,4 @@
-package com.alextos.cashback.util
+package com.alextos.cashback.common
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable

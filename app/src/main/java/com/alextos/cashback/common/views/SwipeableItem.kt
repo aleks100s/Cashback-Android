@@ -1,4 +1,4 @@
-package com.alextos.cashback.util.views
+package com.alextos.cashback.common.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -11,6 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.alextos.cashback.R
@@ -21,9 +23,12 @@ fun SwipeableItem(
     content: @Composable RowScope.() -> Unit,
     onDelete: () -> Boolean
 ) {
+    val haptic = LocalHapticFeedback.current
     val dismissState = rememberSwipeToDismissBoxState(
         confirmValueChange = {
             if (it == SwipeToDismissBoxValue.EndToStart) {
+                HapticFeedbackType(10)
+                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                 return@rememberSwipeToDismissBoxState onDelete()
             }
             return@rememberSwipeToDismissBoxState false

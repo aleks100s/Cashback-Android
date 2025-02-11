@@ -1,7 +1,6 @@
-package com.alextos.cashback.util.views
+package com.alextos.cashback.common.views
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.DropdownMenu
@@ -14,41 +13,59 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
+import com.alextos.cashback.common.UiText
 
+data class ContextMenuItem<Element>(
+    val title: UiText,
+    val isDestructive: Boolean = false,
+    val action: (Element) -> Unit
+)
+
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun PickerDropdown(
+fun <Element> ContextMenu(
     modifier: Modifier = Modifier,
+    element: Element,
     content: @Composable () -> Unit,
-    options: List<String>,
-    onSelect: (String) -> Unit
+    actions: List<ContextMenuItem<Element>>,
+    onClick: (Element) -> Unit
 ) {
+    val haptic = LocalHapticFeedback.current
     var expanded by remember { mutableStateOf(false) }
 
     Box(
         modifier = modifier
-            .clickable {
-                expanded = true
-            }
+            .combinedClickable(
+                onClick = {
+                    onClick(element)
+                },
+                onLongClick = {
+                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                    expanded = true
+                }
+            )
     ) {
         content()
 
-        if (options.isNotEmpty()) {
+        if (actions.isNotEmpty()) {
             DropdownMenu(
                 expanded = expanded,
                 onDismissRequest = {
                     expanded = false
                 }
             ) {
-                options.forEach {
+                actions.forEach {
                     DropdownMenuItem(
                         text = {
                             Text(
-                                text = it,
-                                color = MaterialTheme.colorScheme.secondary
+                                text = it.title.asString(),
+                                color = if (it.isDestructive) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.secondary
                             )
                         },
                         onClick = {
-                            onSelect(it)
+                            it.action(element)
                             expanded = false
                         }
                     )

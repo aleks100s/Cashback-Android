@@ -14,8 +14,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
-import com.alextos.cashback.util.views.CustomTextField
-import com.alextos.cashback.util.views.Screen
+import com.alextos.cashback.common.views.CustomTextField
+import com.alextos.cashback.common.views.Screen
 
 @Composable
 fun CategoryDetailScreen(

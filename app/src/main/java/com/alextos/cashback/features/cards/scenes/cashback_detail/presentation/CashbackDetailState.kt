@@ -2,7 +2,7 @@ package com.alextos.cashback.features.cards.scenes.cashback_detail.presentation
 
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.domain.models.Category
-import com.alextos.cashback.util.UiText
+import com.alextos.cashback.common.UiText
 
 data class CashbackDetailState(
     val percent: String = "5",

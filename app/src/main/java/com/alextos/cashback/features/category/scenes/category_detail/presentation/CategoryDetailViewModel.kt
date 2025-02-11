@@ -1,6 +1,5 @@
 package com.alextos.cashback.features.category.scenes.category_detail.presentation
 
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,7 +10,7 @@ import com.alextos.cashback.core.domain.services.ToastService
 import com.alextos.cashback.features.category.CategoryRoute
 import com.alextos.cashback.features.category.scenes.category_list.domain.CategoryRepository
 import com.alextos.cashback.features.category.scenes.category_detail.domain.ValidateCategoryUseCase
-import com.alextos.cashback.util.UiText
+import com.alextos.cashback.common.UiText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

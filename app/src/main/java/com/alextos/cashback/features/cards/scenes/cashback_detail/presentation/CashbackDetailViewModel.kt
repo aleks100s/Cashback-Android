@@ -11,7 +11,7 @@ import com.alextos.cashback.features.cards.CardsRoute
 import com.alextos.cashback.features.cards.domain.CardsRepository
 import com.alextos.cashback.features.cards.scenes.cashback_detail.domain.ValidateCashbackUseCase
 import com.alextos.cashback.features.category.CategoryMediator
-import com.alextos.cashback.util.UiText
+import com.alextos.cashback.common.UiText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -34,16 +34,16 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.currency.Currency
 import com.alextos.cashback.core.domain.models.currency.localization
-import com.alextos.cashback.util.views.Screen
-import com.alextos.cashback.util.views.ContextMenuItem
+import com.alextos.cashback.common.views.Screen
+import com.alextos.cashback.common.views.ContextMenuItem
 import com.alextos.cashback.features.cards.scenes.card_detail.presentation.components.CashbackView
-import com.alextos.cashback.util.UiText
-import com.alextos.cashback.util.views.CustomTextField
-import com.alextos.cashback.util.views.CustomWideButton
-import com.alextos.cashback.util.views.Dialog
-import com.alextos.cashback.util.views.PickerDropdown
-import com.alextos.cashback.util.views.RoundedList
-import com.alextos.cashback.util.views.SectionView
+import com.alextos.cashback.common.UiText
+import com.alextos.cashback.common.views.CustomTextField
+import com.alextos.cashback.common.views.CustomWideButton
+import com.alextos.cashback.common.views.Dialog
+import com.alextos.cashback.common.views.PickerDropdown
+import com.alextos.cashback.common.views.RoundedList
+import com.alextos.cashback.common.views.SectionView
 
 @Composable
 fun CardDetailScreen(

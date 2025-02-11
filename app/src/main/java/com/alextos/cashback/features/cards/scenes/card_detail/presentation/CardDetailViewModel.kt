@@ -10,7 +10,7 @@ import com.alextos.cashback.features.cards.CardsRoute
 import com.alextos.cashback.features.cards.domain.CardsRepository
 import com.alextos.cashback.features.cards.scenes.card_detail.domain.DeleteAllCashbackUseCase
 import com.alextos.cashback.features.cards.scenes.card_detail.domain.DeleteCardUseCase
-import com.alextos.cashback.util.UiText
+import com.alextos.cashback.common.UiText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

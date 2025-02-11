@@ -1,6 +1,6 @@
 package com.alextos.cashback.core.domain.models
 
-import com.alextos.cashback.util.views.ListElement
+import com.alextos.cashback.common.views.ListElement
 import java.util.Locale
 import java.util.UUID
 import kotlin.random.Random

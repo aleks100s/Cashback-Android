@@ -1,6 +1,6 @@
 package com.alextos.cashback.features.category.scenes.category_detail.presentation
 
-import com.alextos.cashback.util.UiText
+import com.alextos.cashback.common.UiText
 
 data class CategoryDetailState(
     val categoryName: String = "",
