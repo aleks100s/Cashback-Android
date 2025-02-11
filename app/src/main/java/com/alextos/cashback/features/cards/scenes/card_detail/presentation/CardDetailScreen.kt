@@ -1,4 +1,4 @@
-package com.alextos.cashback.features.cards.presentation.card_detail
+package com.alextos.cashback.features.cards.scenes.card_detail.presentation
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -28,7 +28,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -37,7 +36,7 @@ import com.alextos.cashback.core.domain.models.currency.Currency
 import com.alextos.cashback.core.domain.models.currency.localization
 import com.alextos.cashback.util.views.Screen
 import com.alextos.cashback.util.views.ContextMenuItem
-import com.alextos.cashback.features.cards.presentation.card_detail.components.CashbackView
+import com.alextos.cashback.features.cards.scenes.card_detail.presentation.components.CashbackView
 import com.alextos.cashback.util.UiText
 import com.alextos.cashback.util.views.CustomTextField
 import com.alextos.cashback.util.views.CustomWideButton

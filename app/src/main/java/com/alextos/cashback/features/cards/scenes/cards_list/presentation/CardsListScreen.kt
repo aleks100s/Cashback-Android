@@ -1,4 +1,4 @@
-package com.alextos.cashback.features.cards.presentation.cards_list
+package com.alextos.cashback.features.cards.scenes.cards_list.presentation
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
@@ -35,8 +35,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.util.views.Screen
-import com.alextos.cashback.features.cards.presentation.cards_list.components.AddCardSheet
-import com.alextos.cashback.features.cards.presentation.cards_list.components.CardItemView
+import com.alextos.cashback.features.cards.scenes.cards_list.presentation.components.AddCardSheet
+import com.alextos.cashback.features.cards.scenes.cards_list.presentation.components.CardItemView
 import com.alextos.cashback.util.views.SearchBar
 
 @OptIn(ExperimentalMaterial3Api::class)

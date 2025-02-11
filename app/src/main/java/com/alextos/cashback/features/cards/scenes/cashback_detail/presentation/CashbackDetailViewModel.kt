@@ -1,4 +1,4 @@
-package com.alextos.cashback.features.cards.presentation.cashback_detail
+package com.alextos.cashback.features.cards.scenes.cashback_detail.presentation
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -9,7 +9,7 @@ import com.alextos.cashback.core.domain.models.Cashback
 import com.alextos.cashback.core.domain.services.ToastService
 import com.alextos.cashback.features.cards.CardsRoute
 import com.alextos.cashback.features.cards.domain.CardsRepository
-import com.alextos.cashback.features.cards.domain.use_cases.ValidateCashbackUseCase
+import com.alextos.cashback.features.cards.scenes.cashback_detail.domain.ValidateCashbackUseCase
 import com.alextos.cashback.features.category.CategoryMediator
 import com.alextos.cashback.util.UiText
 import kotlinx.coroutines.Dispatchers

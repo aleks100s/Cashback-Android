@@ -1,4 +1,4 @@
-package com.alextos.cashback.features.cards.domain.use_cases
+package com.alextos.cashback.features.cards.scenes.cashback_detail.domain
 
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.domain.models.Category

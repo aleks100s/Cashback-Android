@@ -1,4 +1,4 @@
-package com.alextos.cashback.features.cards.presentation.card_detail.components
+package com.alextos.cashback.features.cards.scenes.card_detail.presentation.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

@@ -1,4 +1,4 @@
-package com.alextos.cashback.features.cards.presentation.card_detail
+package com.alextos.cashback.features.cards.scenes.card_detail.presentation
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -8,6 +8,8 @@ import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.services.ToastService
 import com.alextos.cashback.features.cards.CardsRoute
 import com.alextos.cashback.features.cards.domain.CardsRepository
+import com.alextos.cashback.features.cards.scenes.card_detail.domain.DeleteAllCashbackUseCase
+import com.alextos.cashback.features.cards.scenes.card_detail.domain.DeleteCardUseCase
 import com.alextos.cashback.util.UiText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,6 +19,8 @@ import kotlinx.coroutines.launch
 
 class CardDetailViewModel(
     savedStateHandle: SavedStateHandle,
+    private val deleteCardUseCase: DeleteCardUseCase,
+    private val deleteAllCashbackUseCase: DeleteAllCashbackUseCase,
     private val repository: CardsRepository,
     private val toastService: ToastService
 ): ViewModel() {
@@ -82,10 +86,7 @@ class CardDetailViewModel(
                 viewModelScope.launch(Dispatchers.IO) {
                     val card = state.value.card
                     if (card != null) {
-                        card.cashback.forEach {
-                            repository.deleteCashback(cashback = it, cardId = card.id)
-                        }
-                        repository.createOrUpdate(card)
+                        deleteAllCashbackUseCase.execute(card)
                         viewModelScope.launch(Dispatchers.Main) {
                             _state.update { it.copy(card = card.copy(cashback = emptyList())) }
                             toastService.showToast(UiText.StringResourceId(R.string.card_detail_all_cashback_deleted))
@@ -101,17 +102,12 @@ class CardDetailViewModel(
             }
             is CardDetailAction.DeleteCard -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    val card = state.value.card?.copy(cashback = emptyList(), isArchived = true)
+                    val card = state.value.card
                     if (card != null) {
-                        card.cashback.forEach {
-                            repository.deleteCashback(cashback = it, cardId = card.id)
-                        }
-                        repository.archiveCard(card)
-                        viewModelScope.launch(Dispatchers.Main) {
-                            toastService.showToast(UiText.StringResourceId(R.string.card_detail_card_deleted))
-                        }
+                        deleteCardUseCase.execute(card)
                     }
                 }
+                toastService.showToast(UiText.StringResourceId(R.string.card_detail_card_deleted))
             }
             is CardDetailAction.EditCashback -> {}
         }

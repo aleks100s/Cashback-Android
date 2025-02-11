@@ -1,4 +1,4 @@
-package com.alextos.cashback.features.cards.presentation.cards_list
+package com.alextos.cashback.features.cards.scenes.cards_list.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -6,7 +6,7 @@ import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.domain.services.ToastService
 import com.alextos.cashback.features.cards.domain.CardsRepository
-import com.alextos.cashback.features.cards.domain.use_cases.FilterCardsUseCase
+import com.alextos.cashback.features.cards.scenes.cards_list.domain.FilterCardsUseCase
 import com.alextos.cashback.util.UiText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
