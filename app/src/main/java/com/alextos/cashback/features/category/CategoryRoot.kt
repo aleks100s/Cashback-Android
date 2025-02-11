@@ -1,5 +1,10 @@
 package com.alextos.cashback.features.category
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -22,12 +27,16 @@ fun CategoryRoot(modifier: Modifier = Modifier, onSelectCategory: () -> Unit) {
         navigation<CategoryRoute.CategoryGraph>(
             startDestination = CategoryRoute.CategoryList
         ) {
-            composable<CategoryRoute.CategoryList> {
-
+            composable<CategoryRoute.CategoryList>(
+                enterTransition = { slideInHorizontally(animationSpec = tween(500)) { it } },
+                exitTransition = { fadeOut(animationSpec = tween(500)) },
+                popEnterTransition = { fadeIn(animationSpec = tween(500)) },
+                popExitTransition = { slideOutHorizontally(animationSpec = tween(500)) { it } }
+            ) {
                 CategoryListScreen(
                     viewModel = koinViewModel(),
                     onSelectCategory = onSelectCategory,
-                    navController = navController,
+                    goBack = onSelectCategory,
                     onCreateCategory = {
                         navController.navigate(CategoryRoute.CategoryDetail(it, null))
                     },
@@ -37,8 +46,18 @@ fun CategoryRoot(modifier: Modifier = Modifier, onSelectCategory: () -> Unit) {
                 )
             }
 
-            composable<CategoryRoute.CategoryDetail> {
-                CategoryDetailScreen(viewModel = koinViewModel(), navController = navController) {
+            composable<CategoryRoute.CategoryDetail>(
+                enterTransition = { slideInHorizontally(animationSpec = tween(500)) { it } },
+                exitTransition = { fadeOut(animationSpec = tween(500)) },
+                popEnterTransition = { fadeIn(animationSpec = tween(500)) },
+                popExitTransition = { slideOutHorizontally(animationSpec = tween(500)) { it } }
+            ) {
+                CategoryDetailScreen(
+                    viewModel = koinViewModel(),
+                    goBack = {
+                        navController.popBackStack()
+                    }
+                ) {
                     navController.popBackStack()
                 }
             }

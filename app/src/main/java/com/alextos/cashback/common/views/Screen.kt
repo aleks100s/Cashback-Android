@@ -25,7 +25,7 @@ import com.alextos.cashback.features.cards.scenes.card_detail.presentation.CardD
 fun Screen(
     modifier: Modifier,
     title: String,
-    navController: NavController? = null,
+    goBack: (() -> Unit)? = null,
     floatingActionButton: @Composable () -> Unit = {},
     actions: @Composable RowScope.() -> Unit = {},
     content: @Composable (Modifier) -> Unit
@@ -39,10 +39,10 @@ fun Screen(
                 },
                 actions = actions,
                 navigationIcon = {
-                    if (navController != null) {
+                    if (goBack != null) {
                         IconButton(
                             onClick = {
-                                navController.popBackStack()
+                                goBack()
                             }
                         ) {
                             Icon(

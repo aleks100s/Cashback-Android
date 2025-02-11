@@ -61,7 +61,7 @@ import com.github.skydoves.colorpicker.compose.rememberColorPickerController
 fun CardDetailScreen(
     modifier: Modifier = Modifier,
     viewModel: CardDetailViewModel,
-    navController: NavController,
+    goBack: () -> Unit,
     onAddCashback: () -> Unit,
     onEditCashback: (String) -> Unit,
     onDelete: () -> Unit
@@ -71,7 +71,7 @@ fun CardDetailScreen(
     Screen(
         modifier = modifier,
         title = state.cardName,
-        navController = navController,
+        goBack = goBack,
         floatingActionButton = {
             if (!state.isEditMode) {
                 FloatingActionButton(onClick = {

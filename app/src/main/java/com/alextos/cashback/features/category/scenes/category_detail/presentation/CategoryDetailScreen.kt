@@ -22,7 +22,7 @@ import com.alextos.cashback.common.views.Screen
 fun CategoryDetailScreen(
     modifier: Modifier = Modifier,
     viewModel: CategoryDetailViewModel,
-    navController: NavController,
+    goBack: () -> Unit,
     onSaved: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -30,7 +30,7 @@ fun CategoryDetailScreen(
     Screen(
         modifier = modifier,
         title = state.title.asString(),
-        navController = navController
+        goBack = goBack
     ) {
         CategoryDetailView(modifier = it, state = state) { action ->
             viewModel.onAction(action)

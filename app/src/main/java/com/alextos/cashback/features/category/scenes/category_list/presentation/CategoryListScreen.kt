@@ -33,7 +33,7 @@ import com.alextos.cashback.common.UiText
 fun CategoryListScreen(
     modifier: Modifier = Modifier,
     viewModel: CategoryListViewModel,
-    navController: NavController,
+    goBack: () -> Unit,
     onSelectCategory: () -> Unit,
     onCreateCategory: (String) -> Unit,
     onEditCategory: (String) -> Unit
@@ -43,7 +43,7 @@ fun CategoryListScreen(
     Screen(
         modifier = modifier,
         title = stringResource(R.string.category_list_title),
-        navController = navController,
+        goBack = goBack,
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 onCreateCategory(state.searchQuery)

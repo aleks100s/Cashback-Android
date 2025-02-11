@@ -1,5 +1,13 @@
 package com.alextos.cashback.features.cards
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -35,13 +43,20 @@ fun CardsRoot(modifier: Modifier = Modifier) {
                 )
             }
 
-            composable<CardsRoute.CardDetail> { navBackStackEntry ->
+            composable<CardsRoute.CardDetail>(
+                enterTransition = { slideInHorizontally(animationSpec = tween(500)) { it } },
+                exitTransition = { fadeOut(animationSpec = tween(500)) },
+                popEnterTransition = { fadeIn(animationSpec = tween(500)) },
+                popExitTransition = { slideOutHorizontally(animationSpec = tween(500)) { it } }
+            ) { navBackStackEntry ->
                 val args = navBackStackEntry.toRoute<CardsRoute.CardDetail>()
                 val id = args.cardId
 
                 CardDetailScreen(
                     viewModel = koinViewModel(),
-                    navController = navController,
+                    goBack = {
+                        navController.popBackStack()
+                    },
                     onAddCashback = {
                         navController.navigate(CardsRoute.CashbackDetail(id, null))
                     },
@@ -54,10 +69,17 @@ fun CardsRoot(modifier: Modifier = Modifier) {
                 )
             }
 
-            composable<CardsRoute.CashbackDetail> {
+            composable<CardsRoute.CashbackDetail>(
+                enterTransition = { slideInHorizontally(animationSpec = tween(500)) { it } },
+                exitTransition = { fadeOut(animationSpec = tween(500)) },
+                popEnterTransition = { fadeIn(animationSpec = tween(500)) },
+                popExitTransition = { slideOutHorizontally(animationSpec = tween(500)) { it } }
+            ) {
                 CashbackDetailScreen(
                     viewModel = koinViewModel(),
-                    navController = navController,
+                    goBack = {
+                        navController.popBackStack()
+                    },
                     selectCategory = {
                         navController.navigate(CardsRoute.SelectCategory)
                     },
@@ -67,7 +89,12 @@ fun CardsRoot(modifier: Modifier = Modifier) {
                 )
             }
 
-            composable<CardsRoute.SelectCategory> {
+            composable<CardsRoute.SelectCategory>(
+                enterTransition = { slideInHorizontally(animationSpec = tween(500)) { it } },
+                exitTransition = { fadeOut(animationSpec = tween(500)) },
+                popEnterTransition = { fadeIn(animationSpec = tween(500)) },
+                popExitTransition = { slideOutHorizontally(animationSpec = tween(500)) { it } }
+            ) {
                 CategoryRoot {
                     navController.popBackStack()
                 }

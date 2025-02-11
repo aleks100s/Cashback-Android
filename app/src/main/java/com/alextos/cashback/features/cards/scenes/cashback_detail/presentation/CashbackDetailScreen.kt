@@ -29,16 +29,16 @@ import com.alextos.cashback.common.views.SectionView
 fun CashbackDetailScreen(
     modifier: Modifier = Modifier,
     viewModel: CashbackDetailViewModel,
-    navController: NavController,
+    goBack: () -> Unit,
     selectCategory: () -> Unit,
-    onSave: () -> Unit
+    onSave: () -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     Screen(
         modifier = modifier,
         title = state.title.asString(),
-        navController = navController
+        goBack = goBack
     ) {
         AddCashbackView(modifier = it, state = state, onAction = { action ->
             viewModel.onAction(action)
