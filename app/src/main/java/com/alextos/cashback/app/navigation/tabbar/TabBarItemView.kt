@@ -19,7 +19,7 @@ fun RowScope.TabBarItemView(
 ) {
     NavigationBarItem(
         label = {
-            Text(text = tab.title)
+            Text(text = tab.title.asString())
         },
         alwaysShowLabel = true,
         icon = {
@@ -28,7 +28,7 @@ fun RowScope.TabBarItemView(
                     is TabBarItem.Cards -> Icons.Default.Email
                     is TabBarItem.Settings -> Icons.Default.Settings
                 },
-                contentDescription = tab.title
+                contentDescription = tab.title.asString()
             )
         },
         selected = isActive,

@@ -15,8 +15,8 @@ fun TabBarView(navController: NavHostController) {
     NavigationBar {
         tabs.forEach { tab ->
             val isActive = when(tab) {
-                is TabBarItem.Cards -> currentRoute == "com.alextos.cashback.app.navigation.tabbar.TabBarItem.Cards"
-                is TabBarItem.Settings -> currentRoute == "com.alextos.cashback.app.navigation.tabbar.TabBarItem.Settings"
+                is TabBarItem.Cards -> currentRoute == TabBarItem.Cards.javaClass.canonicalName
+                is TabBarItem.Settings -> currentRoute == TabBarItem.Settings.javaClass.canonicalName
             }
 
             TabBarItemView(tab, isActive) {

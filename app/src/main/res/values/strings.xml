@@ -80,4 +80,6 @@
     <string name="settings_trashbin">Корзина</string>
     <string name="settings_trashbin_title">Удаленные карты и категориии</string>
     <string name="settings_trashbin_footer">Здесь можно найти удаленные ранее категории и карты, восстановить их</string>
+    <string name="tab_bar_settings">Настройки</string>
+    <string name="tab_bar_cards">Мои карты</string>
 </resources>
