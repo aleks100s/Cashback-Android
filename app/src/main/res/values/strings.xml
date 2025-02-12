@@ -73,4 +73,7 @@
     <string name="card_detail_color">Цвет карты</string>
     <string name="card_detail_change_color">Изменить</string>
     <string name="comon_go_back">Назад</string>
+    <string name="settings_category_catalog_header">Каталог категорий кэшбэка</string>
+    <string name="settings_categories">Все категории</string>
+    <string name="settings_category_catalog_footer">Здесь можно посмотреть все доступные категории кэшбэка, удалить ненужные или добавить новые.</string>
 </resources>

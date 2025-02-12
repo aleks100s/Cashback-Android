@@ -16,7 +16,11 @@ import com.alextos.cashback.features.category.scenes.category_detail.presentatio
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun CategoryRoot(modifier: Modifier = Modifier, onSelectCategory: () -> Unit) {
+fun CategoryRoot(
+    modifier: Modifier = Modifier,
+    onSelectCategory: () -> Unit,
+    goBack: () -> Unit
+) {
     val navController = rememberNavController()
 
     NavHost(
@@ -31,7 +35,7 @@ fun CategoryRoot(modifier: Modifier = Modifier, onSelectCategory: () -> Unit) {
                 CategoryListScreen(
                     viewModel = koinViewModel(),
                     onSelectCategory = onSelectCategory,
-                    goBack = onSelectCategory,
+                    goBack = goBack,
                     onCreateCategory = {
                         navController.navigate(CategoryRoute.CategoryDetail(it, null))
                     },

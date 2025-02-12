@@ -8,4 +8,7 @@ sealed interface SettingsRoute {
 
     @Serializable
     data object Settings: SettingsRoute
+
+    @Serializable
+    data object CategoryCatalog: SettingsRoute
 }

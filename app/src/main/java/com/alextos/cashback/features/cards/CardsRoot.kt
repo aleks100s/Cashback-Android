@@ -95,9 +95,14 @@ fun CardsRoot(modifier: Modifier = Modifier) {
                 popEnterTransition = { fadeIn(animationSpec = tween(500)) },
                 popExitTransition = { slideOutVertically(animationSpec = tween(500)) { it } }
             ) {
-                CategoryRoot {
-                    navController.popBackStack()
-                }
+                CategoryRoot(
+                    onSelectCategory = {
+                        navController.popBackStack()
+                    },
+                    goBack = {
+                        navController.popBackStack()
+                    }
+                )
             }
         }
     }

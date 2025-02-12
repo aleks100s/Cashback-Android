@@ -34,6 +34,7 @@ class SettingsViewModel(
             is SettingsAction.CopyValue -> {
                 pasteboardService.copy(label = action.label, text = action.text)
             }
+            is SettingsAction.ShowCatalog -> {}
         }
     }
 }
