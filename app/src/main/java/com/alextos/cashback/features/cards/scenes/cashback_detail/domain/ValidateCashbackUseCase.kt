@@ -10,7 +10,7 @@ class ValidateCashbackUseCase {
         selectedCategory: Category?,
         initialCategory: Category?
     ): Boolean {
-        val cardHasSameCategory = card.cashback.map { it.category }.contains(selectedCategory)
+        val cardHasSameCategory = card.cashback.map { it.category.id }.contains(selectedCategory?.id)
         return (!cardHasSameCategory || initialCategory == selectedCategory)
                 && percent > 0
                 && selectedCategory != null

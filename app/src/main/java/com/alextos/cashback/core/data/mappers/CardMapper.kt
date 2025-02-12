@@ -21,7 +21,7 @@ fun CardEntity.toDomain(cashback: List<Cashback>): Card {
     return Card(
         id = id,
         name = name,
-        cashback = cashback,
+        cashback = cashback.sortedBy { it.category.name },
         color = color,
         isArchived = isArchived,
         isFavourite = isFavourite,
