@@ -1,4 +1,4 @@
-package com.alextos.cashback.features.settings.presentation.settings
+package com.alextos.cashback.features.settings.scenes.settings.presentation
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -29,7 +29,8 @@ import com.alextos.cashback.common.views.SectionView
 fun SettingsScreen(
     modifier: Modifier = Modifier,
     viewModel: SettingsViewModel,
-    openCatalog: () -> Unit
+    openCatalog: () -> Unit,
+    openTrashbin: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -45,6 +46,9 @@ fun SettingsScreen(
                 when (action) {
                     SettingsAction.ShowCatalog -> {
                         openCatalog()
+                    }
+                    SettingsAction.ShowTrashbin -> {
+                        openTrashbin()
                     }
                     else -> {}
                 }
@@ -72,6 +76,17 @@ private fun SettingsView(
                     title = stringResource(R.string.settings_categories),
                     onAction = onAction
                 )
+            }
+        }
+
+        item {
+            SectionView(
+                title = stringResource(R.string.settings_trashbin_title),
+                footer = stringResource(R.string.settings_trashbin_footer)
+            ) {
+                SectionItem(title = stringResource(R.string.settings_trashbin)) {
+                    onAction(SettingsAction.ShowTrashbin)
+                }
             }
         }
 

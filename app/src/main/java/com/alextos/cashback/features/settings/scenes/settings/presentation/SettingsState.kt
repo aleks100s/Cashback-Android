@@ -1,4 +1,4 @@
-package com.alextos.cashback.features.settings.presentation.settings
+package com.alextos.cashback.features.settings.scenes.settings.presentation
 
 data class SettingsState(
     val appVersion: String = "",

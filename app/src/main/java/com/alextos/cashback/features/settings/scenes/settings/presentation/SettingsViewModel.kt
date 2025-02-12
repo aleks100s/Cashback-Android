@@ -1,4 +1,4 @@
-package com.alextos.cashback.features.settings.presentation.settings
+package com.alextos.cashback.features.settings.scenes.settings.presentation
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -35,6 +35,7 @@ class SettingsViewModel(
                 pasteboardService.copy(label = action.label, text = action.text)
             }
             is SettingsAction.ShowCatalog -> {}
+            is SettingsAction.ShowTrashbin -> {}
         }
     }
 }
