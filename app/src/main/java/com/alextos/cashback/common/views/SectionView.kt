@@ -22,7 +22,7 @@ fun SectionView(
         title?.let {
             Text(
                 modifier = Modifier.padding(start = 8.dp),
-                text = title
+                text = title.uppercase(),
             )
         }
 
