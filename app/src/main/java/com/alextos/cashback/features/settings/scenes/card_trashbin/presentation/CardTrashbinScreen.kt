@@ -1,10 +1,12 @@
 package com.alextos.cashback.features.settings.scenes.card_trashbin.presentation
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -15,7 +17,6 @@ import com.alextos.cashback.common.views.ContextMenuItem
 import com.alextos.cashback.common.views.CustomWideButton
 import com.alextos.cashback.common.views.RoundedList
 import com.alextos.cashback.common.views.Screen
-import com.alextos.cashback.core.presentation.views.CardItemView
 
 @Composable
 fun CardTrashbinScreen(
@@ -47,11 +48,14 @@ private fun CardTrashbinView(
         modifier = modifier.padding(horizontal = 16.dp),
         list = state.cards,
         itemView = { modifier, card ->
-            CardItemView(modifier = modifier, card = card) { }
+            Text(
+                modifier = modifier.fillMaxWidth().padding(vertical = 4.dp),
+                text = card.name
+            )
         },
         bottomView = {
             CustomWideButton(
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier.padding(top = 16.dp),
                 title = stringResource(R.string.common_restore_all)
             ) {
                 onAction(CardTrashbinAction.RestoreAll)
@@ -61,9 +65,11 @@ private fun CardTrashbinView(
             Text(text = stringResource(R.string.trashbin_empty))
         },
         onItemClick = {},
-        onDelete = { card ->
+        onSwipe = { card ->
             onAction(CardTrashbinAction.RestoreCard(card))
         },
+        swipeBackground = Color.Green.copy(alpha = 0.5f),
+        swipeText = stringResource(R.string.common_restore),
         contextMenuActions = { card ->
             listOf(
                 ContextMenuItem(title = UiText.StringResourceId(R.string.common_restore)) {

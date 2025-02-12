@@ -141,7 +141,7 @@ private fun CategoryListView(
                 )
             }
         },
-        onDelete = {
+        onSwipe = {
             onAction(CategoryListAction.DeleteCategory(it))
         }
     )

@@ -36,7 +36,7 @@ import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.features.cards.scenes.cards_list.presentation.components.AddCardSheet
-import com.alextos.cashback.core.presentation.views.CardItemView
+import com.alextos.cashback.features.cards.scenes.cards_list.presentation.components.CardItemView
 import com.alextos.cashback.common.views.SearchBar
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -21,6 +21,7 @@ import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 
@@ -40,7 +41,9 @@ fun <Element: ListElement> RoundedList(
     emptyView: @Composable () -> Unit,
     onItemClick: (Element) -> Unit = {},
     contextMenuActions: (Element) -> List<ContextMenuItem<Element>>,
-    onDelete: (Element) -> Unit
+    onSwipe: (Element) -> Unit,
+    swipeBackground: Color = Color.Red,
+    swipeText: String = ""
 ) {
     val scrollState: LazyListState = rememberLazyListState()
 
@@ -96,9 +99,11 @@ fun <Element: ListElement> RoundedList(
                         )
                     },
                     onDelete = {
-                        onDelete(item)
+                        onSwipe(item)
                         true
-                    }
+                    },
+                    swipeBackground = swipeBackground,
+                    swipeText = swipeText
                 )
 
                 if (list.lastOrNull() != item) {

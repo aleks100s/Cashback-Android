@@ -5,6 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -63,9 +64,11 @@ private fun CategoryTrashbinView(
             Text(text = stringResource(R.string.trashbin_empty))
         },
         onItemClick = {},
-        onDelete = { category ->
+        onSwipe = { category ->
             onAction(CategoryTrashbinAction.RestoreCategory(category))
         },
+        swipeBackground = Color.Green.copy(alpha = 0.5f),
+        swipeText = stringResource(R.string.common_restore),
         contextMenuActions = { category ->
             listOf(
                 ContextMenuItem(title = UiText.StringResourceId(R.string.common_restore)) {

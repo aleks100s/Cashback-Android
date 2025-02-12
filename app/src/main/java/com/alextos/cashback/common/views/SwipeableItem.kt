@@ -21,7 +21,9 @@ import com.alextos.cashback.R
 fun SwipeableItem(
     modifier: Modifier = Modifier,
     content: @Composable RowScope.() -> Unit,
-    onDelete: () -> Boolean
+    onDelete: () -> Boolean,
+    swipeBackground: Color = Color.Red,
+    swipeText: String = stringResource(R.string.common_remove)
 ) {
     val haptic = LocalHapticFeedback.current
     val dismissState = rememberSwipeToDismissBoxState(
@@ -44,12 +46,12 @@ fun SwipeableItem(
             Column(
                 modifier = modifier
                     .fillMaxSize()
-                    .background(Color.Red)
+                    .background(swipeBackground)
                     .padding(16.dp),
                 horizontalAlignment = Alignment.End,
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(text = stringResource(R.string.common_remove))
+                Text(text = swipeText)
             }
         },
         enableDismissFromStartToEnd = false,

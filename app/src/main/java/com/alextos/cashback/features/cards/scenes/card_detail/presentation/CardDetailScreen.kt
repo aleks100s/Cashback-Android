@@ -210,7 +210,7 @@ private fun CardDetailView(
         onItemClick = {
             onAction(CardDetailAction.EditCashback(it))
         },
-        onDelete = {
+        onSwipe = {
             onAction(CardDetailAction.DeleteCashback(it))
         },
         contextMenuActions = {

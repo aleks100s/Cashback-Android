@@ -1,4 +1,4 @@
-package com.alextos.cashback.core.presentation.views
+package com.alextos.cashback.features.cards.scenes.cards_list.presentation.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.offset
@@ -10,6 +10,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.alextos.cashback.core.domain.models.Category
 import com.alextos.cashback.core.domain.models.generateMockCategory
+import com.alextos.cashback.core.presentation.views.CategoryIconSize
+import com.alextos.cashback.core.presentation.views.CategoryIconView
 
 @Composable
 fun CategoriesStackView(
