@@ -24,13 +24,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.alextos.cashback.R
 import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.common.views.CustomButton
 import com.alextos.cashback.common.views.CustomWideButton
 import com.alextos.cashback.common.views.SectionView
-import com.alextos.cashback.features.category.scenes.category_list.presentation.components.CategoryItemView
+import com.alextos.cashback.core.presentation.views.CategoryItemView
 
 @Composable
 fun CashbackDetailScreen(

@@ -1,4 +1,4 @@
-package com.alextos.cashback.features.category.scenes.category_list.presentation.components
+package com.alextos.cashback.core.presentation.views
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,8 +20,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.Category
-import com.alextos.cashback.core.presentation.views.CategoryIconSize
-import com.alextos.cashback.core.presentation.views.CategoryIconView
 import com.alextos.cashback.common.views.Dialog
 
 @Composable

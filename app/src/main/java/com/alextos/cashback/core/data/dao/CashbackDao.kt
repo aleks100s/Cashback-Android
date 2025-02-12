@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
-import com.alextos.cashback.core.data.combined_entities.CashbackWithCategory
+import com.alextos.cashback.core.data.entities.combined_entities.CashbackWithCategory
 import com.alextos.cashback.core.data.entities.CashbackEntity
 
 @Dao

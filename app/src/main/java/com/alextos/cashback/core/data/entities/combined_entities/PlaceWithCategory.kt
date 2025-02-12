@@ -1,4 +1,4 @@
-package com.alextos.cashback.core.data.combined_entities
+package com.alextos.cashback.core.data.entities.combined_entities
 
 import androidx.room.Embedded
 import androidx.room.Relation

@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Upsert
-import com.alextos.cashback.core.data.combined_entities.PlaceWithCategory
+import com.alextos.cashback.core.data.entities.combined_entities.PlaceWithCategory
 import com.alextos.cashback.core.data.entities.PlaceEntity
 import kotlinx.coroutines.flow.Flow
 

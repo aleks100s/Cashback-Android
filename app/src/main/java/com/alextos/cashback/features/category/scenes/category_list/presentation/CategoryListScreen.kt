@@ -20,14 +20,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.generateMockCategory
 import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.common.views.ContextMenuItem
 import com.alextos.cashback.common.views.RoundedList
 import com.alextos.cashback.common.views.SearchBar
-import com.alextos.cashback.features.category.scenes.category_list.presentation.components.CategoryItemView
+import com.alextos.cashback.core.presentation.views.CategoryItemView
 import com.alextos.cashback.common.UiText
 
 @Composable

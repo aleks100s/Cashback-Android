@@ -1,6 +1,6 @@
 package com.alextos.cashback.core.data.mappers
 
-import com.alextos.cashback.core.data.combined_entities.PaymentWithCard
+import com.alextos.cashback.core.data.entities.combined_entities.PaymentWithCard
 import com.alextos.cashback.core.data.entities.PaymentEntity
 import com.alextos.cashback.core.domain.models.Cashback
 import com.alextos.cashback.core.domain.models.Payment
