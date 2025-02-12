@@ -1,4 +1,4 @@
-package com.alextos.cashback.common
+package com.alextos.cashback.common.transitions
 
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.core.tween

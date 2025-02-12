@@ -76,10 +76,19 @@
     <string name="settings_category_catalog_header">Каталог категорий кэшбэка</string>
     <string name="settings_categories">Все категории</string>
     <string name="settings_category_catalog_footer">Здесь можно посмотреть все доступные категории кэшбэка, удалить ненужные или добавить новые.</string>
-    <string name="trashbin_title">Корзина</string>
-    <string name="settings_trashbin">Корзина</string>
-    <string name="settings_trashbin_title">Удаленные карты и категориии</string>
-    <string name="settings_trashbin_footer">Здесь можно найти удаленные ранее категории и карты, восстановить их</string>
+    <string name="card_trashbin_title">Удаленные карты</string>
+    <string name="category_trashbin_title">Удаленные категории</string>
+    <string name="settings_trashbin_cards">Удаленные карты</string>
+    <string name="settings_trashbin_categories">Удаленные категории</string>
+    <string name="settings_trashbin_title">Корзина</string>
+    <string name="settings_trashbin_footer">Здесь можно найти удаленные ранее данные и восстановить их</string>
     <string name="tab_bar_settings">Настройки</string>
     <string name="tab_bar_cards">Мои карты</string>
+    <string name="common_restore_all">Восстановить все</string>
+    <string name="common_restore">Восстановить</string>
+    <string name="trashbin_empty">Корзина пуста</string>
+    <string name="trashbin_card_restored">Карта восстановлена</string>
+    <string name="trashbin_category_restored">Категория восстановлена</string>
+    <string name="trashbin_cards_restored">Все карты восстановлены</string>
+    <string name="trashbin_categories_restored">Все категории восстановлены</string>
 </resources>

@@ -1,10 +1,11 @@
 package com.alextos.cashback.core.domain.models
 
+import com.alextos.cashback.common.views.ListElement
 import java.util.UUID
 import kotlin.random.Random
 
 data class Card(
-    val id: String = UUID.randomUUID().toString(),
+    override val id: String = UUID.randomUUID().toString(),
     var name: String,
     val cashback: List<Cashback> = listOf(),
     var color: String? = null,
@@ -12,7 +13,7 @@ data class Card(
     var isFavourite: Boolean = false,
     var currency: String = "Рубли",
     var currencySymbol: String = "₽"
-) {
+): ListElement {
     override fun toString(): String {
         if (isEmpty()) {
             return "Нет кэшбэка"

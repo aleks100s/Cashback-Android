@@ -30,7 +30,8 @@ fun SettingsScreen(
     modifier: Modifier = Modifier,
     viewModel: SettingsViewModel,
     openCatalog: () -> Unit,
-    openTrashbin: () -> Unit
+    openCardTrashbin: () -> Unit,
+    openCategoryTrashbin: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -47,8 +48,11 @@ fun SettingsScreen(
                     SettingsAction.ShowCatalog -> {
                         openCatalog()
                     }
-                    SettingsAction.ShowTrashbin -> {
-                        openTrashbin()
+                    SettingsAction.ShowCardTrashbin -> {
+                        openCardTrashbin()
+                    }
+                    SettingsAction.ShowCategoryTrashbin -> {
+                        openCategoryTrashbin()
                     }
                     else -> {}
                 }
@@ -84,29 +88,33 @@ private fun SettingsView(
                 title = stringResource(R.string.settings_trashbin_title),
                 footer = stringResource(R.string.settings_trashbin_footer)
             ) {
-                SectionItem(title = stringResource(R.string.settings_trashbin)) {
-                    onAction(SettingsAction.ShowTrashbin)
+                SectionItem(title = stringResource(R.string.settings_trashbin_cards)) {
+                    onAction(SettingsAction.ShowCardTrashbin)
+                }
+
+                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+
+                SectionItem(title = stringResource(R.string.settings_trashbin_categories)) {
+                    onAction(SettingsAction.ShowCategoryTrashbin)
                 }
             }
         }
 
         item {
             SectionView(title = stringResource(R.string.settings_app_about)) {
-                Column {
-                    ClickableItem(
-                        title = stringResource(R.string.settings_app_version),
-                        value = state.appVersion,
-                        onAction = onAction
-                    )
+                ClickableItem(
+                    title = stringResource(R.string.settings_app_version),
+                    value = state.appVersion,
+                    onAction = onAction
+                )
 
-                    HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
 
-                    ClickableItem(
-                        title = stringResource(R.string.settings_app_build),
-                        value = "${state.buildVersion}",
-                        onAction = onAction
-                    )
-                }
+                ClickableItem(
+                    title = stringResource(R.string.settings_app_build),
+                    value = "${state.buildVersion}",
+                    onAction = onAction
+                )
             }
         }
     }

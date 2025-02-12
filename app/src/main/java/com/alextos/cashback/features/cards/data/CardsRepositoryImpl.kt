@@ -17,7 +17,7 @@ class CardsRepositoryImpl(
     private val cashbackDao: CashbackDao
 ): CardsRepository {
     override fun getAllCards(): Flow<List<Card>> {
-        return cardDao.getAll().map { list ->
+        return cardDao.getAllUnarchived().map { list ->
             list.map { constructCard(it) }
         }
     }

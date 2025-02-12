@@ -38,7 +38,7 @@ fun <Element: ListElement> RoundedList(
     topView: @Composable () -> Unit = {},
     bottomView: @Composable () -> Unit = {},
     emptyView: @Composable () -> Unit,
-    onItemClick: (Element) -> Unit,
+    onItemClick: (Element) -> Unit = {},
     contextMenuActions: (Element) -> List<ContextMenuItem<Element>>,
     onDelete: (Element) -> Unit
 ) {

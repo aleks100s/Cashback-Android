@@ -35,7 +35,8 @@ class SettingsViewModel(
                 pasteboardService.copy(label = action.label, text = action.text)
             }
             is SettingsAction.ShowCatalog -> {}
-            is SettingsAction.ShowTrashbin -> {}
+            is SettingsAction.ShowCardTrashbin -> {}
+            is SettingsAction.ShowCategoryTrashbin -> {}
         }
     }
 }

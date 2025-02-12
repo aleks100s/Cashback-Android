@@ -30,7 +30,9 @@ fun SectionView(
             modifier = Modifier.clip(shape = RoundedCornerShape(16.dp)),
             tonalElevation = 4.dp
         ) {
-            content()
+            Column {
+                content()
+            }
         }
 
         footer?.let {

@@ -7,8 +7,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.alextos.cashback.common.horizontalComposableTransition
-import com.alextos.cashback.common.verticalComposableTransition
+import com.alextos.cashback.common.transitions.horizontalComposableTransition
+import com.alextos.cashback.common.transitions.verticalComposableTransition
 import com.alextos.cashback.features.cards.scenes.cashback_detail.presentation.CashbackDetailScreen
 import com.alextos.cashback.features.cards.scenes.card_detail.presentation.CardDetailScreen
 import com.alextos.cashback.features.cards.scenes.cards_list.presentation.CardsListScreen

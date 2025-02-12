@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.alextos.cashback.common.horizontalComposableTransition
+import com.alextos.cashback.common.transitions.horizontalComposableTransition
 import com.alextos.cashback.features.category.scenes.category_list.presentation.CategoryListScreen
 import com.alextos.cashback.features.category.scenes.category_detail.presentation.CategoryDetailScreen
 import org.koin.androidx.compose.koinViewModel

@@ -6,11 +6,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.alextos.cashback.common.horizontalComposableTransition
-import com.alextos.cashback.common.verticalComposableTransition
+import com.alextos.cashback.common.transitions.horizontalComposableTransition
+import com.alextos.cashback.common.transitions.verticalComposableTransition
 import com.alextos.cashback.features.category.CategoryRoot
 import com.alextos.cashback.features.settings.scenes.settings.presentation.SettingsScreen
-import com.alextos.cashback.features.settings.scenes.trashbin.TrashbinScreen
+import com.alextos.cashback.features.settings.scenes.card_trashbin.presentation.CardTrashbinScreen
+import com.alextos.cashback.features.settings.scenes.category_trashbin.presentation.CategoryTrashbinScreen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -31,8 +32,11 @@ fun SettingsRoot(modifier: Modifier = Modifier) {
                     openCatalog = {
                         navController.navigate(SettingsRoute.CategoryCatalog)
                     },
-                    openTrashbin = {
-                        navController.navigate(SettingsRoute.Trashbin)
+                    openCardTrashbin = {
+                        navController.navigate(SettingsRoute.CardTrashbin)
+                    },
+                    openCategoryTrashbin = {
+                        navController.navigate(SettingsRoute.CategoryTrashbin)
                     }
                 )
             }
@@ -46,8 +50,14 @@ fun SettingsRoot(modifier: Modifier = Modifier) {
                 )
             }
 
-            horizontalComposableTransition<SettingsRoute.Trashbin> {
-                TrashbinScreen(viewModel = koinViewModel()) {
+            horizontalComposableTransition<SettingsRoute.CardTrashbin> {
+                CardTrashbinScreen(viewModel = koinViewModel()) {
+                    navController.popBackStack()
+                }
+            }
+
+            horizontalComposableTransition<SettingsRoute.CategoryTrashbin> {
+                CategoryTrashbinScreen(viewModel = koinViewModel()) {
                     navController.popBackStack()
                 }
             }
