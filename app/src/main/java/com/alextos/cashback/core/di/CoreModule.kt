@@ -3,8 +3,10 @@ package com.alextos.cashback.core.di
 import androidx.room.Room
 import com.alextos.cashback.core.data.database.AppDatabase
 import com.alextos.cashback.core.data.database.DatabaseSeeder
+import com.alextos.cashback.core.data.settings.SettingsManagerImpl
 import com.alextos.cashback.core.data.services.PasteboardServiceImpl
 import com.alextos.cashback.core.data.services.ToastServiceImpl
+import com.alextos.cashback.core.domain.settings.SettingsManager
 import com.alextos.cashback.core.domain.services.PasteboardService
 import com.alextos.cashback.core.domain.services.ToastService
 import org.koin.android.ext.koin.androidApplication
@@ -20,6 +22,8 @@ val coreModule = module {
             .addCallback(DatabaseSeeder(androidContext()))
             .build()
     }
+
+    single<SettingsManager> { SettingsManagerImpl(androidContext()) }
 
     factory { get<AppDatabase>().categoryDao() }
     factory { get<AppDatabase>().placeDao() }
