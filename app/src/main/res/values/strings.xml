@@ -91,4 +91,7 @@
     <string name="trashbin_category_restored">Категория восстановлена</string>
     <string name="trashbin_cards_restored">Все карты восстановлены</string>
     <string name="trashbin_categories_restored">Все категории восстановлены</string>
+    <string name="settings_notifications_title">Настройка уведомлений</string>
+    <string name="settings_notifications_footer">Приложение напомнит вам выбрать и сохранить кэшбэк каждый месяц 1 числа.\nПроверьте, что вы разрешили уведомления в настройках системы.</string>
+    <string name="settings_notifications">Уведомления</string>
 </resources>
