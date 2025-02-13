@@ -39,11 +39,13 @@ class CardsListViewModel(
     fun onAction(action: CardsListAction) {
         when (action) {
             is CardsListAction.SearchQueryChange -> {
-                _state.update {
-                    it.copy(
-                        searchQuery = action.query,
-                        filteredCards = filterUseCase.execute(it.allCards, action.query)
-                    )
+                viewModelScope.launch(Dispatchers.IO) {
+                    _state.update {
+                        it.copy(
+                            searchQuery = action.query,
+                            filteredCards = filterUseCase.execute(it.allCards, action.query)
+                        )
+                    }
                 }
             }
             is CardsListAction.ToggleFavourite -> {

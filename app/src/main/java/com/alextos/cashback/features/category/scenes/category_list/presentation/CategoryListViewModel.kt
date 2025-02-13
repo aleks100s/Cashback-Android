@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CategoryListViewModel(
     private val filterUseCase: FilterCategoryUseCase,
@@ -44,12 +45,14 @@ class CategoryListViewModel(
     fun onAction(action: CategoryListAction) {
         when (action) {
             is CategoryListAction.SearchQueryChanged -> {
-                val query = action.query
-                _state.update { state ->
-                    state.copy(
-                        searchQuery = query,
-                        filteredCategories = filterUseCase.execute(state.allCategories, query)
-                    )
+                viewModelScope.launch(Dispatchers.IO) {
+                    val query = action.query
+                    _state.update { state ->
+                        state.copy(
+                            searchQuery = query,
+                            filteredCategories = filterUseCase.execute(state.allCategories, query)
+                        )
+                    }
                 }
             }
             is CategoryListAction.SelectCategory -> {
@@ -61,10 +64,8 @@ class CategoryListViewModel(
             is CategoryListAction.DeleteCategory -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     archiveCategoryUseCase.execute(action.category)
-                    viewModelScope.launch(Dispatchers.Main) {
-                        toastService.showToast(UiText.StringResourceId(R.string.category_list_category_removed))
-                    }
                 }
+                toastService.showToast(UiText.StringResourceId(R.string.category_list_category_removed))
             }
             is CategoryListAction.CreateCategory -> {}
             is CategoryListAction.EditCategory -> {}

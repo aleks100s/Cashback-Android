@@ -46,7 +46,8 @@ fun SettingsRoot(modifier: Modifier = Modifier) {
                     onSelectCategory = {},
                     goBack = {
                         navController.popBackStack()
-                    }
+                    },
+                    disableSelection = true
                 )
             }
 

@@ -14,6 +14,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun CategoryRoot(
     modifier: Modifier = Modifier,
+    disableSelection: Boolean = false,
     onSelectCategory: () -> Unit,
     goBack: () -> Unit
 ) {
@@ -32,6 +33,7 @@ fun CategoryRoot(
                     viewModel = koinViewModel(),
                     onSelectCategory = onSelectCategory,
                     goBack = goBack,
+                    disableSelection = disableSelection,
                     onCreateCategory = {
                         navController.navigate(CategoryRoute.CategoryDetail(it, null))
                     },

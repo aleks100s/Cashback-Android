@@ -33,6 +33,7 @@ import com.alextos.cashback.common.UiText
 fun CategoryListScreen(
     modifier: Modifier = Modifier,
     viewModel: CategoryListViewModel,
+    disableSelection: Boolean = false,
     goBack: () -> Unit,
     onSelectCategory: () -> Unit,
     onCreateCategory: (String) -> Unit,
@@ -54,10 +55,12 @@ fun CategoryListScreen(
         }
     ) {
         CategoryListView(modifier = it, state = state) { action ->
-            viewModel.onAction(action)
             when (action) {
                 is CategoryListAction.SelectCategory -> {
-                    onSelectCategory()
+                    if (!disableSelection) {
+                        viewModel.onAction(action)
+                        onSelectCategory()
+                    }
                 }
                 is CategoryListAction.CreateCategory -> {
                     onCreateCategory(action.name)
@@ -65,7 +68,9 @@ fun CategoryListScreen(
                 is CategoryListAction.EditCategory -> {
                     onEditCategory(action.category.id)
                 }
-                else -> {}
+                else -> {
+                    viewModel.onAction(action)
+                }
             }
         }
     }

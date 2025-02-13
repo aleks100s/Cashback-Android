@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CategoryDetailViewModel(
     savedStateHandle: SavedStateHandle,
@@ -97,10 +98,12 @@ class CategoryDetailViewModel(
                         isNative = false
                     )
                     repository.createOrUpdate(category)
-                    if (categoryId != null) {
-                        toastService.showToast(UiText.StringResourceId(R.string.category_detail_changeded))
-                    } else {
-                        toastService.showToast(UiText.StringResourceId(R.string.category_detail_added))
+                    withContext(Dispatchers.Main) {
+                        if (categoryId != null) {
+                            toastService.showToast(UiText.StringResourceId(R.string.category_detail_changeded))
+                        } else {
+                            toastService.showToast(UiText.StringResourceId(R.string.category_detail_added))
+                        }
                     }
                 }
             }
