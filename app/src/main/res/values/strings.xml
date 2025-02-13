@@ -94,4 +94,8 @@
     <string name="settings_notifications_title">Настройка уведомлений</string>
     <string name="settings_notifications_footer">Приложение напомнит вам выбрать и сохранить кэшбэк каждый месяц 1 числа.\nПроверьте, что вы разрешили уведомления в настройках системы.</string>
     <string name="settings_notifications">Уведомления</string>
+    <string name="monthly_notification_title">Пора добавить кэшбэк</string>
+    <string name="monthly_notification_subtitle">Не забудьте выбрать и сохранить кэшбэк в этом месяце</string>
+    <string name="monthly_notification_channel_title">Ежемесячные напоминания</string>
+    <string name="monthly_notification_channel_subtitle">Напомню добавить кэшбэк 1 числа каждого месяца</string>
 </resources>
