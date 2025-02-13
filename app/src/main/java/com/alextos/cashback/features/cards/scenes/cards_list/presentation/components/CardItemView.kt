@@ -36,12 +36,15 @@ import com.alextos.cashback.core.domain.models.generateMockCard
 fun CardItemView(
     modifier: Modifier = Modifier,
     card: Card,
-    onFavouriteTap: () -> Unit
+    onClick: () -> Unit = {},
+    onFavouriteTap: () -> Unit = {}
 ) {
     val haptic = LocalHapticFeedback.current
 
     Column(
-        modifier = modifier,
+        modifier = modifier
+            .clip(RoundedCornerShape(12.dp))
+            .clickable(onClick = onClick),
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Row(

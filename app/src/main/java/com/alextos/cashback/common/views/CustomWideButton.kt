@@ -23,8 +23,8 @@ fun CustomWideButton(
 ) {
     Text(
         modifier = modifier
-            .clickable { onTap() }
             .clip(RoundedCornerShape(8.dp))
+            .clickable { onTap() }
             .background(MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp))
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 12.dp),

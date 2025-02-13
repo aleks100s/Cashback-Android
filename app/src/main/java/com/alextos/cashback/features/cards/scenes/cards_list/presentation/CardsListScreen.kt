@@ -134,15 +134,15 @@ private fun CardsListView(
             } else {
                 items(state.filteredCards, key = { it.id }) { card ->
                     CardItemView(
-                        modifier = Modifier
-                            .animateItem()
-                            .clickable {
-                                onAction(CardsListAction.CardSelect(card))
-                            },
-                        card = card
-                    ) {
-                        onAction(CardsListAction.ToggleFavourite(card))
-                    }
+                        modifier = Modifier.animateItem(),
+                        card = card,
+                        onClick = {
+                            onAction(CardsListAction.CardSelect(card))
+                        },
+                        onFavouriteTap = {
+                            onAction(CardsListAction.ToggleFavourite(card))
+                        }
+                    )
                 }
 
                 item {

@@ -19,8 +19,8 @@ fun CustomButton(
 ) {
     Text(
         modifier = Modifier
-            .clickable { onTap() }
             .clip(RoundedCornerShape(8.dp))
+            .clickable { onTap() }
             .padding(horizontal = 16.dp, vertical = 8.dp),
         text = title,
         color = color
