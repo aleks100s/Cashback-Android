@@ -15,7 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.alextos.cashback.app.navigation.ApplicationRoot
 import com.alextos.cashback.app.theme.CashbackTheme
-import com.alextos.cashback.core.data.notifications.MonthlyNotificationScheduler
+import com.alextos.cashback.app.notifications.MonthlyNotificationScheduler
 import com.alextos.cashback.core.domain.settings.SettingsManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

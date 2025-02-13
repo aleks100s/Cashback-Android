@@ -1,4 +1,4 @@
-package com.alextos.cashback.core.data.notifications
+package com.alextos.cashback.app.notifications
 
 import android.app.AlarmManager
 import android.app.NotificationChannel
