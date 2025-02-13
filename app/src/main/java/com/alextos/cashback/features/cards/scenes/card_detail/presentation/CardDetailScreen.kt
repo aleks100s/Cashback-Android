@@ -213,6 +213,7 @@ private fun CardDetailView(
         onSwipe = {
             onAction(CardDetailAction.DeleteCashback(it))
         },
+        swipeText = stringResource(R.string.common_remove),
         contextMenuActions = {
             listOf(
                 ContextMenuItem(
