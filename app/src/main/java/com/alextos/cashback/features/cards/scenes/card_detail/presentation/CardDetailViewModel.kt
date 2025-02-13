@@ -68,6 +68,7 @@ class CardDetailViewModel(
                 viewModelScope.launch(Dispatchers.IO) {
                     repository.deleteCashback(action.cashback, cardId)
                     repository.getCard(cardId)?.let { card ->
+                        repository.createOrUpdate(card)
                         _state.update { it.copy(card = card) }
                         viewModelScope.launch(Dispatchers.Main) {
                             toastService.showToast(UiText.StringResourceId(R.string.card_detail_cashback_removed))

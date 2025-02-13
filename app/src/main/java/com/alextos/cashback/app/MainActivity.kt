@@ -58,6 +58,8 @@ class MainActivity : ComponentActivity() {
             } else {
                 allowNotifications()
             }
+        } else {
+            allowNotifications()
         }
     }
 
@@ -85,5 +87,6 @@ class MainActivity : ComponentActivity() {
             }
         }
         MonthlyNotificationScheduler.createNotificationChannel(this)
+        MonthlyNotificationScheduler.scheduleNextNotification(this)
     }
 }

@@ -28,6 +28,7 @@ class ApplicationViewModel(
     }
 
     private fun turnOnNotifications() {
+        turnOffNotifications()
         MonthlyNotificationScheduler.scheduleNextNotification(getApplication())
     }
 
