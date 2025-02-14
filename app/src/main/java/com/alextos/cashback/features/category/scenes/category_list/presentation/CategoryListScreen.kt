@@ -146,10 +146,7 @@ private fun CategoryListView(
                 )
             }
         },
-        onSwipe = {
-            onAction(CategoryListAction.DeleteCategory(it))
-        },
-        swipeText = stringResource(R.string.common_remove),
+        onSwipe = null,
     )
 }
 

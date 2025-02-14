@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -93,12 +94,14 @@ fun CardItemView(
 
                             Icon(
                                 modifier = Modifier
-                                    .size(24.dp)
                                     .minimumInteractiveComponentSize()
+                                    .clip(CircleShape)
                                     .clickable {
                                         onFavouriteTap()
                                         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                                    },
+                                    }
+                                    .padding(4.dp)
+                                    .size(28.dp),
                                 imageVector = if (card.isFavourite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                                 contentDescription = stringResource(R.string.cards_list_item_favourite),
                                 tint = if (card.isFavourite) Color.Red else Color.Gray

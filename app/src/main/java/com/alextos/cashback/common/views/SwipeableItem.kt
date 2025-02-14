@@ -21,7 +21,7 @@ import com.alextos.cashback.R
 fun SwipeableItem(
     modifier: Modifier = Modifier,
     content: @Composable RowScope.() -> Unit,
-    onDelete: () -> Boolean,
+    onSwipe: () -> Boolean,
     swipeBackground: Color = Color.Red,
     swipeText: String = stringResource(R.string.common_remove)
 ) {
@@ -29,9 +29,8 @@ fun SwipeableItem(
     val dismissState = rememberSwipeToDismissBoxState(
         confirmValueChange = {
             if (it == SwipeToDismissBoxValue.EndToStart) {
-                HapticFeedbackType(10)
                 haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                return@rememberSwipeToDismissBoxState onDelete()
+                return@rememberSwipeToDismissBoxState onSwipe()
             }
             return@rememberSwipeToDismissBoxState false
         },

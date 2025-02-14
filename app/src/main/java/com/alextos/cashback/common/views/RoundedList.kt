@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -23,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 
 interface ListElement {
@@ -41,7 +43,7 @@ fun <Element: ListElement> RoundedList(
     emptyView: @Composable () -> Unit,
     onItemClick: (Element) -> Unit = {},
     contextMenuActions: (Element) -> List<ContextMenuItem<Element>>,
-    onSwipe: (Element) -> Unit,
+    onSwipe: ((Element) -> Unit)?,
     swipeBackground: Color = Color.Red,
     swipeText: String = ""
 ) {
@@ -76,35 +78,38 @@ fun <Element: ListElement> RoundedList(
                     RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp)
                 } else RectangleShape
 
-                SwipeableItem(
-                    modifier = Modifier
-                        .clip(topCornersShape)
-                        .clip(bottomCornersShape),
-                    content = {
-                        ContextMenu(
-                            element = item,
-                            content = {
-                                itemView(
-                                    Modifier
-                                        .animateItem()
-                                        .clip(topCornersShape)
-                                        .clip(bottomCornersShape)
-                                        .background(MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp))
-                                        .padding(vertical = 12.dp, horizontal = 16.dp),
-                                    item
-                                )
-                            },
-                            actions = contextMenuActions(item),
-                            onClick = onItemClick
-                        )
-                    },
-                    onDelete = {
-                        onSwipe(item)
-                        true
-                    },
-                    swipeBackground = swipeBackground,
-                    swipeText = swipeText
-                )
+                if (onSwipe != null) {
+                    SwipeableItem(
+                        modifier = Modifier
+                            .clip(topCornersShape)
+                            .clip(bottomCornersShape),
+                        content = {
+                            ContextMenuView(
+                                item = item,
+                                itemView = itemView,
+                                topCornersShape = topCornersShape,
+                                bottomCornersShape = bottomCornersShape,
+                                contextMenuActions = contextMenuActions,
+                                onItemClick = onItemClick
+                            )
+                        },
+                        onSwipe = {
+                            onSwipe(item)
+                            true
+                        },
+                        swipeBackground = swipeBackground,
+                        swipeText = swipeText
+                    )
+                } else {
+                    ContextMenuView(
+                        item = item,
+                        itemView = itemView,
+                        topCornersShape = topCornersShape,
+                        bottomCornersShape = bottomCornersShape,
+                        contextMenuActions = contextMenuActions,
+                        onItemClick = onItemClick
+                    )
+                }
 
                 if (list.lastOrNull() != item) {
                     HorizontalDivider()
@@ -124,4 +129,35 @@ fun <Element: ListElement> RoundedList(
             Spacer(modifier = Modifier.height(16.dp))
         }
     }
+}
+
+@Composable
+private fun <Element> LazyItemScope.ContextMenuView(
+    item: Element,
+    itemView: @Composable (Modifier, Element) -> Unit,
+    topCornersShape: Shape,
+    bottomCornersShape: Shape,
+    contextMenuActions: (Element) -> List<ContextMenuItem<Element>>,
+    onItemClick: (Element) -> Unit,
+) {
+    ContextMenu(
+        element = item,
+        content = {
+            itemView(
+                Modifier
+                    .animateItem()
+                    .clip(topCornersShape)
+                    .clip(bottomCornersShape)
+                    .background(
+                        MaterialTheme.colorScheme.surfaceColorAtElevation(
+                            4.dp
+                        )
+                    )
+                    .padding(vertical = 12.dp, horizontal = 16.dp),
+                item
+            )
+        },
+        actions = contextMenuActions(item),
+        onClick = onItemClick
+    )
 }
