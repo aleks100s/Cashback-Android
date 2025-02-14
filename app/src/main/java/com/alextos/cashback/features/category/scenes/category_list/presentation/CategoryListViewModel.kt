@@ -45,13 +45,11 @@ class CategoryListViewModel(
     fun onAction(action: CategoryListAction) {
         when (action) {
             is CategoryListAction.SearchQueryChanged -> {
+                val query = action.query
+                _state.update { it.copy(searchQuery = query) }
                 viewModelScope.launch(Dispatchers.IO) {
-                    val query = action.query
                     _state.update { state ->
-                        state.copy(
-                            searchQuery = query,
-                            filteredCategories = filterUseCase.execute(state.allCategories, query)
-                        )
+                        state.copy(filteredCategories = filterUseCase.execute(state.allCategories, query))
                     }
                 }
             }
