@@ -27,6 +27,7 @@
     <string name="add_card_sheet_placeholder">Название карты</string>
     <string name="common_save">Сохранить</string>
     <string name="common_ok">Ок</string>
+    <string name="common_done">Готово</string>
     <string name="cards_list_card_added">Карта добавлена</string>
     <string name="card_list_card_changed">Карта обновлена</string>
     <string name="card_detail_add_cashback">Добавить кэшбэк</string>

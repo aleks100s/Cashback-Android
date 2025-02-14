@@ -85,12 +85,6 @@ class CardDetailViewModel(
             is CardDetailAction.ChangeCurrency -> {
                 _state.update { it.copy(currency = action.currency) }
             }
-            is CardDetailAction.PickColor -> {
-                _state.update { it.copy(isPickColorSheetShown = true) }
-            }
-            is CardDetailAction.DismissColorPicker -> {
-                _state.update { it.copy(isPickColorSheetShown = false) }
-            }
             is CardDetailAction.ChangeColor -> {
                 _state.update { it.copy(color = "#${action.color}") }
             }

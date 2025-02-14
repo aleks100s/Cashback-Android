@@ -1,5 +1,6 @@
 package com.alextos.cashback.features.cards.scenes.card_detail.presentation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
@@ -30,7 +32,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -43,6 +47,7 @@ import com.alextos.cashback.common.views.ContextMenuItem
 import com.alextos.cashback.features.cards.scenes.card_detail.presentation.components.CashbackView
 import com.alextos.cashback.common.UiText
 import com.alextos.cashback.common.makeColor
+import com.alextos.cashback.common.views.ColorPicker
 import com.alextos.cashback.common.views.CustomButton
 import com.alextos.cashback.common.views.CustomTextField
 import com.alextos.cashback.common.views.CustomWideButton
@@ -130,37 +135,6 @@ fun CardDetailScreen(
                 viewModel.onAction(CardDetailAction.DismissDeleteCardDialog)
             }
         )
-    }
-
-    if (state.isPickColorSheetShown) {
-        ModalBottomSheet(onDismissRequest = {
-            viewModel.onAction(CardDetailAction.DismissColorPicker)
-        }) {
-            val controller = rememberColorPickerController()
-
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(32.dp)
-            ) {
-                HsvColorPicker(
-                    modifier = Modifier
-                        .size(300.dp)
-                        .padding(16.dp),
-                    controller = controller,
-                    onColorChanged = { colorEnvelope: ColorEnvelope ->
-                        viewModel.onAction(CardDetailAction.ChangeColor(colorEnvelope.hexCode))
-                    },
-                    initialColor = makeColor(state.color)
-                )
-
-                Button(onClick = {
-                    viewModel.onAction(CardDetailAction.DismissColorPicker)
-                }) {
-                    Text(text = stringResource(R.string.common_ok))
-                }
-            }
-        }
     }
 }
 
@@ -280,20 +254,13 @@ private fun EditCardView(
 
                     HorizontalDivider()
 
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(text = stringResource(R.string.card_detail_color))
-
-                        CustomButton(
-                            title = stringResource(R.string.card_detail_change_color),
-                            color = makeColor(state.color)
-                        ) {
-                            onAction(CardDetailAction.PickColor)
+                    ColorPicker(
+                        title = stringResource(R.string.card_detail_color),
+                        color = state.color,
+                        onColorChange = {
+                            onAction(CardDetailAction.ChangeColor(it))
                         }
-                    }
+                    )
 
                     HorizontalDivider()
 
