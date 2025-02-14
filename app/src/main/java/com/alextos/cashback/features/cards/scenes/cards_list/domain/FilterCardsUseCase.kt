@@ -9,10 +9,8 @@ class FilterCardsUseCase {
         return withContext(Dispatchers.IO) {
             val query = query.lowercase()
             return@withContext cards.filter { card ->
-                card.name.lowercase().contains(query)
-                        || card.toString().lowercase().contains(query)
-                        || card.cashback.joinToString { it.category.synonyms?.lowercase() ?: "" }
-                    .contains(query)
+                card.toString().lowercase().contains(query)
+                        || card.cashback.joinToString { it.category.synonyms?.lowercase() ?: "" }.contains(query)
             }
         }
     }
