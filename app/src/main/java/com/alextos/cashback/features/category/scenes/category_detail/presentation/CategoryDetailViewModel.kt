@@ -11,6 +11,7 @@ import com.alextos.cashback.features.category.CategoryRoute
 import com.alextos.cashback.features.category.scenes.category_list.domain.CategoryRepository
 import com.alextos.cashback.features.category.scenes.category_detail.domain.ValidateCategoryUseCase
 import com.alextos.cashback.common.UiText
+import com.alextos.cashback.features.category.scenes.category_detail.domain.CreateOrUpdateCategoryUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,11 +20,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okio.utf8Size
 
 class CategoryDetailViewModel(
     savedStateHandle: SavedStateHandle,
     private val repository: CategoryRepository,
     private val validateCategoryUseCase: ValidateCategoryUseCase,
+    private val createOrUpdateCategoryUseCase: CreateOrUpdateCategoryUseCase,
     private val toastService: ToastService
 ): ViewModel() {
     private val categoryId = savedStateHandle.toRoute<CategoryRoute.CategoryDetail>().categoryId
@@ -86,18 +89,12 @@ class CategoryDetailViewModel(
             is CategoryDetailAction.SaveButtonTapped -> {
                 val state = state.value
                 viewModelScope.launch(Dispatchers.IO) {
-                    val emoji = state.emoji.firstOrNull() ?: state.categoryName.firstOrNull() ?: "?"
-                    val category = this@CategoryDetailViewModel.category?.copy(
-                        name = state.categoryName,
-                        emoji = emoji.toString(),
-                        info = state.description
-                    ) ?: Category(
-                        name = state.categoryName,
-                        emoji = emoji.toString(),
-                        info = state.description,
-                        isNative = false
+                    createOrUpdateCategoryUseCase.execute(
+                        category = category,
+                        categoryName = state.categoryName,
+                        emoji = state.emoji,
+                        description = state.description
                     )
-                    repository.createOrUpdate(category)
                     withContext(Dispatchers.Main) {
                         if (categoryId != null) {
                             toastService.showToast(UiText.StringResourceId(R.string.category_detail_changeded))
