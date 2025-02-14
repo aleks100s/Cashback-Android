@@ -9,5 +9,6 @@ sealed interface CardsListAction {
     data object AddCard: CardsListAction
     data object DismissAddCardSheet: CardsListAction
     data class CardNameChange(val name: String): CardsListAction
+    data class CardColorChange(val color: String): CardsListAction
     data object SaveButtonTapped: CardsListAction
 }

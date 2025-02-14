@@ -76,6 +76,10 @@ fun CardsListScreen(
                     onValueChange = { name ->
                         viewModel.onAction(CardsListAction.CardNameChange(name))
                     },
+                    color = state.newCardColor,
+                    onColorChange = { color ->
+                        viewModel.onAction(CardsListAction.CardColorChange(color))
+                    },
                     onSaveTapped = {
                         viewModel.onAction(CardsListAction.SaveButtonTapped)
                     }

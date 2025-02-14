@@ -76,11 +76,16 @@ class CardsListViewModel(
                     it.copy(newCardName = action.name)
                 }
             }
+            is CardsListAction.CardColorChange -> {
+                _state.update {
+                    it.copy(newCardColor = "#${action.color}")
+                }
+            }
             is CardsListAction.SaveButtonTapped -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    val card = Card(name = state.value.newCardName)
+                    val card = Card(name = state.value.newCardName, color = state.value.newCardColor)
                     repository.createOrUpdate(card)
-                    _state.update { it.copy(newCardName = "", isAddCardSheetShown = false) }
+                    _state.update { it.copy(newCardName = "", newCardColor = "#E7E7E7", isAddCardSheetShown = false) }
                     viewModelScope.launch(Dispatchers.Main) {
                         toastService.showToast(UiText.StringResourceId(R.string.cards_list_card_added))
                     }

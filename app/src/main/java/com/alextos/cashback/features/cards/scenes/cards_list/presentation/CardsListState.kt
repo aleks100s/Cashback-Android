@@ -7,5 +7,6 @@ data class CardsListState(
     val allCards: List<Card> = listOf(),
     val filteredCards: List<Card> = listOf(),
     val isAddCardSheetShown: Boolean = false,
-    val newCardName: String = ""
+    val newCardName: String = "",
+    val newCardColor: String = "#E7E7E7"
 )
