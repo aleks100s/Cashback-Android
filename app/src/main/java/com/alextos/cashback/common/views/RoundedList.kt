@@ -43,9 +43,10 @@ fun <Element: ListElement> RoundedList(
     emptyView: @Composable () -> Unit,
     onItemClick: (Element) -> Unit = {},
     contextMenuActions: (Element) -> List<ContextMenuItem<Element>>,
-    onSwipe: ((Element) -> Unit)?,
+    onSwipe: (Element) -> Unit = {},
     swipeBackground: Color = Color.Red,
-    swipeText: String = ""
+    swipeText: String = "",
+    allowSwipe: Boolean = true
 ) {
     val scrollState: LazyListState = rememberLazyListState()
 
@@ -78,7 +79,7 @@ fun <Element: ListElement> RoundedList(
                     RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp)
                 } else RectangleShape
 
-                if (onSwipe != null) {
+                if (allowSwipe) {
                     SwipeableItem(
                         modifier = Modifier
                             .clip(topCornersShape)

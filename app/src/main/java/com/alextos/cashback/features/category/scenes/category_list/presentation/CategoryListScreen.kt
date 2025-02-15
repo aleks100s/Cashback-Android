@@ -146,7 +146,7 @@ private fun CategoryListView(
                 )
             }
         },
-        onSwipe = null,
+        allowSwipe = false,
     )
 }
 
