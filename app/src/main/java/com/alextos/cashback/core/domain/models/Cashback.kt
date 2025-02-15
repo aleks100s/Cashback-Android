@@ -27,8 +27,14 @@ data class Cashback(
     }
 
     private fun showFloatingPoint(): Boolean {
-        return (percent * 100) % 10 < 0.1
+        val value = roundToWhole(percent * 100)
+        return value == value.toInt().toDouble()
     }
+}
+
+private fun roundToWhole(value: Double, epsilon: Double = 1e-3): Double {
+    val rounded = kotlin.math.round(value)
+    return if (kotlin.math.abs(value - rounded) < epsilon) rounded else value
 }
 
 fun generateMockCashback(category: Category? = null): Cashback {
