@@ -12,6 +12,7 @@ import com.alextos.cashback.features.cards.domain.CardsRepository
 import com.alextos.cashback.features.cards.scenes.cashback_detail.domain.ValidateCashbackUseCase
 import com.alextos.cashback.features.category.CategoryMediator
 import com.alextos.cashback.common.UiText
+import com.alextos.cashback.features.cards.scenes.cashback_detail.domain.CreateCashbackUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,6 +24,7 @@ import kotlinx.coroutines.launch
 class CashbackDetailViewModel(
     savedStateHandle: SavedStateHandle,
     private val validateCashbackUseCase: ValidateCashbackUseCase,
+    private val createCashbackUseCase: CreateCashbackUseCase,
     private val cardsRepository: CardsRepository,
     private val categoryMediator: CategoryMediator,
     private val toastService: ToastService
@@ -98,22 +100,13 @@ class CashbackDetailViewModel(
                     return
                 }
 
-                val percent = (state.value.percent.toDoubleOrNull() ?: 0.0) / 100
                 viewModelScope.launch(Dispatchers.IO) {
-                    this@CashbackDetailViewModel.cashback?.let { oldCashback ->
-                        viewModelScope.launch(Dispatchers.IO) {
-                            cardsRepository.deleteCashback(oldCashback, cardId)
-                        }
-                    }
-
-                    val newCashback = Cashback(
-                        percent = percent,
+                    createCashbackUseCase.execute(
+                        card = card,
+                        existingCashback = cashback,
+                        percent = state.value.percent,
                         category = selectedCategory
                     )
-                    cardsRepository.createCashback(newCashback, cardId)
-                    state.value.card?.let { card ->
-                        cardsRepository.createOrUpdate(card)
-                    }
                 }
 
                 if (cashbackId != null) {
