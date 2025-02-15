@@ -15,6 +15,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,6 +42,7 @@ fun CategoryListScreen(
     onEditCategory: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val haptic = LocalHapticFeedback.current
 
     Screen(
         modifier = modifier,
@@ -59,14 +62,20 @@ fun CategoryListScreen(
                 is CategoryListAction.SelectCategory -> {
                     if (!disableSelection) {
                         viewModel.onAction(action)
+                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                         onSelectCategory()
                     }
                 }
                 is CategoryListAction.CreateCategory -> {
                     onCreateCategory(action.name)
+                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                 }
                 is CategoryListAction.EditCategory -> {
                     onEditCategory(action.category.id)
+                }
+                is CategoryListAction.DeleteCategory -> {
+                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                    viewModel.onAction(action)
                 }
                 else -> {
                     viewModel.onAction(action)

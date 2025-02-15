@@ -1,6 +1,5 @@
 package com.alextos.cashback.features.cards.scenes.card_detail.presentation
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,30 +10,26 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -46,20 +41,14 @@ import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.common.views.ContextMenuItem
 import com.alextos.cashback.features.cards.scenes.card_detail.presentation.components.CashbackView
 import com.alextos.cashback.common.UiText
-import com.alextos.cashback.common.makeColor
 import com.alextos.cashback.common.views.ColorPicker
-import com.alextos.cashback.common.views.CustomButton
 import com.alextos.cashback.common.views.CustomTextField
 import com.alextos.cashback.common.views.CustomWideButton
 import com.alextos.cashback.common.views.Dialog
 import com.alextos.cashback.common.views.PickerDropdown
 import com.alextos.cashback.common.views.RoundedList
 import com.alextos.cashback.common.views.SectionView
-import com.github.skydoves.colorpicker.compose.ColorEnvelope
-import com.github.skydoves.colorpicker.compose.HsvColorPicker
-import com.github.skydoves.colorpicker.compose.rememberColorPickerController
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardDetailScreen(
     modifier: Modifier = Modifier,
@@ -70,6 +59,7 @@ fun CardDetailScreen(
     onDelete: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val haptic = LocalHapticFeedback.current
 
     Screen(
         modifier = modifier,
@@ -87,6 +77,7 @@ fun CardDetailScreen(
         actions = {
             IconButton(
                 onClick = {
+                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                     viewModel.onAction(CardDetailAction.ToggleEditMode)
                 }
             ) {
@@ -102,7 +93,18 @@ fun CardDetailScreen(
             EditCardView(
                 modifier = it,
                 state = state,
-                onAction = viewModel::onAction
+                onAction = { action ->
+                    viewModel.onAction(action)
+                    when (action) {
+                        is CardDetailAction.DeleteCard -> {
+                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                        }
+                        is CardDetailAction.ToggleFavourite -> {
+                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                        }
+                        else -> {}
+                    }
+                }
             )
         } else {
             CardDetailView(
@@ -114,7 +116,9 @@ fun CardDetailScreen(
                         is CardDetailAction.EditCashback -> {
                             onEditCashback(action.cashback.id)
                         }
-
+                        is CardDetailAction.DeleteCashback -> {
+                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                        }
                         else -> {}
                     }
                 }

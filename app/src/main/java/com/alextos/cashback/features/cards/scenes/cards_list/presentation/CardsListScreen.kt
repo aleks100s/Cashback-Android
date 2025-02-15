@@ -28,7 +28,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -46,6 +49,7 @@ fun CardsListScreen(
     viewModel: CardsListViewModel,
     onCardSelect: (Card) -> Unit
 ) {
+    val haptic = LocalHapticFeedback.current
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     Screen(
@@ -81,6 +85,7 @@ fun CardsListScreen(
                         viewModel.onAction(CardsListAction.CardColorChange(color))
                     },
                     onSaveTapped = {
+                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                         viewModel.onAction(CardsListAction.SaveButtonTapped)
                     }
                 )
@@ -132,7 +137,10 @@ private fun CardsListView(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(stringResource(R.string.cards_list_no_search_results))
+                        Text(
+                            stringResource(R.string.cards_list_no_search_results),
+                            textAlign = TextAlign.Center
+                        )
                     }
                 }
             } else {
