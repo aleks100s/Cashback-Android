@@ -8,7 +8,8 @@ import kotlin.random.Random
 data class Cashback(
     override val id: String = UUID.randomUUID().toString(),
     val category: Category,
-    val percent: Double
+    val percent: Double,
+    val order: Int = 0
 ): ListElement {
     override fun toString(): String {
         return if (showFloatingPoint()) {
@@ -41,6 +42,7 @@ fun generateMockCashback(category: Category? = null): Cashback {
     return Cashback(
         id = UUID.randomUUID().toString(),
         category = category ?: generateMockCategory(), // Генерируем случайную категорию
-        percent = Random.nextDouble(0.01, 0.2) // Генерируем процент от 1.0 до 20.0
+        percent = Random.nextDouble(0.01, 0.2), // Генерируем процент от 1.0 до 20.0,
+        order = 0
     )
 }

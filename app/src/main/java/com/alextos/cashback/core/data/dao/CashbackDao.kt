@@ -11,7 +11,7 @@ import com.alextos.cashback.core.data.entities.CashbackEntity
 @Dao
 interface CashbackDao {
     @Transaction
-    @Query("SELECT * FROM cashback WHERE cardId = :cardId")
+    @Query("SELECT * FROM cashback WHERE cardId = :cardId ORDER BY `order`")
     suspend fun getAllBy(cardId: String): List<CashbackWithCategory>
 
     @Query("SELECT * FROM cashback WHERE id = :cashbackId LIMIT 1")

@@ -28,5 +28,6 @@ data class CashbackEntity(
     val id: String,
     val categoryId: String,
     val percent: Double,
-    val cardId: String
+    val cardId: String,
+    val order: Int
 )
