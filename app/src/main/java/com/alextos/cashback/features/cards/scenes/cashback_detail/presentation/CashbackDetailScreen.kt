@@ -9,7 +9,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.Button
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -30,6 +35,7 @@ import com.alextos.cashback.common.views.CustomButton
 import com.alextos.cashback.common.views.CustomWideButton
 import com.alextos.cashback.common.views.SectionView
 import com.alextos.cashback.core.presentation.views.CategoryItemView
+import com.alextos.cashback.features.cards.scenes.cards_list.presentation.CardsListAction
 
 @Composable
 fun CashbackDetailScreen(
@@ -44,13 +50,30 @@ fun CashbackDetailScreen(
     Screen(
         modifier = modifier,
         title = state.title.asString(),
-        goBack = goBack
+        goBack = goBack,
+        floatingActionButton = {
+            Button(
+                onClick = {
+                    viewModel.onAction(CashbackDetailAction.SaveCashbackDetail)
+                    onSave()
+                },
+                enabled = state.isValid
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    Text(text = stringResource(R.string.common_save))
+
+                    Icon(Icons.Default.Done, stringResource(R.string.common_save))
+                }
+            }
+        }
     ) {
         AddCashbackView(modifier = it, state = state, onAction = { action ->
             viewModel.onAction(action)
 
             when (action) {
-                is CashbackDetailAction.SaveCashbackDetail -> onSave()
                 is CashbackDetailAction.SelectCategory -> selectCategory()
                 else -> {}
             }
@@ -117,15 +140,6 @@ private fun AddCashbackView(
                     }
                 }
             }
-        }
-
-        Button(
-            onClick = {
-                onAction(CashbackDetailAction.SaveCashbackDetail)
-            },
-            enabled = state.isValid
-        ) {
-            Text(text = stringResource(R.string.common_save))
         }
     }
 }

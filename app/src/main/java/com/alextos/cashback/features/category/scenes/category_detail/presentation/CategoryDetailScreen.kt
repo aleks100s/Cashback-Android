@@ -2,8 +2,12 @@ package com.alextos.cashback.features.category.scenes.category_detail.presentati
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,6 +21,7 @@ import androidx.navigation.NavController
 import com.alextos.cashback.R
 import com.alextos.cashback.common.views.CustomTextField
 import com.alextos.cashback.common.views.Screen
+import com.alextos.cashback.features.cards.scenes.cashback_detail.presentation.CashbackDetailAction
 
 @Composable
 fun CategoryDetailScreen(
@@ -30,17 +35,27 @@ fun CategoryDetailScreen(
     Screen(
         modifier = modifier,
         title = state.title.asString(),
-        goBack = goBack
-    ) {
-        CategoryDetailView(modifier = it, state = state) { action ->
-            viewModel.onAction(action)
-            when (action) {
-                is CategoryDetailAction.SaveButtonTapped -> {
+        goBack = goBack,
+        floatingActionButton = {
+            Button(
+                onClick = {
+                    viewModel.onAction(CategoryDetailAction.SaveButtonTapped)
                     onSaved()
+                },
+                enabled = state.isValid
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    Text(text = stringResource(R.string.common_save))
+
+                    Icon(Icons.Default.Done, stringResource(R.string.common_save))
                 }
-                else -> {}
             }
         }
+    ) {
+        CategoryDetailView(modifier = it, state = state, onAction = viewModel::onAction)
     }
 }
 
@@ -81,15 +96,6 @@ private fun CategoryDetailView(
             label = stringResource(R.string.category_detail_description),
             footer = stringResource(R.string.category_detail_optional)
         )
-
-        Button(
-            onClick = {
-                onAction(CategoryDetailAction.SaveButtonTapped)
-            },
-            enabled = state.isValid
-        ) {
-            Text(stringResource(R.string.common_save))
-        }
     }
 }
 
