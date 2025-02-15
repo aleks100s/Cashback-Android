@@ -100,7 +100,7 @@ private fun CategoryListView(
             Column(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Top
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Text(
                     text = stringResource(R.string.category_list_no_search_results),
