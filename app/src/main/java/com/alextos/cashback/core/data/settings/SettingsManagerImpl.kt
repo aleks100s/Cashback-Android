@@ -11,10 +11,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class SettingsManagerImpl(
-    private val context: Context
+    context: Context
 ): SettingsManager {
     companion object {
         private val NOTIFICATIONS_KEY = booleanPreferencesKey("notifications_enabled")
+        private val ONBOARDING_KEY = booleanPreferencesKey("was_onboarding_shown")
     }
 
     private val dataStore = context.dataStore
@@ -27,6 +28,17 @@ class SettingsManagerImpl(
     override suspend fun setNotifications(enabled: Boolean) {
         dataStore.edit { preferences ->
             preferences[NOTIFICATIONS_KEY] = enabled
+        }
+    }
+
+    override val wasOnboardingShown: Flow<Boolean>
+        get() = dataStore.data.map { preferences ->
+            preferences[ONBOARDING_KEY] ?: false
+        }
+
+    override suspend fun setOnboarding(shown: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[ONBOARDING_KEY] = shown
         }
     }
 }

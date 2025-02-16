@@ -100,4 +100,5 @@
     <string name="monthly_notification_channel_title">Ежемесячные напоминания</string>
     <string name="monthly_notification_channel_subtitle">Напомню добавить кэшбэк 1 числа каждого месяца</string>
     <string name="add_card_sheet_pick_color">Можно выбрать цвет карты</string>
+    <string name="common_next">Далее</string>
 </resources>
