@@ -52,6 +52,11 @@ class SettingsViewModel(
                     settingsManager.setNotifications(action.enabled)
                 }
             }
+            is SettingsAction.ShowOnboarding -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    settingsManager.setOnboarding(shown = false)
+                }
+            }
             is SettingsAction.ShowCatalog -> {}
             is SettingsAction.ShowCardTrashbin -> {}
             is SettingsAction.ShowCategoryTrashbin -> {}

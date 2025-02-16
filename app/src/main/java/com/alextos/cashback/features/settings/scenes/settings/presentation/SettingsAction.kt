@@ -6,4 +6,5 @@ sealed interface SettingsAction {
     data object ShowCatalog: SettingsAction
     data object ShowCardTrashbin: SettingsAction
     data object ShowCategoryTrashbin: SettingsAction
+    data object ShowOnboarding: SettingsAction
 }

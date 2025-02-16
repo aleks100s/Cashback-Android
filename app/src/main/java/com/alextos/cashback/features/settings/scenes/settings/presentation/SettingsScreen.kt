@@ -28,8 +28,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
 import com.alextos.cashback.common.ads.AdBannerView
+import com.alextos.cashback.common.views.CustomWideButton
 import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.common.views.SectionView
+import com.alextos.cashback.features.cards.scenes.cashback_detail.presentation.CashbackDetailAction
 
 @Composable
 fun SettingsScreen(
@@ -100,6 +102,17 @@ private fun SettingsView(
                             onAction(SettingsAction.SetNotifications(it))
                         }
                     )
+                }
+            }
+        }
+
+        item {
+            SectionView(
+                title = stringResource(R.string.settings_onboarding_title),
+                footer = stringResource(R.string.settings_onboarding_footer)
+            ) {
+                CustomWideButton(title = stringResource(R.string.settings_show_onboarding)) {
+                    onAction(SettingsAction.ShowOnboarding)
                 }
             }
         }

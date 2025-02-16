@@ -101,4 +101,7 @@
     <string name="monthly_notification_channel_subtitle">Напомню добавить кэшбэк 1 числа каждого месяца</string>
     <string name="add_card_sheet_pick_color">Можно выбрать цвет карты</string>
     <string name="common_next">Далее</string>
+    <string name="settings_show_onboarding">Посмотреть обучение</string>
+    <string name="settings_onboarding_footer">Здесь можно посмотреть информацию об основных функциях приложения</string>
+    <string name="settings_onboarding_title">Обучение</string>
 </resources>
