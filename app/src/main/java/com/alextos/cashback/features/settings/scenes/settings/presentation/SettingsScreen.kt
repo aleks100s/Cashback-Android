@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
+import com.alextos.cashback.common.ads.AdBannerView
 import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.common.views.SectionView
 
@@ -42,7 +43,10 @@ fun SettingsScreen(
 
     Screen(
         modifier = modifier,
-        title = stringResource(R.string.settings_title)
+        title = stringResource(R.string.settings_title),
+        bannerView = {
+            AdBannerView("R-M-14164420-2")
+        }
     ) {
         SettingsView(
             modifier = it,

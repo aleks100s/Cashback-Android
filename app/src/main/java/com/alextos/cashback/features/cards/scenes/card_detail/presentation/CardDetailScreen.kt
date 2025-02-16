@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -41,6 +42,7 @@ import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.common.views.ContextMenuItem
 import com.alextos.cashback.features.cards.scenes.card_detail.presentation.components.CashbackView
 import com.alextos.cashback.common.UiText
+import com.alextos.cashback.common.ads.AdBannerView
 import com.alextos.cashback.common.views.ColorPicker
 import com.alextos.cashback.common.views.CustomTextField
 import com.alextos.cashback.common.views.CustomWideButton
@@ -87,6 +89,9 @@ fun CardDetailScreen(
                     Icon(Icons.Filled.Edit, stringResource(R.string.card_detail_edit))
                 }
             }
+        },
+        bannerView = {
+            AdBannerView("R-M-14164420-1")
         }
     ) {
         if (state.isEditMode) {

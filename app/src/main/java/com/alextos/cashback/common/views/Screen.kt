@@ -1,6 +1,9 @@
 package com.alextos.cashback.common.views
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -25,6 +28,7 @@ fun Screen(
     backButtonIcon: ImageVector = Icons.AutoMirrored.Filled.ArrowBack,
     floatingActionButton: @Composable () -> Unit = {},
     actions: @Composable RowScope.() -> Unit = {},
+    bannerView: @Composable (() -> Unit)? = null,
     content: @Composable (Modifier) -> Unit
 ) {
     Scaffold(
@@ -51,8 +55,16 @@ fun Screen(
                 }
             )
         },
-        floatingActionButton = floatingActionButton
+        floatingActionButton = floatingActionButton,
+        bottomBar = {
+            if (bannerView != null) {
+                bannerView()
+            }
+        }
     ) { innerPaddings ->
-        content(Modifier.padding(top = innerPaddings.calculateTopPadding()))
+        content(Modifier.padding(
+            top = innerPaddings.calculateTopPadding(),
+            bottom = innerPaddings.calculateBottomPadding()
+        ))
     }
 }

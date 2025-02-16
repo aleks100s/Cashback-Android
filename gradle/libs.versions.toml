@@ -17,6 +17,7 @@ activityCompose = "1.10.0"
 composeBom = "2025.01.01"
 kotlinSerialization = "2.1.10"
 material3 = "1.3.1"
+mobileads = "7.10.0"
 roomKtx = "2.6.1"
 
 [libraries]
@@ -45,6 +46,7 @@ koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndr
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinAndroidxCompose" }
 koin-androidx-compose-navigation = { module = "io.insert-koin:koin-androidx-compose-navigation", version.ref = "koinAndroidxComposeNavigation" }
 material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
+mobileads = { module = "com.yandex.android:mobileads", version.ref = "mobileads" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
