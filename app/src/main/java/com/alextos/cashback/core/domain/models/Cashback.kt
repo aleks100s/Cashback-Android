@@ -9,7 +9,7 @@ data class Cashback(
     override val id: String = UUID.randomUUID().toString(),
     val category: Category,
     val percent: Double,
-    val order: Int = 0
+    val order: Int
 ): ListElement {
     override fun toString(): String {
         return if (showFloatingPoint()) {

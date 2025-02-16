@@ -23,7 +23,8 @@ class CreateCashbackUseCase(
             val percent = (percent.toDoubleOrNull() ?: 0.0) / 100
             val newCashback = Cashback(
                 percent = percent,
-                category = category
+                category = category,
+                order = card.cashback.count()
             )
             repository.createCashback(newCashback, card.id)
             repository.createOrUpdate(card)
