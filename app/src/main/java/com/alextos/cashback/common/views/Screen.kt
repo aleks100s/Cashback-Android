@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.alextos.cashback.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -64,7 +65,7 @@ fun Screen(
     ) { innerPaddings ->
         content(Modifier.padding(
             top = innerPaddings.calculateTopPadding(),
-            bottom = innerPaddings.calculateBottomPadding()
+            bottom = if (bannerView != null) innerPaddings.calculateBottomPadding() else 0.dp
         ))
     }
 }

@@ -8,12 +8,14 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
@@ -28,19 +30,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.alextos.cashback.BuildConfig
 import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.features.cards.scenes.cards_list.presentation.components.AddCardSheet
 import com.alextos.cashback.features.cards.scenes.cards_list.presentation.components.CardItemView
 import com.alextos.cashback.common.views.SearchBar
+import com.alextos.cashback.features.cards.scenes.cards_list.presentation.components.FilterItemView
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -101,6 +104,7 @@ private fun CardsListView(
     state: CardsListState,
     onAction: (CardsListAction) -> Unit
 ) {
+    val focusManager = LocalFocusManager.current
     if (state.allCards.isEmpty()) {
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -122,11 +126,24 @@ private fun CardsListView(
                     enter = fadeIn() + expandVertically(),
                     exit = fadeOut() + shrinkVertically()
                 ) {
-                    SearchBar(
-                        value = state.searchQuery,
-                        placeholder = stringResource(R.string.cards_list_search_placeholder)
-                    ) {
-                        onAction(CardsListAction.SearchQueryChange(it))
+                    Column {
+                        SearchBar(
+                            value = state.searchQuery,
+                            placeholder = stringResource(R.string.cards_list_search_placeholder)
+                        ) {
+                            onAction(CardsListAction.SearchQueryChange(it))
+                        }
+                        LazyRow {
+                            items(state.popularCategories) { category ->
+                                FilterItemView(
+                                    category = category,
+                                    isSelected = state.selectedCategory == category
+                                ) {
+                                    focusManager.clearFocus()
+                                    onAction(CardsListAction.SelectCategory(category))
+                                }
+                            }
+                        }
                     }
                 }
             }

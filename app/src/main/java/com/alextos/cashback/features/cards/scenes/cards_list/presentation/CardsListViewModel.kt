@@ -49,7 +49,7 @@ class CardsListViewModel(
     fun onAction(action: CardsListAction) {
         when (action) {
             is CardsListAction.SearchQueryChange -> {
-                _state.update { it.copy(searchQuery = action.query) }
+                _state.update { it.copy(searchQuery = action.query, selectedCategory = null) }
                 viewModelScope.launch(Dispatchers.IO) {
                     _state.update {
                         it.copy(filteredCards = filterUseCase.execute(it.allCards, action.query))
@@ -106,10 +106,10 @@ class CardsListViewModel(
                 if (category == state.value.selectedCategory) {
                     _state.update { it.copy(selectedCategory = null, filteredCards = it.allCards) }
                 } else {
-                    _state.update { it.copy(selectedCategory = category) }
+                    _state.update { it.copy(selectedCategory = category, searchQuery = "") }
                     viewModelScope.launch(Dispatchers.IO) {
                         _state.update {
-                            it.copy(filteredCards = filterUseCase.execute(it.filteredCards, category.name))
+                            it.copy(filteredCards = filterUseCase.execute(it.allCards, category.name))
                         }
                     }
                 }
