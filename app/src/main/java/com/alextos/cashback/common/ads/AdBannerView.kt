@@ -60,5 +60,3 @@ fun AdBannerView(id: String) {
         }
     )
 }
-
-// R-M-14164420-2

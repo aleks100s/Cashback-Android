@@ -4,6 +4,7 @@ import com.alextos.cashback.features.cards.data.CardsRepositoryImpl
 import com.alextos.cashback.features.cards.domain.CardsRepository
 import com.alextos.cashback.features.cards.scenes.card_detail.domain.DeleteAllCashbackUseCase
 import com.alextos.cashback.features.cards.scenes.card_detail.domain.DeleteCardUseCase
+import com.alextos.cashback.features.cards.scenes.card_detail.domain.DeleteCashbackUseCase
 import com.alextos.cashback.features.cards.scenes.cards_list.domain.FilterCardsUseCase
 import com.alextos.cashback.features.cards.scenes.cashback_detail.domain.ValidateCashbackUseCase
 import com.alextos.cashback.features.cards.scenes.cashback_detail.presentation.CashbackDetailViewModel
@@ -23,4 +24,5 @@ val cardsModule = module {
     factory { DeleteAllCashbackUseCase(get()) }
     factory { DeleteCardUseCase(get()) }
     factory { CreateCashbackUseCase(get()) }
+    factory { DeleteCashbackUseCase(get()) }
 }

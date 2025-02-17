@@ -42,8 +42,8 @@ class CardsRepositoryImpl(
         cashbackDao.delete(cashback.toEntity(cardId))
     }
 
-    override suspend fun createCashback(cashback: Cashback, cardId: String) {
-        cashbackDao.insert(cashback.toEntity(cardId))
+    override suspend fun createOrUpdateCashback(cashback: Cashback, cardId: String) {
+        cashbackDao.upsert(cashback.toEntity(cardId))
     }
 
     override suspend fun getCashback(id: String): Cashback? {

@@ -26,7 +26,7 @@ class CreateCashbackUseCase(
                 category = category,
                 order = card.cashback.count()
             )
-            repository.createCashback(newCashback, card.id)
+            repository.createOrUpdateCashback(newCashback, card.id)
             repository.createOrUpdate(card)
         }
     }
