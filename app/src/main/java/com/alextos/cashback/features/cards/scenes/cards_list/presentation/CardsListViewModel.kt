@@ -5,17 +5,20 @@ import androidx.lifecycle.viewModelScope
 import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.domain.services.ToastService
-import com.alextos.cashback.features.cards.domain.CardsRepository
+import com.alextos.cashback.core.domain.repository.CardsRepository
 import com.alextos.cashback.features.cards.scenes.cards_list.domain.FilterCardsUseCase
 import com.alextos.cashback.common.UiText
+import com.alextos.cashback.core.domain.repository.CategoryRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CardsListViewModel(
-    private val repository: CardsRepository,
+    private val cardsRepository: CardsRepository,
+    private val categoryRepository: CategoryRepository,
     private val filterUseCase: FilterCardsUseCase,
     private val toastService: ToastService
 ): ViewModel() {
@@ -24,7 +27,7 @@ class CardsListViewModel(
 
     init {
         viewModelScope.launch {
-            repository.getAllCards()
+            cardsRepository.getAllCards()
                 .collect { list ->
                     _state.update {
                         it.copy(
@@ -32,6 +35,13 @@ class CardsListViewModel(
                             filteredCards = filterUseCase.execute(list, it.searchQuery)
                         )
                     }
+                }
+        }
+
+        viewModelScope.launch {
+            categoryRepository.getPopularCategories()
+                .collect { list ->
+                    _state.update { it.copy(popularCategories = list, selectedCategory = null) }
                 }
         }
     }
@@ -49,7 +59,7 @@ class CardsListViewModel(
             is CardsListAction.ToggleFavourite -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     val card = action.card
-                    repository.createOrUpdate(card.copy(isFavourite = !card.isFavourite))
+                    cardsRepository.createOrUpdate(card.copy(isFavourite = !card.isFavourite))
                 }
                 toastService.showToast(
                     UiText.StringResourceId(
@@ -84,10 +94,23 @@ class CardsListViewModel(
             is CardsListAction.SaveButtonTapped -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     val card = Card(name = state.value.newCardName, color = state.value.newCardColor)
-                    repository.createOrUpdate(card)
+                    cardsRepository.createOrUpdate(card)
                     _state.update { it.copy(newCardName = "", newCardColor = "#E7E7E7", isAddCardSheetShown = false) }
-                    viewModelScope.launch(Dispatchers.Main) {
+                    withContext(Dispatchers.Main) {
                         toastService.showToast(UiText.StringResourceId(R.string.cards_list_card_added))
+                    }
+                }
+            }
+            is CardsListAction.SelectCategory -> {
+                val category = action.category
+                if (category == state.value.selectedCategory) {
+                    _state.update { it.copy(selectedCategory = null, filteredCards = it.allCards) }
+                } else {
+                    _state.update { it.copy(selectedCategory = category) }
+                    viewModelScope.launch(Dispatchers.IO) {
+                        _state.update {
+                            it.copy(filteredCards = filterUseCase.execute(it.filteredCards, category.name))
+                        }
                     }
                 }
             }

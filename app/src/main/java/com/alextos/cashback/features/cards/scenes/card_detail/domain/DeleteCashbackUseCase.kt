@@ -2,7 +2,7 @@ package com.alextos.cashback.features.cards.scenes.card_detail.domain
 
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.domain.models.Cashback
-import com.alextos.cashback.features.cards.domain.CardsRepository
+import com.alextos.cashback.core.domain.repository.CardsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

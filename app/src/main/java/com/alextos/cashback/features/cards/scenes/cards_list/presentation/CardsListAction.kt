@@ -1,6 +1,7 @@
 package com.alextos.cashback.features.cards.scenes.cards_list.presentation
 
 import com.alextos.cashback.core.domain.models.Card
+import com.alextos.cashback.core.domain.models.Category
 
 sealed interface CardsListAction {
     data class SearchQueryChange(val query: String): CardsListAction
@@ -11,4 +12,5 @@ sealed interface CardsListAction {
     data class CardNameChange(val name: String): CardsListAction
     data class CardColorChange(val color: String): CardsListAction
     data object SaveButtonTapped: CardsListAction
+    data class SelectCategory(val category: Category): CardsListAction
 }

@@ -1,10 +1,10 @@
-package com.alextos.cashback.features.category.data
+package com.alextos.cashback.core.data.repository
 
 import com.alextos.cashback.core.data.dao.CategoryDao
 import com.alextos.cashback.core.data.mappers.toDomain
 import com.alextos.cashback.core.data.mappers.toEntity
 import com.alextos.cashback.core.domain.models.Category
-import com.alextos.cashback.features.category.scenes.category_list.domain.CategoryRepository
+import com.alextos.cashback.core.domain.repository.CategoryRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -20,6 +20,12 @@ class CategoryRepositoryImpl(
 
     override fun getAllCategories(): Flow<List<Category>> {
         return categoryDao.getAll().map { list ->
+            list.map { it.toDomain() }
+        }
+    }
+
+    override fun getPopularCategories(): Flow<List<Category>> {
+        return categoryDao.getPopularCategories().map { list ->
             list.map { it.toDomain() }
         }
     }

@@ -8,7 +8,7 @@ import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.Cashback
 import com.alextos.cashback.core.domain.services.ToastService
 import com.alextos.cashback.features.cards.CardsRoute
-import com.alextos.cashback.features.cards.domain.CardsRepository
+import com.alextos.cashback.core.domain.repository.CardsRepository
 import com.alextos.cashback.features.cards.scenes.cashback_detail.domain.ValidateCashbackUseCase
 import com.alextos.cashback.features.category.CategoryMediator
 import com.alextos.cashback.common.UiText

@@ -1,7 +1,7 @@
 package com.alextos.cashback.features.category.scenes.category_detail.domain
 
 import com.alextos.cashback.core.domain.models.Category
-import com.alextos.cashback.features.category.scenes.category_list.domain.CategoryRepository
+import com.alextos.cashback.core.domain.repository.CategoryRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

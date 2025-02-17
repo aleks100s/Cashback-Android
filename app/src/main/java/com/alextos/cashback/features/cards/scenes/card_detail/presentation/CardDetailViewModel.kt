@@ -7,7 +7,7 @@ import androidx.navigation.toRoute
 import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.services.ToastService
 import com.alextos.cashback.features.cards.CardsRoute
-import com.alextos.cashback.features.cards.domain.CardsRepository
+import com.alextos.cashback.core.domain.repository.CardsRepository
 import com.alextos.cashback.features.cards.scenes.card_detail.domain.DeleteAllCashbackUseCase
 import com.alextos.cashback.features.cards.scenes.card_detail.domain.DeleteCardUseCase
 import com.alextos.cashback.common.UiText

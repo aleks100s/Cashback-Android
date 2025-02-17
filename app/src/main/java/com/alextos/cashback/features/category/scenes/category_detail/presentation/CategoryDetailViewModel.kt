@@ -8,7 +8,7 @@ import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.Category
 import com.alextos.cashback.core.domain.services.ToastService
 import com.alextos.cashback.features.category.CategoryRoute
-import com.alextos.cashback.features.category.scenes.category_list.domain.CategoryRepository
+import com.alextos.cashback.core.domain.repository.CategoryRepository
 import com.alextos.cashback.features.category.scenes.category_detail.domain.ValidateCategoryUseCase
 import com.alextos.cashback.common.UiText
 import com.alextos.cashback.features.category.scenes.category_detail.domain.CreateOrUpdateCategoryUseCase
@@ -20,7 +20,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okio.utf8Size
 
 class CategoryDetailViewModel(
     savedStateHandle: SavedStateHandle,

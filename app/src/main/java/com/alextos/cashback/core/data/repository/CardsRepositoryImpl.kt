@@ -1,4 +1,4 @@
-package com.alextos.cashback.features.cards.data
+package com.alextos.cashback.core.data.repository
 
 import com.alextos.cashback.core.data.dao.CardDao
 import com.alextos.cashback.core.data.dao.CashbackDao
@@ -7,7 +7,7 @@ import com.alextos.cashback.core.data.mappers.toDomain
 import com.alextos.cashback.core.data.mappers.toEntity
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.domain.models.Cashback
-import com.alextos.cashback.features.cards.domain.CardsRepository
+import com.alextos.cashback.core.domain.repository.CardsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull

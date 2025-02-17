@@ -1,4 +1,4 @@
-package com.alextos.cashback.features.cards.domain
+package com.alextos.cashback.core.domain.repository
 
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.domain.models.Cashback
