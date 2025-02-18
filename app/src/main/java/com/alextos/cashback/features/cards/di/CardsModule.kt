@@ -1,7 +1,5 @@
 package com.alextos.cashback.features.cards.di
 
-import com.alextos.cashback.core.data.repository.CardsRepositoryImpl
-import com.alextos.cashback.core.domain.repository.CardsRepository
 import com.alextos.cashback.features.cards.scenes.card_detail.domain.DeleteAllCashbackUseCase
 import com.alextos.cashback.features.cards.scenes.card_detail.domain.DeleteCardUseCase
 import com.alextos.cashback.features.cards.scenes.card_detail.domain.DeleteCashbackUseCase

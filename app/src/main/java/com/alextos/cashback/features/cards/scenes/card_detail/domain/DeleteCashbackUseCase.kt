@@ -15,11 +15,11 @@ class DeleteCashbackUseCase(
     ) {
         withContext(Dispatchers.IO) {
             repository.deleteCashback(cashback = cashback, cardId = card.id)
-            val card = card.copy(cashback = card.cashback.filter { it.id != cashback.id })
-            card.cashback.forEachIndexed { index, cashback ->
-                repository.createOrUpdateCashback(cashback.copy(order = index), card.id)
+            val updatedCard = card.copy(cashback = card.cashback.filter { it.id != cashback.id })
+            updatedCard.cashback.forEachIndexed { index, cashback ->
+                repository.createOrUpdateCashback(cashback.copy(order = index), updatedCard.id)
             }
-            repository.createOrUpdate(card)
+            repository.createOrUpdate(updatedCard)
         }
     }
 }

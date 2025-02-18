@@ -20,9 +20,9 @@ class CreateCashbackUseCase(
             existingCashback?.let { oldCashback ->
                 repository.deleteCashback(oldCashback, card.id)
             }
-            val percent = (percent.toDoubleOrNull() ?: 0.0) / 100
+            val percentNumber = (percent.toDoubleOrNull() ?: 0.0) / 100
             val newCashback = Cashback(
-                percent = percent,
+                percent = percentNumber,
                 category = category,
                 order = card.cashback.count()
             )

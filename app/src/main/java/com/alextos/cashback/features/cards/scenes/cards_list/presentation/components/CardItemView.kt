@@ -37,6 +37,7 @@ import com.alextos.cashback.core.domain.models.generateMockCard
 fun CardItemView(
     modifier: Modifier = Modifier,
     card: Card,
+    query: String,
     onClick: () -> Unit = {},
     onFavouriteTap: () -> Unit = {}
 ) {
@@ -108,7 +109,7 @@ fun CardItemView(
                             )
                         }
 
-                        Text(text = card.toString())
+                        Text(text = card.toStringWith(query))
                     }
                 }
             }
@@ -120,6 +121,6 @@ fun CardItemView(
 @Composable
 private fun CardItemPreview() {
     Surface(modifier = Modifier.padding(8.dp)) {
-        CardItemView(card = generateMockCard()) {}
+        CardItemView(card = generateMockCard(), query = "") {}
     }
 }

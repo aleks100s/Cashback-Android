@@ -13,7 +13,6 @@ import com.alextos.cashback.core.domain.models.predefined.emoji
 import com.alextos.cashback.core.domain.models.predefined.info
 import com.alextos.cashback.core.domain.models.predefined.localization
 import com.alextos.cashback.core.domain.models.predefined.synonyms
-import java.util.UUID
 import java.util.concurrent.Executors
 import kotlin.random.Random
 
@@ -59,10 +58,10 @@ class DatabaseSeeder(private val context: Context) : RoomDatabase.Callback() {
                 Card(name = "Яндекс", color = "#FF0000"),
                 Card(name = "Озон", color = "#0000FF"),
             ).map { it.toEntity() }
-            val command = cards.joinToString(separator = ", ") { entity ->
+            val cardCommand = cards.joinToString(separator = ", ") { entity ->
                 "('${entity.id}', '${entity.name}', '${entity.color}', ${entity.isArchived}, ${entity.isFavourite}, '${entity.currency}', '${entity.currencySymbol}')"
             }
-            db.execSQL("INSERT INTO cards (id, name, color, isArchived, isFavourite, currency, currencySymbol) VALUES $command;")
+            db.execSQL("INSERT INTO cards (id, name, color, isArchived, isFavourite, currency, currencySymbol) VALUES $cardCommand;")
 
             cards.forEach { card ->
                 val cashback = listOf(
@@ -71,10 +70,10 @@ class DatabaseSeeder(private val context: Context) : RoomDatabase.Callback() {
                     Cashback(category = categories.random(), percent = Random.nextDouble(0.01, 0.1), order = 2),
                     Cashback(category = categories.random(), percent = Random.nextDouble(0.01, 0.1), order = 3),
                 ).map { it.toEntity(card.id) }
-                val command = cashback.joinToString(separator = ", ") { entity ->
+                val cashbackCommand = cashback.joinToString(separator = ", ") { entity ->
                     "('${entity.id}', '${entity.categoryId}', ${entity.percent}, '${entity.cardId}', ${entity.order})"
                 }
-                db.execSQL("INSERT INTO cashback (id, categoryId, percent, cardId, `order`) VALUES $command;")
+                db.execSQL("INSERT INTO cashback (id, categoryId, percent, cardId, `order`) VALUES $cashbackCommand;")
             }
         }
     }

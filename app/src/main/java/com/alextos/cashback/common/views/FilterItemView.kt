@@ -1,4 +1,4 @@
-package com.alextos.cashback.features.cards.scenes.cards_list.presentation.components
+package com.alextos.cashback.common.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,7 +25,7 @@ fun FilterItemView(
         modifier = Modifier
             .clickable { onClick() }
             .clip(RoundedCornerShape(50))
-            .background(if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiary.copy(alpha = 0.5f))
+            .background(if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiary)
             .padding(horizontal = 8.dp, vertical = 4.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically

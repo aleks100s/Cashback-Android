@@ -15,8 +15,8 @@ import kotlin.math.roundToInt
 
 @Composable
 fun AdBannerView(id: String) {
-    val context = LocalContext.current
-    val displayMetrics = remember { context.resources.displayMetrics }
+    val localContext = LocalContext.current
+    val displayMetrics = remember { localContext.resources.displayMetrics }
 
     AndroidView(
         factory = { context ->
@@ -56,7 +56,7 @@ fun AdBannerView(id: String) {
         update = { view ->
             val width = displayMetrics.widthPixels
             val adWidth = (width / displayMetrics.density).roundToInt()
-            view.setAdSize(BannerAdSize.stickySize(context = context, width = adWidth))
+            view.setAdSize(BannerAdSize.stickySize(context = localContext, width = adWidth))
         }
     )
 }

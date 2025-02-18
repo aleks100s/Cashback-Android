@@ -15,18 +15,18 @@ class CreateOrUpdateCategoryUseCase(
         description: String
     ) {
         withContext(Dispatchers.IO) {
-            val emoji = extractFirstEmoji(emoji) ?: categoryName.firstOrNull() ?: "?"
-            val category = category?.copy(
+            val newEmoji = extractFirstEmoji(emoji) ?: categoryName.firstOrNull() ?: "?"
+            val updatedCategory = category?.copy(
                 name = categoryName,
-                emoji = emoji.toString(),
+                emoji = newEmoji.toString(),
                 info = description
             ) ?: Category(
                 name = categoryName,
-                emoji = emoji.toString(),
+                emoji = newEmoji.toString(),
                 info = description,
                 isNative = false
             )
-            repository.createOrUpdate(category)
+            repository.createOrUpdate(updatedCategory)
         }
     }
 

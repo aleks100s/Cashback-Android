@@ -22,6 +22,18 @@ data class Card(
         return sortedCashback().joinToString(separator = ", ") { it.toString() }
     }
 
+    fun toStringWith(searchQuery: String): String {
+        val query = searchQuery.lowercase()
+        return if (query.isEmpty() || isEmpty()) {
+            toString()
+        } else {
+            sortedCashback().filter { cashback ->
+                cashback.category.name.lowercase().contains(query)
+                        || cashback.category.synonyms?.lowercase()?.contains(query) == true
+            }.joinToString(separator = ", ") { it.toString() }
+        }
+    }
+
     fun isEmpty() = cashback.isEmpty()
 
     fun sortedCategories() = sortedCashback().map { it.category }

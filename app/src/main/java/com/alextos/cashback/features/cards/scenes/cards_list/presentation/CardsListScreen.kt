@@ -43,7 +43,7 @@ import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.features.cards.scenes.cards_list.presentation.components.AddCardSheet
 import com.alextos.cashback.features.cards.scenes.cards_list.presentation.components.CardItemView
 import com.alextos.cashback.common.views.SearchBar
-import com.alextos.cashback.features.cards.scenes.cards_list.presentation.components.FilterItemView
+import com.alextos.cashback.common.views.FilterItemView
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -133,7 +133,7 @@ private fun CardsListView(
                         ) {
                             onAction(CardsListAction.SearchQueryChange(it))
                         }
-                        LazyRow {
+                        LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             items(state.popularCategories) { category ->
                                 FilterItemView(
                                     category = category,
@@ -168,6 +168,7 @@ private fun CardsListView(
                         onClick = {
                             onAction(CardsListAction.CardSelect(card))
                         },
+                        query = state.searchQuery,
                         onFavouriteTap = {
                             onAction(CardsListAction.ToggleFavourite(card))
                         }
