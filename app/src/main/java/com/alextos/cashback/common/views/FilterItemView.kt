@@ -23,8 +23,8 @@ fun FilterItemView(
 ) {
     Row(
         modifier = Modifier
-            .clickable { onClick() }
             .clip(RoundedCornerShape(50))
+            .clickable { onClick() }
             .background(if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiary)
             .padding(horizontal = 8.dp, vertical = 4.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),

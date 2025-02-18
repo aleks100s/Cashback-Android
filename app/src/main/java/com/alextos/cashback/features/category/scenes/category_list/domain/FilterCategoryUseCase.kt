@@ -10,7 +10,7 @@ class FilterCategoryUseCase {
             val query = query.lowercase()
             return@withContext categories.filter { category ->
                 category.name.lowercase().contains(query)
-                        || category.synonyms?.lowercase()?.contains(query) ?: true
+                        || category.synonyms?.lowercase()?.contains(query) ?: false
             }
         }
     }
