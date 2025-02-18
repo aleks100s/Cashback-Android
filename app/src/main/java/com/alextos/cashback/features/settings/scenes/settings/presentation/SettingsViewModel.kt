@@ -54,7 +54,7 @@ class SettingsViewModel(
                 }
             }
             is SettingsAction.ShareApp -> {
-                shareService.shareApp()
+                shareService.shareApp(appType = action.appType)
             }
             is SettingsAction.ShowCatalog -> {}
             is SettingsAction.ShowCardTrashbin -> {}

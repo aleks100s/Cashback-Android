@@ -1,5 +1,7 @@
 package com.alextos.cashback.features.settings.scenes.settings.presentation
 
+import com.alextos.cashback.core.domain.services.AppType
+
 sealed interface SettingsAction {
     data class CopyValue(val label: String, val text: String): SettingsAction
     data class SetNotifications(val enabled: Boolean): SettingsAction
@@ -7,5 +9,5 @@ sealed interface SettingsAction {
     data object ShowCardTrashbin: SettingsAction
     data object ShowCategoryTrashbin: SettingsAction
     data object ShowOnboarding: SettingsAction
-    data object ShareApp: SettingsAction
+    data class ShareApp(val appType: AppType): SettingsAction
 }

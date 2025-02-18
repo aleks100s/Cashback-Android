@@ -31,6 +31,7 @@ import com.alextos.cashback.common.ads.AdBannerView
 import com.alextos.cashback.common.views.CustomWideButton
 import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.common.views.SectionView
+import com.alextos.cashback.core.domain.services.AppType
 import com.alextos.cashback.features.cards.scenes.cashback_detail.presentation.CashbackDetailAction
 
 @Composable
@@ -152,7 +153,13 @@ private fun SettingsView(
                 footer = stringResource(R.string.settings_share_app_footer)
             ) {
                 CustomWideButton(title = stringResource(R.string.settings_share_app)) {
-                    onAction(SettingsAction.ShareApp)
+                    onAction(SettingsAction.ShareApp(AppType.Android))
+                }
+
+                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+
+                CustomWideButton(title = stringResource(R.string.settings_share_app_ios)) {
+                    onAction(SettingsAction.ShareApp(AppType.iOS))
                 }
             }
         }

@@ -3,6 +3,7 @@ package com.alextos.cashback.core.data.services
 import android.content.Context
 import android.content.Intent
 import com.alextos.cashback.R
+import com.alextos.cashback.core.domain.services.AppType
 import com.alextos.cashback.core.domain.services.ShareService
 
 class ShareServiceImpl(
@@ -18,7 +19,11 @@ class ShareServiceImpl(
         context.startActivity(chooser)
     }
 
-    override fun shareApp() {
-        share(link = "https://www.rustore.ru/catalog/app/com.alextos.cashback")
+    override fun shareApp(appType: AppType) {
+        val link = when(appType) {
+            is AppType.Android -> "https://www.rustore.ru/catalog/app/com.alextos.cashback"
+            is AppType.iOS -> "https://apps.apple.com/ru/app/кэшбэк/id6517354748"
+        }
+        share(link = link)
     }
 }
