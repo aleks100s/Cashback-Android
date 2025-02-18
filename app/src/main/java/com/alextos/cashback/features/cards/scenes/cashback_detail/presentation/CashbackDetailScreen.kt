@@ -34,6 +34,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
 import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.common.views.CustomButton
+import com.alextos.cashback.common.views.CustomLabel
 import com.alextos.cashback.common.views.CustomWideButton
 import com.alextos.cashback.common.views.SectionView
 import com.alextos.cashback.core.presentation.views.CategoryItemView
@@ -63,14 +64,10 @@ fun CashbackDetailScreen(
                 },
                 enabled = state.isValid
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    Text(text = stringResource(R.string.common_save))
-
-                    Icon(Icons.Default.Done, stringResource(R.string.common_save))
-                }
+                CustomLabel(
+                    title = stringResource(R.string.common_save),
+                    imageVector = Icons.Default.Done
+                )
             }
         }
     ) {

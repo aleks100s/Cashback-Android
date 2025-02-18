@@ -115,10 +115,15 @@ private fun CardsListView(
     val focusManager = LocalFocusManager.current
     if (state.allCards.isEmpty()) {
         Box(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .padding(horizontal = 32.dp)
+                .fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            Text(text = stringResource(R.string.cards_list_empty))
+            Text(
+                text = stringResource(R.string.cards_list_empty),
+                textAlign = TextAlign.Center
+            )
         }
     } else {
         val scrollState: LazyListState = rememberLazyListState()

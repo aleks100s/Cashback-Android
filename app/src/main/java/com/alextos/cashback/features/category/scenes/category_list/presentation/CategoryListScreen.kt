@@ -8,8 +8,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,6 +28,7 @@ import com.alextos.cashback.common.views.RoundedList
 import com.alextos.cashback.common.views.SearchBar
 import com.alextos.cashback.core.presentation.views.CategoryItemView
 import com.alextos.cashback.common.UiText
+import com.alextos.cashback.common.views.CustomLabel
 
 @Composable
 fun CategoryListScreen(
@@ -50,10 +49,13 @@ fun CategoryListScreen(
         goBack = goBack,
         backButtonIcon = Icons.Default.Close,
         floatingActionButton = {
-            FloatingActionButton(onClick = {
+            Button(onClick = {
                 onCreateCategory(state.searchQuery)
             }) {
-                Icon(Icons.Filled.Add, stringResource(R.string.category_list_create_category))
+                CustomLabel(
+                    title = stringResource(R.string.category_list_create_category),
+                    imageVector = Icons.Filled.Add
+                )
             }
         }
     ) {

@@ -16,7 +16,7 @@
     <string name="card_detail_cashback_list_title">Кэшбэк на карте</string>
     <string name="card_detail_cashback_currency_form">Форма выплаты кэшбэка: %1$s</string>
     <string name="cards_list_card_icon">Иконка карты</string>
-    <string name="cards_list_add_new_card">Добавить новую карту</string>
+    <string name="cards_list_add_new_card">Добавить карту</string>
     <string name="dialog_cancel">Отмена</string>
     <string name="dialog_delete">Удалить</string>
     <string name="dialog_delete_cashback">Удалить кэшбэк?</string>
@@ -109,4 +109,5 @@
     <string name="share_app_link">Поделиться ссылкой через</string>
     <string name="settings_share_app">Поделиться приложением</string>
     <string name="settings_share_app_footer">Если вам понравилось приложение, то вы можете поделиться им с другом</string>
+    <string name="settings_share_app_title">Поделиться</string>
 </resources>
