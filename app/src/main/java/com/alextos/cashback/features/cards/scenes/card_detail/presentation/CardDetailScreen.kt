@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,7 +16,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -47,6 +46,7 @@ import com.alextos.cashback.common.views.ColorPicker
 import com.alextos.cashback.common.views.CustomTextField
 import com.alextos.cashback.common.views.CustomWideButton
 import com.alextos.cashback.common.views.Dialog
+import com.alextos.cashback.common.views.CustomLabel
 import com.alextos.cashback.common.views.PickerDropdown
 import com.alextos.cashback.common.views.RoundedList
 import com.alextos.cashback.common.views.SectionView
@@ -69,10 +69,13 @@ fun CardDetailScreen(
         goBack = goBack,
         floatingActionButton = {
             if (!state.isEditMode) {
-                FloatingActionButton(onClick = {
+                Button(onClick = {
                     onAddCashback()
                 }) {
-                    Icon(Icons.Filled.Add, stringResource(R.string.card_detail_add_cashback))
+                    CustomLabel(
+                        title = stringResource(R.string.card_detail_add_cashback),
+                        imageVector = Icons.Filled.Add
+                    )
                 }
             }
         },

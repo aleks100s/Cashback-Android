@@ -34,6 +34,7 @@ import com.github.skydoves.colorpicker.compose.rememberColorPickerController
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ColorPicker(
+    modifier: Modifier = Modifier,
     title: String,
     color: String,
     onColorChange: (String) -> Unit
@@ -41,7 +42,7 @@ fun ColorPicker(
     var isPickerShown by remember { mutableStateOf(false) }
 
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {

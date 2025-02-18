@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.alextos.cashback.R
 import com.alextos.cashback.common.views.ColorPicker
+import com.alextos.cashback.common.views.SectionView
 
 @Composable
 fun AddCardSheet(
@@ -35,21 +36,28 @@ fun AddCardSheet(
             style = MaterialTheme.typography.headlineSmall
         )
 
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = cardName,
-            onValueChange = onValueChange,
-            singleLine = true,
-            label = {
-                Text(stringResource(R.string.add_card_sheet_placeholder))
-            }
-        )
+        SectionView(footer = stringResource(R.string.add_card_sheet_name_hint)) {
+            OutlinedTextField(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp, vertical = 12.dp)
+                    .fillMaxWidth(),
+                value = cardName,
+                onValueChange = onValueChange,
+                singleLine = true,
+                label = {
+                    Text(stringResource(R.string.add_card_sheet_placeholder))
+                }
+            )
+        }
 
-        ColorPicker(
-            title = stringResource(R.string.add_card_sheet_pick_color),
-            color = color,
-            onColorChange = onColorChange
-        )
+        SectionView(footer = stringResource(R.string.add_card_sheet_color_hint)) {
+            ColorPicker(
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                title = stringResource(R.string.add_card_sheet_pick_color),
+                color = color,
+                onColorChange = onColorChange
+            )
+        }
 
         Button(onClick = onSaveTapped, enabled = cardName.isNotEmpty()) {
             Text(stringResource(R.string.common_save))

@@ -3,7 +3,7 @@
     <string name="settings_app_version">Версия приложения</string>
     <string name="settings_app_build">Номер сборки</string>
     <string name="settings_app_about">О приложении</string>
-    <string name="cards_list_empty">Нет сохраненных карт</string>
+    <string name="cards_list_empty">Добавьте первую карту, чтобы начать управлять кэшбэком</string>
     <string name="cards_list_title">Мои карты</string>
     <string name="settings_title">Настройки</string>
     <string name="cards_list_search_placeholder">Категория кэшбэка</string>
@@ -21,7 +21,7 @@
     <string name="dialog_delete">Удалить</string>
     <string name="dialog_delete_cashback">Удалить кэшбэк?</string>
     <string name="dialog_cannot_undo">Это действие нельзя отменить</string>
-    <string name="card_detail_no_cashback">Нет сохраненных кэшбэков</string>
+    <string name="card_detail_no_cashback">Добавьте первый кэшбэк на карту</string>
     <string name="card_detail_cashback_removed">Кэшбэк удален</string>
     <string name="add_card_sheet_title">Добавить новую карту</string>
     <string name="add_card_sheet_placeholder">Название карты</string>
@@ -104,4 +104,6 @@
     <string name="settings_show_onboarding">Посмотреть обучение</string>
     <string name="settings_onboarding_footer">Здесь можно посмотреть информацию об основных функциях приложения</string>
     <string name="settings_onboarding_title">Обучение</string>
+    <string name="add_card_sheet_name_hint">Это может быть название банка или что угодно другое</string>
+    <string name="add_card_sheet_color_hint">Цвет карты позволит проще отличать её</string>
 </resources>

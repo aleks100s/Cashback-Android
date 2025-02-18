@@ -9,7 +9,7 @@ data class CardsListState(
     val filteredCards: List<Card> = listOf(),
     val isAddCardSheetShown: Boolean = false,
     val newCardName: String = "",
-    val newCardColor: String = "#E7E7E7",
+    val newCardColor: String = "#FF0000",
     val popularCategories: List<Category> = emptyList(),
     val selectedCategory: Category? = null
 )
