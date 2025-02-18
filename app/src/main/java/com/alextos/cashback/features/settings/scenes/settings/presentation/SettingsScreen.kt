@@ -147,6 +147,16 @@ private fun SettingsView(
         }
 
         item {
+            SectionView(
+                footer = stringResource(R.string.settings_share_app_footer)
+            ) {
+                CustomWideButton(title = stringResource(R.string.settings_share_app)) {
+                    onAction(SettingsAction.ShareApp)
+                }
+            }
+        }
+
+        item {
             SectionView(title = stringResource(R.string.settings_app_about)) {
                 ClickableItem(
                     title = stringResource(R.string.settings_app_version),

@@ -1,11 +1,14 @@
 package com.alextos.cashback.features.settings.scenes.settings.presentation
 
 import android.app.Application
+import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.alextos.cashback.app.CashbackApplication
 import com.alextos.cashback.core.domain.settings.SettingsManager
 import com.alextos.cashback.core.domain.services.PasteboardService
+import com.alextos.cashback.core.domain.services.ShareService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +18,8 @@ import kotlinx.coroutines.launch
 class SettingsViewModel(
     application: Application,
     private val settingsManager: SettingsManager,
-    private val pasteboardService: PasteboardService
+    private val pasteboardService: PasteboardService,
+    private val shareService: ShareService
 ): AndroidViewModel(application) {
     private val _state = MutableStateFlow(SettingsState())
     val state = _state.asStateFlow()
@@ -56,6 +60,9 @@ class SettingsViewModel(
                 viewModelScope.launch(Dispatchers.IO) {
                     settingsManager.setOnboarding(shown = false)
                 }
+            }
+            is SettingsAction.ShareApp -> {
+                shareService.shareApp()
             }
             is SettingsAction.ShowCatalog -> {}
             is SettingsAction.ShowCardTrashbin -> {}

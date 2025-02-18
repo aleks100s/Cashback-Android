@@ -7,4 +7,5 @@ sealed interface SettingsAction {
     data object ShowCardTrashbin: SettingsAction
     data object ShowCategoryTrashbin: SettingsAction
     data object ShowOnboarding: SettingsAction
+    data object ShareApp: SettingsAction
 }

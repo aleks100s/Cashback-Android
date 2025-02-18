@@ -7,11 +7,13 @@ import com.alextos.cashback.core.data.repository.CardsRepositoryImpl
 import com.alextos.cashback.core.data.repository.CategoryRepositoryImpl
 import com.alextos.cashback.core.data.settings.SettingsManagerImpl
 import com.alextos.cashback.core.data.services.PasteboardServiceImpl
+import com.alextos.cashback.core.data.services.ShareServiceImpl
 import com.alextos.cashback.core.data.services.ToastServiceImpl
 import com.alextos.cashback.core.domain.repository.CardsRepository
 import com.alextos.cashback.core.domain.repository.CategoryRepository
 import com.alextos.cashback.core.domain.settings.SettingsManager
 import com.alextos.cashback.core.domain.services.PasteboardService
+import com.alextos.cashback.core.domain.services.ShareService
 import com.alextos.cashback.core.domain.services.ToastService
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
@@ -40,4 +42,5 @@ val coreModule = module {
 
     factory<PasteboardService> { PasteboardServiceImpl(androidApplication()) }
     factory<ToastService> { ToastServiceImpl(androidContext()) }
+    factory<ShareService> { ShareServiceImpl(androidContext()) }
 }
