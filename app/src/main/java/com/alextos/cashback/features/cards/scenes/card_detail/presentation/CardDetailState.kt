@@ -10,4 +10,5 @@ data class CardDetailState(
     val isFavourite: Boolean = false,
     val currency: String = "",
     val isDeleteCardDialogShown: Boolean = false,
+    val isAdVisible: Boolean = true
 )

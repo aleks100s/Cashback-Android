@@ -11,6 +11,7 @@ import com.alextos.cashback.core.domain.repository.CardsRepository
 import com.alextos.cashback.features.cards.scenes.card_detail.domain.DeleteAllCashbackUseCase
 import com.alextos.cashback.features.cards.scenes.card_detail.domain.DeleteCardUseCase
 import com.alextos.cashback.common.UiText
+import com.alextos.cashback.core.domain.settings.SettingsManager
 import com.alextos.cashback.features.cards.scenes.card_detail.domain.DeleteCashbackUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +26,8 @@ class CardDetailViewModel(
     private val deleteAllCashbackUseCase: DeleteAllCashbackUseCase,
     private val deleteCashbackUseCase: DeleteCashbackUseCase,
     private val repository: CardsRepository,
-    private val toastService: ToastService
+    private val toastService: ToastService,
+    private val settingsManager: SettingsManager
 ): ViewModel() {
     private val cardId = savedStateHandle.toRoute<CardsRoute.CardDetail>().cardId
 
@@ -45,6 +47,13 @@ class CardDetailViewModel(
                             color = card?.color ?: "#E7E7E7"
                         )
                     }
+                }
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            settingsManager.isAdEnabled
+                .collect { isEnabled ->
+                    _state.update { it.copy(isAdVisible = isEnabled) }
                 }
         }
     }

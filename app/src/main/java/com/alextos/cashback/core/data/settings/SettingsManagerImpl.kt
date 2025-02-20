@@ -16,6 +16,7 @@ class SettingsManagerImpl(
     companion object {
         private val NOTIFICATIONS_KEY = booleanPreferencesKey("notifications_enabled")
         private val ONBOARDING_KEY = booleanPreferencesKey("was_onboarding_shown")
+        private val ADS_KEY = booleanPreferencesKey("is_ad_enabled")
     }
 
     private val dataStore = context.dataStore
@@ -39,6 +40,17 @@ class SettingsManagerImpl(
     override suspend fun setOnboarding(shown: Boolean) {
         dataStore.edit { preferences ->
             preferences[ONBOARDING_KEY] = shown
+        }
+    }
+
+    override val isAdEnabled: Flow<Boolean>
+        get() = dataStore.data.map { preferences ->
+            preferences[ADS_KEY] ?: true
+        }
+
+    override suspend fun disableAds() {
+        dataStore.edit { preferences ->
+            preferences[ADS_KEY] = false
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.alextos.cashback.features.settings.scenes.settings.presentation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,25 +10,34 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.Popup
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
 import com.alextos.cashback.common.ads.AdBannerView
+import com.alextos.cashback.common.views.CustomButton
 import com.alextos.cashback.common.views.CustomWideButton
 import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.common.views.SectionView
@@ -48,7 +58,9 @@ fun SettingsScreen(
         modifier = modifier,
         title = stringResource(R.string.settings_title),
         bannerView = {
-            AdBannerView("R-M-14164420-2")
+            if (state.isAdVisible) {
+                AdBannerView("R-M-14164420-2")
+            }
         }
     ) {
         SettingsView(
@@ -70,6 +82,52 @@ fun SettingsScreen(
                 }
             }
         )
+    }
+
+    if (state.isDisableAdDialogShown) {
+        Dialog(
+            onDismissRequest = {
+                viewModel.onAction(SettingsAction.HidePromoCodePrompt)
+            }
+        ) {
+            Column(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(MaterialTheme.colorScheme.surface)
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = stringResource(R.string.settings_disable_ads_title),
+                    textAlign = TextAlign.Center
+                )
+
+                TextField(
+                    value = state.promoCode,
+                    onValueChange = {
+                        viewModel.onAction(SettingsAction.ChangePromoCodeValue(it))
+                    }
+                )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    CustomButton(title = stringResource(R.string.common_cancel)) {
+                        viewModel.onAction(SettingsAction.HidePromoCodePrompt)
+                    }
+
+                    Button(
+                        onClick = {
+                            viewModel.onAction(SettingsAction.ValidatePromoCode)
+                        }
+                    ) {
+                        Text(stringResource(R.string.common_ok))
+                    }
+                }
+            }
+        }
     }
 }
 

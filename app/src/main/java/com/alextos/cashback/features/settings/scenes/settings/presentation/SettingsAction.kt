@@ -10,4 +10,7 @@ sealed interface SettingsAction {
     data object ShowCategoryTrashbin: SettingsAction
     data object ShowOnboarding: SettingsAction
     data class ShareApp(val appType: AppType): SettingsAction
+    data class ChangePromoCodeValue(val code: String): SettingsAction
+    data object HidePromoCodePrompt: SettingsAction
+    data object ValidatePromoCode: SettingsAction
 }

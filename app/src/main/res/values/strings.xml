@@ -111,4 +111,7 @@
     <string name="settings_share_app_ios">Версия для iPhone</string>
     <string name="settings_share_app_footer">Если вам понравилось приложение, то вы можете поделиться им с другом</string>
     <string name="settings_share_app_title">Поделиться</string>
+    <string name="settings_disable_ads_title">Введите промокод для отключения рекламы</string>
+    <string name="common_cancel">Отмена</string>
+    <string name="ad_disabled">Поздравляем, реклама отключена!</string>
 </resources>
