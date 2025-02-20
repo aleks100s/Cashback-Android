@@ -26,7 +26,8 @@ sealed interface CategoryIconSize {
 fun CategoryIconView(
     modifier: Modifier = Modifier,
     category: Category,
-    size: CategoryIconSize
+    size: CategoryIconSize,
+    color: Color = Color.Red
 ) {
     val circleSize = when (size) {
         is CategoryIconSize.Small -> {
@@ -60,7 +61,10 @@ fun CategoryIconView(
             .size(circleSize)
             .background(
                 brush = Brush.verticalGradient(
-                    colors = listOf(Color.Red.copy(red = 0.9f, green = 0.4f), Color.Red.copy(red = 0.7f, green = 0.2f))
+                    colors = listOf(
+                        color.copy(red = color.red * 0.75f, green = color.green * 0.75f, blue = color.blue * 0.75f),
+                        color.copy(red = color.red * 0.5f, green = color.green * 0.5f, blue = color.blue * 0.5f)
+                    )
                 ),
                 shape = CircleShape
             )

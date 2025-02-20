@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -16,7 +17,8 @@ import com.alextos.cashback.core.presentation.views.CategoryIconView
 @Composable
 fun CategoriesStackView(
     modifier: Modifier = Modifier,
-    categories: List<Category>
+    categories: List<Category>,
+    color: Color
 ) {
     Row(
         modifier = modifier,
@@ -26,7 +28,8 @@ fun CategoriesStackView(
             CategoryIconView(
                 modifier = modifier.offset(x = (-12).dp * index).zIndex(index.toFloat()),
                 category = category,
-                size = CategoryIconSize.Small
+                size = CategoryIconSize.Small,
+                color = color
             )
         }
     }
@@ -40,5 +43,5 @@ private fun CategoriesStackPreview() {
         generateMockCategory(),
         generateMockCategory(),
         generateMockCategory()
-    ))
+    ), color = Color.Red)
 }
