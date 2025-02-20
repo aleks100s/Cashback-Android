@@ -42,6 +42,13 @@ class SettingsViewModel(
                     _state.update { it.copy(isNotificationsEnabled = isEnabled) }
                 }
         }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            settingsManager.isAdEnabled
+                .collect { isEnabled ->
+                    _state.update { it.copy(isAdVisible = isEnabled) }
+                }
+        }
     }
 
     fun onAction(action: SettingsAction) {

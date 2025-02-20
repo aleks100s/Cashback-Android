@@ -6,5 +6,5 @@ data class SettingsState(
     val isNotificationsEnabled: Boolean = false,
     val isDisableAdDialogShown: Boolean = false,
     val promoCode: String = "",
-    val isAdVisible: Boolean = false
+    val isAdVisible: Boolean = true
 )
