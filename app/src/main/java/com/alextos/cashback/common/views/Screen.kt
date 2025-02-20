@@ -9,6 +9,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -63,6 +64,9 @@ fun Screen(
                 }
             )
         },
+        containerColor = color?.let {
+            it.copy(alpha = 0.3f)
+        } ?: MaterialTheme.colorScheme.background,
         floatingActionButton = floatingActionButton,
         bottomBar = {
             if (bannerView != null) {
@@ -70,25 +74,9 @@ fun Screen(
             }
         }
     ) { innerPaddings ->
-        var contentModifier = Modifier.padding(
+        content(Modifier.padding(
             top = innerPaddings.calculateTopPadding(),
             bottom = if (bannerView != null) innerPaddings.calculateBottomPadding() else 0.dp
-        )
-        if (color != null) {
-            contentModifier = contentModifier
-                .background(
-                    brush = Brush.linearGradient(
-                        colors = listOf(
-                            Color.White.copy(alpha = 0.25f),
-                            Color.White.copy(alpha = 0.1f)
-                        ),
-                        start = Offset.Zero,
-                        end = Offset(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY)
-                    )
-                )
-                .background(color.copy(0.2f))
-                .fillMaxSize()
-        }
-        content(contentModifier)
+        ))
     }
 }

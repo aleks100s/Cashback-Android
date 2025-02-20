@@ -50,13 +50,13 @@ class DatabaseSeeder(private val context: Context) : RoomDatabase.Callback() {
 
         if (BuildConfig.DEBUG) {
             val cards = listOf(
-                Card(name = "Сбер", color = "#00FF00", isFavourite = true),
-                Card(name = "Альфа", color = "#FF0000"),
-                Card(name = "ВТБ", color = "#0000FF"),
-                Card(name = "Т-Банк", color = "#FFFF00"),
-                Card(name = "Газпром", color = "#FF0088"),
-                Card(name = "Яндекс", color = "#FF0000"),
-                Card(name = "Озон", color = "#0000FF"),
+                Card(name = "Карта зеленого банка", color = "#00FF00", isFavourite = true),
+                Card(name = "Карта красного банка", color = "#FF0000"),
+                Card(name = "Карта синего банка", color = "#0000FF"),
+                Card(name = "Карта желтого банка", color = "#FFFF00"),
+//                Card(name = "Газпром", color = "#FF0088"),
+//                Card(name = "Яндекс", color = "#FF0000"),
+//                Card(name = "Озон", color = "#0000FF"),
             ).map { it.toEntity() }
             val cardCommand = cards.joinToString(separator = ", ") { entity ->
                 "('${entity.id}', '${entity.name}', '${entity.color}', ${entity.isArchived}, ${entity.isFavourite}, '${entity.currency}', '${entity.currencySymbol}')"
@@ -65,10 +65,10 @@ class DatabaseSeeder(private val context: Context) : RoomDatabase.Callback() {
 
             cards.forEach { card ->
                 val cashback = listOf(
-                    Cashback(category = categories.random(), percent = Random.nextDouble(0.01, 0.1), order = 0),
-                    Cashback(category = categories.random(), percent = Random.nextDouble(0.01, 0.1), order = 1),
-                    Cashback(category = categories.random(), percent = Random.nextDouble(0.01, 0.1), order = 2),
-                    Cashback(category = categories.random(), percent = Random.nextDouble(0.01, 0.1), order = 3),
+                    Cashback(category = categories.random(), percent = Random.nextInt(1, 5).toDouble() / 100, order = 0),
+                    Cashback(category = categories.random(), percent = Random.nextInt(1, 5).toDouble() / 100, order = 1),
+                    Cashback(category = categories.random(), percent = Random.nextInt(1, 5).toDouble() / 100, order = 2),
+                    Cashback(category = categories.random(), percent = Random.nextInt(1, 5).toDouble() / 100, order = 3),
                 ).map { it.toEntity(card.id) }
                 val cashbackCommand = cashback.joinToString(separator = ", ") { entity ->
                     "('${entity.id}', '${entity.categoryId}', ${entity.percent}, '${entity.cardId}', ${entity.order})"
