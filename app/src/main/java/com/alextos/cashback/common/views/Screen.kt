@@ -1,6 +1,8 @@
 package com.alextos.cashback.common.views
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -10,8 +12,12 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -22,6 +28,7 @@ import com.alextos.cashback.R
 fun Screen(
     modifier: Modifier,
     title: String,
+    color: Color? = null,
     goBack: (() -> Unit)? = null,
     backButtonIcon: ImageVector = Icons.AutoMirrored.Filled.ArrowBack,
     floatingActionButton: @Composable () -> Unit = {},
@@ -36,6 +43,9 @@ fun Screen(
                 title = {
                     Text(title)
                 },
+                colors = color?.let {
+                    TopAppBarDefaults.topAppBarColors().copy(containerColor = it.copy(0.4f))
+                } ?: TopAppBarDefaults.topAppBarColors(),
                 actions = actions,
                 navigationIcon = {
                     if (goBack != null) {
@@ -60,9 +70,25 @@ fun Screen(
             }
         }
     ) { innerPaddings ->
-        content(Modifier.padding(
+        var contentModifier = Modifier.padding(
             top = innerPaddings.calculateTopPadding(),
             bottom = if (bannerView != null) innerPaddings.calculateBottomPadding() else 0.dp
-        ))
+        )
+        if (color != null) {
+            contentModifier = contentModifier
+                .background(
+                    brush = Brush.linearGradient(
+                        colors = listOf(
+                            Color.White.copy(alpha = 0.25f),
+                            Color.White.copy(alpha = 0.1f)
+                        ),
+                        start = Offset.Zero,
+                        end = Offset(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY)
+                    )
+                )
+                .background(color.copy(0.2f))
+                .fillMaxSize()
+        }
+        content(contentModifier)
     }
 }

@@ -1,5 +1,6 @@
 package com.alextos.cashback.features.cards.scenes.card_detail.presentation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,6 +28,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
@@ -42,6 +45,7 @@ import com.alextos.cashback.common.views.ContextMenuItem
 import com.alextos.cashback.features.cards.scenes.card_detail.presentation.components.CashbackView
 import com.alextos.cashback.common.UiText
 import com.alextos.cashback.common.ads.AdBannerView
+import com.alextos.cashback.common.makeColor
 import com.alextos.cashback.common.views.ColorPicker
 import com.alextos.cashback.common.views.CustomTextField
 import com.alextos.cashback.common.views.CustomWideButton
@@ -66,6 +70,7 @@ fun CardDetailScreen(
     Screen(
         modifier = modifier,
         title = state.cardName,
+        color = makeColor(state.color),
         goBack = goBack,
         floatingActionButton = {
             if (!state.isEditMode) {
@@ -157,12 +162,17 @@ private fun CardDetailView(
     onAction: (CardDetailAction) -> Unit
 ) {
     val list = state.card?.cashback ?: emptyList()
+    val color = makeColor(state.card?.color)
 
     RoundedList(
         modifier = modifier.padding(horizontal = 16.dp),
         list = list,
         itemView = { modifier, cashback ->
-            CashbackView(modifier = modifier, cashback = cashback)
+            CashbackView(
+                modifier = modifier,
+                cashback = cashback,
+                color = color
+            )
         },
         emptyView = {
             Box(
