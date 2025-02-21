@@ -8,6 +8,7 @@ import com.alextos.cashback.core.domain.services.ToastService
 import com.alextos.cashback.core.domain.repository.CardsRepository
 import com.alextos.cashback.features.cards.scenes.cards_list.domain.FilterCardsUseCase
 import com.alextos.cashback.common.UiText
+import com.alextos.cashback.core.AppConstants
 import com.alextos.cashback.core.domain.repository.CategoryRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -97,7 +98,7 @@ class CardsListViewModel(
                 viewModelScope.launch(Dispatchers.IO) {
                     val card = Card(name = state.value.newCardName, color = state.value.newCardColor)
                     cardsRepository.createOrUpdate(card)
-                    _state.update { it.copy(newCardName = "", newCardColor = "#E7E7E7", isAddCardSheetShown = false) }
+                    _state.update { it.copy(newCardName = "", newCardColor = AppConstants.COLOR_HEX_DEFAULT, isAddCardSheetShown = false) }
                     withContext(Dispatchers.Main) {
                         toastService.showToast(UiText.StringResourceId(R.string.cards_list_card_added))
                     }
