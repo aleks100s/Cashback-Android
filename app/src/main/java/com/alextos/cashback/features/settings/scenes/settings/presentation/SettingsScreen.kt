@@ -57,11 +57,9 @@ fun SettingsScreen(
     Screen(
         modifier = modifier,
         title = stringResource(R.string.settings_title),
-        bannerView = {
-            if (state.isAdVisible) {
-                AdBannerView("R-M-14164420-2")
-            }
-        }
+        bannerView = if (state.isAdVisible) {
+            { AdBannerView("R-M-14164420-2") }
+        } else null
     ) {
         SettingsView(
             modifier = it,

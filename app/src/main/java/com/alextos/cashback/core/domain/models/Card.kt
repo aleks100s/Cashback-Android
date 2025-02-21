@@ -38,7 +38,7 @@ data class Card(
 
     fun sortedCategories() = sortedCashback().map { it.category }
 
-    private fun sortedCashback() = cashback.sortedBy { it.category.name }
+    private fun sortedCashback() = cashback.sortedBy { it.category.priority }
 }
 
 fun generateMockCard(isEmpty: Boolean = false): Card {
