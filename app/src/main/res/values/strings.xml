@@ -99,7 +99,7 @@
     <string name="monthly_notification_subtitle">Не забудьте выбрать и сохранить кэшбэк в этом месяце</string>
     <string name="monthly_notification_channel_title">Ежемесячные напоминания</string>
     <string name="monthly_notification_channel_subtitle">Напомню добавить кэшбэк 1 числа каждого месяца</string>
-    <string name="add_card_sheet_pick_color">Можно выбрать цвет карты</string>
+    <string name="add_card_sheet_pick_color">Цвет карты</string>
     <string name="common_next">Далее</string>
     <string name="settings_show_onboarding">Посмотреть обучение</string>
     <string name="settings_onboarding_footer">Здесь можно посмотреть информацию об основных функциях приложения</string>
@@ -114,6 +114,6 @@
     <string name="settings_disable_ads_title">Введите промокод для отключения рекламы</string>
     <string name="common_cancel">Отмена</string>
     <string name="ad_disabled">Поздравляем, реклама отключена!</string>
-    <string name="add_card_sheet_select_currency">Можно выбрать форму кэшбэка</string>
+    <string name="add_card_sheet_select_currency">Форма кэшбэка</string>
     <string name="add_card_sheet_select_currency_footer">Рубли, мили или баллы</string>
 </resources>

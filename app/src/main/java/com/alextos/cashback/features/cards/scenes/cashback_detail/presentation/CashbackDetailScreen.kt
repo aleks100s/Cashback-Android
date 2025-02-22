@@ -138,7 +138,7 @@ private fun AddCashbackView(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     state.percentOptions.forEach {
-                        CustomButton("$it%") {
+                        CustomButton(title = "$it%") {
                             onAction(CashbackDetailAction.ChangePercent(it.toString()))
                         }
                     }
