@@ -1,10 +1,10 @@
 package com.alextos.cashback.features.cards.scenes.cards_list.presentation.components
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -19,7 +19,6 @@ import com.alextos.cashback.common.views.ColorPicker
 import com.alextos.cashback.common.views.PickerDropdown
 import com.alextos.cashback.common.views.SectionView
 import com.alextos.cashback.core.domain.models.currency.Currency
-import com.alextos.cashback.core.domain.models.currency.localization
 
 @Composable
 fun AddCardSheet(
@@ -31,57 +30,67 @@ fun AddCardSheet(
     onCurrencyChange: (Currency) -> Unit,
     onSaveTapped: () -> Unit
 ) {
-    Column(
+    LazyColumn(
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 32.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(32.dp)
     ) {
-        Text(
-            text = stringResource(R.string.add_card_sheet_title),
-            style = MaterialTheme.typography.headlineSmall
-        )
-
-        SectionView(footer = stringResource(R.string.add_card_sheet_name_hint)) {
-            OutlinedTextField(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp, vertical = 12.dp)
-                    .fillMaxWidth(),
-                value = cardName,
-                onValueChange = onValueChange,
-                singleLine = true,
-                label = {
-                    Text(stringResource(R.string.add_card_sheet_placeholder))
-                }
+        item {
+            Text(
+                text = stringResource(R.string.add_card_sheet_title),
+                style = MaterialTheme.typography.headlineSmall
             )
         }
 
-        SectionView(footer = stringResource(R.string.add_card_sheet_color_hint)) {
-            ColorPicker(
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-                title = stringResource(R.string.add_card_sheet_pick_color),
-                color = color,
-                onColorChange = onColorChange
-            )
+        item {
+            SectionView(footer = stringResource(R.string.add_card_sheet_name_hint)) {
+                OutlinedTextField(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp, vertical = 12.dp)
+                        .fillMaxWidth(),
+                    value = cardName,
+                    onValueChange = onValueChange,
+                    singleLine = true,
+                    label = {
+                        Text(stringResource(R.string.add_card_sheet_placeholder))
+                    }
+                )
+            }
         }
 
-        SectionView(footer = stringResource(R.string.add_card_sheet_select_currency_footer)) {
-            Row(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp, vertical = 12.dp)
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(text = stringResource(R.string.add_card_sheet_select_currency))
+        item {
+            SectionView(footer = stringResource(R.string.add_card_sheet_color_hint)) {
+                ColorPicker(
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                    title = stringResource(R.string.add_card_sheet_pick_color),
+                    color = color,
+                    onColorChange = onColorChange
+                )
+            }
+        }
 
-                PickerDropdown(selected = currency, options = Currency.entries) {
-                    onCurrencyChange(it)
+        item {
+            SectionView(footer = stringResource(R.string.add_card_sheet_select_currency_footer)) {
+                Row(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp, vertical = 12.dp)
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(text = stringResource(R.string.add_card_sheet_select_currency))
+
+                    PickerDropdown(selected = currency, options = Currency.entries) {
+                        onCurrencyChange(it)
+                    }
                 }
             }
         }
 
-        Button(onClick = onSaveTapped, enabled = cardName.isNotEmpty()) {
-            Text(stringResource(R.string.common_save))
+        item {
+            Button(onClick = onSaveTapped, enabled = cardName.isNotEmpty()) {
+                Text(stringResource(R.string.common_save))
+            }
         }
     }
 }
