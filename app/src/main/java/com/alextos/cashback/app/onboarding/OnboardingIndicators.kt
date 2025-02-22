@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun Indicators(pagerState: PagerState) {
+fun OnboardingIndicators(pagerState: PagerState) {
     Row(horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
         repeat(onboardingPages.size) { index ->
             Box(

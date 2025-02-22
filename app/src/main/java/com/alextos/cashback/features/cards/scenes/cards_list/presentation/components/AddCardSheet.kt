@@ -80,7 +80,11 @@ fun AddCardSheet(
                 ) {
                     Text(text = stringResource(R.string.add_card_sheet_select_currency))
 
-                    PickerDropdown(selected = currency, options = Currency.entries) {
+                    PickerDropdown(
+                        modifier = Modifier.weight(1f),
+                        selected = currency,
+                        options = Currency.entries
+                    ) {
                         onCurrencyChange(it)
                     }
                 }

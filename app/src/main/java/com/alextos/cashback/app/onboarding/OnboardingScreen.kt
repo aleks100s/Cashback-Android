@@ -12,8 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.alextos.cashback.R
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
@@ -39,7 +37,7 @@ fun OnboardingScreen(onFinish: () -> Unit) {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             // Индикаторы страниц (dots)
-            Indicators(pagerState)
+            OnboardingIndicators(pagerState)
 
             // Кнопка "Далее" или "Начать"
             Button(onClick = {

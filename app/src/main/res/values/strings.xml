@@ -114,6 +114,6 @@
     <string name="settings_disable_ads_title">Введите промокод для отключения рекламы</string>
     <string name="common_cancel">Отмена</string>
     <string name="ad_disabled">Поздравляем, реклама отключена!</string>
-    <string name="add_card_sheet_select_currency">Можно выбрать валюту кэшбэка</string>
+    <string name="add_card_sheet_select_currency">Можно выбрать форму кэшбэка</string>
     <string name="add_card_sheet_select_currency_footer">Рубли, мили или баллы</string>
 </resources>
