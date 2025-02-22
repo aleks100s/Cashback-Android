@@ -3,6 +3,9 @@ package com.alextos.cashback.core.data.mappers
 import com.alextos.cashback.core.data.entities.CardEntity
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.domain.models.Cashback
+import com.alextos.cashback.core.domain.models.currency.Currency
+import com.alextos.cashback.core.domain.models.currency.localization
+import com.alextos.cashback.core.domain.models.currency.symbol
 import java.util.UUID
 
 fun Card.toEntity(): CardEntity {
@@ -12,8 +15,8 @@ fun Card.toEntity(): CardEntity {
         color = color,
         isArchived = isArchived,
         isFavourite = isFavourite,
-        currency = currency,
-        currencySymbol = currencySymbol
+        currency = currency.localization,
+        currencySymbol = currency.symbol
     )
 }
 
@@ -25,7 +28,6 @@ fun CardEntity.toDomain(cashback: List<Cashback>): Card {
         color = color,
         isArchived = isArchived,
         isFavourite = isFavourite,
-        currency = currency,
-        currencySymbol = currencySymbol
+        currency = Currency.makeFrom(currency)
     )
 }

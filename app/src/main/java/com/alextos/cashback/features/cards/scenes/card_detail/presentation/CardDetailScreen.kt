@@ -277,7 +277,7 @@ private fun EditCardView(
 
                         PickerDropdown(
                             selected = state.currency,
-                            options = Currency.entries.map { it.localization },
+                            options = Currency.entries,
                             onSelect = {
                                 onAction(CardDetailAction.ChangeCurrency(it))
                             }

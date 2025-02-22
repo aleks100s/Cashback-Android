@@ -1,6 +1,7 @@
 package com.alextos.cashback.features.cards.scenes.card_detail.presentation
 
 import com.alextos.cashback.core.domain.models.Card
+import com.alextos.cashback.core.domain.models.currency.Currency
 
 data class CardDetailState(
     val isEditMode: Boolean = false,
@@ -8,7 +9,7 @@ data class CardDetailState(
     val cardName: String = "",
     val color: String = "#E7E7E7",
     val isFavourite: Boolean = false,
-    val currency: String = "",
+    val currency: Currency = Currency.RUBLE,
     val isDeleteCardDialogShown: Boolean = false,
     val isAdVisible: Boolean = true
 )

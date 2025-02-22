@@ -11,6 +11,7 @@ import com.alextos.cashback.core.domain.repository.CardsRepository
 import com.alextos.cashback.features.cards.scenes.card_detail.domain.DeleteAllCashbackUseCase
 import com.alextos.cashback.features.cards.scenes.card_detail.domain.DeleteCardUseCase
 import com.alextos.cashback.common.UiText
+import com.alextos.cashback.core.domain.models.currency.Currency
 import com.alextos.cashback.core.domain.settings.SettingsManager
 import com.alextos.cashback.features.cards.scenes.card_detail.domain.DeleteCashbackUseCase
 import kotlinx.coroutines.Dispatchers
@@ -43,7 +44,7 @@ class CardDetailViewModel(
                             card = card,
                             cardName = card?.name ?: "",
                             isFavourite = card?.isFavourite ?: false,
-                            currency = card?.currency ?: "",
+                            currency = card?.currency ?: Currency.RUBLE,
                             color = card?.color ?: "#E7E7E7"
                         )
                     }

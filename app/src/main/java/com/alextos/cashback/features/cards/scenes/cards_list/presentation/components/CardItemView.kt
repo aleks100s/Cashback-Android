@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import com.alextos.cashback.R
 import com.alextos.cashback.common.makeColor
 import com.alextos.cashback.core.domain.models.Card
+import com.alextos.cashback.core.domain.models.currency.symbol
 import com.alextos.cashback.core.domain.models.generateMockCard
 
 @Composable
@@ -130,7 +131,7 @@ fun CardItemView(
                 horizontalArrangement = Arrangement.End
             ) {
                 Text(
-                    text = card.currencySymbol,
+                    text = card.currency.symbol,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Black,
                     color = MaterialTheme.colorScheme.onSurface.copy(0.65f)

@@ -1,6 +1,7 @@
 package com.alextos.cashback.core.domain.models
 
 import com.alextos.cashback.common.views.ListElement
+import com.alextos.cashback.core.domain.models.currency.Currency
 import java.util.UUID
 import kotlin.random.Random
 
@@ -11,8 +12,7 @@ data class Card(
     var color: String? = null,
     var isArchived: Boolean = false,
     var isFavourite: Boolean = false,
-    var currency: String = "Рубли",
-    var currencySymbol: String = "₽"
+    var currency: Currency = Currency.RUBLE
 ): ListElement {
     override fun toString(): String {
         if (isEmpty()) {
@@ -44,9 +44,6 @@ data class Card(
 fun generateMockCard(isEmpty: Boolean = false): Card {
     val cardNames = listOf("Gold Card", "Platinum Card", "Travel Card", "Cashback Card", "Business Card")
     val colors = listOf("#FFD700", "#C0C0C0", "#1E90FF", "#4CAF50", "#8B0000", null) // Цвета и null
-    val currencies = listOf("USD" to "$", "EUR" to "€", "RUB" to "₽", "GBP" to "£", "JPY" to "¥")
-
-    val (currency, symbol) = currencies.random() // Выбираем случайную валюту
 
     return Card(
         id = UUID.randomUUID().toString(),
@@ -55,7 +52,6 @@ fun generateMockCard(isEmpty: Boolean = false): Card {
         color = colors.random(), // Случайный цвет или null
         isArchived = false,
         isFavourite = Random.nextBoolean(),
-        currency = currency,
-        currencySymbol = symbol
+        currency = Currency.entries.random()
     )
 }

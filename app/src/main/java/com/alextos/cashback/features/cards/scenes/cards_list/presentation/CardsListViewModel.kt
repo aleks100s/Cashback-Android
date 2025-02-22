@@ -105,8 +105,7 @@ class CardsListViewModel(
                     val card = Card(
                         name = state.value.newCardName,
                         color = state.value.newCardColor,
-                        currency = state.value.newCardCurrency.localization,
-                        currencySymbol = state.value.newCardCurrency.symbol
+                        currency = state.value.newCardCurrency,
                     )
                     cardsRepository.createOrUpdate(card)
                     _state.update { state ->
