@@ -11,9 +11,7 @@ import com.alextos.cashback.common.UiText
 import com.alextos.cashback.core.AppConstants
 import com.alextos.cashback.core.domain.repository.CategoryRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch

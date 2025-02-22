@@ -7,7 +7,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.alextos.cashback.common.transitions.horizontalComposableTransition
-import com.alextos.cashback.common.transitions.verticalComposableTransition
 import com.alextos.cashback.features.category.CategoryRoot
 import com.alextos.cashback.features.settings.scenes.settings.presentation.SettingsScreen
 import com.alextos.cashback.features.settings.scenes.card_trashbin.presentation.CardTrashbinScreen
@@ -41,7 +40,7 @@ fun SettingsRoot(modifier: Modifier = Modifier) {
                 )
             }
 
-            verticalComposableTransition<SettingsRoute.CategoryCatalog> {
+            horizontalComposableTransition<SettingsRoute.CategoryCatalog> {
                 CategoryRoot(
                     onSelectCategory = {},
                     goBack = {

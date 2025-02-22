@@ -60,9 +60,7 @@ fun Screen(
                 }
             )
         },
-        containerColor = color?.let {
-            it.copy(alpha = 0.3f)
-        } ?: MaterialTheme.colorScheme.background,
+        containerColor = color?.copy(alpha = 0.3f) ?: MaterialTheme.colorScheme.background,
         floatingActionButton = floatingActionButton,
         bottomBar = {
             if (bannerView != null) {

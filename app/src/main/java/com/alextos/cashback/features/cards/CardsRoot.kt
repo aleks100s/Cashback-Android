@@ -8,7 +8,6 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.alextos.cashback.common.transitions.horizontalComposableTransition
-import com.alextos.cashback.common.transitions.verticalComposableTransition
 import com.alextos.cashback.features.cards.scenes.cashback_detail.presentation.CashbackDetailScreen
 import com.alextos.cashback.features.cards.scenes.card_detail.presentation.CardDetailScreen
 import com.alextos.cashback.features.cards.scenes.cards_list.presentation.CardsListScreen
@@ -73,7 +72,7 @@ fun CardsRoot(modifier: Modifier = Modifier) {
                 )
             }
 
-            verticalComposableTransition<CardsRoute.SelectCategory> {
+            horizontalComposableTransition<CardsRoute.SelectCategory> {
                 CategoryRoot(
                     onSelectCategory = {
                         navController.popBackStack()

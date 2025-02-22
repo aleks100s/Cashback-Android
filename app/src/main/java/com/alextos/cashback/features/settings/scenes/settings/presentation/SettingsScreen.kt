@@ -33,7 +33,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.Popup
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
 import com.alextos.cashback.common.ads.AdBannerView
@@ -42,7 +41,6 @@ import com.alextos.cashback.common.views.CustomWideButton
 import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.common.views.SectionView
 import com.alextos.cashback.core.domain.services.AppType
-import com.alextos.cashback.features.cards.scenes.cashback_detail.presentation.CashbackDetailAction
 
 @Composable
 fun SettingsScreen(

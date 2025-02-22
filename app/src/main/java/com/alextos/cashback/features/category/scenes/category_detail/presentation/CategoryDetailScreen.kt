@@ -2,13 +2,10 @@ package com.alextos.cashback.features.category.scenes.category_detail.presentati
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -17,11 +14,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.alextos.cashback.R
+import com.alextos.cashback.common.views.CustomLabel
 import com.alextos.cashback.common.views.CustomTextField
 import com.alextos.cashback.common.views.Screen
-import com.alextos.cashback.features.cards.scenes.cashback_detail.presentation.CashbackDetailAction
 
 @Composable
 fun CategoryDetailScreen(
@@ -44,14 +40,10 @@ fun CategoryDetailScreen(
                 },
                 enabled = state.isValid
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    Text(text = stringResource(R.string.common_save))
-
-                    Icon(Icons.Default.Done, stringResource(R.string.common_save))
-                }
+                CustomLabel(
+                    title = stringResource(R.string.common_save),
+                    imageVector = Icons.Default.Done
+                )
             }
         }
     ) {

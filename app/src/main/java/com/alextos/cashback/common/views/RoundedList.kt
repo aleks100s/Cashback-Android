@@ -7,9 +7,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -22,7 +20,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -82,11 +79,19 @@ fun <Element: ListElement> RoundedList(
                     RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp)
                 } else RectangleShape
 
+                val backgroundTopCornersShape = if (item == list.firstOrNull()) {
+                    RoundedCornerShape(topStart = 18.dp, topEnd = 18.dp)
+                } else RectangleShape
+
+                val backgroundBottomCornersShape = if (item == list.lastOrNull()) {
+                    RoundedCornerShape(bottomStart = 18.dp, bottomEnd = 18.dp)
+                } else RectangleShape
+
                 if (allowSwipe) {
                     SwipeableItem(
                         modifier = Modifier
-                            .clip(topCornersShape)
-                            .clip(bottomCornersShape),
+                            .clip(backgroundTopCornersShape)
+                            .clip(backgroundBottomCornersShape),
                         content = {
                             ContextMenuView(
                                 item = item,
