@@ -9,6 +9,9 @@ import com.alextos.cashback.core.domain.repository.CardsRepository
 import com.alextos.cashback.features.cards.scenes.cards_list.domain.FilterCardsUseCase
 import com.alextos.cashback.common.UiText
 import com.alextos.cashback.core.AppConstants
+import com.alextos.cashback.core.domain.models.currency.Currency
+import com.alextos.cashback.core.domain.models.currency.localization
+import com.alextos.cashback.core.domain.models.currency.symbol
 import com.alextos.cashback.core.domain.repository.CategoryRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -92,11 +95,28 @@ class CardsListViewModel(
                     it.copy(newCardColor = "#${action.color}")
                 }
             }
+            is CardsListAction.CardCurrencyChange -> {
+                _state.update {
+                    it.copy(newCardCurrency = action.currency)
+                }
+            }
             is CardsListAction.SaveButtonTapped -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    val card = Card(name = state.value.newCardName, color = state.value.newCardColor)
+                    val card = Card(
+                        name = state.value.newCardName,
+                        color = state.value.newCardColor,
+                        currency = state.value.newCardCurrency.localization,
+                        currencySymbol = state.value.newCardCurrency.symbol
+                    )
                     cardsRepository.createOrUpdate(card)
-                    _state.update { it.copy(newCardName = "", newCardColor = AppConstants.COLOR_HEX_DEFAULT, isAddCardSheetShown = false) }
+                    _state.update { state ->
+                        state.copy(
+                            newCardName = "",
+                            newCardColor = AppConstants.COLOR_HEX_DEFAULT,
+                            newCardCurrency = Currency.RUBLE,
+                            isAddCardSheetShown = false
+                        )
+                    }
                     withContext(Dispatchers.Main) {
                         toastService.showToast(UiText.StringResourceId(R.string.cards_list_card_added))
                     }

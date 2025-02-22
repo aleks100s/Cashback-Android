@@ -276,7 +276,7 @@ private fun EditCardView(
                         Text(text = stringResource(R.string.card_detail_cashback_currency))
 
                         PickerDropdown(
-                            title = state.currency,
+                            selected = state.currency,
                             options = Currency.entries.map { it.localization },
                             onSelect = {
                                 onAction(CardDetailAction.ChangeCurrency(it))

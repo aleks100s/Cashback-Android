@@ -2,6 +2,7 @@ package com.alextos.cashback.features.cards.scenes.cards_list.presentation.compo
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -12,11 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.alextos.cashback.R
 import com.alextos.cashback.common.views.ColorPicker
+import com.alextos.cashback.common.views.PickerDropdown
 import com.alextos.cashback.common.views.SectionView
+import com.alextos.cashback.core.domain.models.currency.Currency
+import com.alextos.cashback.core.domain.models.currency.localization
 
 @Composable
 fun AddCardSheet(
@@ -24,6 +27,8 @@ fun AddCardSheet(
     onValueChange: (String) -> Unit,
     color: String,
     onColorChange: (String) -> Unit,
+    currency: Currency,
+    onCurrencyChange: (Currency) -> Unit,
     onSaveTapped: () -> Unit
 ) {
     Column(
@@ -57,6 +62,22 @@ fun AddCardSheet(
                 color = color,
                 onColorChange = onColorChange
             )
+        }
+
+        SectionView(footer = stringResource(R.string.add_card_sheet_select_currency_footer)) {
+            Row(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp, vertical = 12.dp)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(text = stringResource(R.string.add_card_sheet_select_currency))
+
+                PickerDropdown(selected = currency, options = Currency.entries) {
+                    onCurrencyChange(it)
+                }
+            }
         }
 
         Button(onClick = onSaveTapped, enabled = cardName.isNotEmpty()) {
