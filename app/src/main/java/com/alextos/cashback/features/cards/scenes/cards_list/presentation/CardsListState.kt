@@ -6,6 +6,7 @@ import com.alextos.cashback.core.domain.models.Category
 import com.alextos.cashback.core.domain.models.currency.Currency
 
 data class CardsListState(
+    val isLoading: Boolean = true,
     val searchQuery: String = "",
     val allCards: List<Card> = listOf(),
     val filteredCards: List<Card> = listOf(),

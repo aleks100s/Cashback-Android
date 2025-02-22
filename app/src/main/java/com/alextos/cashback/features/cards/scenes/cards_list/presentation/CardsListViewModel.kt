@@ -10,8 +10,6 @@ import com.alextos.cashback.features.cards.scenes.cards_list.domain.FilterCardsU
 import com.alextos.cashback.common.UiText
 import com.alextos.cashback.core.AppConstants
 import com.alextos.cashback.core.domain.models.currency.Currency
-import com.alextos.cashback.core.domain.models.currency.localization
-import com.alextos.cashback.core.domain.models.currency.symbol
 import com.alextos.cashback.core.domain.repository.CategoryRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,6 +33,7 @@ class CardsListViewModel(
                 .collect { list ->
                     _state.update {
                         it.copy(
+                            isLoading = false,
                             allCards = list,
                             filteredCards = filterUseCase.execute(list, it.searchQuery)
                         )
