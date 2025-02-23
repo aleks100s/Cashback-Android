@@ -10,12 +10,14 @@ import com.alextos.cashback.core.domain.settings.SettingsManager
 import com.alextos.cashback.core.domain.services.PasteboardService
 import com.alextos.cashback.core.domain.services.ShareService
 import com.alextos.cashback.core.domain.services.ToastService
-import com.alextos.cashback.features.settings.scenes.settings.ExportDataUseCase
+import com.alextos.cashback.features.settings.scenes.settings.domain.ExportDataUseCase
+import com.alextos.cashback.features.settings.scenes.settings.domain.ImportDataUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SettingsViewModel(
     private val settingsManager: SettingsManager,
@@ -23,7 +25,8 @@ class SettingsViewModel(
     private val shareService: ShareService,
     private val appInfoService: AppInfoService,
     private val toastService: ToastService,
-    private val exportDataUseCase: ExportDataUseCase
+    private val exportDataUseCase: ExportDataUseCase,
+    private val importDataUseCase: ImportDataUseCase
 ): ViewModel() {
     private val _state = MutableStateFlow(SettingsState())
     val state = _state.asStateFlow()
@@ -95,6 +98,14 @@ class SettingsViewModel(
             is SettingsAction.ExportData -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     exportDataUseCase.execute()
+                }
+            }
+            is SettingsAction.ImportData -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    importDataUseCase.execute()
+                    withContext(Dispatchers.Main) {
+                        toastService.showToast(UiText.StringResourceId(R.string.settings_import_success))
+                    }
                 }
             }
             is SettingsAction.ShowCatalog -> {}

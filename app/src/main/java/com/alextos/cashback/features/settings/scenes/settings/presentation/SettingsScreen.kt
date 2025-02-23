@@ -169,6 +169,12 @@ private fun SettingsView(
                 CustomWideButton(title = stringResource(R.string.settings_export_data)) {
                     onAction(SettingsAction.ExportData)
                 }
+
+                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+
+                CustomWideButton(title = stringResource(R.string.settings_import_data)) {
+                    onAction(SettingsAction.ImportData)
+                }
             }
         }
 

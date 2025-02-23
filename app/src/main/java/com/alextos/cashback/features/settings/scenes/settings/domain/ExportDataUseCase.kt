@@ -1,4 +1,4 @@
-package com.alextos.cashback.features.settings.scenes.settings
+package com.alextos.cashback.features.settings.scenes.settings.domain
 
 import com.alextos.cashback.core.data.dto.UserData
 import com.alextos.cashback.core.data.dto.mappers.toDto

@@ -3,7 +3,8 @@ package com.alextos.cashback.features.settings.di
 import com.alextos.cashback.features.settings.scenes.settings.presentation.SettingsViewModel
 import com.alextos.cashback.features.settings.scenes.card_trashbin.presentation.CardTrashbinViewModel
 import com.alextos.cashback.features.settings.scenes.category_trashbin.presentation.CategoryTrashbinViewModel
-import com.alextos.cashback.features.settings.scenes.settings.ExportDataUseCase
+import com.alextos.cashback.features.settings.scenes.settings.domain.ExportDataUseCase
+import com.alextos.cashback.features.settings.scenes.settings.domain.ImportDataUseCase
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
@@ -12,4 +13,5 @@ val settingsModule = module {
     viewModelOf(::CardTrashbinViewModel)
     viewModelOf(::CategoryTrashbinViewModel)
     factory { ExportDataUseCase(get(), get(), get()) }
+    factory { ImportDataUseCase(get(), get(), get()) }
 }
