@@ -179,16 +179,16 @@ private fun CardDetailView(
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = stringResource(R.string.card_detail_no_cashback),
-                    style = MaterialTheme.typography.headlineSmall,
-                    textAlign = TextAlign.Center
-                )
-
                 Icon(
                     painter = painterResource(R.drawable.credit_card),
                     contentDescription = stringResource(R.string.card_detail_no_cashback),
                     tint = color.copy(alpha = 0.3f),
+                )
+
+                Text(
+                    text = stringResource(R.string.card_detail_no_cashback),
+                    style = MaterialTheme.typography.headlineSmall,
+                    textAlign = TextAlign.Center
                 )
             }
         },
