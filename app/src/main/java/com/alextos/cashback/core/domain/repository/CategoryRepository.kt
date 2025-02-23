@@ -9,4 +9,7 @@ interface CategoryRepository {
     fun getPopularCategories(): Flow<List<Category>>
     suspend fun getCategory(id: String): Category?
     suspend fun createOrUpdate(category: Category)
+    suspend fun getAllCategoriesExport(): List<Category>
+    fun getArchivedCategories(): Flow<List<Category>>
+    suspend fun unarchive(category: Category)
 }

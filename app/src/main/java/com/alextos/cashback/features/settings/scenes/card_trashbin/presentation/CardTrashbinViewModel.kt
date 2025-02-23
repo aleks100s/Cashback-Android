@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alextos.cashback.R
 import com.alextos.cashback.common.UiText
+import com.alextos.cashback.core.domain.repository.CardsRepository
 import com.alextos.cashback.core.domain.services.ToastService
-import com.alextos.cashback.features.settings.scenes.card_trashbin.domain.CardTrashbinRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class CardTrashbinViewModel(
-    private val repository: CardTrashbinRepository,
+    private val repository: CardsRepository,
     private val toastService: ToastService
 ): ViewModel() {
     private val _state = MutableStateFlow(CardTrashbinState())

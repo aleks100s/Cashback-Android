@@ -13,4 +13,7 @@ interface CardsRepository {
     suspend fun createOrUpdateCashback(cashback: Cashback, cardId: String)
     suspend fun getCashback(id: String): Cashback?
     suspend fun archiveCard(card: Card)
+    suspend fun getCardsExport(): List<Card>
+    fun getArchivedCards(): Flow<List<Card>>
+    suspend fun unarchive(card: Card)
 }

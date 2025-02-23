@@ -8,9 +8,11 @@ import com.alextos.cashback.core.data.entities.mappers.toEntity
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.domain.models.Cashback
 import com.alextos.cashback.core.domain.repository.CardsRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.withContext
 
 class CardsRepositoryImpl(
     private val cardDao: CardDao,
@@ -52,6 +54,23 @@ class CardsRepositoryImpl(
 
     override suspend fun archiveCard(card: Card) {
         cardDao.upsert(card.toEntity())
+    }
+
+    override suspend fun getCardsExport(): List<Card> {
+        return cardDao.getCardsExport().map { constructCard(it) }
+    }
+
+    override fun getArchivedCards(): Flow<List<Card>> {
+        return cardDao.getAllArchived()
+            .map { list ->
+                list.map { it.toDomain(emptyList()) }
+            }
+    }
+
+    override suspend fun unarchive(card: Card) {
+        withContext(Dispatchers.IO) {
+            cardDao.upsert(card.copy(isArchived = false).toEntity())
+        }
     }
 
     private suspend fun constructCard(entity: CardEntity): Card {

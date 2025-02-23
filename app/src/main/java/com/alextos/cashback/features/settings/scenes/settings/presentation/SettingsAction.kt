@@ -13,4 +13,5 @@ sealed interface SettingsAction {
     data class ChangePromoCodeValue(val code: String): SettingsAction
     data object HidePromoCodePrompt: SettingsAction
     data object ValidatePromoCode: SettingsAction
+    data object ExportData: SettingsAction
 }

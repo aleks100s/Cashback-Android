@@ -10,6 +10,7 @@ import com.alextos.cashback.core.domain.settings.SettingsManager
 import com.alextos.cashback.core.domain.services.PasteboardService
 import com.alextos.cashback.core.domain.services.ShareService
 import com.alextos.cashback.core.domain.services.ToastService
+import com.alextos.cashback.features.settings.scenes.settings.ExportDataUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,7 +22,8 @@ class SettingsViewModel(
     private val pasteboardService: PasteboardService,
     private val shareService: ShareService,
     private val appInfoService: AppInfoService,
-    private val toastService: ToastService
+    private val toastService: ToastService,
+    private val exportDataUseCase: ExportDataUseCase
 ): ViewModel() {
     private val _state = MutableStateFlow(SettingsState())
     val state = _state.asStateFlow()
@@ -88,6 +90,11 @@ class SettingsViewModel(
                     }
                     onAction(SettingsAction.HidePromoCodePrompt)
                     toastService.showToast(UiText.StringResourceId(R.string.ad_disabled))
+                }
+            }
+            is SettingsAction.ExportData -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    exportDataUseCase.execute()
                 }
             }
             is SettingsAction.ShowCatalog -> {}
