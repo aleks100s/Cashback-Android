@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.alextos.cashback.BuildConfig
-import com.alextos.cashback.core.data.mappers.toEntity
+import com.alextos.cashback.core.data.entities.mappers.toEntity
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.domain.models.Cashback
 import com.alextos.cashback.core.domain.models.Category

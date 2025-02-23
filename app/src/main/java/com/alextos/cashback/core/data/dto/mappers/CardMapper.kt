@@ -1,17 +1,16 @@
-package com.alextos.cashback.core.data.mappers
+package com.alextos.cashback.core.data.dto.mappers
 
-import com.alextos.cashback.core.data.entities.CardEntity
+import com.alextos.cashback.core.data.dto.CardDto
 import com.alextos.cashback.core.domain.models.Card
-import com.alextos.cashback.core.domain.models.Cashback
 import com.alextos.cashback.core.domain.models.currency.Currency
 import com.alextos.cashback.core.domain.models.currency.localization
 import com.alextos.cashback.core.domain.models.currency.symbol
-import java.util.UUID
 
-fun Card.toEntity(): CardEntity {
-    return CardEntity(
+fun Card.toDto(): CardDto {
+    return CardDto(
         id = id,
         name = name,
+        cashback = cashback.map { it.toDto() },
         color = color,
         isArchived = isArchived,
         isFavourite = isFavourite,
@@ -20,11 +19,11 @@ fun Card.toEntity(): CardEntity {
     )
 }
 
-fun CardEntity.toDomain(cashback: List<Cashback>): Card {
+fun CardDto.toDomain(): Card {
     return Card(
         id = id,
         name = name,
-        cashback = cashback,
+        cashback = cashback.map { it.toDomain() },
         color = color,
         isArchived = isArchived,
         isFavourite = isFavourite,

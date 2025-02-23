@@ -1,8 +1,8 @@
 package com.alextos.cashback.features.settings.scenes.card_trashbin.data
 
 import com.alextos.cashback.core.data.dao.CardDao
-import com.alextos.cashback.core.data.mappers.toDomain
-import com.alextos.cashback.core.data.mappers.toEntity
+import com.alextos.cashback.core.data.entities.mappers.toDomain
+import com.alextos.cashback.core.data.entities.mappers.toEntity
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.features.settings.scenes.card_trashbin.domain.CardTrashbinRepository
 import kotlinx.coroutines.Dispatchers

@@ -3,8 +3,8 @@ package com.alextos.cashback.core.data.repository
 import com.alextos.cashback.core.data.dao.CardDao
 import com.alextos.cashback.core.data.dao.CashbackDao
 import com.alextos.cashback.core.data.entities.CardEntity
-import com.alextos.cashback.core.data.mappers.toDomain
-import com.alextos.cashback.core.data.mappers.toEntity
+import com.alextos.cashback.core.data.entities.mappers.toDomain
+import com.alextos.cashback.core.data.entities.mappers.toEntity
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.domain.models.Cashback
 import com.alextos.cashback.core.domain.repository.CardsRepository

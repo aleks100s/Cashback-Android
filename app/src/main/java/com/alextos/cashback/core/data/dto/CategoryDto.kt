@@ -1,0 +1,15 @@
+package com.alextos.cashback.core.data.dto
+
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class CategoryDto(
+    val id: String,
+    val name: String,
+    val emoji: String,
+    val synonyms: String?,
+    var priority: Int,
+    var isArchived: Boolean,
+    val info: String?,
+    val isNative: Boolean
+)

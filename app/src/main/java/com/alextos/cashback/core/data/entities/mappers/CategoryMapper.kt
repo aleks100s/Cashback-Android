@@ -1,4 +1,4 @@
-package com.alextos.cashback.core.data.mappers
+package com.alextos.cashback.core.data.entities.mappers
 
 import com.alextos.cashback.core.data.entities.CategoryEntity
 import com.alextos.cashback.core.domain.models.Category

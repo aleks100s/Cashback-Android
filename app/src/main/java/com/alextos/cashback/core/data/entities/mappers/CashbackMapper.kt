@@ -1,4 +1,4 @@
-package com.alextos.cashback.core.data.mappers
+package com.alextos.cashback.core.data.entities.mappers
 
 import com.alextos.cashback.core.data.entities.combined_entities.CashbackWithCategory
 import com.alextos.cashback.core.data.entities.CashbackEntity

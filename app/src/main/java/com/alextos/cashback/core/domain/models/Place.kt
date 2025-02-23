@@ -10,7 +10,6 @@ data class Place(
     val isFavourite: Boolean
 )
 
-
 fun generateMockPlace(category: Category? = null): Place {
     val randomNames = listOf("Cafe Mocha", "Burger Spot", "Tech Hub", "Zen Garden", "Book Haven")
 
