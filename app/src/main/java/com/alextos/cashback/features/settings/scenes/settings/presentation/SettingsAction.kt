@@ -14,5 +14,7 @@ sealed interface SettingsAction {
     data object HidePromoCodePrompt: SettingsAction
     data object ValidatePromoCode: SettingsAction
     data object ExportData: SettingsAction
+    data object ShowImportAlert: SettingsAction
+    data object HideImportAlert: SettingsAction
     data object ImportData: SettingsAction
 }

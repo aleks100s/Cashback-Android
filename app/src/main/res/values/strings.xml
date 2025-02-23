@@ -122,4 +122,7 @@
     <string name="settings_export_data_title">Перенос данных на другое устройство</string>
     <string name="settings_export_data_footer">Экспортируйте файл с одного устройства и откройте его в приложении на новом девайсе.\nПри импорте имеющиеся данные будут перезаписаны!</string>
     <string name="settings_import_success">Данные успешно импортированы</string>
+    <string name="settings_import_alert_confirm">Перезаписать данные</string>
+    <string name="settings_import_alert_text">При импорте все старые данные будут удалены</string>
+    <string name="settings_import_alert_title">Вы уверены?</string>
 </resources>

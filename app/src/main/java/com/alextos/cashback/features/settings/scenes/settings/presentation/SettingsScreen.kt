@@ -80,6 +80,20 @@ fun SettingsScreen(
         )
     }
 
+    if (state.isImportAlertShown) {
+        com.alextos.cashback.common.views.Dialog(
+            title = stringResource(R.string.settings_import_alert_title),
+            text = stringResource(R.string.settings_import_alert_text),
+            actionTitle = stringResource(R.string.settings_import_alert_confirm),
+            onConfirm = {
+                viewModel.onAction(SettingsAction.ImportData)
+            },
+            onDismiss = {
+                viewModel.onAction(SettingsAction.HideImportAlert)
+            }
+        )
+    }
+
     if (state.isDisableAdDialogShown) {
         Dialog(
             onDismissRequest = {
@@ -173,7 +187,7 @@ private fun SettingsView(
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
 
                 CustomWideButton(title = stringResource(R.string.settings_import_data)) {
-                    onAction(SettingsAction.ImportData)
+                    onAction(SettingsAction.ShowImportAlert)
                 }
             }
         }

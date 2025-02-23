@@ -101,7 +101,14 @@ class SettingsViewModel(
                 }
             }
             is SettingsAction.ImportData -> {
+                _state.update { it.copy(isImportAlertShown = false) }
                 userDataService.initiateImport()
+            }
+            is SettingsAction.ShowImportAlert -> {
+                _state.update { it.copy(isImportAlertShown = true) }
+            }
+            is SettingsAction.HideImportAlert -> {
+                _state.update { it.copy(isImportAlertShown = false) }
             }
             is SettingsAction.ShowCatalog -> {}
             is SettingsAction.ShowCardTrashbin -> {}
