@@ -162,7 +162,10 @@ private fun SettingsView(
         }
 
         item {
-            SectionView {
+            SectionView(
+                title = stringResource(R.string.settings_export_data_title),
+                footer = stringResource(R.string.settings_export_data_footer)
+            ) {
                 CustomWideButton(title = stringResource(R.string.settings_export_data)) {
                     onAction(SettingsAction.ExportData)
                 }

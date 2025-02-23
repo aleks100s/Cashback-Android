@@ -17,7 +17,7 @@ class UserDataServiceImpl(private val context: Context): UserDataService {
     }
 
     private fun createJsonFile(jsonString: String): File {
-        val file = File(context.getExternalFilesDir(null), "temp")
+        val file = File(context.getExternalFilesDir(null), "Кэшбэк")
         file.writeText(jsonString)
         return file
     }
@@ -27,10 +27,13 @@ class UserDataServiceImpl(private val context: Context): UserDataService {
 
         val intent = Intent(Intent.ACTION_SEND).apply {
             type = "application/json"
+            putExtra(Intent.EXTRA_TITLE, "Кэшбэк")
             putExtra(Intent.EXTRA_STREAM, uri)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
 
-        context.startActivity(Intent.createChooser(intent, context.getString(R.string.export_data_prompt)))
+        val chooser = Intent.createChooser(intent, context.getString(R.string.export_data_prompt))
+        chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivity(chooser)
     }
 }

@@ -118,4 +118,6 @@
     <string name="add_card_sheet_select_currency_footer">Рубли, мили или баллы</string>
     <string name="export_data_prompt">Экспортировать данные в файл</string>
     <string name="settings_export_data">Экспортировать данные</string>
+    <string name="settings_export_data_title">Перенос данных на другое устройство</string>
+    <string name="settings_export_data_footer">Экспортируйте файл с одного устройства и откройте его в приложении на новом девайсе.\nПри импорте имеющиеся данные будут перезаписаны!</string>
 </resources>

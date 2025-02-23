@@ -13,7 +13,7 @@ fun Card.toDto(): CardDto {
         cashback = cashback.map { it.toDto() },
         color = color,
         isArchived = isArchived,
-        isFavourite = isFavourite,
+        isFavorite = isFavourite,
         currency = currency.localization,
         currencySymbol = currency.symbol
     )
@@ -26,7 +26,7 @@ fun CardDto.toDomain(): Card {
         cashback = cashback.map { it.toDomain() },
         color = color,
         isArchived = isArchived,
-        isFavourite = isFavourite,
+        isFavourite = isFavorite,
         currency = Currency.makeFrom(currency)
     )
 }
