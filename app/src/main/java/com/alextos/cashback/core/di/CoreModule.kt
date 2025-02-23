@@ -3,7 +3,7 @@ package com.alextos.cashback.core.di
 import androidx.room.Room
 import com.alextos.cashback.core.data.database.AppDatabase
 import com.alextos.cashback.core.data.database.DatabaseSeeder
-import com.alextos.cashback.core.data.repository.CardsRepositoryImpl
+import com.alextos.cashback.core.data.repository.CardRepositoryImpl
 import com.alextos.cashback.core.data.repository.CategoryRepositoryImpl
 import com.alextos.cashback.core.data.services.AppInfoServiceImpl
 import com.alextos.cashback.core.data.settings.SettingsManagerImpl
@@ -11,7 +11,7 @@ import com.alextos.cashback.core.data.services.PasteboardServiceImpl
 import com.alextos.cashback.core.data.services.ShareServiceImpl
 import com.alextos.cashback.core.data.services.ToastServiceImpl
 import com.alextos.cashback.core.data.services.UserDataServiceImpl
-import com.alextos.cashback.core.domain.repository.CardsRepository
+import com.alextos.cashback.core.domain.repository.CardRepository
 import com.alextos.cashback.core.domain.repository.CategoryRepository
 import com.alextos.cashback.core.domain.services.AppInfoService
 import com.alextos.cashback.core.domain.settings.SettingsManager
@@ -42,7 +42,7 @@ val coreModule = module {
     factory { get<AppDatabase>().paymentDao() }
 
     factory<CategoryRepository> { CategoryRepositoryImpl(get()) }
-    factory<CardsRepository> { CardsRepositoryImpl(get(), get()) }
+    factory<CardRepository> { CardRepositoryImpl(get(), get()) }
 
     factory<PasteboardService> { PasteboardServiceImpl(androidApplication()) }
     factory<ToastService> { ToastServiceImpl(androidContext()) }

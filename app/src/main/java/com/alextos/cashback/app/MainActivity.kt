@@ -107,7 +107,12 @@ class MainActivity : ComponentActivity(), UserDataFileProvider {
     override fun showFilePicker() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
-            type = "application/json"
+            type = "*/*"
+            putExtra(Intent.EXTRA_MIME_TYPES, arrayOf(
+                "application/octet-stream", // Для неизвестных типов
+                "text/plain",
+                "application/json"
+            ))
         }
         pickJsonFile.launch(intent)
     }

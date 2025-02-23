@@ -20,7 +20,7 @@ class CategoryRepositoryImpl(
             }
     }
 
-    override fun getAllCategories(): Flow<List<Category>> {
+    override fun getAllCategoriesFlow(): Flow<List<Category>> {
         return categoryDao.getAll().map { list ->
             list.map { it.toDomain() }
         }
@@ -42,7 +42,7 @@ class CategoryRepositoryImpl(
         categoryDao.upsert(category.toEntity())
     }
 
-    override suspend fun getAllCategoriesExport(): List<Category> {
+    override suspend fun getAllCategories(): List<Category> {
         return categoryDao.getCategoriesExport().map { it.toDomain() }
     }
 
@@ -57,5 +57,9 @@ class CategoryRepositoryImpl(
         withContext(Dispatchers.IO) {
             categoryDao.upsert(category.copy(isArchived = false).toEntity())
         }
+    }
+
+    override suspend fun replaceAll(categories: List<Category>) {
+        categoryDao.replaceAll(categories.map { it.toEntity() })
     }
 }

@@ -8,7 +8,7 @@ import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.Cashback
 import com.alextos.cashback.core.domain.services.ToastService
 import com.alextos.cashback.features.cards.CardsRoute
-import com.alextos.cashback.core.domain.repository.CardsRepository
+import com.alextos.cashback.core.domain.repository.CardRepository
 import com.alextos.cashback.features.cards.scenes.cashback_detail.domain.ValidateCashbackUseCase
 import com.alextos.cashback.features.category.CategoryMediator
 import com.alextos.cashback.common.UiText
@@ -25,7 +25,7 @@ class CashbackDetailViewModel(
     savedStateHandle: SavedStateHandle,
     private val validateCashbackUseCase: ValidateCashbackUseCase,
     private val createCashbackUseCase: CreateCashbackUseCase,
-    private val cardsRepository: CardsRepository,
+    private val cardRepository: CardRepository,
     private val categoryMediator: CategoryMediator,
     private val toastService: ToastService
 ): ViewModel() {
@@ -39,13 +39,13 @@ class CashbackDetailViewModel(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            cardsRepository.getCardFlow(cardId)
+            cardRepository.getCardFlow(cardId)
                 .mapNotNull { it }
                 .collect { card ->
                     _state.update { it.copy(card = card) }
 
                     cashbackId?.let { cashbackId ->
-                        cardsRepository.getCashback(cashbackId)?.let { cashback ->
+                        cardRepository.getCashback(cashbackId)?.let { cashback ->
                             this@CashbackDetailViewModel.cashback = cashback
                             _state.update { state ->
                                 state.copy(

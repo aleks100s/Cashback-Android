@@ -7,7 +7,7 @@ import androidx.navigation.toRoute
 import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.services.ToastService
 import com.alextos.cashback.features.cards.CardsRoute
-import com.alextos.cashback.core.domain.repository.CardsRepository
+import com.alextos.cashback.core.domain.repository.CardRepository
 import com.alextos.cashback.features.cards.scenes.card_detail.domain.DeleteAllCashbackUseCase
 import com.alextos.cashback.features.cards.scenes.card_detail.domain.DeleteCardUseCase
 import com.alextos.cashback.common.UiText
@@ -26,7 +26,7 @@ class CardDetailViewModel(
     private val deleteCardUseCase: DeleteCardUseCase,
     private val deleteAllCashbackUseCase: DeleteAllCashbackUseCase,
     private val deleteCashbackUseCase: DeleteCashbackUseCase,
-    private val repository: CardsRepository,
+    private val repository: CardRepository,
     private val toastService: ToastService,
     private val settingsManager: SettingsManager
 ): ViewModel() {

@@ -7,18 +7,18 @@ import com.alextos.cashback.core.data.entities.mappers.toDomain
 import com.alextos.cashback.core.data.entities.mappers.toEntity
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.domain.models.Cashback
-import com.alextos.cashback.core.domain.repository.CardsRepository
+import com.alextos.cashback.core.domain.repository.CardRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.withContext
 
-class CardsRepositoryImpl(
+class CardRepositoryImpl(
     private val cardDao: CardDao,
     private val cashbackDao: CashbackDao
-): CardsRepository {
-    override fun getAllCards(): Flow<List<Card>> {
+): CardRepository {
+    override fun getAllCardsFlow(): Flow<List<Card>> {
         return cardDao.getAllUnarchived().map { list ->
             list.map { constructCard(it) }
         }
@@ -56,7 +56,7 @@ class CardsRepositoryImpl(
         cardDao.upsert(card.toEntity())
     }
 
-    override suspend fun getCardsExport(): List<Card> {
+    override suspend fun getAllCards(): List<Card> {
         return cardDao.getCardsExport().map { constructCard(it) }
     }
 
@@ -71,6 +71,15 @@ class CardsRepositoryImpl(
         withContext(Dispatchers.IO) {
             cardDao.upsert(card.copy(isArchived = false).toEntity())
         }
+    }
+
+    override suspend fun replaceAll(cards: List<Card>) {
+        cardDao.replaceAllCardsAndCashback(
+            cards = cards.map { it.toEntity() },
+            cashback = cards.flatMap { card ->
+                card.cashback.map { it.toEntity(card.id) }
+            }
+        )
     }
 
     private suspend fun constructCard(entity: CardEntity): Card {

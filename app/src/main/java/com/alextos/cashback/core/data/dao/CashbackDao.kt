@@ -2,15 +2,14 @@ package com.alextos.cashback.core.data.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
+import androidx.room.Insert
 import androidx.room.Query
-import androidx.room.Transaction
 import androidx.room.Upsert
 import com.alextos.cashback.core.data.entities.combined_entities.CashbackWithCategory
 import com.alextos.cashback.core.data.entities.CashbackEntity
 
 @Dao
 interface CashbackDao {
-    @Transaction
     @Query("SELECT * FROM cashback WHERE cardId = :cardId ORDER BY `order`")
     suspend fun getAllBy(cardId: String): List<CashbackWithCategory>
 
@@ -22,4 +21,7 @@ interface CashbackDao {
 
     @Delete
     suspend fun delete(cashback: CashbackEntity)
+
+    @Insert
+    suspend fun insertAll(cashback: List<CashbackEntity>)
 }

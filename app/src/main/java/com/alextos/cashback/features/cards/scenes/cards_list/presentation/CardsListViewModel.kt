@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.domain.services.ToastService
-import com.alextos.cashback.core.domain.repository.CardsRepository
+import com.alextos.cashback.core.domain.repository.CardRepository
 import com.alextos.cashback.features.cards.scenes.cards_list.domain.FilterCardsUseCase
 import com.alextos.cashback.common.UiText
 import com.alextos.cashback.core.AppConstants
@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class CardsListViewModel(
-    private val cardsRepository: CardsRepository,
+    private val cardRepository: CardRepository,
     private val categoryRepository: CategoryRepository,
     private val filterUseCase: FilterCardsUseCase,
     private val toastService: ToastService
@@ -29,7 +29,7 @@ class CardsListViewModel(
 
     init {
         viewModelScope.launch {
-            cardsRepository.getAllCards()
+            cardRepository.getAllCardsFlow()
                 .collect { list ->
                     _state.update {
                         it.copy(
@@ -62,7 +62,7 @@ class CardsListViewModel(
             is CardsListAction.ToggleFavourite -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     val card = action.card
-                    cardsRepository.createOrUpdate(card.copy(isFavourite = !card.isFavourite))
+                    cardRepository.createOrUpdate(card.copy(isFavourite = !card.isFavourite))
                 }
                 toastService.showToast(
                     UiText.StringResourceId(
@@ -106,7 +106,7 @@ class CardsListViewModel(
                         color = state.value.newCardColor,
                         currency = state.value.newCardCurrency,
                     )
-                    cardsRepository.createOrUpdate(card)
+                    cardRepository.createOrUpdate(card)
                     _state.update { state ->
                         state.copy(
                             newCardName = "",

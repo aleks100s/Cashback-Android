@@ -3,12 +3,12 @@ package com.alextos.cashback.features.cards.scenes.cashback_detail.domain
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.domain.models.Cashback
 import com.alextos.cashback.core.domain.models.Category
-import com.alextos.cashback.core.domain.repository.CardsRepository
+import com.alextos.cashback.core.domain.repository.CardRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class CreateCashbackUseCase(
-    private val repository: CardsRepository
+    private val repository: CardRepository
 ) {
     suspend fun execute(
         card: Card,

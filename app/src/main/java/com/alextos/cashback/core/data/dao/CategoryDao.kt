@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Upsert
 import com.alextos.cashback.core.data.entities.CategoryEntity
 import kotlinx.coroutines.flow.Flow
@@ -36,4 +37,13 @@ interface CategoryDao {
 
     @Delete
     suspend fun delete(categoryEntity: CategoryEntity)
+
+    @Query("DELETE FROM categories")
+    suspend fun deleteAll()
+
+    @Transaction
+    suspend fun replaceAll(categories: List<CategoryEntity>) {
+        deleteAll()
+        insertAll(categories)
+    }
 }

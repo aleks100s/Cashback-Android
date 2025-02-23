@@ -5,8 +5,9 @@ import android.content.Intent
 import androidx.core.content.FileProvider.*
 import com.alextos.cashback.R
 import com.alextos.cashback.core.data.dto.UserData
+import com.alextos.cashback.core.data.dto.mappers.toDomain
 import com.alextos.cashback.core.data.dto.mappers.toDto
-import com.alextos.cashback.core.domain.repository.CardsRepository
+import com.alextos.cashback.core.domain.repository.CardRepository
 import com.alextos.cashback.core.domain.repository.CategoryRepository
 import com.alextos.cashback.core.domain.services.UserDataDelegate
 import com.alextos.cashback.core.domain.services.UserDataFileProvider
@@ -17,7 +18,7 @@ import java.io.File
 class UserDataServiceImpl(
     private val context: Context,
     private val categoryRepository: CategoryRepository,
-    private val cardsRepository: CardsRepository
+    private val cardRepository: CardRepository
 ): UserDataService {
     override var delegate: UserDataDelegate? = null
     override var provider: UserDataFileProvider? = null
@@ -30,8 +31,8 @@ class UserDataServiceImpl(
     }
 
     private suspend fun prepareData(): UserData {
-        val categories = categoryRepository.getAllCategoriesExport()
-        val cards = cardsRepository.getCardsExport()
+        val categories = categoryRepository.getAllCategories()
+        val cards = cardRepository.getAllCards()
         val data = UserData(
             categories = categories.map { it.toDto() },
             cards = cards.map { it.toDto() },
@@ -42,7 +43,7 @@ class UserDataServiceImpl(
     }
 
     private fun createJsonFile(jsonString: String): File {
-        val file = File(context.getExternalFilesDir(null), "Кэшбэк.json")
+        val file = File(context.getExternalFilesDir(null), "Кэшбэк")
         file.writeText(jsonString)
         return file
     }
@@ -68,6 +69,8 @@ class UserDataServiceImpl(
 
     override suspend fun continueImport(json: String) {
         val data: UserData = Json.decodeFromString(json)
+        categoryRepository.replaceAll(data.categories.map { it.toDomain() })
+        cardRepository.replaceAll(data.cards.map { it.toDomain() })
         delegate?.userDataServiceDidFinishImport()
     }
 }
