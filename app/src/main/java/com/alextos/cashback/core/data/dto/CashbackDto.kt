@@ -7,5 +7,5 @@ data class CashbackDto(
     val id: String,
     val category: CategoryDto,
     val percent: Double,
-    val order: Int
+    val order: Int = 0
 )

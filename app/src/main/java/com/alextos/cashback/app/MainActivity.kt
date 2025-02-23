@@ -1,23 +1,24 @@
 package com.alextos.cashback.app
 
 import android.Manifest
-import android.content.Context
+import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Rect
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.view.MotionEvent
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.alextos.cashback.app.navigation.ApplicationRoot
 import com.alextos.cashback.app.notifications.MonthlyNotificationScheduler
 import com.alextos.cashback.app.theme.CashbackTheme
+import com.alextos.cashback.core.domain.services.UserDataFileProvider
+import com.alextos.cashback.core.domain.services.UserDataService
 import com.alextos.cashback.core.domain.settings.SettingsManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,11 +28,22 @@ import org.koin.android.ext.android.inject
 // Константа для идентификации запроса
 private const val NOTIFICATION_PERMISSION_REQUEST_CODE = 1001
 
-class MainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity(), UserDataFileProvider {
     private val settingsManager by inject<SettingsManager>()
+    private val userDataService by inject<UserDataService>()
+
+    // Запуск выбора файла
+    private val pickJsonFile = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            result.data?.data?.let { uri ->
+                readJsonFromUri(uri)
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        userDataService.provider = this
         enableEdgeToEdge()
         setContent {
             CashbackTheme {
@@ -90,5 +102,22 @@ class MainActivity : ComponentActivity() {
         }
         MonthlyNotificationScheduler.createNotificationChannel(this)
         MonthlyNotificationScheduler.scheduleNextNotification(this)
+    }
+
+    override fun showFilePicker() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "application/json"
+        }
+        pickJsonFile.launch(intent)
+    }
+
+    private fun readJsonFromUri(uri: Uri) {
+        contentResolver.openInputStream(uri)?.use { inputStream ->
+            val jsonString = inputStream.bufferedReader().use { it.readText() }
+            lifecycleScope.launch(Dispatchers.IO) {
+                userDataService.continueImport(jsonString)
+            }
+        }
     }
 }

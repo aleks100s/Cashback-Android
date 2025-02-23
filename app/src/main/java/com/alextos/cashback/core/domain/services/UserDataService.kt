@@ -1,7 +1,18 @@
 package com.alextos.cashback.core.domain.services
 
-import com.alextos.cashback.core.data.dto.UserData
-
 interface UserDataService {
-    suspend fun exportData(data: UserData)
+    var delegate: UserDataDelegate?
+    var provider: UserDataFileProvider?
+
+    fun initiateImport()
+    suspend fun continueImport(json: String)
+    suspend fun exportData()
+}
+
+interface UserDataDelegate {
+    fun userDataServiceDidFinishImport()
+}
+
+interface UserDataFileProvider {
+    fun showFilePicker()
 }

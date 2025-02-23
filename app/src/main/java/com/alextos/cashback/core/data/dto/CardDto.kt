@@ -7,9 +7,9 @@ data class CardDto(
     val id: String,
     var name: String,
     val cashback: List<CashbackDto>,
-    var color: String?,
-    var isArchived: Boolean,
-    var isFavorite: Boolean,
-    var currency: String,
-    var currencySymbol: String
+    var color: String? = "#E7E7E7",
+    var isArchived: Boolean = false,
+    var isFavorite: Boolean = false,
+    var currency: String = "",
+    var currencySymbol: String = ""
 )

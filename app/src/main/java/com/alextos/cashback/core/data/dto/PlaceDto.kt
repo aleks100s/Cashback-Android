@@ -7,5 +7,5 @@ data class PlaceDto(
     val id: String,
     val name: String,
     val category: CategoryDto,
-    val isFavourite: Boolean
+    val isFavorite: Boolean = false
 )

@@ -5,19 +5,44 @@ import android.content.Intent
 import androidx.core.content.FileProvider.*
 import com.alextos.cashback.R
 import com.alextos.cashback.core.data.dto.UserData
+import com.alextos.cashback.core.data.dto.mappers.toDto
+import com.alextos.cashback.core.domain.repository.CardsRepository
+import com.alextos.cashback.core.domain.repository.CategoryRepository
+import com.alextos.cashback.core.domain.services.UserDataDelegate
+import com.alextos.cashback.core.domain.services.UserDataFileProvider
 import com.alextos.cashback.core.domain.services.UserDataService
 import kotlinx.serialization.json.Json
 import java.io.File
 
-class UserDataServiceImpl(private val context: Context): UserDataService {
-    override suspend fun exportData(data: UserData) {
+class UserDataServiceImpl(
+    private val context: Context,
+    private val categoryRepository: CategoryRepository,
+    private val cardsRepository: CardsRepository
+): UserDataService {
+    override var delegate: UserDataDelegate? = null
+    override var provider: UserDataFileProvider? = null
+
+    override suspend fun exportData() {
+        val data = prepareData()
         val json = Json.encodeToString(data)
         val file = createJsonFile(json)
         shareJsonFile(file)
     }
 
+    private suspend fun prepareData(): UserData {
+        val categories = categoryRepository.getAllCategoriesExport()
+        val cards = cardsRepository.getCardsExport()
+        val data = UserData(
+            categories = categories.map { it.toDto() },
+            cards = cards.map { it.toDto() },
+            places = emptyList(),
+            payments = emptyList()
+        )
+        return data
+    }
+
     private fun createJsonFile(jsonString: String): File {
-        val file = File(context.getExternalFilesDir(null), "Кэшбэк")
+        val file = File(context.getExternalFilesDir(null), "Кэшбэк.json")
         file.writeText(jsonString)
         return file
     }
@@ -35,5 +60,14 @@ class UserDataServiceImpl(private val context: Context): UserDataService {
         val chooser = Intent.createChooser(intent, context.getString(R.string.export_data_prompt))
         chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(chooser)
+    }
+
+    override fun initiateImport() {
+        provider?.showFilePicker()
+    }
+
+    override suspend fun continueImport(json: String) {
+        val data: UserData = Json.decodeFromString(json)
+        delegate?.userDataServiceDidFinishImport()
     }
 }

@@ -11,7 +11,7 @@ fun Payment.toDto(): PaymentDto {
     return PaymentDto(
         id = id,
         amount = amount,
-        date = date,
+        date = date.toDouble(),
         source = card?.toDto()
     )
 }
@@ -20,7 +20,7 @@ fun PaymentDto.toDomain(): Payment {
     return Payment(
         id = id,
         amount = amount,
-        date = LocalDate.of(2001, 1, 1).atStartOfDay().plusSeconds(date).toLocalDate(),
+        date = LocalDate.of(2001, 1, 1).atStartOfDay().plusSeconds(date.toLong()).toLocalDate(),
         card = source?.toDomain()
     )
 }

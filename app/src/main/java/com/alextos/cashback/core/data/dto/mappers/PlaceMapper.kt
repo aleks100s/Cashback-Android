@@ -8,7 +8,7 @@ fun Place.toDto(): PlaceDto {
         id = id,
         name = name,
         category = category.toDto(),
-        isFavourite = isFavourite
+        isFavorite = isFavourite
     )
 }
 
@@ -17,6 +17,6 @@ fun PlaceDto.toDomain(): Place {
         id = id,
         name = name,
         category = category.toDomain(),
-        isFavourite = isFavourite
+        isFavourite = isFavorite
     )
 }
