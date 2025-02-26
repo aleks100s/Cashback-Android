@@ -27,7 +27,7 @@ fun CategoryIconView(
     modifier: Modifier = Modifier,
     category: Category,
     size: CategoryIconSize,
-    color: Color = Color.Red
+    color: Color = MaterialTheme.colorScheme.primary
 ) {
     val circleSize = when (size) {
         is CategoryIconSize.Small -> {
