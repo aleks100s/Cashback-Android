@@ -10,6 +10,8 @@ import com.alextos.cashback.core.domain.repository.CategoryRepository
 import com.alextos.cashback.features.category.scenes.category_list.domain.FilterCategoryUseCase
 import com.alextos.cashback.features.category.scenes.category_list.domain.IncreaseCategoryPriorityUseCase
 import com.alextos.cashback.common.UiText
+import com.alextos.cashback.core.domain.services.AnalyticsEvent
+import com.alextos.cashback.core.domain.services.AnalyticsService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,7 +24,8 @@ class CategoryListViewModel(
     private val archiveCategoryUseCase: ArchiveCategoryUseCase,
     private val categoryRepository: CategoryRepository,
     private val categoryMediator: CategoryMediator,
-    private val toastService: ToastService
+    private val toastService: ToastService,
+    private val analyticsService: AnalyticsService
 ): ViewModel() {
     private val _state = MutableStateFlow(CategoryListState())
     val state = _state.asStateFlow()
@@ -53,19 +56,28 @@ class CategoryListViewModel(
                 }
             }
             is CategoryListAction.SelectCategory -> {
+                analyticsService.logEvent(AnalyticsEvent.SelectCategorySelect)
                 viewModelScope.launch(Dispatchers.IO) {
                     categoryMediator.setSelectedCategory(action.category)
                     increaseCategoryPriorityUseCase.execute(action.category)
                 }
             }
             is CategoryListAction.DeleteCategory -> {
+                analyticsService.logEvent(AnalyticsEvent.SelectCategoryDeleteButtonTapped)
                 viewModelScope.launch(Dispatchers.IO) {
                     archiveCategoryUseCase.execute(action.category)
                 }
                 toastService.showToast(UiText.StringResourceId(R.string.category_list_category_removed))
             }
-            is CategoryListAction.CreateCategory -> {}
-            is CategoryListAction.EditCategory -> {}
+            is CategoryListAction.CreateCategory -> {
+                analyticsService.logEvent(AnalyticsEvent.SelectCategoryCreateNewButtonTapped)
+            }
+            is CategoryListAction.EditCategory -> {
+                analyticsService.logEvent(AnalyticsEvent.SelectCategoryEditButtonTapped)
+            }
+            is CategoryListAction.InfoButtonTapped -> {
+                analyticsService.logEvent(AnalyticsEvent.SelectCategoryInfoButtonTapped)
+            }
         }
     }
 }

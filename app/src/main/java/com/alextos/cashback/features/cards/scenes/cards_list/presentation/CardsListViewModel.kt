@@ -11,6 +11,8 @@ import com.alextos.cashback.common.UiText
 import com.alextos.cashback.core.AppConstants
 import com.alextos.cashback.core.domain.models.currency.Currency
 import com.alextos.cashback.core.domain.repository.CategoryRepository
+import com.alextos.cashback.core.domain.services.AnalyticsEvent
+import com.alextos.cashback.core.domain.services.AnalyticsService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,7 +24,8 @@ class CardsListViewModel(
     private val cardRepository: CardRepository,
     private val categoryRepository: CategoryRepository,
     private val filterUseCase: FilterCardsUseCase,
-    private val toastService: ToastService
+    private val toastService: ToastService,
+    private val analyticsService: AnalyticsService
 ): ViewModel() {
     private val _state = MutableStateFlow(CardsListState())
     val state = _state.asStateFlow()
@@ -60,6 +63,7 @@ class CardsListViewModel(
                 }
             }
             is CardsListAction.ToggleFavourite -> {
+                analyticsService.logEvent(AnalyticsEvent.CardListFavouriteToggle)
                 viewModelScope.launch(Dispatchers.IO) {
                     val card = action.card
                     cardRepository.createOrUpdate(card.copy(isFavourite = !card.isFavourite))
@@ -75,6 +79,7 @@ class CardsListViewModel(
                 )
             }
             is CardsListAction.AddCard -> {
+                analyticsService.logEvent(AnalyticsEvent.CardListAddCardButtonTapped)
                 _state.update {
                     it.copy(isAddCardSheetShown = true)
                 }
@@ -90,16 +95,19 @@ class CardsListViewModel(
                 }
             }
             is CardsListAction.CardColorChange -> {
+                analyticsService.logEvent(AnalyticsEvent.AddCardColorChange)
                 _state.update {
                     it.copy(newCardColor = "#${action.color}")
                 }
             }
             is CardsListAction.CardCurrencyChange -> {
+                analyticsService.logEvent(AnalyticsEvent.AddCardCurrencyChange)
                 _state.update {
                     it.copy(newCardCurrency = action.currency)
                 }
             }
             is CardsListAction.SaveButtonTapped -> {
+                analyticsService.logEvent(AnalyticsEvent.AddCardSaveButtonTapped)
                 viewModelScope.launch(Dispatchers.IO) {
                     val card = Card(
                         name = state.value.newCardName,
@@ -121,6 +129,7 @@ class CardsListViewModel(
                 }
             }
             is CardsListAction.SelectCategory -> {
+                analyticsService.logEvent(AnalyticsEvent.CardListFilterTapped)
                 val category = action.category
                 if (category == state.value.selectedCategory) {
                     _state.update { it.copy(selectedCategory = null, filteredCards = it.allCards) }
@@ -133,7 +142,9 @@ class CardsListViewModel(
                     }
                 }
             }
-            is CardsListAction.CardSelect -> {}
+            is CardsListAction.CardSelect -> {
+                analyticsService.logEvent(AnalyticsEvent.CardListCardTapped)
+            }
         }
     }
 }

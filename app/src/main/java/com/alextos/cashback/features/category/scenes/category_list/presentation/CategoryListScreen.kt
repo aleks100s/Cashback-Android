@@ -95,7 +95,9 @@ private fun CategoryListView(
         modifier = modifier.padding(horizontal = 16.dp),
         list = state.filteredCategories,
         itemView = { itemModifier, category ->
-            CategoryItemView(modifier = itemModifier, category = category)
+            CategoryItemView(modifier = itemModifier, category = category) {
+                onAction(CategoryListAction.InfoButtonTapped)
+            }
         },
         stickyHeader = {
             SearchBar(

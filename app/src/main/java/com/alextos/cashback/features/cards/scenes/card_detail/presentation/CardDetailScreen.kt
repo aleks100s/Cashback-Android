@@ -38,7 +38,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.currency.Currency
-import com.alextos.cashback.core.domain.models.currency.localization
 import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.common.views.ContextMenuItem
 import com.alextos.cashback.features.cards.scenes.card_detail.presentation.components.CashbackView
@@ -74,6 +73,7 @@ fun CardDetailScreen(
         floatingActionButton = {
             if (!state.isEditMode) {
                 Button(onClick = {
+                    viewModel.onAction(CardDetailAction.AddCashback)
                     onAddCashback()
                 }) {
                     CustomLabel(

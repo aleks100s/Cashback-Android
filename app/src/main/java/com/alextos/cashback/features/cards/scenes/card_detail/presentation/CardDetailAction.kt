@@ -15,4 +15,5 @@ sealed interface CardDetailAction {
     data object ShowDeleteCardDialog: CardDetailAction
     data object DismissDeleteCardDialog: CardDetailAction
     data object DeleteCard: CardDetailAction
+    data object AddCashback: CardDetailAction
 }

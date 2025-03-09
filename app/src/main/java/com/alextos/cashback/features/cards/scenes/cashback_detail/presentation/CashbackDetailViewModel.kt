@@ -12,6 +12,8 @@ import com.alextos.cashback.core.domain.repository.CardRepository
 import com.alextos.cashback.features.cards.scenes.cashback_detail.domain.ValidateCashbackUseCase
 import com.alextos.cashback.features.category.CategoryMediator
 import com.alextos.cashback.common.UiText
+import com.alextos.cashback.core.domain.services.AnalyticsEvent
+import com.alextos.cashback.core.domain.services.AnalyticsService
 import com.alextos.cashback.features.cards.scenes.cashback_detail.domain.CreateCashbackUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,7 +29,8 @@ class CashbackDetailViewModel(
     private val createCashbackUseCase: CreateCashbackUseCase,
     private val cardRepository: CardRepository,
     private val categoryMediator: CategoryMediator,
-    private val toastService: ToastService
+    private val toastService: ToastService,
+    private var analyticsService: AnalyticsService
 ): ViewModel() {
     private val cardId = savedStateHandle.toRoute<CardsRoute.CashbackDetail>().cardId
     private val cashbackId = savedStateHandle.toRoute<CardsRoute.CashbackDetail>().cashbackId
@@ -89,6 +92,11 @@ class CashbackDetailViewModel(
     fun onAction(action: CashbackDetailAction) {
         when(action) {
             is CashbackDetailAction.ChangePercent -> {
+                if (cashbackId == null) {
+                    analyticsService.logEvent(AnalyticsEvent.AddCashbackSelectPercentButtonTapped)
+                } else {
+                    analyticsService.logEvent(AnalyticsEvent.EditCashbackSelectPercentButtonTapped)
+                }
                 _state.update { state ->
                     state.copy(percent = action.value)
                 }
@@ -111,8 +119,10 @@ class CashbackDetailViewModel(
 
                 if (cashbackId != null) {
                     toastService.showToast(UiText.StringResourceId(R.string.add_cashback_changed))
+                    analyticsService.logEvent(AnalyticsEvent.EditCashbackSaveButtonTapped)
                 } else {
                     toastService.showToast(UiText.StringResourceId(R.string.add_cashback_added))
+                    analyticsService.logEvent(AnalyticsEvent.AddCashbackSaveButtonTapped)
                 }
             }
             is CashbackDetailAction.CategorySelected -> {
@@ -120,7 +130,13 @@ class CashbackDetailViewModel(
                     state.copy(selectedCategory = action.category)
                 }
             }
-            is CashbackDetailAction.SelectCategory -> {}
+            is CashbackDetailAction.SelectCategory -> {
+                if (cashbackId == null) {
+                    analyticsService.logEvent(AnalyticsEvent.AddCashbackSelectCategoryButtonTapped)
+                } else {
+                    analyticsService.logEvent(AnalyticsEvent.EditCashbackSelectCategoryButtonTapped)
+                }
+            }
         }
     }
 }

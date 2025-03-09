@@ -8,7 +8,6 @@ enum class AnalyticsEvent(val rawValue: String) {
 
     AddCardColorChange("Add Card Color Change"),
     AddCardCurrencyChange("Add Card Currency Change"),
-    AddCardCancelButtonTapped("Add Card Cancel Button Tapped"),
     AddCardSaveButtonTapped("Add Card Save Button Tapped"),
 
     CardDetailEditButtonTapped("Card Detail Edit Button Tapped"),
@@ -25,24 +24,20 @@ enum class AnalyticsEvent(val rawValue: String) {
     CardDetailDeleteTransactionsButtonTapped("Card Detail Delete Transactions Button Tapped"),
     CardDetailDoneButtonTapped("Card Detail Done Button Tapped"),
 
-    AddCashbackCancelButtonTapped("Add Cashback Cancel Button Tapped"),
     AddCashbackSaveButtonTapped("Add Cashback Save Button Tapped"),
     AddCashbackSelectCategoryButtonTapped("Add Cashback Select Category Button Tapped"),
     AddCashbackSelectPercentButtonTapped("Add Cashback Select Percent Button Tapped"),
 
-    EditCashbackCancelButtonTapped("Edit Cashback Cancel Button Tapped"),
     EditCashbackSaveButtonTapped("Edit Cashback Save Button Tapped"),
     EditCashbackSelectCategoryButtonTapped("Edit Cashback Select Category Button Tapped"),
     EditCashbackSelectPercentButtonTapped("Edit Cashback Select Percent Button Tapped"),
 
-    SelectCategoryCancelButtonTapped("Select Category Cancel Button Tapped"),
     SelectCategoryCreateNewButtonTapped("Select Category Create New Button Tapped"),
     SelectCategorySelect("Select Category Select"),
     SelectCategoryInfoButtonTapped("Select Category Info Button Tapped"),
     SelectCategoryDeleteButtonTapped("Select Category Delete Button Tapped"),
     SelectCategoryEditButtonTapped("Select Category Edit Button Tapped"),
 
-    CreateCategoryCancelButtonTapped("Create Category Cancel Button Tapped"),
     CreateCategorySaveButtonTapped("Create Category Save Button Tapped"),
 
     PaymentsTogglePeriodButtonTapped("Payments Toggle Period Button Tapped"),
@@ -52,7 +47,6 @@ enum class AnalyticsEvent(val rawValue: String) {
     PaymentsSelect("Payments Select"),
     PaymentsDelete("Payments Delete"),
 
-    AddPaymentCancelButtonTapped("Add Payment Cancel Button Tapped"),
     AddPaymentSaveButtonTapped("Add Payment Save Button Tapped"),
     AddPaymentSelectDateButtonTapped("Add Payment Select Date Button Tapped"),
     AddPaymentSelectCardButtonTapped("Add Payment Select Card Button Tapped"),
@@ -67,7 +61,6 @@ enum class AnalyticsEvent(val rawValue: String) {
     PlacesSelect("Places Select"),
     PlacesDelete("Places Delete"),
 
-    AddPlaceCancelButtonTapped("Add Place Cancel Button Tapped"),
     AddPlaceSaveButtonTapped("Add Place Save Button Tapped"),
     AddPlaceSelectCategoryButtonTapped("Add Place Select Category Button Tapped"),
 
@@ -79,7 +72,6 @@ enum class AnalyticsEvent(val rawValue: String) {
     PlaceDetailEditButtonTapped("Place Detail Edit Button Tapped"),
 
     SettingsToggleNotifications("Settings Toggle Notifications"),
-    SettingsToggleSiriTips("Settings Toggle Siri Tips"),
     SettingsExportButtonTapped("Settings Export Button Tapped"),
     SettingsExportFinished("Settings Export Finished"),
     SettingsImportButtonTapped("Settings Import Button Tapped"),

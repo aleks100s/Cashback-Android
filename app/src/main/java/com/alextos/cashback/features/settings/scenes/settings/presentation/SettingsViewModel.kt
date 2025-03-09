@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.alextos.cashback.R
 import com.alextos.cashback.common.UiText
 import com.alextos.cashback.core.AppConstants
+import com.alextos.cashback.core.domain.services.AnalyticsEvent
+import com.alextos.cashback.core.domain.services.AnalyticsService
 import com.alextos.cashback.core.domain.services.AppInfoService
 import com.alextos.cashback.core.domain.settings.SettingsManager
 import com.alextos.cashback.core.domain.services.PasteboardService
@@ -24,7 +26,8 @@ class SettingsViewModel(
     private val shareService: ShareService,
     private val appInfoService: AppInfoService,
     private val toastService: ToastService,
-    private val userDataService: UserDataService
+    private val userDataService: UserDataService,
+    private val analyticsService: AnalyticsService
 ): ViewModel(), UserDataDelegate {
     private val _state = MutableStateFlow(SettingsState())
     val state = _state.asStateFlow()
@@ -67,12 +70,14 @@ class SettingsViewModel(
                 }
             }
             is SettingsAction.SetNotifications -> {
+                analyticsService.logEvent(AnalyticsEvent.SettingsToggleNotifications)
                 _state.update { it.copy(isNotificationsEnabled = action.enabled) }
                 viewModelScope.launch(Dispatchers.IO) {
                     settingsManager.setNotifications(action.enabled)
                 }
             }
             is SettingsAction.ShowOnboarding -> {
+                analyticsService.logEvent(AnalyticsEvent.SettingsShowOnboardingButtonTapped)
                 viewModelScope.launch(Dispatchers.IO) {
                     settingsManager.setOnboarding(shown = false)
                 }
@@ -96,8 +101,10 @@ class SettingsViewModel(
                 }
             }
             is SettingsAction.ExportData -> {
+                analyticsService.logEvent(AnalyticsEvent.SettingsExportButtonTapped)
                 viewModelScope.launch(Dispatchers.IO) {
                     userDataService.exportData()
+                    analyticsService.logEvent(AnalyticsEvent.SettingsExportFinished)
                 }
             }
             is SettingsAction.ImportData -> {
@@ -105,19 +112,25 @@ class SettingsViewModel(
                 userDataService.initiateImport()
             }
             is SettingsAction.ShowImportAlert -> {
+                analyticsService.logEvent(AnalyticsEvent.SettingsImportButtonTapped)
                 _state.update { it.copy(isImportAlertShown = true) }
             }
             is SettingsAction.HideImportAlert -> {
                 _state.update { it.copy(isImportAlertShown = false) }
             }
             is SettingsAction.ShowCatalog -> {}
-            is SettingsAction.ShowCardTrashbin -> {}
-            is SettingsAction.ShowCategoryTrashbin -> {}
+            is SettingsAction.ShowCardTrashbin -> {
+                analyticsService.logEvent(AnalyticsEvent.SettingsOpenCardsTrashbin)
+            }
+            is SettingsAction.ShowCategoryTrashbin -> {
+                analyticsService.logEvent(AnalyticsEvent.SettingsOpenCategoriesTrashbin)
+            }
         }
     }
 
     override fun userDataServiceDidFinishImport() {
         viewModelScope.launch(Dispatchers.Main) {
+            analyticsService.logEvent(AnalyticsEvent.SettingsImportFinished)
             toastService.showToast(UiText.StringResourceId(R.string.settings_import_success))
         }
     }

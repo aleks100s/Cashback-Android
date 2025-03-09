@@ -10,11 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.Button
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -38,7 +35,6 @@ import com.alextos.cashback.common.views.CustomLabel
 import com.alextos.cashback.common.views.CustomWideButton
 import com.alextos.cashback.common.views.SectionView
 import com.alextos.cashback.core.presentation.views.CategoryItemView
-import com.alextos.cashback.features.cards.scenes.cards_list.presentation.CardsListAction
 
 @Composable
 fun CashbackDetailScreen(

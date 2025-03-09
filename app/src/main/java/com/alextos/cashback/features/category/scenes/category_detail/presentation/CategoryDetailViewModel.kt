@@ -11,6 +11,8 @@ import com.alextos.cashback.features.category.CategoryRoute
 import com.alextos.cashback.core.domain.repository.CategoryRepository
 import com.alextos.cashback.features.category.scenes.category_detail.domain.ValidateCategoryUseCase
 import com.alextos.cashback.common.UiText
+import com.alextos.cashback.core.domain.services.AnalyticsEvent
+import com.alextos.cashback.core.domain.services.AnalyticsService
 import com.alextos.cashback.features.category.scenes.category_detail.domain.CreateOrUpdateCategoryUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,7 +28,8 @@ class CategoryDetailViewModel(
     private val repository: CategoryRepository,
     private val validateCategoryUseCase: ValidateCategoryUseCase,
     private val createOrUpdateCategoryUseCase: CreateOrUpdateCategoryUseCase,
-    private val toastService: ToastService
+    private val toastService: ToastService,
+    private var analyticsService: AnalyticsService
 ): ViewModel() {
     private val categoryId = savedStateHandle.toRoute<CategoryRoute.CategoryDetail>().categoryId
     private val name = savedStateHandle.toRoute<CategoryRoute.CategoryDetail>().name
@@ -86,6 +89,7 @@ class CategoryDetailViewModel(
                 }
             }
             is CategoryDetailAction.SaveButtonTapped -> {
+                analyticsService.logEvent(AnalyticsEvent.CreateCategorySaveButtonTapped)
                 val state = state.value
                 viewModelScope.launch(Dispatchers.IO) {
                     createOrUpdateCategoryUseCase.execute(

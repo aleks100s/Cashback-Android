@@ -12,6 +12,8 @@ import com.alextos.cashback.features.cards.scenes.card_detail.domain.DeleteAllCa
 import com.alextos.cashback.features.cards.scenes.card_detail.domain.DeleteCardUseCase
 import com.alextos.cashback.common.UiText
 import com.alextos.cashback.core.domain.models.currency.Currency
+import com.alextos.cashback.core.domain.services.AnalyticsEvent
+import com.alextos.cashback.core.domain.services.AnalyticsService
 import com.alextos.cashback.core.domain.settings.SettingsManager
 import com.alextos.cashback.features.cards.scenes.card_detail.domain.DeleteCashbackUseCase
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +30,8 @@ class CardDetailViewModel(
     private val deleteCashbackUseCase: DeleteCashbackUseCase,
     private val repository: CardRepository,
     private val toastService: ToastService,
-    private val settingsManager: SettingsManager
+    private val settingsManager: SettingsManager,
+    private val analyticsService: AnalyticsService
 ): ViewModel() {
     private val cardId = savedStateHandle.toRoute<CardsRoute.CardDetail>().cardId
 
@@ -62,6 +65,7 @@ class CardDetailViewModel(
     fun onAction(action: CardDetailAction) {
         when (action) {
             is CardDetailAction.ToggleEditMode -> {
+                analyticsService.logEvent(if (state.value.isEditMode) AnalyticsEvent.CardDetailEditButtonTapped else AnalyticsEvent.CardDetailDoneButtonTapped)
                 _state.update { it.copy(isEditMode = !it.isEditMode) }
                 val state = state.value
                 val card = state.card?.copy(
@@ -78,6 +82,7 @@ class CardDetailViewModel(
                 }
             }
             is CardDetailAction.DeleteCashback -> {
+                analyticsService.logEvent(AnalyticsEvent.CardDetailDeleteCashback)
                 viewModelScope.launch(Dispatchers.IO) {
                     val card = state.value.card
                     if (card != null) {
@@ -92,15 +97,19 @@ class CardDetailViewModel(
                 _state.update { it.copy(cardName = action.name) }
             }
             is CardDetailAction.ToggleFavourite -> {
+                analyticsService.logEvent(AnalyticsEvent.CardDetailFavouriteToggle)
                 _state.update { it.copy(isFavourite = !it.isFavourite) }
             }
             is CardDetailAction.ChangeCurrency -> {
+                analyticsService.logEvent(AnalyticsEvent.CardDetailCurrencyChange)
                 _state.update { it.copy(currency = action.currency) }
             }
             is CardDetailAction.ChangeColor -> {
+                analyticsService.logEvent(AnalyticsEvent.CardDetailColorChange)
                 _state.update { it.copy(color = "#${action.color}") }
             }
             is CardDetailAction.DeleteAllCashback -> {
+                analyticsService.logEvent(AnalyticsEvent.CardDetailDeleteAllCashbackButtonTapped)
                 viewModelScope.launch(Dispatchers.IO) {
                     val card = state.value.card
                     if (card != null) {
@@ -113,6 +122,7 @@ class CardDetailViewModel(
                 }
             }
             is CardDetailAction.ShowDeleteCardDialog -> {
+                analyticsService.logEvent(AnalyticsEvent.CardDetailDeleteCardButtonTapped)
                 _state.update { it.copy(isDeleteCardDialogShown = true) }
             }
             is CardDetailAction.DismissDeleteCardDialog -> {
@@ -127,7 +137,12 @@ class CardDetailViewModel(
                 }
                 toastService.showToast(UiText.StringResourceId(R.string.card_detail_card_deleted))
             }
-            is CardDetailAction.EditCashback -> {}
+            is CardDetailAction.EditCashback -> {
+                analyticsService.logEvent(AnalyticsEvent.CardDetailCashbackTapped)
+            }
+            is CardDetailAction.AddCashback -> {
+                analyticsService.logEvent(AnalyticsEvent.CardDetailAddCashbackButtonTapped)
+            }
         }
     }
 }

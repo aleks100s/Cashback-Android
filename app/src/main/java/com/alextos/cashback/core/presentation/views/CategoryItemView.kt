@@ -25,7 +25,8 @@ import com.alextos.cashback.common.views.Dialog
 @Composable
 fun CategoryItemView(
     modifier: Modifier = Modifier,
-    category: Category
+    category: Category,
+    onClick: () -> Unit = {}
 ) {
     var isDialogShown by remember { mutableStateOf(false) }
 
@@ -43,6 +44,7 @@ fun CategoryItemView(
                 modifier = Modifier
                     .minimumInteractiveComponentSize()
                     .clickable {
+                        onClick()
                         isDialogShown = true
                     },
                 imageVector = Icons.Filled.Info,
