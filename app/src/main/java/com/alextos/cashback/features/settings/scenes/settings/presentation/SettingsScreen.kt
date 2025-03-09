@@ -55,7 +55,7 @@ fun SettingsScreen(
         modifier = modifier,
         title = stringResource(R.string.settings_title),
         bannerView = if (state.isAdVisible) {
-            { AdBannerView("R-M-14164420-2") }
+            { AdBannerView(viewModel.bannerId) }
         } else null
     ) {
         SettingsView(
@@ -264,8 +264,8 @@ private fun SettingsView(
                 title = stringResource(R.string.settings_share_app_title),
                 footer = stringResource(R.string.settings_share_app_footer)
             ) {
-                CustomWideButton(title = stringResource(R.string.settings_share_app)) {
-                    onAction(SettingsAction.ShareApp(AppType.Android))
+                CustomWideButton(title = stringResource(R.string.settings_share_app_rustore)) {
+                    onAction(SettingsAction.ShareApp(AppType.RuStore))
                 }
 
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))

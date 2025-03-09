@@ -14,6 +14,8 @@ import com.alextos.cashback.common.UiText
 import com.alextos.cashback.core.domain.models.currency.Currency
 import com.alextos.cashback.core.domain.services.AnalyticsEvent
 import com.alextos.cashback.core.domain.services.AnalyticsService
+import com.alextos.cashback.core.domain.services.AppInfoService
+import com.alextos.cashback.core.domain.services.AppInstallationSource
 import com.alextos.cashback.core.domain.settings.SettingsManager
 import com.alextos.cashback.features.cards.scenes.card_detail.domain.DeleteCashbackUseCase
 import kotlinx.coroutines.Dispatchers
@@ -31,14 +33,22 @@ class CardDetailViewModel(
     private val repository: CardRepository,
     private val toastService: ToastService,
     private val settingsManager: SettingsManager,
-    private val analyticsService: AnalyticsService
+    private val analyticsService: AnalyticsService,
+    private val appInfoService: AppInfoService
 ): ViewModel() {
     private val cardId = savedStateHandle.toRoute<CardsRoute.CardDetail>().cardId
 
     private val _state = MutableStateFlow(CardDetailState())
     val state = _state.asStateFlow()
 
+    val bannerId: String = when (appInfoService.installationSource) {
+        AppInstallationSource.GOOGLE_PLAY -> "demo-banner-yandex"
+        AppInstallationSource.HUAWEI -> "demo-banner-yandex"
+        AppInstallationSource.RU_STORE -> "R-M-14164420-1"
+    }
+
     init {
+
         viewModelScope.launch(Dispatchers.IO) {
             repository.getCardFlow(cardId)
                 .collect { card ->

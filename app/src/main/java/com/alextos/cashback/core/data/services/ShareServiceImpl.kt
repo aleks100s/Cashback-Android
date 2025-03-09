@@ -22,7 +22,9 @@ class ShareServiceImpl(
 
     override fun shareApp(appType: AppType) {
         val link = when(appType) {
-            is AppType.Android -> AppConstants.RU_STORE_LINK
+            is AppType.RuStore -> AppConstants.RU_STORE_LINK
+            is AppType.GooglePlay -> AppConstants.GOOGLE_PLAY_LINK
+            is AppType.HuaweiAppGallery -> AppConstants.HUAWEI_APP_GALLERY_LINK
             is AppType.iOS -> AppConstants.APP_STORE_LINK
         }
         share(link = link)

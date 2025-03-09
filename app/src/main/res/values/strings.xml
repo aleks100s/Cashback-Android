@@ -109,7 +109,7 @@
     <string name="add_card_sheet_name_hint">Это может быть название банка или что угодно другое</string>
     <string name="add_card_sheet_color_hint">Цвет карты позволит проще отличать её</string>
     <string name="share_app_link">Поделиться ссылкой через</string>
-    <string name="settings_share_app">Поделиться приложением</string>
+    <string name="settings_share_app_rustore">Поделиться ссылкой в RuStore</string>
     <string name="settings_share_app_ios">Версия для iPhone</string>
     <string name="settings_share_app_footer">Если вам понравилось приложение, то вы можете поделиться им с другом</string>
     <string name="settings_share_app_title">Поделиться</string>

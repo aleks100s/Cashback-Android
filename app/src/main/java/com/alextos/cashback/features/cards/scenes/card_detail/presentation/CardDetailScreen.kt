@@ -98,7 +98,7 @@ fun CardDetailScreen(
             }
         },
         bannerView = if (state.isAdVisible) {
-            { AdBannerView("R-M-14164420-1") }
+            { AdBannerView(viewModel.bannerId) }
         } else null
     ) {
         if (state.isEditMode) {
