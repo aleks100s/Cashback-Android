@@ -34,6 +34,7 @@ fun CategoryListScreen(
     modifier: Modifier = Modifier,
     viewModel: CategoryListViewModel,
     disableSelection: Boolean = false,
+    disableBackButton: Boolean = false,
     goBack: () -> Unit,
     onSelectCategory: () -> Unit,
     onCreateCategory: (String) -> Unit,
@@ -45,7 +46,7 @@ fun CategoryListScreen(
     Screen(
         modifier = modifier,
         title = stringResource(R.string.category_list_title),
-        goBack = goBack,
+        goBack = if (disableBackButton) null else goBack,
         floatingActionButton = {
             Button(onClick = {
                 onCreateCategory(state.searchQuery)

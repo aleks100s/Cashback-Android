@@ -2,7 +2,8 @@ package com.alextos.cashback.app.navigation.tabbar
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -25,8 +26,9 @@ fun RowScope.TabBarItemView(
         icon = {
             Icon(
                 imageVector = when(tab) {
-                    is TabBarItem.Cards -> Icons.Default.Email
+                    is TabBarItem.Cards -> Icons.Default.Home
                     is TabBarItem.Settings -> Icons.Default.Settings
+                    is TabBarItem.Categories -> Icons.Default.List
                 },
                 contentDescription = tab.title.asString()
             )

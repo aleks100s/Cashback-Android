@@ -10,9 +10,6 @@ sealed interface SettingsRoute {
     data object Settings: SettingsRoute
 
     @Serializable
-    data object CategoryCatalog: SettingsRoute
-
-    @Serializable
     data object CardTrashbin: SettingsRoute
 
     @Serializable

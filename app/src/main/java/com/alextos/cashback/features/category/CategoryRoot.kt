@@ -16,6 +16,7 @@ fun CategoryRoot(
     modifier: Modifier = Modifier,
     disableSelection: Boolean = false,
     onSelectCategory: () -> Unit,
+    disableBackButton: Boolean = false,
     goBack: () -> Unit
 ) {
     val navController = rememberNavController()
@@ -34,6 +35,7 @@ fun CategoryRoot(
                     onSelectCategory = onSelectCategory,
                     goBack = goBack,
                     disableSelection = disableSelection,
+                    disableBackButton = disableBackButton,
                     onCreateCategory = {
                         navController.navigate(CategoryRoute.CategoryDetail(it, null))
                     },

@@ -8,7 +8,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
 fun TabBarView(navController: NavHostController) {
-    val tabs = listOf(TabBarItem.Cards, TabBarItem.Settings)
+    val tabs = listOf(TabBarItem.Cards, TabBarItem.Categories, TabBarItem.Settings)
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
@@ -17,6 +17,7 @@ fun TabBarView(navController: NavHostController) {
             val isActive = when(tab) {
                 is TabBarItem.Cards -> currentRoute == TabBarItem.Cards.javaClass.canonicalName
                 is TabBarItem.Settings -> currentRoute == TabBarItem.Settings.javaClass.canonicalName
+                is TabBarItem.Categories -> currentRoute == TabBarItem.Categories.javaClass.canonicalName
             }
 
             TabBarItemView(tab, isActive) {

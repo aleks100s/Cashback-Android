@@ -118,7 +118,6 @@ class SettingsViewModel(
             is SettingsAction.HideImportAlert -> {
                 _state.update { it.copy(isImportAlertShown = false) }
             }
-            is SettingsAction.ShowCatalog -> {}
             is SettingsAction.ShowCardTrashbin -> {
                 analyticsService.logEvent(AnalyticsEvent.SettingsOpenCardsTrashbin)
             }

@@ -13,4 +13,7 @@ sealed class TabBarItem(
 
     @Serializable
     data object Settings: TabBarItem(title = UiText.StringResourceId(R.string.tab_bar_settings))
+
+    @Serializable
+    data object Categories: TabBarItem(title = UiText.StringResourceId(R.string.tab_bar_categories))
 }

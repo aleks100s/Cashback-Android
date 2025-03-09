@@ -46,7 +46,6 @@ import com.alextos.cashback.core.domain.services.AppType
 fun SettingsScreen(
     modifier: Modifier = Modifier,
     viewModel: SettingsViewModel,
-    openCatalog: () -> Unit,
     openCardTrashbin: () -> Unit,
     openCategoryTrashbin: () -> Unit
 ) {
@@ -65,9 +64,6 @@ fun SettingsScreen(
             onAction = { action ->
                 viewModel.onAction(action)
                 when (action) {
-                    SettingsAction.ShowCatalog -> {
-                        openCatalog()
-                    }
                     SettingsAction.ShowCardTrashbin -> {
                         openCardTrashbin()
                     }
@@ -205,18 +201,6 @@ private fun SettingsView(
 
         item {
             SectionView(
-                title = stringResource(R.string.settings_category_catalog_header),
-                footer = stringResource(R.string.settings_category_catalog_footer)
-            ) {
-                SectionItem(
-                    title = stringResource(R.string.settings_categories),
-                    onAction = onAction
-                )
-            }
-        }
-
-        item {
-            SectionView(
                 title = stringResource(R.string.settings_trashbin_title),
                 footer = stringResource(R.string.settings_trashbin_footer)
             ) {
@@ -276,13 +260,13 @@ private fun SettingsView(
 @Composable
 private fun SectionItem(
     title: String,
-    onAction: (SettingsAction) -> Unit
+    onAction: () -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                onAction(SettingsAction.ShowCatalog)
+                onAction()
             }
             .padding(vertical = 12.dp, horizontal = 16.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
