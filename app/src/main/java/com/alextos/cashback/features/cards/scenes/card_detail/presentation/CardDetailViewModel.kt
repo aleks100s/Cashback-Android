@@ -42,7 +42,7 @@ class CardDetailViewModel(
     val state = _state.asStateFlow()
 
     val bannerId: String = when (appInfoService.installationSource) {
-        AppInstallationSource.GOOGLE_PLAY -> "demo-banner-yandex"
+        AppInstallationSource.GOOGLE_PLAY -> "R-M-14460024-1"
         AppInstallationSource.HUAWEI -> "demo-banner-yandex"
         AppInstallationSource.RU_STORE -> "R-M-14164420-1"
     }

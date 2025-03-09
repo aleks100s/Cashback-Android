@@ -34,7 +34,7 @@ class SettingsViewModel(
     val state = _state.asStateFlow()
 
     val bannerId = when (appInfoService.installationSource) {
-        AppInstallationSource.GOOGLE_PLAY -> "demo-banner-yandex"
+        AppInstallationSource.GOOGLE_PLAY -> "R-M-14460024-2"
         AppInstallationSource.HUAWEI -> "demo-banner-yandex"
         AppInstallationSource.RU_STORE -> "R-M-14164420-2"
     }
