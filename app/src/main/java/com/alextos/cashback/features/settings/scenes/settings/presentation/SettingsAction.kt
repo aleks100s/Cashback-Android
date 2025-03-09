@@ -16,4 +16,6 @@ sealed interface SettingsAction {
     data object ShowImportAlert: SettingsAction
     data object HideImportAlert: SettingsAction
     data object ImportData: SettingsAction
+    data object ToggleCardsTab: SettingsAction
+    data object ToggleCategoriesTab: SettingsAction
 }

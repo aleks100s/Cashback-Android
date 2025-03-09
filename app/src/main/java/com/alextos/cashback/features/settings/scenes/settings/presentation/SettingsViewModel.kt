@@ -57,6 +57,20 @@ class SettingsViewModel(
                     _state.update { it.copy(isAdVisible = isEnabled) }
                 }
         }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            settingsManager.isCardsTabEnabled
+                .collect { isEnabled ->
+                    _state.update { it.copy(isCardsTabEnabled = isEnabled) }
+                }
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            settingsManager.isCategoriesTabEnabled
+                .collect { isEnabled ->
+                    _state.update { it.copy(isCategoriesTabEnabled = isEnabled) }
+                }
+        }
     }
 
     fun onAction(action: SettingsAction) {
@@ -123,6 +137,20 @@ class SettingsViewModel(
             }
             is SettingsAction.ShowCategoryTrashbin -> {
                 analyticsService.logEvent(AnalyticsEvent.SettingsOpenCategoriesTrashbin)
+            }
+            is SettingsAction.ToggleCardsTab -> {
+                analyticsService.logEvent(AnalyticsEvent.SettingsToggleCardsFeature)
+                viewModelScope.launch(Dispatchers.IO) {
+                    settingsManager.setCardsTab(!state.value.isCardsTabEnabled)
+                }
+                toastService.showToast(if (!state.value.isCardsTabEnabled) UiText.StringResourceId(R.string.settings_tab_enabled) else UiText.StringResourceId(R.string.settings_tab_disabled))
+            }
+            is SettingsAction.ToggleCategoriesTab -> {
+                analyticsService.logEvent(AnalyticsEvent.SettingsToggleCategoriesFeature)
+                viewModelScope.launch(Dispatchers.IO) {
+                    settingsManager.setCategoriesTab(!state.value.isCategoriesTabEnabled)
+                }
+                toastService.showToast(if (!state.value.isCategoriesTabEnabled) UiText.StringResourceId(R.string.settings_tab_enabled) else UiText.StringResourceId(R.string.settings_tab_disabled))
             }
         }
     }

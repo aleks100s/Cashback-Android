@@ -93,6 +93,10 @@
     <string name="settings_notifications_title">Настройка уведомлений</string>
     <string name="settings_notifications_footer">Приложение напомнит вам выбрать и сохранить кэшбэк каждый месяц 1 числа.\nПроверьте, что вы разрешили уведомления в настройках системы.</string>
     <string name="settings_notifications">Уведомления</string>
+    <string name="settings_tabs_title">Настройка разделов приложения</string>
+    <string name="settings_tabs_footer">Отключение разделов позволит сфокусироваться только на необходимом Вам функционале. Разделы можно включить или отключить в любое время без потери данных.</string>
+    <string name="settings_tabs_cards">Мои карты</string>
+    <string name="settings_tabs_categories">Категории</string>
     <string name="monthly_notification_title">Пора добавить кэшбэк</string>
     <string name="monthly_notification_subtitle">Не забудьте выбрать и сохранить кэшбэк в этом месяце</string>
     <string name="monthly_notification_channel_title">Ежемесячные напоминания</string>
@@ -123,4 +127,6 @@
     <string name="settings_import_alert_confirm">Перезаписать данные</string>
     <string name="settings_import_alert_text">При импорте все старые данные будут удалены</string>
     <string name="settings_import_alert_title">Вы уверены?</string>
+    <string name="settings_tab_enabled">Раздел активен</string>
+    <string name="settings_tab_disabled">Раздел отключен</string>
 </resources>

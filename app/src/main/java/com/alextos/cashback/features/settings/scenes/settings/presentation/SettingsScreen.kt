@@ -201,6 +201,49 @@ private fun SettingsView(
 
         item {
             SectionView(
+                title = stringResource(R.string.settings_tabs_title),
+                footer = stringResource(R.string.settings_tabs_footer)
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(stringResource(R.string.settings_tabs_cards))
+
+                    Switch(
+                        checked = state.isCardsTabEnabled,
+                        onCheckedChange = {
+                            onAction(SettingsAction.ToggleCardsTab)
+                        }
+                    )
+                }
+
+                HorizontalDivider()
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(stringResource(R.string.settings_tabs_categories))
+
+                    Switch(
+                        checked = state.isCategoriesTabEnabled,
+                        onCheckedChange = {
+                            onAction(SettingsAction.ToggleCategoriesTab)
+                        }
+                    )
+                }
+            }
+        }
+
+        item {
+            SectionView(
                 title = stringResource(R.string.settings_trashbin_title),
                 footer = stringResource(R.string.settings_trashbin_footer)
             ) {

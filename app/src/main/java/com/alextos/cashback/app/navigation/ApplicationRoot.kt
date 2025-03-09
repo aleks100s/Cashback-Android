@@ -32,23 +32,24 @@ fun ApplicationRoot(viewModel: ApplicationViewModel = koinViewModel()) {
     val focusManager = LocalFocusManager.current
     val isOnboardingShown by viewModel.isOnboardingShown.collectAsStateWithLifecycle()
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val tabs by viewModel.tabs.collectAsStateWithLifecycle()
 
     Scaffold(
         modifier = Modifier.fillMaxSize()
             .clickable(
-                indication = null, // Убираем ripple-эффект
+                indication = null,
                 interactionSource = remember { MutableInteractionSource() }
             ) {
                 focusManager.clearFocus()
             },
         bottomBar = {
-            TabBarView(navController)
+            TabBarView(navController, tabs = tabs)
         }
     ) { innerPadding ->
         NavHost(
             modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding()),
             navController = navController,
-            startDestination = TabBarItem.Cards
+            startDestination = tabs.last()
         ) {
             composable<TabBarItem.Cards> {
                 CardsRoot()

@@ -7,8 +7,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
-fun TabBarView(navController: NavHostController) {
-    val tabs = listOf(TabBarItem.Cards, TabBarItem.Categories, TabBarItem.Settings)
+fun TabBarView(
+    navController: NavHostController,
+    tabs: List<TabBarItem>
+) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 

@@ -6,8 +6,12 @@ interface SettingsManager {
     val isNotificationEnabled: Flow<Boolean>
     val wasOnboardingShown: Flow<Boolean>
     val isAdEnabled: Flow<Boolean>
+    val isCardsTabEnabled: Flow<Boolean>
+    val isCategoriesTabEnabled: Flow<Boolean>
 
     suspend fun setNotifications(enabled: Boolean)
     suspend fun setOnboarding(shown: Boolean)
     suspend fun disableAds()
+    suspend fun setCardsTab(enabled: Boolean)
+    suspend fun setCategoriesTab(enabled: Boolean)
 }

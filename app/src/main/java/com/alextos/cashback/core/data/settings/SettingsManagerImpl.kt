@@ -17,6 +17,8 @@ class SettingsManagerImpl(
         private val NOTIFICATIONS_KEY = booleanPreferencesKey("notifications_enabled")
         private val ONBOARDING_KEY = booleanPreferencesKey("was_onboarding_shown")
         private val ADS_KEY = booleanPreferencesKey("is_ad_enabled")
+        private val CARDS_TAB_ENABLED = booleanPreferencesKey("is_cards_tab_enabled")
+        private val CATEGORIES_TAB_ENABLED = booleanPreferencesKey("is_categories_tab_enabled")
     }
 
     private val dataStore = context.dataStore
@@ -51,6 +53,28 @@ class SettingsManagerImpl(
     override suspend fun disableAds() {
         dataStore.edit { preferences ->
             preferences[ADS_KEY] = false
+        }
+    }
+
+    override val isCardsTabEnabled: Flow<Boolean>
+        get() = dataStore.data.map { preferences ->
+            preferences[CARDS_TAB_ENABLED] ?: true
+        }
+
+    override suspend fun setCardsTab(enabled: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[CARDS_TAB_ENABLED] = enabled
+        }
+    }
+
+    override val isCategoriesTabEnabled: Flow<Boolean>
+        get() = dataStore.data.map { preferences ->
+            preferences[CATEGORIES_TAB_ENABLED] ?: true
+        }
+
+    override suspend fun setCategoriesTab(enabled: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[CATEGORIES_TAB_ENABLED] = enabled
         }
     }
 }
