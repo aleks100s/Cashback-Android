@@ -27,6 +27,9 @@ class ApplicationViewModel(
     private val _tabs = MutableStateFlow(listOf(TabBarItem.Cards, TabBarItem.Categories, TabBarItem.Settings))
     val tabs = _tabs.asStateFlow()
 
+    private val _currentTab = MutableStateFlow<TabBarItem>(TabBarItem.Cards)
+    val currentTab = _currentTab.asStateFlow()
+
     init {
         viewModelScope.launch(Dispatchers.IO) {
             settingsManager.isNotificationEnabled
@@ -69,6 +72,7 @@ class ApplicationViewModel(
     }
 
     fun onTabChange(tab: TabBarItem) {
+        _currentTab.update { tab }
         when (tab) {
             TabBarItem.Cards -> {
                 analyticsService.logEvent(AnalyticsEvent.CardListAppear)

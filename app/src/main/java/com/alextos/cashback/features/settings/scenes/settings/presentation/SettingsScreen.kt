@@ -264,6 +264,12 @@ private fun SettingsView(
                 title = stringResource(R.string.settings_share_app_title),
                 footer = stringResource(R.string.settings_share_app_footer)
             ) {
+                CustomWideButton(title = stringResource(R.string.settings_share_app_google_play)) {
+                    onAction(SettingsAction.ShareApp(AppType.GooglePlay))
+                }
+
+                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+
                 CustomWideButton(title = stringResource(R.string.settings_share_app_rustore)) {
                     onAction(SettingsAction.ShareApp(AppType.RuStore))
                 }

@@ -10,7 +10,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -33,6 +35,7 @@ fun ApplicationRoot(viewModel: ApplicationViewModel = koinViewModel()) {
     val isOnboardingShown by viewModel.isOnboardingShown.collectAsStateWithLifecycle()
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val tabs by viewModel.tabs.collectAsStateWithLifecycle()
+    val currentTab by viewModel.currentTab.collectAsStateWithLifecycle()
 
     Scaffold(
         modifier = Modifier.fillMaxSize()
@@ -49,7 +52,7 @@ fun ApplicationRoot(viewModel: ApplicationViewModel = koinViewModel()) {
         NavHost(
             modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding()),
             navController = navController,
-            startDestination = tabs.last()
+            startDestination = currentTab
         ) {
             composable<TabBarItem.Cards> {
                 CardsRoot()

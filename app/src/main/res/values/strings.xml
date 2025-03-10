@@ -110,6 +110,7 @@
     <string name="add_card_sheet_color_hint">Цвет карты позволит проще отличать её</string>
     <string name="share_app_link">Поделиться ссылкой через</string>
     <string name="settings_share_app_rustore">Поделиться ссылкой в RuStore</string>
+    <string name="settings_share_app_google_play">Поделиться ссылкой в Google Play</string>
     <string name="settings_share_app_ios">Версия для iPhone</string>
     <string name="settings_share_app_footer">Если вам понравилось приложение, то вы можете поделиться им с другом</string>
     <string name="settings_share_app_title">Поделиться</string>
