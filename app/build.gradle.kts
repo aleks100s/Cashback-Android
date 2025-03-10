@@ -14,14 +14,15 @@ android {
         applicationId = "com.alextos.cashback"
         minSdk = 28
         targetSdk = 35
-        versionCode = 13
-        versionName = "1.8"
+        versionCode = 14
+        versionName = "1.8.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
+            ndk.debugSymbolLevel = "FULL"
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),

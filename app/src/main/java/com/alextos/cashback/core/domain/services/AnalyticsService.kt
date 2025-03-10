@@ -1,12 +1,12 @@
 package com.alextos.cashback.core.domain.services
 
 enum class AnalyticsEvent(val rawValue: String) {
+    CardListAppear("Card List Appear"),
     CardListAddCardButtonTapped("Card List Add Card Button Tapped"),
     CardListFavouriteToggle("Card List Favourite Toggle"),
     CardListFilterTapped("Card List Filter Tapped"),
     CardListCardTapped("Card List Card Tapped"),
 
-    AddCardColorChange("Add Card Color Change"),
     AddCardCurrencyChange("Add Card Currency Change"),
     AddCardSaveButtonTapped("Add Card Save Button Tapped"),
 
@@ -17,7 +17,6 @@ enum class AnalyticsEvent(val rawValue: String) {
     CardDetailCashbackTapped("Card Detail Cashback Tapped"),
     CardDetailCashbackReorder("Card Detail Cashback Reorder"),
     CardDetailCurrencyChange("Card Detail Currency Change"),
-    CardDetailColorChange("Card Detail Color Change"),
     CardDetailFavouriteToggle("Card Detail Favourite Toggle"),
     CardDetailDeleteCardButtonTapped("Card Detail Delete Card Button Tapped"),
     CardDetailDeleteAllCashbackButtonTapped("Card Detail Delete All Cashback Button Tapped"),
@@ -32,6 +31,7 @@ enum class AnalyticsEvent(val rawValue: String) {
     EditCashbackSelectCategoryButtonTapped("Edit Cashback Select Category Button Tapped"),
     EditCashbackSelectPercentButtonTapped("Edit Cashback Select Percent Button Tapped"),
 
+    SelectCategoryAppear("Select Category Appear"),
     SelectCategoryCreateNewButtonTapped("Select Category Create New Button Tapped"),
     SelectCategorySelect("Select Category Select"),
     SelectCategoryInfoButtonTapped("Select Category Info Button Tapped"),
@@ -40,6 +40,7 @@ enum class AnalyticsEvent(val rawValue: String) {
 
     CreateCategorySaveButtonTapped("Create Category Save Button Tapped"),
 
+    PaymentsAppear("Payments Appear"),
     PaymentsTogglePeriodButtonTapped("Payments Toggle Period Button Tapped"),
     PaymentsPreviousButtonTapped("Payments Previous Button Tapped"),
     PaymentsNextButtonTapped("Payments Next Button Tapped"),
@@ -55,6 +56,7 @@ enum class AnalyticsEvent(val rawValue: String) {
     EditPaymentSelectDateButtonTapped("Edit Payment Select Date Button Tapped"),
     EditPaymentSelectCardButtonTapped("Edit Payment Select Card Button Tapped"),
 
+    PlacesAppear("Places Appear"),
     PlacesAddPlaceButtonTapped("Places Add Place Button Tapped"),
     PlacesFavouriteToggle("Places Favourite Toggle"),
     PlacesEdit("Places Edit"),
@@ -71,6 +73,7 @@ enum class AnalyticsEvent(val rawValue: String) {
     PlaceDetailToggleFavourite("Place Detail Toggle Favourite"),
     PlaceDetailEditButtonTapped("Place Detail Edit Button Tapped"),
 
+    SettingsAppear("Settings Appear"),
     SettingsToggleNotifications("Settings Toggle Notifications"),
     SettingsExportButtonTapped("Settings Export Button Tapped"),
     SettingsExportFinished("Settings Export Finished"),

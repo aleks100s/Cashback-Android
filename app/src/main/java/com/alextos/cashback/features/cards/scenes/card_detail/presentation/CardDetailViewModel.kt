@@ -115,7 +115,6 @@ class CardDetailViewModel(
                 _state.update { it.copy(currency = action.currency) }
             }
             is CardDetailAction.ChangeColor -> {
-                analyticsService.logEvent(AnalyticsEvent.CardDetailColorChange)
                 _state.update { it.copy(color = "#${action.color}") }
             }
             is CardDetailAction.DeleteAllCashback -> {

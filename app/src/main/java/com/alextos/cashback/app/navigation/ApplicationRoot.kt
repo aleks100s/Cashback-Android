@@ -43,7 +43,7 @@ fun ApplicationRoot(viewModel: ApplicationViewModel = koinViewModel()) {
                 focusManager.clearFocus()
             },
         bottomBar = {
-            TabBarView(navController, tabs = tabs)
+            TabBarView(navController, tabs = tabs, onTabChange = viewModel::onTabChange)
         }
     ) { innerPadding ->
         NavHost(

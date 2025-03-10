@@ -5,6 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.alextos.cashback.app.navigation.tabbar.TabBarItem
 import com.alextos.cashback.app.notifications.MonthlyNotificationScheduler
+import com.alextos.cashback.core.domain.services.AnalyticsEvent
+import com.alextos.cashback.core.domain.services.AnalyticsService
 import com.alextos.cashback.core.domain.settings.SettingsManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +18,8 @@ import kotlinx.coroutines.launch
 
 class ApplicationViewModel(
     application: Application,
-    private val settingsManager: SettingsManager
+    private val settingsManager: SettingsManager,
+    private val analyticsService: AnalyticsService
 ): AndroidViewModel(application) {
     private val _isOnboardingShown = MutableStateFlow(false)
     val isOnboardingShown = _isOnboardingShown.asStateFlow()
@@ -62,6 +65,20 @@ class ApplicationViewModel(
     fun hideOnboarding() {
         viewModelScope.launch(Dispatchers.IO) {
             settingsManager.setOnboarding(shown = true)
+        }
+    }
+
+    fun onTabChange(tab: TabBarItem) {
+        when (tab) {
+            TabBarItem.Cards -> {
+                analyticsService.logEvent(AnalyticsEvent.CardListAppear)
+            }
+            TabBarItem.Categories -> {
+                analyticsService.logEvent(AnalyticsEvent.SelectCategoryAppear)
+            }
+            TabBarItem.Settings -> {
+                analyticsService.logEvent(AnalyticsEvent.SettingsAppear)
+            }
         }
     }
 

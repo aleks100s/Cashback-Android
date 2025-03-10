@@ -95,7 +95,6 @@ class CardsListViewModel(
                 }
             }
             is CardsListAction.CardColorChange -> {
-                analyticsService.logEvent(AnalyticsEvent.AddCardColorChange)
                 _state.update {
                     it.copy(newCardColor = "#${action.color}")
                 }
