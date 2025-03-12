@@ -43,8 +43,7 @@ class DatabaseSeeder(private val context: Context) : RoomDatabase.Callback() {
         val command = categoryEntities.joinToString(separator = ", ") { entity ->
             val synonyms = entity.synonyms?.let { "'$it'" }
             val info = entity.info?.let { "'$it'" }
-            val isArchived = if (entity.isArchived) 1 else 0
-            "('${entity.id}', '${entity.name}', '${entity.emoji}', $synonyms, ${entity.priority}, $isArchived, $info, ${entity.isNative})"
+            "('${entity.id}', '${entity.name}', '${entity.emoji}', $synonyms, 0, 0, $info, 0)"
         }
         db.execSQL("INSERT INTO categories (id, name, emoji, synonyms, priority, isArchived, info, isNative) VALUES $command;")
 
@@ -59,7 +58,7 @@ class DatabaseSeeder(private val context: Context) : RoomDatabase.Callback() {
 //                Card(name = "Озон", color = "#0000FF"),
             ).map { it.toEntity() }
             val cardCommand = cards.joinToString(separator = ", ") { entity ->
-                "('${entity.id}', '${entity.name}', '${entity.color}', ${entity.isArchived}, ${entity.isFavourite}, '${entity.currency}', '${entity.currencySymbol}')"
+                "('${entity.id}', '${entity.name}', '${entity.color}', 0, ${if (entity.isFavourite) 1 else 0}, '${entity.currency}', '${entity.currencySymbol}')"
             }
             db.execSQL("INSERT INTO cards (id, name, color, isArchived, isFavourite, currency, currencySymbol) VALUES $cardCommand;")
 
