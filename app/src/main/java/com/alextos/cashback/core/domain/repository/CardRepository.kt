@@ -17,4 +17,5 @@ interface CardRepository {
     fun getArchivedCards(): Flow<List<Card>>
     suspend fun unarchive(card: Card)
     suspend fun replaceAll(cards: List<Card>)
+    suspend fun getFavouriteCards(): List<Card>
 }

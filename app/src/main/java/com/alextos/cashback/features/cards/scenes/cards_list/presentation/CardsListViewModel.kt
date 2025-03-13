@@ -13,6 +13,7 @@ import com.alextos.cashback.core.domain.models.currency.Currency
 import com.alextos.cashback.core.domain.repository.CategoryRepository
 import com.alextos.cashback.core.domain.services.AnalyticsEvent
 import com.alextos.cashback.core.domain.services.AnalyticsService
+import com.alextos.cashback.core.domain.services.WidgetUpdateService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,7 +26,8 @@ class CardsListViewModel(
     private val categoryRepository: CategoryRepository,
     private val filterUseCase: FilterCardsUseCase,
     private val toastService: ToastService,
-    private val analyticsService: AnalyticsService
+    private val analyticsService: AnalyticsService,
+    private val widgetUpdateService: WidgetUpdateService
 ): ViewModel() {
     private val _state = MutableStateFlow(CardsListState())
     val state = _state.asStateFlow()
@@ -77,6 +79,7 @@ class CardsListViewModel(
                         }
                     )
                 )
+                widgetUpdateService.updateWidget()
             }
             is CardsListAction.AddCard -> {
                 analyticsService.logEvent(AnalyticsEvent.CardListAddCardButtonTapped)

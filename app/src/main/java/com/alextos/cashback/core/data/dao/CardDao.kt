@@ -17,6 +17,9 @@ interface CardDao {
     @Query("SELECT * FROM cards WHERE isArchived = 1 ORDER BY isFavourite DESC, name ASC")
     fun getAllArchived(): Flow<List<CardEntity>>
 
+    @Query("SELECT * FROM cards WHERE isFavourite = 1")
+    suspend fun getFavouriteCards(): List<CardEntity>
+
     @Query("SELECT * FROM cards")
     suspend fun getCardsExport(): List<CardEntity>
 

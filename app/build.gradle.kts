@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.mobileads)
     implementation(libs.analytics)
+    implementation(libs.androidx.glance.appwidget)
     ksp(libs.androidx.room.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

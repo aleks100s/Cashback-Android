@@ -82,6 +82,11 @@ class CardRepositoryImpl(
         )
     }
 
+    override suspend fun getFavouriteCards(): List<Card> {
+        return cardDao.getFavouriteCards()
+            .map { constructCard(it) }
+    }
+
     private suspend fun constructCard(entity: CardEntity): Card {
         val cashback = cashbackDao.getAllBy(entity.id)
             .map { it.toDomain() }

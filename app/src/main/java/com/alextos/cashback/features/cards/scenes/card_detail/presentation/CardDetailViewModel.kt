@@ -16,6 +16,7 @@ import com.alextos.cashback.core.domain.services.AnalyticsEvent
 import com.alextos.cashback.core.domain.services.AnalyticsService
 import com.alextos.cashback.core.domain.services.AppInfoService
 import com.alextos.cashback.core.domain.services.AppInstallationSource
+import com.alextos.cashback.core.domain.services.WidgetUpdateService
 import com.alextos.cashback.core.domain.settings.SettingsManager
 import com.alextos.cashback.features.cards.scenes.card_detail.domain.DeleteCashbackUseCase
 import kotlinx.coroutines.Dispatchers
@@ -27,6 +28,7 @@ import kotlinx.coroutines.withContext
 
 class CardDetailViewModel(
     savedStateHandle: SavedStateHandle,
+    appInfoService: AppInfoService,
     private val deleteCardUseCase: DeleteCardUseCase,
     private val deleteAllCashbackUseCase: DeleteAllCashbackUseCase,
     private val deleteCashbackUseCase: DeleteCashbackUseCase,
@@ -34,7 +36,7 @@ class CardDetailViewModel(
     private val toastService: ToastService,
     private val settingsManager: SettingsManager,
     private val analyticsService: AnalyticsService,
-    private val appInfoService: AppInfoService
+    private val widgetUpdateService: WidgetUpdateService
 ): ViewModel() {
     private val cardId = savedStateHandle.toRoute<CardsRoute.CardDetail>().cardId
 
@@ -48,7 +50,6 @@ class CardDetailViewModel(
     }
 
     init {
-
         viewModelScope.launch(Dispatchers.IO) {
             repository.getCardFlow(cardId)
                 .collect { card ->
@@ -109,6 +110,7 @@ class CardDetailViewModel(
             is CardDetailAction.ToggleFavourite -> {
                 analyticsService.logEvent(AnalyticsEvent.CardDetailFavouriteToggle)
                 _state.update { it.copy(isFavourite = !it.isFavourite) }
+                widgetUpdateService.updateWidget()
             }
             is CardDetailAction.ChangeCurrency -> {
                 analyticsService.logEvent(AnalyticsEvent.CardDetailCurrencyChange)
