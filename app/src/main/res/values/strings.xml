@@ -131,4 +131,5 @@
     <string name="settings_tab_enabled">Раздел активен</string>
     <string name="settings_tab_disabled">Раздел отключен</string>
     <string name="widget_no_card">Выберите избранные карты в приложении</string>
+    <string name="widget_favourite_cards">Любимые карты</string>
 </resources>
