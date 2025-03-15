@@ -1,4 +1,4 @@
-package com.alextos.cashback.widget.views
+package com.alextos.cashback.app.widget.views
 
 import androidx.glance.layout.Box
 import androidx.glance.layout.Column

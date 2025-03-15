@@ -1,4 +1,4 @@
-package com.alextos.cashback.widget
+package com.alextos.cashback.app.widget
 
 import android.content.Context
 import androidx.compose.ui.unit.TextUnit
@@ -25,7 +25,7 @@ import androidx.glance.text.TextStyle
 import com.alextos.cashback.R
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.domain.repository.CardRepository
-import com.alextos.cashback.widget.views.CardItemView
+import com.alextos.cashback.app.widget.views.CardItemView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.koin.java.KoinJavaComponent.inject

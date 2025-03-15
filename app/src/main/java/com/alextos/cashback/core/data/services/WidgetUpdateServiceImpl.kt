@@ -5,7 +5,7 @@ import android.content.Intent
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import com.alextos.cashback.core.AppConstants
 import com.alextos.cashback.core.domain.services.WidgetUpdateService
-import com.alextos.cashback.widget.FavouriteCardsWidget
+import com.alextos.cashback.app.widget.FavouriteCardsWidget
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

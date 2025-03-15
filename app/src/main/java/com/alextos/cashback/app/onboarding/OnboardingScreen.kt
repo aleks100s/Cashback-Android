@@ -36,6 +36,17 @@ fun OnboardingScreen(onFinish: () -> Unit) {
                 .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
+            Button(
+                enabled = pagerState.currentPage > 0,
+                onClick = {
+                    coroutineScope.launch {
+                        pagerState.animateScrollToPage(pagerState.currentPage - 1)
+                    }
+                }
+            ) {
+                Text(stringResource(R.string.common_back))
+            }
+
             // Индикаторы страниц (dots)
             OnboardingIndicators(pagerState)
 

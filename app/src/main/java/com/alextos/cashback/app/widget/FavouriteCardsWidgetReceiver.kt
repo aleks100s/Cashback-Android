@@ -1,4 +1,4 @@
-package com.alextos.cashback.widget
+package com.alextos.cashback.app.widget
 
 import android.appwidget.AppWidgetManager
 import android.content.Context
