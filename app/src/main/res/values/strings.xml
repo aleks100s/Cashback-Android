@@ -133,4 +133,6 @@
     <string name="settings_tab_disabled">Раздел отключен</string>
     <string name="widget_no_card">Выберите избранные карты в приложении</string>
     <string name="widget_favourite_cards">Любимые карты</string>
+    <string name="add_card_quick_color_picker">Быстрый выбор</string>
+    <string name="add_card_pick_color_from_palette">Выбрать цвет из палитры</string>
 </resources>

@@ -6,14 +6,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,7 +30,6 @@ import com.github.skydoves.colorpicker.compose.ColorEnvelope
 import com.github.skydoves.colorpicker.compose.HsvColorPicker
 import com.github.skydoves.colorpicker.compose.rememberColorPickerController
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ColorPicker(
     modifier: Modifier = Modifier,
@@ -60,31 +58,37 @@ fun ColorPicker(
     }
 
     if (isPickerShown) {
-        ModalBottomSheet(onDismissRequest = {
+        androidx.compose.ui.window.Dialog(onDismissRequest = {
             isPickerShown = false
         }) {
             val controller = rememberColorPickerController()
 
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(32.dp)
+            Surface(Modifier
+                .padding(16.dp)
+                .clip(RoundedCornerShape(16.dp))
+                .fillMaxWidth()
             ) {
-                HsvColorPicker(
-                    modifier = Modifier
-                        .size(300.dp)
-                        .padding(16.dp),
-                    controller = controller,
-                    onColorChanged = { colorEnvelope: ColorEnvelope ->
-                        onColorChange(colorEnvelope.hexCode)
-                    },
-                    initialColor = makeColor(color)
-                )
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    HsvColorPicker(
+                        modifier = Modifier
+                            .size(300.dp)
+                            .padding(16.dp),
+                        controller = controller,
+                        onColorChanged = { colorEnvelope: ColorEnvelope ->
+                            onColorChange(colorEnvelope.hexCode)
+                        },
+                        initialColor = makeColor(color)
+                    )
 
-                Button(onClick = {
-                    isPickerShown = false
-                }) {
-                    Text(text = stringResource(R.string.common_done))
+                    Button(onClick = {
+                        isPickerShown = false
+                    }, modifier = Modifier.padding(bottom = 16.dp)) {
+                        Text(text = stringResource(R.string.common_done))
+                    }
                 }
             }
         }

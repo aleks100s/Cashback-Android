@@ -6,6 +6,8 @@ enum class AnalyticsEvent(val rawValue: String) {
     CardListFavouriteToggle("Card List Favourite Toggle"),
     CardListFilterTapped("Card List Filter Tapped"),
     CardListCardTapped("Card List Card Tapped"),
+    CardListEditButtonTapped("Card List Edit Button Tapped"),
+    CardsSettingsToggleCompactView("Cards Settings Toggle Compact View"),
 
     AddCardCurrencyChange("Add Card Currency Change"),
     AddCardSaveButtonTapped("Add Card Save Button Tapped"),
