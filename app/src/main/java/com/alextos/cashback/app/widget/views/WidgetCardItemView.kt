@@ -18,7 +18,7 @@ import com.alextos.cashback.common.makeColor
 import com.alextos.cashback.core.domain.models.Card
 
 @Composable
-fun CardItemView(
+fun WidgetCardItemView(
     modifier: GlanceModifier = GlanceModifier,
     card: Card
 ) {

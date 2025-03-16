@@ -14,6 +14,7 @@ import com.alextos.cashback.features.category.CategoryMediator
 import com.alextos.cashback.common.UiText
 import com.alextos.cashback.core.domain.services.AnalyticsEvent
 import com.alextos.cashback.core.domain.services.AnalyticsService
+import com.alextos.cashback.core.domain.services.WidgetUpdateService
 import com.alextos.cashback.features.cards.scenes.cashback_detail.domain.CreateCashbackUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,7 +31,8 @@ class CashbackDetailViewModel(
     private val cardRepository: CardRepository,
     private val categoryMediator: CategoryMediator,
     private val toastService: ToastService,
-    private var analyticsService: AnalyticsService
+    private var analyticsService: AnalyticsService,
+    private val widgetUpdateService: WidgetUpdateService
 ): ViewModel() {
     private val cardId = savedStateHandle.toRoute<CardsRoute.CashbackDetail>().cardId
     private val cashbackId = savedStateHandle.toRoute<CardsRoute.CashbackDetail>().cashbackId
@@ -124,6 +126,7 @@ class CashbackDetailViewModel(
                     toastService.showToast(UiText.StringResourceId(R.string.add_cashback_added))
                     analyticsService.logEvent(AnalyticsEvent.AddCashbackSaveButtonTapped)
                 }
+                widgetUpdateService.updateWidget()
             }
             is CashbackDetailAction.CategorySelected -> {
                 _state.update { state ->

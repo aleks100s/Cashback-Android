@@ -90,6 +90,7 @@ class CardDetailViewModel(
                         repository.createOrUpdate(card)
                     }
                     toastService.showToast(UiText.StringResourceId(R.string.card_list_card_changed))
+                    widgetUpdateService.updateWidget()
                 }
             }
             is CardDetailAction.DeleteCashback -> {
@@ -100,6 +101,7 @@ class CardDetailViewModel(
                         deleteCashbackUseCase.execute(card = card, cashback = action.cashback)
                         withContext(Dispatchers.Main) {
                             toastService.showToast(UiText.StringResourceId(R.string.card_detail_cashback_removed))
+                            widgetUpdateService.updateWidget()
                         }
                     }
                 }
@@ -128,6 +130,7 @@ class CardDetailViewModel(
                         viewModelScope.launch(Dispatchers.Main) {
                             _state.update { it.copy(card = card.copy(cashback = emptyList())) }
                             toastService.showToast(UiText.StringResourceId(R.string.card_detail_all_cashback_deleted))
+                            widgetUpdateService.updateWidget()
                         }
                     }
                 }
@@ -147,6 +150,7 @@ class CardDetailViewModel(
                     }
                 }
                 toastService.showToast(UiText.StringResourceId(R.string.card_detail_card_deleted))
+                widgetUpdateService.updateWidget()
             }
             is CardDetailAction.EditCashback -> {
                 analyticsService.logEvent(AnalyticsEvent.CardDetailCashbackTapped)
