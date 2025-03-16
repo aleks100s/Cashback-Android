@@ -136,4 +136,8 @@
     <string name="add_card_quick_color_picker">Быстрый выбор</string>
     <string name="add_card_pick_color_from_palette">Выбрать цвет из палитры</string>
     <string name="widget_refresh">Обновить виджет</string>
+    <string name="cards_settings_compact_card_view_switch">Компактный вид карт</string>
+    <string name="cards_settings_compact_card_view_title">Настройки отображения карт</string>
+    <string name="card_list_edit_button">Настроить</string>
+    <string name="cards_settings_title">Настройки</string>
 </resources>

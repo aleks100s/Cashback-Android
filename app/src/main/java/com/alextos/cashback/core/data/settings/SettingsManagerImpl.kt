@@ -19,6 +19,7 @@ class SettingsManagerImpl(
         private val ADS_KEY = booleanPreferencesKey("is_ad_enabled")
         private val CARDS_TAB_ENABLED = booleanPreferencesKey("is_cards_tab_enabled")
         private val CATEGORIES_TAB_ENABLED = booleanPreferencesKey("is_categories_tab_enabled")
+        private val COMPACT_CARD_VIEW = booleanPreferencesKey("is_compact_card_view_enabled")
     }
 
     private val dataStore = context.dataStore
@@ -75,6 +76,17 @@ class SettingsManagerImpl(
     override suspend fun setCategoriesTab(enabled: Boolean) {
         dataStore.edit { preferences ->
             preferences[CATEGORIES_TAB_ENABLED] = enabled
+        }
+    }
+
+    override val isCompactCardViewEnabled: Flow<Boolean>
+        get() = dataStore.data.map { preferences ->
+            preferences[COMPACT_CARD_VIEW] ?: false
+        }
+
+    override suspend fun setCompactCardView(enabled: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[COMPACT_CARD_VIEW] = enabled
         }
     }
 }

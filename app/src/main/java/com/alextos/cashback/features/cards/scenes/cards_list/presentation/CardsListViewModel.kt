@@ -14,6 +14,7 @@ import com.alextos.cashback.core.domain.repository.CategoryRepository
 import com.alextos.cashback.core.domain.services.AnalyticsEvent
 import com.alextos.cashback.core.domain.services.AnalyticsService
 import com.alextos.cashback.core.domain.services.WidgetUpdateService
+import com.alextos.cashback.core.domain.settings.SettingsManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,7 +28,8 @@ class CardsListViewModel(
     private val filterUseCase: FilterCardsUseCase,
     private val toastService: ToastService,
     private val analyticsService: AnalyticsService,
-    private val widgetUpdateService: WidgetUpdateService
+    private val widgetUpdateService: WidgetUpdateService,
+    private val settingsManager: SettingsManager
 ): ViewModel() {
     private val _state = MutableStateFlow(CardsListState())
     val state = _state.asStateFlow()
@@ -52,6 +54,12 @@ class CardsListViewModel(
                     _state.update { it.copy(popularCategories = list, selectedCategory = null) }
                 }
         }
+
+        viewModelScope.launch {
+            settingsManager.isCompactCardViewEnabled.collect { isActive ->
+                _state.update { it.copy(isCompactViewActive = isActive) }
+            }
+        }
     }
 
     fun onAction(action: CardsListAction) {
@@ -64,6 +72,7 @@ class CardsListViewModel(
                     }
                 }
             }
+
             is CardsListAction.ToggleFavourite -> {
                 analyticsService.logEvent(AnalyticsEvent.CardListFavouriteToggle)
                 viewModelScope.launch(Dispatchers.IO) {
@@ -81,33 +90,39 @@ class CardsListViewModel(
                 )
                 widgetUpdateService.updateWidget()
             }
+
             is CardsListAction.AddCard -> {
                 analyticsService.logEvent(AnalyticsEvent.CardListAddCardButtonTapped)
                 _state.update {
                     it.copy(isAddCardSheetShown = true)
                 }
             }
+
             is CardsListAction.DismissAddCardSheet -> {
                 _state.update {
                     it.copy(isAddCardSheetShown = false)
                 }
             }
+
             is CardsListAction.CardNameChange -> {
                 _state.update {
                     it.copy(newCardName = action.name)
                 }
             }
+
             is CardsListAction.CardColorChange -> {
                 _state.update {
                     it.copy(newCardColor = "#${action.color}")
                 }
             }
+
             is CardsListAction.CardCurrencyChange -> {
                 analyticsService.logEvent(AnalyticsEvent.AddCardCurrencyChange)
                 _state.update {
                     it.copy(newCardCurrency = action.currency)
                 }
             }
+
             is CardsListAction.SaveButtonTapped -> {
                 analyticsService.logEvent(AnalyticsEvent.AddCardSaveButtonTapped)
                 viewModelScope.launch(Dispatchers.IO) {
@@ -130,6 +145,7 @@ class CardsListViewModel(
                     }
                 }
             }
+
             is CardsListAction.SelectCategory -> {
                 analyticsService.logEvent(AnalyticsEvent.CardListFilterTapped)
                 val category = action.category
@@ -139,13 +155,39 @@ class CardsListViewModel(
                     _state.update { it.copy(selectedCategory = category, searchQuery = "") }
                     viewModelScope.launch(Dispatchers.IO) {
                         _state.update {
-                            it.copy(filteredCards = filterUseCase.execute(it.allCards, category.name))
+                            it.copy(
+                                filteredCards = filterUseCase.execute(
+                                    it.allCards,
+                                    category.name
+                                )
+                            )
                         }
                     }
                 }
             }
+
             is CardsListAction.CardSelect -> {
                 analyticsService.logEvent(AnalyticsEvent.CardListCardTapped)
+            }
+
+            is CardsListAction.EditButtonTapped -> {
+                analyticsService.logEvent(AnalyticsEvent.CardListEditButtonTapped)
+                _state.update {
+                    it.copy(isCardsSettingsSheetShown = true)
+                }
+            }
+
+            is CardsListAction.CompactViewToggle -> {
+                analyticsService.logEvent(AnalyticsEvent.CardsSettingsToggleCompactView)
+                viewModelScope.launch(Dispatchers.IO) {
+                    settingsManager.setCompactCardView(action.isActive)
+                }
+            }
+
+            is CardsListAction.DismissSettingsSheet -> {
+                _state.update {
+                    it.copy(isCardsSettingsSheetShown = false)
+                }
             }
         }
     }

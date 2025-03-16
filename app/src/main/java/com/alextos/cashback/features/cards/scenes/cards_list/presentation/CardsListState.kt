@@ -15,5 +15,7 @@ data class CardsListState(
     val newCardColor: String = AppConstants.COLOR_HEX_DEFAULT,
     val newCardCurrency: Currency = Currency.RUBLE,
     val popularCategories: List<Category> = emptyList(),
-    val selectedCategory: Category? = null
+    val selectedCategory: Category? = null,
+    val isCompactViewActive: Boolean = false,
+    val isCardsSettingsSheetShown: Boolean = false
 )

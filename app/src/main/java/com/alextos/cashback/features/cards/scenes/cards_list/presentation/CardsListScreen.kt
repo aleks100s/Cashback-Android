@@ -43,6 +43,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
+import com.alextos.cashback.common.views.CustomButton
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.features.cards.scenes.cards_list.presentation.components.AddCardSheet
@@ -50,6 +51,7 @@ import com.alextos.cashback.features.cards.scenes.cards_list.presentation.compon
 import com.alextos.cashback.common.views.SearchBar
 import com.alextos.cashback.common.views.FilterItemView
 import com.alextos.cashback.common.views.CustomLabel
+import com.alextos.cashback.features.cards.scenes.cards_list.presentation.components.CardsSettingsSheet
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -73,6 +75,11 @@ fun CardsListScreen(
                     imageVector = Icons.Filled.Add
                 )
             }
+        },
+        actions = {
+            CustomButton(stringResource(R.string.card_list_edit_button)) {
+                viewModel.onAction(CardsListAction.EditButtonTapped)
+            }
         }
     ) {
         CardsListView(modifier = it, state = state) { action ->
@@ -81,6 +88,28 @@ fun CardsListScreen(
                 else -> Unit
             }
             viewModel.onAction(action)
+        }
+
+        if (state.isCardsSettingsSheetShown) {
+            val sheetState = rememberModalBottomSheetState()
+
+            ModalBottomSheet(
+                onDismissRequest = {
+                    viewModel.onAction(CardsListAction.DismissSettingsSheet)
+                },
+                dragHandle = null,
+                sheetState = sheetState
+            ) {
+                CardsSettingsSheet(
+                    state.isCompactViewActive,
+                    onCheckedChange = { isActive ->
+                        viewModel.onAction(CardsListAction.CompactViewToggle(isActive))
+                    },
+                    onDismiss = {
+                        viewModel.onAction(CardsListAction.DismissSettingsSheet)
+                    }
+                )
+            }
         }
 
         if (state.isAddCardSheetShown) {
@@ -214,7 +243,8 @@ private fun CardsListView(
                         query = state.searchQuery,
                         onFavouriteTap = {
                             onAction(CardsListAction.ToggleFavourite(card))
-                        }
+                        },
+                        isCompact = state.isCompactViewActive
                     )
                 }
 

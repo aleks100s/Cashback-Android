@@ -1,5 +1,6 @@
 package com.alextos.cashback.features.cards.scenes.cards_list.presentation.components
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -44,6 +45,7 @@ fun CardItemView(
     modifier: Modifier = Modifier,
     card: Card,
     query: String,
+    isCompact: Boolean,
     onClick: () -> Unit = {},
     onFavouriteTap: () -> Unit = {}
 ) {
@@ -115,10 +117,12 @@ fun CardItemView(
                 )
             } else {
                 Column {
-                    CategoriesStackView(
-                        categories = card.sortedCategories(),
-                        color = color
-                    )
+                    AnimatedVisibility(visible = !isCompact) {
+                        CategoriesStackView(
+                            categories = card.sortedCategories(),
+                            color = color
+                        )
+                    }
 
                     Text(
                         text = card.toStringWith(query),
@@ -145,6 +149,6 @@ fun CardItemView(
 @Composable
 private fun CardItemPreview() {
     Surface(modifier = Modifier.padding(8.dp)) {
-        CardItemView(card = generateMockCard(), query = "") {}
+        CardItemView(card = generateMockCard(), query = "", isCompact = false) {}
     }
 }

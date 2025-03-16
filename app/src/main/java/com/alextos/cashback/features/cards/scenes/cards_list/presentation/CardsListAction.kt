@@ -15,4 +15,7 @@ sealed interface CardsListAction {
     data class CardCurrencyChange(val currency: Currency): CardsListAction
     data object SaveButtonTapped: CardsListAction
     data class SelectCategory(val category: Category): CardsListAction
+    data object EditButtonTapped: CardsListAction
+    data class CompactViewToggle(val isActive: Boolean) : CardsListAction
+    data object DismissSettingsSheet : CardsListAction
 }
