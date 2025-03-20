@@ -18,4 +18,5 @@ sealed interface SettingsAction {
     data object ImportData: SettingsAction
     data object ToggleCardsTab: SettingsAction
     data object ToggleCategoriesTab: SettingsAction
+    data object TogglePlacesTab: SettingsAction
 }

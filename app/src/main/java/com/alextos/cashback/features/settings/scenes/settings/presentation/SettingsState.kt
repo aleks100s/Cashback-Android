@@ -9,5 +9,6 @@ data class SettingsState(
     val isAdVisible: Boolean = true,
     val isImportAlertShown: Boolean = false,
     val isCardsTabEnabled: Boolean = true,
-    val isCategoriesTabEnabled: Boolean = true
+    val isCategoriesTabEnabled: Boolean = true,
+    val isPlacesTabEnabled: Boolean = true,
 )

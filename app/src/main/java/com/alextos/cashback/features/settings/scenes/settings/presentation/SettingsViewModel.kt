@@ -77,6 +77,13 @@ class SettingsViewModel(
                     _state.update { it.copy(isCategoriesTabEnabled = isEnabled) }
                 }
         }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            settingsManager.isPlacesTabEnabled
+                .collect { isEnabled ->
+                    _state.update { it.copy(isPlacesTabEnabled = isEnabled) }
+                }
+        }
     }
 
     fun onAction(action: SettingsAction) {
@@ -157,6 +164,13 @@ class SettingsViewModel(
                     settingsManager.setCategoriesTab(!state.value.isCategoriesTabEnabled)
                 }
                 toastService.showToast(if (!state.value.isCategoriesTabEnabled) UiText.StringResourceId(R.string.settings_tab_enabled) else UiText.StringResourceId(R.string.settings_tab_disabled))
+            }
+            is SettingsAction.TogglePlacesTab -> {
+                analyticsService.logEvent(AnalyticsEvent.SettingsTogglePlacesFeature)
+                viewModelScope.launch(Dispatchers.IO) {
+                    settingsManager.setPlacesTab(!state.value.isPlacesTabEnabled)
+                }
+                toastService.showToast(if (!state.value.isPlacesTabEnabled) UiText.StringResourceId(R.string.settings_tab_enabled) else UiText.StringResourceId(R.string.settings_tab_disabled))
             }
         }
     }

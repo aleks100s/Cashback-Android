@@ -24,7 +24,7 @@ class ApplicationViewModel(
     private val _isOnboardingShown = MutableStateFlow(false)
     val isOnboardingShown = _isOnboardingShown.asStateFlow()
 
-    private val _tabs = MutableStateFlow(listOf(TabBarItem.Cards, TabBarItem.Categories, TabBarItem.Settings))
+    private val _tabs = MutableStateFlow(listOf(TabBarItem.Cards, TabBarItem.Places, TabBarItem.Categories, TabBarItem.Settings))
     val tabs = _tabs.asStateFlow()
 
     private val _currentTab = MutableStateFlow<TabBarItem>(TabBarItem.Cards)
@@ -51,17 +51,20 @@ class ApplicationViewModel(
         }
 
         viewModelScope.launch(Dispatchers.IO) {
-            settingsManager.isCardsTabEnabled
-                .combine(settingsManager.isCategoriesTabEnabled) { isCardsTabEnabled, isCategoriesTabEnabled ->
-                    listOfNotNull(
-                        if (isCardsTabEnabled) TabBarItem.Cards else null,
-                        if (isCategoriesTabEnabled) TabBarItem.Categories else null,
-                        TabBarItem.Settings
-                    )
-                }
-                .collect { list ->
-                    _tabs.update { list }
-                }
+            combine(
+                settingsManager.isCardsTabEnabled,
+                settingsManager.isCategoriesTabEnabled,
+                settingsManager.isPlacesTabEnabled
+            ) { isCardsTabEnabled, isCategoriesTabEnabled, isPlacesTabEnabled ->
+                listOfNotNull(
+                    if (isCardsTabEnabled) TabBarItem.Cards else null,
+                    if (isCategoriesTabEnabled) TabBarItem.Categories else null,
+                    if (isPlacesTabEnabled) TabBarItem.Places else null,
+                    TabBarItem.Settings
+                )
+            }.collect { list ->
+                _tabs.update { list }
+            }
         }
     }
 
@@ -82,6 +85,9 @@ class ApplicationViewModel(
             }
             TabBarItem.Settings -> {
                 analyticsService.logEvent(AnalyticsEvent.SettingsAppear)
+            }
+            TabBarItem.Places -> {
+                analyticsService.logEvent(AnalyticsEvent.PlacesAppear)
             }
         }
     }

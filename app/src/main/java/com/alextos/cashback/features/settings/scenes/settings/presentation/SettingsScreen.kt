@@ -204,40 +204,29 @@ private fun SettingsView(
                 title = stringResource(R.string.settings_tabs_title),
                 footer = stringResource(R.string.settings_tabs_footer)
             ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                FeatureToggle(
+                    stringResource(R.string.settings_tabs_cards),
+                    checked = state.isCardsTabEnabled,
                 ) {
-                    Text(stringResource(R.string.settings_tabs_cards))
-
-                    Switch(
-                        checked = state.isCardsTabEnabled,
-                        onCheckedChange = {
-                            onAction(SettingsAction.ToggleCardsTab)
-                        }
-                    )
+                    onAction(SettingsAction.ToggleCardsTab)
                 }
 
                 HorizontalDivider()
 
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                FeatureToggle(
+                    stringResource(R.string.settings_tabs_categories),
+                    checked = state.isCategoriesTabEnabled,
                 ) {
-                    Text(stringResource(R.string.settings_tabs_categories))
+                    onAction(SettingsAction.ToggleCategoriesTab)
+                }
 
-                    Switch(
-                        checked = state.isCategoriesTabEnabled,
-                        onCheckedChange = {
-                            onAction(SettingsAction.ToggleCategoriesTab)
-                        }
-                    )
+                HorizontalDivider()
+
+                FeatureToggle(
+                    stringResource(R.string.settings_tabs_places),
+                    checked = state.isPlacesTabEnabled,
+                ) {
+                    onAction(SettingsAction.TogglePlacesTab)
                 }
             }
         }
@@ -346,6 +335,30 @@ private fun ClickableItem(
     ) {
         Text(title)
         Text(value)
+    }
+}
+
+@Composable
+private fun FeatureToggle(
+    name: String,
+    checked: Boolean,
+    onCheckedChange: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(name)
+
+        Switch(
+            checked = checked,
+            onCheckedChange = {
+                onCheckedChange()
+            }
+        )
     }
 }
 

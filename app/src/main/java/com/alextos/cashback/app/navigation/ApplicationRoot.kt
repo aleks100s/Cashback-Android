@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -64,6 +65,10 @@ fun ApplicationRoot(viewModel: ApplicationViewModel = koinViewModel()) {
 
             composable<TabBarItem.Categories> {
                 CategoryRoot(disableSelection = true, onSelectCategory = {}, disableBackButton = true) { }
+            }
+
+            composable<TabBarItem.Places> {
+                Text("Places")
             }
         }
     }

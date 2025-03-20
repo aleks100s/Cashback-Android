@@ -8,6 +8,7 @@ interface SettingsManager {
     val isAdEnabled: Flow<Boolean>
     val isCardsTabEnabled: Flow<Boolean>
     val isCategoriesTabEnabled: Flow<Boolean>
+    val isPlacesTabEnabled: Flow<Boolean>
     val isCompactCardViewEnabled: Flow<Boolean>
 
     suspend fun setNotifications(enabled: Boolean)
@@ -15,5 +16,6 @@ interface SettingsManager {
     suspend fun disableAds()
     suspend fun setCardsTab(enabled: Boolean)
     suspend fun setCategoriesTab(enabled: Boolean)
+    suspend fun setPlacesTab(enabled: Boolean)
     suspend fun setCompactCardView(enabled: Boolean)
 }

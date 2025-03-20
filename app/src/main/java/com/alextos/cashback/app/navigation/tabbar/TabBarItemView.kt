@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -29,6 +30,7 @@ fun RowScope.TabBarItemView(
                     is TabBarItem.Cards -> Icons.Default.Home
                     is TabBarItem.Settings -> Icons.Default.Settings
                     is TabBarItem.Categories -> Icons.Default.List
+                    is TabBarItem.Places -> Icons.Default.LocationOn
                 },
                 contentDescription = tab.title.asString()
             )

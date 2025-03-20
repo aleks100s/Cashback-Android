@@ -83,6 +83,7 @@
     <string name="tab_bar_settings">Настройки</string>
     <string name="tab_bar_cards">Мои карты</string>
     <string name="tab_bar_categories">Категории</string>
+    <string name="tab_bar_places">Места</string>
     <string name="common_restore_all">Восстановить все</string>
     <string name="common_restore">Восстановить</string>
     <string name="trashbin_empty">Корзина пуста</string>
@@ -97,6 +98,7 @@
     <string name="settings_tabs_footer">Отключение разделов позволит сфокусироваться только на необходимом Вам функционале. Разделы можно включить или отключить в любое время без потери данных.</string>
     <string name="settings_tabs_cards">Мои карты</string>
     <string name="settings_tabs_categories">Категории</string>
+    <string name="settings_tabs_places">Места</string>
     <string name="monthly_notification_title">Пора добавить кэшбэк</string>
     <string name="monthly_notification_subtitle">Не забудьте выбрать и сохранить кэшбэк в этом месяце</string>
     <string name="monthly_notification_channel_title">Ежемесячные напоминания</string>
