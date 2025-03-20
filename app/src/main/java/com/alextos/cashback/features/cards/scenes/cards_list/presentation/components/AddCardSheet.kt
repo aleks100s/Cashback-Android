@@ -21,6 +21,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.alextos.cashback.R
@@ -40,6 +42,7 @@ fun AddCardSheet(
     onCurrencyChange: (Currency) -> Unit,
     onSaveTapped: () -> Unit
 ) {
+    val haptic = LocalHapticFeedback.current
     LazyColumn(
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 32.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -95,6 +98,7 @@ fun AddCardSheet(
                                 modifier = Modifier
                                     .minimumInteractiveComponentSize()
                                     .clickable {
+                                        haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
                                         onColorChange(preset.toHex())
                                     }
                                     .clip(RoundedCornerShape(50))
@@ -123,6 +127,7 @@ fun AddCardSheet(
                         selected = currency,
                         options = Currency.entries
                     ) {
+                        haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
                         onCurrencyChange(it)
                     }
                 }

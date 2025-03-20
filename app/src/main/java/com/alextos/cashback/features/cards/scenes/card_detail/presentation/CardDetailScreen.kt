@@ -45,6 +45,7 @@ import com.alextos.cashback.common.UiText
 import com.alextos.cashback.common.ads.AdBannerView
 import com.alextos.cashback.common.makeColor
 import com.alextos.cashback.common.views.ColorPicker
+import com.alextos.cashback.common.views.CustomButton
 import com.alextos.cashback.common.views.CustomTextField
 import com.alextos.cashback.common.views.CustomWideButton
 import com.alextos.cashback.common.views.Dialog
@@ -84,17 +85,15 @@ fun CardDetailScreen(
             }
         },
         actions = {
-            IconButton(
-                onClick = {
-                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                    viewModel.onAction(CardDetailAction.ToggleEditMode)
+            CustomButton(
+                title = if (state.isEditMode) {
+                    stringResource(R.string.common_save)
+                } else {
+                    stringResource(R.string.card_detail_edit)
                 }
             ) {
-                if (state.isEditMode) {
-                    Icon(Icons.Filled.Check, stringResource(R.string.common_save))
-                } else {
-                    Icon(Icons.Filled.Edit, stringResource(R.string.card_detail_edit))
-                }
+                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                viewModel.onAction(CardDetailAction.ToggleEditMode)
             }
         },
         bannerView = if (state.isAdVisible) {

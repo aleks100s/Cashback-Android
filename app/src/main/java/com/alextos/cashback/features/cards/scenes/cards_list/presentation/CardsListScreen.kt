@@ -77,8 +77,10 @@ fun CardsListScreen(
             }
         },
         actions = {
-            CustomButton(stringResource(R.string.card_list_edit_button)) {
-                viewModel.onAction(CardsListAction.EditButtonTapped)
+            if (state.allCards.isNotEmpty()) {
+                CustomButton(stringResource(R.string.card_list_edit_button)) {
+                    viewModel.onAction(CardsListAction.EditButtonTapped)
+                }
             }
         }
     ) {

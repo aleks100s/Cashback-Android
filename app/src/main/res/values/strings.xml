@@ -57,7 +57,7 @@
     <string name="category_detail_edit_title">Редактировать категорию</string>
     <string name="category_detail_added">Категория добавлена</string>
     <string name="category_detail_changeded">Категория изменена</string>
-    <string name="card_detail_edit">Редактировать</string>
+    <string name="card_detail_edit">Изменить</string>
     <string name="card_detail_edit_card_info">Редактировать данные карты</string>
     <string name="card_detail_card_name">Название карты</string>
     <string name="card_detail_in_favourites">В избранном</string>
