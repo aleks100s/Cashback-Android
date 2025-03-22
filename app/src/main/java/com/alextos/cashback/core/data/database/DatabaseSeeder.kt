@@ -8,6 +8,7 @@ import com.alextos.cashback.core.data.entities.mappers.toEntity
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.domain.models.Cashback
 import com.alextos.cashback.core.domain.models.Category
+import com.alextos.cashback.core.domain.models.Place
 import com.alextos.cashback.core.domain.models.predefined.PredefinedCategory
 import com.alextos.cashback.core.domain.models.predefined.emoji
 import com.alextos.cashback.core.domain.models.predefined.info
@@ -73,6 +74,17 @@ class DatabaseSeeder(private val context: Context) : RoomDatabase.Callback() {
                     "('${entity.id}', '${entity.categoryId}', ${entity.percent}, '${entity.cardId}', ${entity.order})"
                 }
                 db.execSQL("INSERT INTO cashback (id, categoryId, percent, cardId, `order`) VALUES $cashbackCommand;")
+            }
+
+            val places = listOf(
+                Place(name = "Магазин через дорогу", category = categories.random(), isFavourite = true),
+                Place(name = "Бар", category = categories.random(), isFavourite = false),
+                Place(name = "Кафешка в центре", category = categories.random(), isFavourite = false),
+                Place(name = "Любимая шаурма", category = categories.random(), isFavourite = false),
+            )
+            places.forEach { place ->
+                val placeCommand = "('${place.id}', '${place.name}', '${place.category.id}', ${if (place.isFavourite) 1 else 0})"
+                db.execSQL("INSERT INTO places (id, name, categoryId, isFavourite) VALUES $placeCommand;")
             }
         }
     }
