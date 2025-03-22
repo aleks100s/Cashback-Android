@@ -25,6 +25,7 @@ import com.alextos.cashback.app.navigation.tabbar.TabBarView
 import com.alextos.cashback.app.onboarding.OnboardingScreen
 import com.alextos.cashback.features.cards.CardsRoot
 import com.alextos.cashback.features.category.CategoryRoot
+import com.alextos.cashback.features.places.PlacesRoot
 import com.alextos.cashback.features.settings.SettingsRoot
 import org.koin.androidx.compose.koinViewModel
 
@@ -68,7 +69,7 @@ fun ApplicationRoot(viewModel: ApplicationViewModel = koinViewModel()) {
             }
 
             composable<TabBarItem.Places> {
-                Text("Places")
+                PlacesRoot()
             }
         }
     }

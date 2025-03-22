@@ -142,4 +142,11 @@
     <string name="cards_settings_compact_card_view_title">Настройки отображения карт</string>
     <string name="card_list_edit_button">Настроить</string>
     <string name="cards_settings_title">Настройки</string>
+    <string name="places_title">Места</string>
+    <string name="places_add_place">Добавить место</string>
+    <string name="places_empty_view_title">Добавьте любимые места, чтобы не забыть категорию кэшбэка</string>
+    <string name="places_search_placeholder">Категория кэшбэка</string>
+    <string name="places_no_search_results">Такое место не найдено.\nПопробуйте изменить запрос</string>
+    <string name="places_edit_button">Редактировать место</string>
+    <string name="places_delete_button">Удалить место</string>
 </resources>
