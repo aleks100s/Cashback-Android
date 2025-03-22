@@ -55,13 +55,7 @@ class PlaceDetailViewModel(
                 if (state.value.isEditMode) {
                     analyticsService.logEvent(AnalyticsEvent.PlaceDetailDoneButtonTapped)
                     viewModelScope.launch(Dispatchers.IO) {
-                        state.value.category?.let {
-                            val place = Place(
-                                id = placeId,
-                                name = state.value.placeName,
-                                category = it,
-                                isFavourite = state.value.isFavourite
-                            )
+                        makePlace()?.let { place ->
                             placeRepository.createOrUpdate(place)
                         }
                     }
@@ -70,6 +64,27 @@ class PlaceDetailViewModel(
                 }
                 _state.update { it.copy(isEditMode = !state.value.isEditMode) }
             }
+
+            is PlaceDetailAction.ToggleFavourite -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    makePlace()?.let { place ->
+                        placeRepository.createOrUpdate(place.copy(isFavourite = !place.isFavourite))
+                    }
+                }
+            }
         }
+    }
+
+    private fun makePlace(): Place? {
+        state.value.category?.let {
+            return Place(
+                id = placeId,
+                name = state.value.placeName,
+                category = it,
+                isFavourite = state.value.isFavourite
+            )
+        }
+
+        return null
     }
 }

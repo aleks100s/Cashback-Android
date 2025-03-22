@@ -149,4 +149,10 @@
     <string name="places_no_search_results">Такое место не найдено.\nПопробуйте изменить запрос</string>
     <string name="places_edit_button">Редактировать место</string>
     <string name="places_delete_button">Удалить место</string>
+    <string name="place_detail_about_place">Данные о заведении</string>
+    <string name="place_detail_cards">Карты, которыми можно оплатить</string>
+    <string name="place_detail_place_name">Название</string>
+    <string name="place_detail_category">Категория</string>
+    <string name="place_detail_add_to_favourite">Добавить в избранное</string>
+    <string name="place_detail_in_favourite">В избранном</string>
 </resources>
