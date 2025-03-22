@@ -18,4 +18,8 @@ class PlaceRepositoryImpl(val placeDao: PlaceDao): PlaceRepository {
     override suspend fun deletePlace(place: Place) {
         placeDao.delete(place.toEntity())
     }
+
+    override suspend fun createOrUpdate(place: Place) {
+        placeDao.upsert(place.toEntity())
+    }
 }

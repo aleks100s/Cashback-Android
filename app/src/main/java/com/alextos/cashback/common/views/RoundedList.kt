@@ -90,6 +90,7 @@ fun <Element: ListElement> RoundedList(
                 if (allowSwipe) {
                     SwipeableItem(
                         modifier = Modifier
+                            .animateItem()
                             .clip(backgroundTopCornersShape)
                             .clip(backgroundBottomCornersShape),
                         content = {
@@ -150,6 +151,7 @@ private fun <Element> LazyItemScope.ContextMenuView(
     onItemClick: (Element) -> Unit,
 ) {
     ContextMenu(
+        modifier = Modifier.animateItem(),
         element = item,
         content = {
             itemView(

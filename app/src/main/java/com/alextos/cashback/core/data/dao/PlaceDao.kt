@@ -12,11 +12,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PlaceDao {
     @Transaction
-    @Query("SELECT * FROM places")
+    @Query("SELECT * FROM places ORDER BY isFavourite DESC")
     fun getAll(): Flow<List<PlaceWithCategory>>
 
     @Upsert
-    suspend fun insert(place: PlaceEntity)
+    suspend fun upsert(place: PlaceEntity)
 
     @Delete
     suspend fun delete(place: PlaceEntity)

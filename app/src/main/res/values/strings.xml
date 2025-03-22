@@ -11,8 +11,8 @@
     <string name="cards_list_item_favourite">Избранное</string>
     <string name="common_search">Поиск</string>
     <string name="cards_list_no_search_results">Такой кэшбэк не найден.\nПопробуйте изменить запрос</string>
-    <string name="cards_list_added_to_favourite">Добавлено в избранное</string>
-    <string name="cards_list_removed_from_favourite">Удалено из избранного</string>
+    <string name="common_added_to_favourite">Добавлено в избранное</string>
+    <string name="common_removed_from_favourite">Удалено из избранного</string>
     <string name="card_detail_cashback_list_title">Кэшбэк на карте</string>
     <string name="card_detail_cashback_currency_form">Форма выплаты кэшбэка: %1$s</string>
     <string name="cards_list_card_icon">Иконка карты</string>

@@ -82,9 +82,9 @@ class CardsListViewModel(
                 toastService.showToast(
                     UiText.StringResourceId(
                         if (!action.card.isFavourite) {
-                            R.string.cards_list_added_to_favourite
+                            R.string.common_added_to_favourite
                         } else {
-                            R.string.cards_list_removed_from_favourite
+                            R.string.common_removed_from_favourite
                         }
                     )
                 )

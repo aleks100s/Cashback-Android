@@ -2,9 +2,12 @@ package com.alextos.cashback.features.places.scenes.places.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.alextos.cashback.R
+import com.alextos.cashback.common.UiText
 import com.alextos.cashback.core.domain.repository.PlaceRepository
 import com.alextos.cashback.core.domain.services.AnalyticsEvent
 import com.alextos.cashback.core.domain.services.AnalyticsService
+import com.alextos.cashback.core.domain.services.ToastService
 import com.alextos.cashback.features.places.scenes.places.domain.FilterPlacesUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +18,8 @@ import kotlinx.coroutines.launch
 class PlacesViewModel(
     private val placeRepository: PlaceRepository,
     private val analyticsService: AnalyticsService,
-    private val filterUseCase: FilterPlacesUseCase
+    private val filterUseCase: FilterPlacesUseCase,
+    private val toastService: ToastService
 ): ViewModel() {
     private val _state = MutableStateFlow(PlacesState())
     val state = _state.asStateFlow()
@@ -49,6 +53,19 @@ class PlacesViewModel(
             }
             is PlacesAction.FavouriteToggle -> {
                 analyticsService.logEvent(AnalyticsEvent.PlacesFavouriteToggle)
+                viewModelScope.launch(Dispatchers.IO) {
+                    val place = action.place
+                    placeRepository.createOrUpdate(place.copy(isFavourite = !place.isFavourite))
+                }
+                toastService.showToast(
+                    UiText.StringResourceId(
+                        if (!action.place.isFavourite) {
+                            R.string.common_added_to_favourite
+                        } else {
+                            R.string.common_removed_from_favourite
+                        }
+                    )
+                )
             }
             is PlacesAction.AddPlace -> {
                 analyticsService.logEvent(AnalyticsEvent.PlacesAddPlaceButtonTapped)
