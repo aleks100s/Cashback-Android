@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface PlaceRepository {
     fun getPlaces(): Flow<List<Place>>
+    fun getPlace(id: String): Flow<Place?>
     suspend fun deletePlace(place: Place)
     suspend fun createOrUpdate(place: Place)
 }

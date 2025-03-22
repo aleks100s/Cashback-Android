@@ -81,7 +81,7 @@ fun CardDetailScreen(
                 title = if (state.isEditMode) {
                     stringResource(R.string.common_save)
                 } else {
-                    stringResource(R.string.card_detail_edit)
+                    stringResource(R.string.common_edit)
                 }
             ) {
                 haptic.performHapticFeedback(HapticFeedbackType.LongPress)

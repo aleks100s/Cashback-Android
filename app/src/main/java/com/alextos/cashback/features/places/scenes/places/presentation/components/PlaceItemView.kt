@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,7 +26,7 @@ fun PlaceItemView(
         Column(horizontalAlignment = Alignment.Start) {
             Text(text = place.name)
 
-            Text(text = place.category.name)
+            Text(text = place.category.name, color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f))
         }
 
         FavouriteButton(

@@ -15,6 +15,10 @@ class PlaceRepositoryImpl(val placeDao: PlaceDao): PlaceRepository {
         }
     }
 
+    override fun getPlace(id: String): Flow<Place?> {
+        return placeDao.getPlace(id).map { it?.toDomain() }
+    }
+
     override suspend fun deletePlace(place: Place) {
         placeDao.delete(place.toEntity())
     }

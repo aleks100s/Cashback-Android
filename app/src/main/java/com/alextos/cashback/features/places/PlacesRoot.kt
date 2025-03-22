@@ -2,7 +2,6 @@ package com.alextos.cashback.features.places
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.glance.text.Text
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -39,7 +38,8 @@ fun PlacesRoot(modifier: Modifier = Modifier) {
                 val id = args.placeId
 
                 PlaceDetailScreen(
-                    viewModel = koinViewModel()
+                    viewModel = koinViewModel(),
+                    goBack = { navController.popBackStack() },
                 )
             }
         }

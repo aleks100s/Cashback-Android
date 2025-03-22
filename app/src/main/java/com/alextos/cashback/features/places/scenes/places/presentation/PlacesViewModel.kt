@@ -1,13 +1,17 @@
 package com.alextos.cashback.features.places.scenes.places.presentation
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import com.alextos.cashback.R
 import com.alextos.cashback.common.UiText
 import com.alextos.cashback.core.domain.repository.PlaceRepository
 import com.alextos.cashback.core.domain.services.AnalyticsEvent
 import com.alextos.cashback.core.domain.services.AnalyticsService
 import com.alextos.cashback.core.domain.services.ToastService
+import com.alextos.cashback.features.cards.CardsRoute
+import com.alextos.cashback.features.places.PlacesRoute
 import com.alextos.cashback.features.places.scenes.places.domain.FilterPlacesUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

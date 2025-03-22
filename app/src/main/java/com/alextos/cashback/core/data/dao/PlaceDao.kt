@@ -15,6 +15,9 @@ interface PlaceDao {
     @Query("SELECT * FROM places ORDER BY isFavourite DESC")
     fun getAll(): Flow<List<PlaceWithCategory>>
 
+    @Query("SELECT * FROM places WHERE id = :id")
+    fun getPlace(id: String): Flow<PlaceWithCategory?>
+
     @Upsert
     suspend fun upsert(place: PlaceEntity)
 
