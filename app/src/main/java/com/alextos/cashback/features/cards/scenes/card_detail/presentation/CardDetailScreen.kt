@@ -12,19 +12,18 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -39,10 +38,10 @@ import com.alextos.cashback.common.makeColor
 import com.alextos.cashback.common.views.ColorPicker
 import com.alextos.cashback.common.views.CustomButton
 import com.alextos.cashback.common.views.CustomDivider
-import com.alextos.cashback.common.views.CustomTextField
 import com.alextos.cashback.common.views.CustomWideButton
 import com.alextos.cashback.common.views.Dialog
 import com.alextos.cashback.common.views.CustomLabel
+import com.alextos.cashback.common.views.EmptyView
 import com.alextos.cashback.common.views.FavouriteButton
 import com.alextos.cashback.common.views.PickerDropdown
 import com.alextos.cashback.common.views.RoundedList
@@ -167,23 +166,10 @@ private fun CardDetailView(
             )
         },
         emptyView = {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.credit_card),
-                    contentDescription = stringResource(R.string.card_detail_no_cashback),
-                    tint = color.copy(alpha = 0.3f),
-                )
-
-                Text(
-                    text = stringResource(R.string.card_detail_no_cashback),
-                    style = MaterialTheme.typography.headlineSmall,
-                    textAlign = TextAlign.Center
-                )
-            }
+            EmptyView(
+                title = stringResource(R.string.card_detail_no_cashback),
+                painter = painterResource(R.drawable.credit_card)
+            )
         },
         topView = {
             Text(
@@ -251,15 +237,16 @@ private fun EditCardView(
                         .fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    CustomTextField(
+                    OutlinedTextField(
+                        modifier = Modifier.fillMaxWidth(),
                         value = state.cardName,
                         onValueChange = {
                             onAction(CardDetailAction.ChangeCardName(it))
                         },
-                        label = stringResource(R.string.card_detail_card_name)
+                        label = {
+                            Text(text = stringResource(R.string.card_detail_card_name))
+                        }
                     )
-
-                    CustomDivider()
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -316,14 +303,9 @@ private fun EditCardView(
         }
 
         item {
-            SectionView(
-                title = stringResource(R.string.card_detail_for_brave_users),
-                footer = stringResource(R.string.card_detail_this_action_cannot_be_undone)
-            ) {
+            SectionView {
                 Column(
-                    modifier = Modifier
-                        .padding(vertical = 8.dp)
-                        .fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     if (state.card?.cashback?.isNotEmpty() == true) {

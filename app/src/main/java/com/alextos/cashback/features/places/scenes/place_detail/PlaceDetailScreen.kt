@@ -17,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -29,7 +28,6 @@ import com.alextos.cashback.common.views.CustomDivider
 import com.alextos.cashback.common.views.CustomLabel
 import com.alextos.cashback.common.views.CustomWideButton
 import com.alextos.cashback.common.views.EmptySearchView
-import com.alextos.cashback.common.views.EmptyView
 import com.alextos.cashback.common.views.FavouriteButton
 import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.common.views.SectionView

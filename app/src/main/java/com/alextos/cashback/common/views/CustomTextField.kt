@@ -3,6 +3,7 @@ package com.alextos.cashback.common.views
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,7 +28,7 @@ fun CustomTextField(
         )
 
         footer?.let {
-            Text(text = footer)
+            Text(text = footer, color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f))
         }
     }
 }
