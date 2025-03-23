@@ -29,7 +29,6 @@ import com.alextos.cashback.common.views.CustomLabel
 import com.alextos.cashback.common.views.FavouriteButton
 import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.common.views.SectionView
-import com.alextos.cashback.features.cards.scenes.cashback_detail.presentation.CashbackDetailAction
 
 @Composable
 fun PlaceDetailScreen(
@@ -179,10 +178,10 @@ private fun PlaceDetailView(
             }
         }
 
-        if (!state.isEditMode && !state.isCreateMode) {
-            SectionView(title = stringResource(R.string.place_detail_cards)) {
-
-            }
-        }
+//        if (!state.isEditMode && !state.isCreateMode) {
+//            SectionView(title = stringResource(R.string.place_detail_cards)) {
+//
+//            }
+//        }
     }
 }

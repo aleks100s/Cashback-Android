@@ -211,7 +211,7 @@ private fun SettingsView(
                     onAction(SettingsAction.ToggleCardsTab)
                 }
 
-                HorizontalDivider()
+                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
 
                 FeatureToggle(
                     stringResource(R.string.settings_tabs_categories),
@@ -220,7 +220,7 @@ private fun SettingsView(
                     onAction(SettingsAction.ToggleCategoriesTab)
                 }
 
-                HorizontalDivider()
+                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
 
                 FeatureToggle(
                     stringResource(R.string.settings_tabs_places),

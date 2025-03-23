@@ -10,6 +10,7 @@ import com.alextos.cashback.core.domain.services.AnalyticsEvent
 import com.alextos.cashback.core.domain.services.AnalyticsService
 import com.alextos.cashback.core.domain.services.AppInfoService
 import com.alextos.cashback.core.domain.services.AppInstallationSource
+import com.alextos.cashback.core.domain.settings.SettingsManager
 import com.alextos.cashback.features.category.CategoryMediator
 import com.alextos.cashback.features.places.PlacesRoute
 import kotlinx.coroutines.Dispatchers
@@ -25,6 +26,7 @@ class PlaceDetailViewModel(
     private val placeRepository: PlaceRepository,
     private val analyticsService: AnalyticsService,
     private val categoryMediator: CategoryMediator,
+    private val settingsManager: SettingsManager
 ): ViewModel() {
     private val placeId = savedStateHandle.toRoute<PlacesRoute.PlaceDetails>().placeId
 
@@ -59,6 +61,13 @@ class PlaceDetailViewModel(
             categoryMediator.selectedCategory
                 .collect { category ->
                     onAction(PlaceDetailAction.CategorySelected(category))
+                }
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            settingsManager.isAdEnabled
+                .collect { isEnabled ->
+                    _state.update { it.copy(isAdVisible = isEnabled) }
                 }
         }
     }
