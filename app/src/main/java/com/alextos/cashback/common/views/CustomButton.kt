@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -24,6 +25,7 @@ fun CustomButton(
             .clickable(enabled) { onTap() }
             .padding(horizontal = 16.dp, vertical = 8.dp),
         text = title,
+        fontWeight = FontWeight.Medium,
         color = if (enabled) color else MaterialTheme.colorScheme.onSurface,
     )
 }

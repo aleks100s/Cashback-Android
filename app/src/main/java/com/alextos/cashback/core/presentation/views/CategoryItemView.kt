@@ -33,7 +33,7 @@ fun CategoryItemView(
     Row(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         CategoryIconView(category = category, size = CategoryIconSize.Medium)
 

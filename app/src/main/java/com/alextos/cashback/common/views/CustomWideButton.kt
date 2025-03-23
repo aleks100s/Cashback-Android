@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -29,6 +30,7 @@ fun CustomWideButton(
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 12.dp),
         text = title,
+        fontWeight = FontWeight.Medium,
         color = color
     )
 }

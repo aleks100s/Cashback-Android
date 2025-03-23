@@ -131,7 +131,7 @@ private fun PlaceDetailView(
             Row(
                 modifier = Modifier
                     .padding(end = 16.dp)
-                    .padding(vertical = 6.dp)
+                    .padding(vertical = 8.dp)
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
@@ -159,7 +159,7 @@ private fun PlaceDetailView(
                 Row(
                     modifier = Modifier
                         .padding(start = 16.dp, end = 4.dp)
-                        .padding(vertical = 2.dp)
+                        .padding(vertical = 4.dp)
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically

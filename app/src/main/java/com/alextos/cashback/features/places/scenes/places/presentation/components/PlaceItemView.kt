@@ -29,12 +29,12 @@ fun PlaceItemView(
     val color = MaterialTheme.colorScheme.primary
     Row(
         modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
             modifier = Modifier
-                .size(44.dp)
+                .size(48.dp)
                 .background(
                     brush = Brush.verticalGradient(
                         colors = listOf(
