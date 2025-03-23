@@ -58,7 +58,8 @@ fun EmptyView(
             Icon(
                 painter = painter,
                 tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
-                contentDescription = title
+                contentDescription = title,
+                modifier = Modifier.size(44.dp)
             )
 
             Text(

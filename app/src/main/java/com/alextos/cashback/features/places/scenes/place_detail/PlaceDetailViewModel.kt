@@ -16,6 +16,7 @@ import com.alextos.cashback.features.places.PlacesRoute
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.UUID
@@ -43,6 +44,7 @@ class PlaceDetailViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             placeId?.let {
                 placeRepository.getPlace(id = it)
+                    .distinctUntilChanged()
                     .collect { place ->
                         _state.update { state ->
                             state.copy(

@@ -166,25 +166,10 @@ private fun CardsListView(
             CircularProgressIndicator()
         }
     } else if (state.allCards.isEmpty()) {
-        Box(
-            modifier = Modifier
-                .padding(horizontal = 32.dp)
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Icon(
-                    painter = painterResource(R.drawable.credit_card),
-                    contentDescription = stringResource(R.string.cards_list_empty),
-                    tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
-                )
-
-                Text(
-                    text = stringResource(R.string.cards_list_empty),
-                    textAlign = TextAlign.Center
-                )
-            }
-        }
+        EmptyView(
+            title = stringResource(R.string.cards_list_empty),
+            painter = painterResource(R.drawable.credit_card)
+        )
     } else {
         val scrollState: LazyListState = rememberLazyListState()
 
@@ -201,7 +186,7 @@ private fun CardsListView(
                 ) {
                     Column(
                         modifier = Modifier
-                            .background(MaterialTheme.colorScheme.background)
+                            .background(MaterialTheme.colorScheme.background.copy(alpha = 0.5f))
                             .padding(bottom = 4.dp)
                     ) {
                         SearchBar(
@@ -210,6 +195,7 @@ private fun CardsListView(
                         ) {
                             onAction(CardsListAction.SearchQueryChange(it))
                         }
+
                         LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             items(state.popularCategories) { category ->
                                 FilterItemView(
