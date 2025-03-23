@@ -27,6 +27,7 @@ import com.alextos.cashback.common.ads.AdBannerView
 import com.alextos.cashback.common.views.CustomButton
 import com.alextos.cashback.common.views.CustomDivider
 import com.alextos.cashback.common.views.CustomLabel
+import com.alextos.cashback.common.views.CustomWideButton
 import com.alextos.cashback.common.views.EmptySearchView
 import com.alextos.cashback.common.views.EmptyView
 import com.alextos.cashback.common.views.FavouriteButton
@@ -194,6 +195,17 @@ private fun PlaceDetailView(
                             }
                         }
                     }
+                }
+            }
+        }
+
+        if (state.isEditMode) {
+            SectionView {
+                CustomWideButton(
+                    title = stringResource(R.string.place_detail_delete),
+                    color = MaterialTheme.colorScheme.error
+                ) {
+                    onAction(PlaceDetailAction.DeletePlace)
                 }
             }
         }

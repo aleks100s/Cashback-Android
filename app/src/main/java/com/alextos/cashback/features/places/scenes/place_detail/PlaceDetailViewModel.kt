@@ -15,11 +15,9 @@ import com.alextos.cashback.core.domain.settings.SettingsManager
 import com.alextos.cashback.features.category.CategoryMediator
 import com.alextos.cashback.features.places.PlacesRoute
 import com.alextos.cashback.features.places.scenes.place_detail.components.PlaceCard
-import com.alextos.cashback.features.places.scenes.place_detail.components.PlaceCardView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -141,6 +139,14 @@ class PlaceDetailViewModel(
                     }
                 }
             }
+
+            is PlaceDetailAction.DeletePlace -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    makePlace()?.let {
+                        placeRepository.deletePlace(it)
+                    }
+                }
+            }
         }
     }
 
@@ -148,7 +154,7 @@ class PlaceDetailViewModel(
         state.value.category?.let {
             return Place(
                 id = placeId ?: UUID.randomUUID().toString(),
-                name = state.value.placeName,
+                name = state.value.placeName.trim(),
                 category = it,
                 isFavourite = state.value.isFavourite
             )

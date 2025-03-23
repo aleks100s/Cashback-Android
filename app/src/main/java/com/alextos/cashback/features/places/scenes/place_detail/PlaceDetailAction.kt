@@ -9,4 +9,5 @@ interface PlaceDetailAction {
     data object SelectCategory: PlaceDetailAction
     data class CategorySelected(val category: Category): PlaceDetailAction
     data object SavePlace: PlaceDetailAction
+    data object DeletePlace: PlaceDetailAction
 }
