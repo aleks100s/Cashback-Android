@@ -75,7 +75,6 @@ class ApplicationViewModel(
     }
 
     fun onTabChange(tab: TabBarItem) {
-        _currentTab.update { tab }
         when (tab) {
             TabBarItem.Cards -> {
                 analyticsService.logEvent(AnalyticsEvent.CardListAppear)

@@ -159,12 +159,8 @@ private fun <Element> LazyItemScope.ContextMenuView(
                     .animateItem()
                     .clip(topCornersShape)
                     .clip(bottomCornersShape)
-                    .background(
-                        MaterialTheme.colorScheme.surfaceColorAtElevation(
-                            4.dp
-                        )
-                    )
-                    .padding(vertical = 12.dp, horizontal = 16.dp),
+                    .background(MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp))
+                    .padding(vertical = 8.dp, horizontal = 16.dp),
                 item
             )
         },

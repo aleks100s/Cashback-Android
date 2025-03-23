@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,12 +33,12 @@ fun FavouriteButton(
     onFavouriteToggle: () -> Unit
 ) {
     val haptic = LocalHapticFeedback.current
-    var clicked by remember { mutableStateOf(false) }
+    var isAnimating by remember { mutableStateOf(false) }
     val scale by animateFloatAsState(
-        targetValue = if (clicked) 1.5f else 1f,
+        targetValue = if (isAnimating) 1.5f else 1f,
         animationSpec = tween(durationMillis = 300, easing = FastOutSlowInEasing),
         finishedListener = {
-            clicked = false
+            isAnimating = false
         }
     )
 
@@ -47,10 +48,9 @@ fun FavouriteButton(
             .scale(scale)
             .clip(CircleShape)
             .clickable {
-                clicked = true
+                isAnimating = true
                 onFavouriteToggle()
                 haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-
             }
             .size(32.dp),
         imageVector = if (isFavourite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,

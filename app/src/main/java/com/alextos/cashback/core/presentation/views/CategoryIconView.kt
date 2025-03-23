@@ -34,7 +34,7 @@ fun CategoryIconView(
             44.dp
         }
         is CategoryIconSize.Medium -> {
-            56.dp
+            48.dp
         }
     }
 
@@ -52,7 +52,7 @@ fun CategoryIconView(
             MaterialTheme.typography.headlineSmall
         }
         is CategoryIconSize.Medium -> {
-            MaterialTheme.typography.headlineMedium
+            MaterialTheme.typography.headlineSmall
         }
     }
 
