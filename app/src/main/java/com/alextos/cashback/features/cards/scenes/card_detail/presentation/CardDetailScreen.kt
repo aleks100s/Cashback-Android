@@ -38,6 +38,7 @@ import com.alextos.cashback.common.ads.AdBannerView
 import com.alextos.cashback.common.makeColor
 import com.alextos.cashback.common.views.ColorPicker
 import com.alextos.cashback.common.views.CustomButton
+import com.alextos.cashback.common.views.CustomDivider
 import com.alextos.cashback.common.views.CustomTextField
 import com.alextos.cashback.common.views.CustomWideButton
 import com.alextos.cashback.common.views.Dialog
@@ -258,7 +259,7 @@ private fun EditCardView(
                         label = stringResource(R.string.card_detail_card_name)
                     )
 
-                    HorizontalDivider()
+                    CustomDivider()
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -277,7 +278,7 @@ private fun EditCardView(
                         )
                     }
 
-                    HorizontalDivider()
+                    CustomDivider()
 
                     ColorPicker(
                         title = stringResource(R.string.card_detail_color),
@@ -287,7 +288,7 @@ private fun EditCardView(
                         }
                     )
 
-                    HorizontalDivider()
+                    CustomDivider()
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -333,7 +334,7 @@ private fun EditCardView(
                             onAction(CardDetailAction.DeleteAllCashback)
                         }
 
-                        HorizontalDivider(Modifier.padding(horizontal = 16.dp))
+                        CustomDivider()
                     }
 
                     CustomWideButton(

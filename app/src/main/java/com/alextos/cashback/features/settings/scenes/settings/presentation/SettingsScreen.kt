@@ -37,6 +37,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
 import com.alextos.cashback.common.ads.AdBannerView
 import com.alextos.cashback.common.views.CustomButton
+import com.alextos.cashback.common.views.CustomDivider
 import com.alextos.cashback.common.views.CustomWideButton
 import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.common.views.SectionView
@@ -180,7 +181,7 @@ private fun SettingsView(
                     onAction(SettingsAction.ExportData)
                 }
 
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                CustomDivider()
 
                 CustomWideButton(title = stringResource(R.string.settings_import_data)) {
                     onAction(SettingsAction.ShowImportAlert)
@@ -211,7 +212,7 @@ private fun SettingsView(
                     onAction(SettingsAction.ToggleCardsTab)
                 }
 
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                CustomDivider()
 
                 FeatureToggle(
                     stringResource(R.string.settings_tabs_categories),
@@ -220,7 +221,7 @@ private fun SettingsView(
                     onAction(SettingsAction.ToggleCategoriesTab)
                 }
 
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                CustomDivider()
 
                 FeatureToggle(
                     stringResource(R.string.settings_tabs_places),
@@ -240,7 +241,7 @@ private fun SettingsView(
                     onAction(SettingsAction.ShowCardTrashbin)
                 }
 
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                CustomDivider()
 
                 SectionItem(title = stringResource(R.string.settings_trashbin_categories)) {
                     onAction(SettingsAction.ShowCategoryTrashbin)
@@ -257,13 +258,13 @@ private fun SettingsView(
                     onAction(SettingsAction.ShareApp(AppType.GooglePlay))
                 }
 
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                CustomDivider()
 
                 CustomWideButton(title = stringResource(R.string.settings_share_app_rustore)) {
                     onAction(SettingsAction.ShareApp(AppType.RuStore))
                 }
 
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                CustomDivider()
 
                 CustomWideButton(title = stringResource(R.string.settings_share_app_ios)) {
                     onAction(SettingsAction.ShareApp(AppType.iOS))
@@ -279,7 +280,7 @@ private fun SettingsView(
                     onAction = onAction
                 )
 
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                CustomDivider()
 
                 ClickableItem(
                     title = stringResource(R.string.settings_app_build),

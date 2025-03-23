@@ -141,10 +141,7 @@ private fun PlacesView(
                 }
             },
             emptyView = {
-                EmptyView(
-                    title = stringResource(R.string.places_empty_view_title),
-                    icon = Icons.Default.LocationOn
-                )
+                EmptyView(title = stringResource(R.string.places_empty_view_title))
             },
             onItemClick = {
                 onAction(PlacesAction.PlaceSelected(it))

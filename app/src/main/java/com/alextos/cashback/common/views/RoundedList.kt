@@ -122,10 +122,7 @@ fun <Element: ListElement> RoundedList(
                 }
 
                 if (list.lastOrNull() != item) {
-                    HorizontalDivider(modifier = Modifier
-                        .background(MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp))
-                        .padding(start = 64.dp)
-                    )
+                    CustomDivider()
                 }
             }
 

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +30,7 @@ import com.alextos.cashback.common.views.SearchBar
 import com.alextos.cashback.core.presentation.views.CategoryItemView
 import com.alextos.cashback.common.UiText
 import com.alextos.cashback.common.views.CustomLabel
+import com.alextos.cashback.common.views.EmptyView
 
 @Composable
 fun CategoryListScreen(
@@ -110,22 +112,16 @@ private fun CategoryListView(
             }
         },
         emptyView = {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                Text(
-                    text = stringResource(R.string.category_list_no_search_results),
-                    textAlign = TextAlign.Center
-                )
-
-                Button(onClick = {
-                    onAction(CategoryListAction.CreateCategory(name = state.searchQuery))
-                }) {
-                    Text(text = stringResource(R.string.category_list_add_new_category))
+            EmptyView(
+                title = stringResource(R.string.category_list_no_search_results),
+                button = {
+                    Button(onClick = {
+                        onAction(CategoryListAction.CreateCategory(name = state.searchQuery))
+                    }) {
+                        Text(text = stringResource(R.string.category_list_add_new_category))
+                    }
                 }
-            }
+            )
         },
         onItemClick = {
             onAction(CategoryListAction.SelectCategory(it))

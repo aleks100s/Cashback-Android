@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
@@ -166,10 +165,7 @@ private fun CardsListView(
             CircularProgressIndicator()
         }
     } else if (state.allCards.isEmpty()) {
-        EmptyView(
-            title = stringResource(R.string.cards_list_empty),
-            painter = painterResource(R.drawable.credit_card)
-        )
+        EmptyView(title = stringResource(R.string.cards_list_empty))
     } else {
         val scrollState: LazyListState = rememberLazyListState()
 
@@ -213,10 +209,7 @@ private fun CardsListView(
 
             if (state.filteredCards.isEmpty()) {
                 item {
-                    EmptyView(
-                        title = stringResource(R.string.cards_list_no_search_results),
-                        painter = painterResource(R.drawable.credit_card)
-                    )
+                    EmptyView(title = stringResource(R.string.cards_list_no_search_results))
                 }
             } else {
                 items(state.filteredCards, key = { it.id }) { card ->
