@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
@@ -32,6 +33,7 @@ import com.alextos.cashback.R
 import com.alextos.cashback.common.UiText
 import com.alextos.cashback.common.views.ContextMenuItem
 import com.alextos.cashback.common.views.CustomLabel
+import com.alextos.cashback.common.views.EmptyView
 import com.alextos.cashback.common.views.RoundedList
 import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.common.views.SearchBar
@@ -42,7 +44,7 @@ import com.alextos.cashback.features.places.scenes.places.presentation.component
 fun PlacesScreen(
     modifier: Modifier = Modifier,
     viewModel: PlacesViewModel,
-    onPlaceSelected: (Place) -> Unit,
+    onPlaceSelected: (Place, Boolean) -> Unit,
     onAddPlace: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -67,7 +69,8 @@ fun PlacesScreen(
             state = state
         ) { action ->
             when (action) {
-                is PlacesAction.PlaceSelected -> onPlaceSelected(action.place)
+                is PlacesAction.PlaceSelected -> onPlaceSelected(action.place, false)
+                is PlacesAction.EditPlace -> onPlaceSelected(action.place, true)
                 else -> viewModel.onAction(action)
             }
         }
@@ -139,25 +142,10 @@ private fun PlacesView(
                 }
             },
             emptyView = {
-                Box(
-                    modifier = Modifier
-                        .padding(horizontal = 32.dp)
-                        .fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Icon(
-                            imageVector = Icons.Default.LocationOn,
-                            contentDescription = stringResource(R.string.places_empty_view_title),
-                            tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
-                        )
-
-                        Text(
-                            text = stringResource(R.string.places_empty_view_title),
-                            textAlign = TextAlign.Center
-                        )
-                    }
-                }
+                EmptyView(
+                    title = stringResource(R.string.places_empty_view_title),
+                    icon = Icons.Default.LocationOn
+                )
             },
             onItemClick = {
                 onAction(PlacesAction.PlaceSelected(it))

@@ -28,7 +28,7 @@ class PlaceDetailViewModel(
 ): ViewModel() {
     private val placeId = savedStateHandle.toRoute<PlacesRoute.PlaceDetails>().placeId
 
-    private val _state = MutableStateFlow(PlaceDetailState())
+    private val _state = MutableStateFlow(PlaceDetailState(isEditMode = savedStateHandle.toRoute<PlacesRoute.PlaceDetails>().isEditMode))
     val state = _state.asStateFlow()
 
     val bannerId = when (appInfoService.installationSource) {
@@ -46,7 +46,7 @@ class PlaceDetailViewModel(
                             state.copy(
                                 placeName = place?.name ?: "",
                                 category = place?.category,
-                                isFavourite = place?.isFavourite ?: false
+                                isFavourite = place?.isFavourite ?: false,
                             )
                         }
                     }

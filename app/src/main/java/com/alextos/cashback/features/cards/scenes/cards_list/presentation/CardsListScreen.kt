@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
@@ -21,6 +22,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -51,6 +53,7 @@ import com.alextos.cashback.features.cards.scenes.cards_list.presentation.compon
 import com.alextos.cashback.common.views.SearchBar
 import com.alextos.cashback.common.views.FilterItemView
 import com.alextos.cashback.common.views.CustomLabel
+import com.alextos.cashback.common.views.EmptyView
 import com.alextos.cashback.features.cards.scenes.cards_list.presentation.components.CardsSettingsSheet
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -224,15 +227,10 @@ private fun CardsListView(
 
             if (state.filteredCards.isEmpty()) {
                 item {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            stringResource(R.string.cards_list_no_search_results),
-                            textAlign = TextAlign.Center
-                        )
-                    }
+                    EmptyView(
+                        title = stringResource(R.string.cards_list_no_search_results),
+                        painter = painterResource(R.drawable.credit_card)
+                    )
                 }
             } else {
                 items(state.filteredCards, key = { it.id }) { card ->

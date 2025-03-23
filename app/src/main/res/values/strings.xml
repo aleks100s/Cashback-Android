@@ -48,8 +48,8 @@
     <string name="category_list_delete_category">Удалить категорию</string>
     <string name="category_list_category_removed">Категория удалена</string>
     <string name="common_remove">Удалить</string>
-    <string name="category_detail_title">Создать категорию</string>
-    <string name="category_list_create_category">Создать категорию</string>
+    <string name="category_detail_title">Добавить категорию</string>
+    <string name="category_list_create_category">Добавить категорию</string>
     <string name="category_detail_name">Название категории</string>
     <string name="category_detail_emoji">Emoji</string>
     <string name="category_detail_description">Описание категории</string>

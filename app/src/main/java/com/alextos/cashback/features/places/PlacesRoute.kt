@@ -10,7 +10,7 @@ sealed interface PlacesRoute {
     data object Places: PlacesRoute
 
     @Serializable
-    data class PlaceDetails(val placeId: String?): PlacesRoute
+    data class PlaceDetails(val placeId: String?, val isEditMode: Boolean): PlacesRoute
 
     @Serializable
     data object SelectCategory: PlacesRoute

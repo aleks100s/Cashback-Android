@@ -28,11 +28,11 @@ fun PlacesRoot(modifier: Modifier = Modifier) {
             composable<PlacesRoute.Places> {
                 PlacesScreen(
                     viewModel = koinViewModel(),
-                    onPlaceSelected = { place ->
-                        navController.navigate(PlacesRoute.PlaceDetails(place.id))
+                    onPlaceSelected = { place, isEdit ->
+                        navController.navigate(PlacesRoute.PlaceDetails(place.id, isEdit))
                     },
                     onAddPlace = {
-                        navController.navigate(PlacesRoute.PlaceDetails(null))
+                        navController.navigate(PlacesRoute.PlaceDetails(null, false))
                     }
                 )
             }
