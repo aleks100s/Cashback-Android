@@ -30,18 +30,19 @@ fun PlacesRoot(modifier: Modifier = Modifier) {
                     viewModel = koinViewModel(),
                     onPlaceSelected = { place ->
                         navController.navigate(PlacesRoute.PlaceDetails(place.id))
+                    },
+                    onAddPlace = {
+                        navController.navigate(PlacesRoute.PlaceDetails(null))
                     }
                 )
             }
 
-            horizontalComposableTransition<PlacesRoute.PlaceDetails> { navBackStackEntry ->
-                val args = navBackStackEntry.toRoute<PlacesRoute.PlaceDetails>()
-                val id = args.placeId
-
+            horizontalComposableTransition<PlacesRoute.PlaceDetails> {
                 PlaceDetailScreen(
                     viewModel = koinViewModel(),
                     goBack = { navController.popBackStack() },
-                    onCategorySelect = { navController.navigate(PlacesRoute.SelectCategory) }
+                    onCategorySelect = { navController.navigate(PlacesRoute.SelectCategory) },
+                    onSave = { navController.popBackStack() }
                 )
             }
 

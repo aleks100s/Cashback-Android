@@ -8,4 +8,5 @@ interface PlaceDetailAction {
     data class ChangeName(val name: String): PlaceDetailAction
     data object SelectCategory: PlaceDetailAction
     data class CategorySelected(val category: Category): PlaceDetailAction
+    data object SavePlace: PlaceDetailAction
 }

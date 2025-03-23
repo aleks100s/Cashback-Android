@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 class PlaceDetailViewModel(
     savedStateHandle: SavedStateHandle,
@@ -38,16 +39,20 @@ class PlaceDetailViewModel(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            placeRepository.getPlace(id = placeId)
-                .collect { place ->
-                    _state.update { state ->
-                        state.copy(
-                            placeName = place?.name ?: "",
-                            category = place?.category,
-                            isFavourite = place?.isFavourite ?: false
-                        )
+            placeId?.let {
+                placeRepository.getPlace(id = it)
+                    .collect { place ->
+                        _state.update { state ->
+                            state.copy(
+                                placeName = place?.name ?: "",
+                                category = place?.category,
+                                isFavourite = place?.isFavourite ?: false
+                            )
+                        }
                     }
-                }
+            } ?: run {
+                _state.update { it.copy(isCreateMode = true) }
+            }
         }
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -75,6 +80,7 @@ class PlaceDetailViewModel(
             }
 
             is PlaceDetailAction.ToggleFavourite -> {
+                analyticsService.logEvent(AnalyticsEvent.PlaceDetailToggleFavourite)
                 viewModelScope.launch(Dispatchers.IO) {
                     makePlace()?.let { place ->
                         placeRepository.createOrUpdate(place.copy(isFavourite = !place.isFavourite))
@@ -87,11 +93,24 @@ class PlaceDetailViewModel(
             }
 
             is PlaceDetailAction.SelectCategory -> {
-                analyticsService.logEvent(AnalyticsEvent.PlaceDetailSelectCategoryButtonTapped)
+                if (state.value.isEditMode) {
+                    analyticsService.logEvent(AnalyticsEvent.PlaceDetailSelectCategoryButtonTapped)
+                } else if (state.value.isCreateMode) {
+                    analyticsService.logEvent(AnalyticsEvent.AddPlaceSelectCategoryButtonTapped)
+                }
             }
 
             is PlaceDetailAction.CategorySelected -> {
                 _state.update { it.copy(category = action.category) }
+            }
+
+            is PlaceDetailAction.SavePlace -> {
+                analyticsService.logEvent(AnalyticsEvent.AddPlaceSaveButtonTapped)
+                viewModelScope.launch(Dispatchers.IO) {
+                    makePlace()?.let { place ->
+                        placeRepository.createOrUpdate(place)
+                    }
+                }
             }
         }
     }
@@ -99,7 +118,7 @@ class PlaceDetailViewModel(
     private fun makePlace(): Place? {
         state.value.category?.let {
             return Place(
-                id = placeId,
+                id = placeId ?: UUID.randomUUID().toString(),
                 name = state.value.placeName,
                 category = it,
                 isFavourite = state.value.isFavourite

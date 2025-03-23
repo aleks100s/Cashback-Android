@@ -10,6 +10,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -28,6 +29,11 @@ import com.alextos.cashback.common.views.SearchBar
 import com.alextos.cashback.core.presentation.views.CategoryItemView
 import com.alextos.cashback.common.UiText
 import com.alextos.cashback.common.views.CustomLabel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun CategoryListScreen(
@@ -42,6 +48,7 @@ fun CategoryListScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val haptic = LocalHapticFeedback.current
+    val scope = rememberCoroutineScope()
 
     Screen(
         modifier = modifier,

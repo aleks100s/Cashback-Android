@@ -70,7 +70,6 @@ enum class AnalyticsEvent(val rawValue: String) {
 
     PlaceDetailDoneButtonTapped("Place Detail Done Button Tapped"),
     PlaceDetailSelectCategoryButtonTapped("Place Detail Select Category Button Tapped"),
-    PlaceDetailFavouriteToggle("Place Detail Favourite Toggle"),
     PlaceDetailDelete("Place Detail Delete"),
     PlaceDetailToggleFavourite("Place Detail Toggle Favourite"),
     PlaceDetailEditButtonTapped("Place Detail Edit Button Tapped"),

@@ -5,6 +5,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Done
+import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -22,23 +25,26 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
 import com.alextos.cashback.common.ads.AdBannerView
 import com.alextos.cashback.common.views.CustomButton
+import com.alextos.cashback.common.views.CustomLabel
 import com.alextos.cashback.common.views.FavouriteButton
 import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.common.views.SectionView
+import com.alextos.cashback.features.cards.scenes.cashback_detail.presentation.CashbackDetailAction
 
 @Composable
 fun PlaceDetailScreen(
     modifier: Modifier = Modifier,
     viewModel: PlaceDetailViewModel,
     goBack: () -> Unit,
-    onCategorySelect: () -> Unit
+    onCategorySelect: () -> Unit,
+    onSave: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val haptic = LocalHapticFeedback.current
 
     Screen(
         modifier = modifier,
-        title = state.placeName,
+        title = if (state.isCreateMode) stringResource(R.string.add_place_title) else state.placeName,
         goBack = goBack,
         bannerView = {
             if (state.isAdVisible) {
@@ -46,17 +52,36 @@ fun PlaceDetailScreen(
             }
         },
         actions = {
-            CustomButton(
-                title = if (state.isEditMode) {
-                    stringResource(R.string.common_save)
-                } else {
-                    stringResource(R.string.common_edit)
+            if (!state.isCreateMode) {
+                CustomButton(
+                    title = if (state.isEditMode) {
+                        stringResource(R.string.common_save)
+                    } else {
+                        stringResource(R.string.common_edit)
+                    }
+                ) {
+                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                    viewModel.onAction(PlaceDetailAction.ToggleEditMode)
                 }
-            ) {
-                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                viewModel.onAction(PlaceDetailAction.ToggleEditMode)
             }
         },
+        floatingActionButton = {
+            if (state.isCreateMode) {
+                Button(
+                    onClick = {
+                        viewModel.onAction(PlaceDetailAction.SavePlace)
+                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                        onSave()
+                    },
+                    enabled = state.placeName.isNotEmpty() && state.category != null
+                ) {
+                    CustomLabel(
+                        title = stringResource(R.string.common_save),
+                        imageVector = Icons.Default.Done
+                    )
+                }
+            }
+        }
     ) {
         PlaceDetailView(
             modifier = it,
@@ -98,7 +123,7 @@ private fun PlaceDetailView(
                     onValueChange = { onAction(PlaceDetailAction.ChangeName(it)) },
                     label = { Text(text = stringResource(R.string.place_detail_place_name)) },
                     shape = MaterialTheme.shapes.small,
-                    enabled = state.isEditMode
+                    enabled = state.isEditMode || state.isCreateMode
                 )
             }
 
@@ -107,47 +132,54 @@ private fun PlaceDetailView(
             Row(
                 modifier = Modifier
                     .padding(end = 16.dp)
-                    .padding(vertical = 4.dp)
+                    .padding(vertical = 6.dp)
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 CustomButton(
-                    title = state.category?.name ?: "",
-                    enabled = state.isEditMode
+                    title = state.category?.name ?: stringResource(R.string.add_place_select_category),
+                    enabled = state.isEditMode || state.isCreateMode
                 ) {
                     onAction(PlaceDetailAction.SelectCategory)
                 }
 
-                Text(
-                    text = stringResource(R.string.place_detail_category),
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
+                if (state.category != null) {
+                    Text(
+                        text = stringResource(R.string.place_detail_category),
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             }
 
-            HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+            if (!state.isCreateMode) {
+                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
 
-            Row(
-                modifier = Modifier
-                    .padding(start = 16.dp, end = 4.dp)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = if (state.isFavourite) stringResource(R.string.place_detail_in_favourite) else stringResource(R.string.place_detail_add_to_favourite),
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
-                )
+                Row(
+                    modifier = Modifier
+                        .padding(start = 16.dp, end = 4.dp)
+                        .padding(vertical = 2.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = if (state.isFavourite) stringResource(R.string.place_detail_in_favourite) else stringResource(
+                            R.string.place_detail_add_to_favourite
+                        ),
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
+                    )
 
-                FavouriteButton(isFavourite = state.isFavourite) {
-                    onAction(PlaceDetailAction.ToggleFavourite)
+                    FavouriteButton(isFavourite = state.isFavourite) {
+                        onAction(PlaceDetailAction.ToggleFavourite)
+                    }
                 }
             }
         }
 
-        if (!state.isEditMode) {
+        if (!state.isEditMode && !state.isCreateMode) {
             SectionView(title = stringResource(R.string.place_detail_cards)) {
 
             }

@@ -155,4 +155,6 @@
     <string name="place_detail_category">Категория</string>
     <string name="place_detail_add_to_favourite">Добавить в избранное</string>
     <string name="place_detail_in_favourite">В избранном</string>
+    <string name="add_place_title">Новое место</string>
+    <string name="add_place_select_category">Выбрать категорию</string>
 </resources>

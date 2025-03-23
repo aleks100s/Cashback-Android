@@ -42,7 +42,8 @@ import com.alextos.cashback.features.places.scenes.places.presentation.component
 fun PlacesScreen(
     modifier: Modifier = Modifier,
     viewModel: PlacesViewModel,
-    onPlaceSelected: (Place) -> Unit
+    onPlaceSelected: (Place) -> Unit,
+    onAddPlace: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -51,6 +52,7 @@ fun PlacesScreen(
         title = stringResource(R.string.places_title),
         floatingActionButton = {
             Button(onClick = {
+                onAddPlace()
                 viewModel.onAction(PlacesAction.AddPlace)
             }) {
                 CustomLabel(
