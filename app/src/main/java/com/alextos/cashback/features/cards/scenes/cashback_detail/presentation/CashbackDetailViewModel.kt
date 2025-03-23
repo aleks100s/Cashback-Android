@@ -31,7 +31,7 @@ class CashbackDetailViewModel(
     private val cardRepository: CardRepository,
     private val categoryMediator: CategoryMediator,
     private val toastService: ToastService,
-    private var analyticsService: AnalyticsService,
+    private val analyticsService: AnalyticsService,
     private val widgetUpdateService: WidgetUpdateService
 ): ViewModel() {
     private val cardId = savedStateHandle.toRoute<CardsRoute.CashbackDetail>().cardId

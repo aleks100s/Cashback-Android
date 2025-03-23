@@ -15,14 +15,15 @@ import androidx.compose.ui.unit.dp
 fun CustomButton(
     title: String,
     color: Color = MaterialTheme.colorScheme.primary,
+    enabled: Boolean = true,
     onTap: () -> Unit
 ) {
     Text(
         modifier = Modifier
             .clip(RoundedCornerShape(8.dp))
-            .clickable { onTap() }
+            .clickable(enabled) { onTap() }
             .padding(horizontal = 16.dp, vertical = 8.dp),
         text = title,
-        color = color
+        color = if (enabled) color else MaterialTheme.colorScheme.onSurface,
     )
 }

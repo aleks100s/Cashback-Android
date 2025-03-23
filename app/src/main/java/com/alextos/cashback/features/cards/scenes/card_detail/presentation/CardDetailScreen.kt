@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -247,7 +248,7 @@ private fun EditCardView(
                     modifier = Modifier
                         .padding(horizontal = 16.dp, vertical = 12.dp)
                         .fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     CustomTextField(
                         value = state.cardName,
@@ -267,6 +268,7 @@ private fun EditCardView(
                         Text(text = stringResource(R.string.card_detail_cashback_currency))
 
                         PickerDropdown(
+                            modifier = Modifier.offset(x = 16.dp),
                             selected = state.currency,
                             options = Currency.entries,
                             onSelect = {
@@ -289,7 +291,8 @@ private fun EditCardView(
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
                             text = if (state.isFavourite) {
@@ -300,6 +303,7 @@ private fun EditCardView(
                         )
 
                         FavouriteButton(
+                            modifier = Modifier.offset(x = 12.dp),
                             isFavourite = state.isFavourite,
                             onFavouriteToggle = {
                                 onAction(CardDetailAction.ToggleFavourite)
@@ -319,7 +323,7 @@ private fun EditCardView(
                     modifier = Modifier
                         .padding(vertical = 8.dp)
                         .fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     if (state.card?.cashback?.isNotEmpty() == true) {
                         CustomWideButton(
@@ -329,7 +333,7 @@ private fun EditCardView(
                             onAction(CardDetailAction.DeleteAllCashback)
                         }
 
-                        HorizontalDivider()
+                        HorizontalDivider(Modifier.padding(horizontal = 16.dp))
                     }
 
                     CustomWideButton(

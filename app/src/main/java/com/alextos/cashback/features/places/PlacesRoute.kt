@@ -11,4 +11,7 @@ sealed interface PlacesRoute {
 
     @Serializable
     data class PlaceDetails(val placeId: String): PlacesRoute
+
+    @Serializable
+    data object SelectCategory: PlacesRoute
 }

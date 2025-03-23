@@ -10,6 +10,7 @@ import com.alextos.cashback.core.domain.services.AnalyticsEvent
 import com.alextos.cashback.core.domain.services.AnalyticsService
 import com.alextos.cashback.core.domain.services.AppInfoService
 import com.alextos.cashback.core.domain.services.AppInstallationSource
+import com.alextos.cashback.features.category.CategoryMediator
 import com.alextos.cashback.features.places.PlacesRoute
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +22,8 @@ class PlaceDetailViewModel(
     savedStateHandle: SavedStateHandle,
     appInfoService: AppInfoService,
     private val placeRepository: PlaceRepository,
-    private val analyticsService: AnalyticsService
+    private val analyticsService: AnalyticsService,
+    private val categoryMediator: CategoryMediator,
 ): ViewModel() {
     private val placeId = savedStateHandle.toRoute<PlacesRoute.PlaceDetails>().placeId
 
@@ -45,6 +47,13 @@ class PlaceDetailViewModel(
                             isFavourite = place?.isFavourite ?: false
                         )
                     }
+                }
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            categoryMediator.selectedCategory
+                .collect { category ->
+                    onAction(PlaceDetailAction.CategorySelected(category))
                 }
         }
     }
@@ -71,6 +80,18 @@ class PlaceDetailViewModel(
                         placeRepository.createOrUpdate(place.copy(isFavourite = !place.isFavourite))
                     }
                 }
+            }
+
+            is PlaceDetailAction.ChangeName -> {
+                _state.update { it.copy(placeName = action.name) }
+            }
+
+            is PlaceDetailAction.SelectCategory -> {
+                analyticsService.logEvent(AnalyticsEvent.PlaceDetailSelectCategoryButtonTapped)
+            }
+
+            is PlaceDetailAction.CategorySelected -> {
+                _state.update { it.copy(category = action.category) }
             }
         }
     }

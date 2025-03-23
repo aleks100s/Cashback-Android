@@ -8,6 +8,7 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.alextos.cashback.common.transitions.horizontalComposableTransition
+import com.alextos.cashback.features.category.CategoryRoot
 import com.alextos.cashback.features.places.scenes.place_detail.PlaceDetailScreen
 import com.alextos.cashback.features.places.scenes.places.presentation.PlacesScreen
 import org.koin.androidx.compose.koinViewModel
@@ -40,6 +41,18 @@ fun PlacesRoot(modifier: Modifier = Modifier) {
                 PlaceDetailScreen(
                     viewModel = koinViewModel(),
                     goBack = { navController.popBackStack() },
+                    onCategorySelect = { navController.navigate(PlacesRoute.SelectCategory) }
+                )
+            }
+
+            horizontalComposableTransition<PlacesRoute.SelectCategory> {
+                CategoryRoot(
+                    onSelectCategory = {
+                        navController.popBackStack()
+                    },
+                    goBack = {
+                        navController.popBackStack()
+                    }
                 )
             }
         }

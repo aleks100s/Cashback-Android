@@ -29,6 +29,7 @@ import com.alextos.cashback.R
 
 @Composable
 fun FavouriteButton(
+    modifier: Modifier = Modifier,
     isFavourite: Boolean,
     onFavouriteToggle: () -> Unit
 ) {
@@ -43,7 +44,7 @@ fun FavouriteButton(
     )
 
     Icon(
-        modifier = Modifier
+        modifier = modifier
             .minimumInteractiveComponentSize()
             .scale(scale)
             .clip(CircleShape)
