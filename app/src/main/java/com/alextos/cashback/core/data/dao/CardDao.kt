@@ -7,6 +7,7 @@ import androidx.room.Transaction
 import androidx.room.Upsert
 import com.alextos.cashback.core.data.entities.CardEntity
 import com.alextos.cashback.core.data.entities.CashbackEntity
+import com.alextos.cashback.core.domain.models.Category
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -47,4 +48,7 @@ interface CardDao {
         insertAllCards(cards)
         insertAllCashback(cashback)
     }
+
+    @Query("SELECT DISTINCT c.* FROM cards c JOIN cashback cb ON c.id = cb.cardId WHERE cb.categoryId = :categoryId ORDER BY cb.percent DESC")
+    suspend fun getCards(categoryId: String): List<CardEntity>
 }

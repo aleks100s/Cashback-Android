@@ -2,6 +2,7 @@ package com.alextos.cashback.core.domain.repository
 
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.domain.models.Cashback
+import com.alextos.cashback.core.domain.models.Category
 import kotlinx.coroutines.flow.Flow
 
 interface CardRepository {
@@ -18,4 +19,5 @@ interface CardRepository {
     suspend fun unarchive(card: Card)
     suspend fun replaceAll(cards: List<Card>)
     suspend fun getFavouriteCards(): List<Card>
+    suspend fun getCards(category: Category): List<Card>
 }

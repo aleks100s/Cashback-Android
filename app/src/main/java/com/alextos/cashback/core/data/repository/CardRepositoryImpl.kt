@@ -7,6 +7,7 @@ import com.alextos.cashback.core.data.entities.mappers.toDomain
 import com.alextos.cashback.core.data.entities.mappers.toEntity
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.domain.models.Cashback
+import com.alextos.cashback.core.domain.models.Category
 import com.alextos.cashback.core.domain.repository.CardRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -84,6 +85,11 @@ class CardRepositoryImpl(
 
     override suspend fun getFavouriteCards(): List<Card> {
         return cardDao.getFavouriteCards()
+            .map { constructCard(it) }
+    }
+
+    override suspend fun getCards(category: Category): List<Card> {
+        return cardDao.getCards(categoryId = category.id)
             .map { constructCard(it) }
     }
 

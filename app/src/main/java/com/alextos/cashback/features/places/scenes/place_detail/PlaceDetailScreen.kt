@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.Button
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -18,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -25,10 +25,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
 import com.alextos.cashback.common.ads.AdBannerView
 import com.alextos.cashback.common.views.CustomButton
+import com.alextos.cashback.common.views.CustomDivider
 import com.alextos.cashback.common.views.CustomLabel
+import com.alextos.cashback.common.views.EmptyView
 import com.alextos.cashback.common.views.FavouriteButton
 import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.common.views.SectionView
+import com.alextos.cashback.features.places.scenes.place_detail.components.PlaceCardView
 
 @Composable
 fun PlaceDetailScreen(
@@ -126,8 +129,6 @@ private fun PlaceDetailView(
                 )
             }
 
-            HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
-
             Row(
                 modifier = Modifier
                     .padding(end = 16.dp)
@@ -154,7 +155,7 @@ private fun PlaceDetailView(
             }
 
             if (!state.isCreateMode) {
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                CustomDivider()
 
                 Row(
                     modifier = Modifier
@@ -178,10 +179,22 @@ private fun PlaceDetailView(
             }
         }
 
-//        if (!state.isEditMode && !state.isCreateMode) {
-//            SectionView(title = stringResource(R.string.place_detail_cards)) {
-//
-//            }
-//        }
+        if (!state.isEditMode && !state.isCreateMode) {
+            if (state.cards.isEmpty()) {
+                EmptyView(title = stringResource(R.string.place_detail_no_cards))
+            } else {
+                SectionView(title = stringResource(R.string.place_detail_cards)) {
+                    Column(Modifier.fillMaxWidth()) {
+                        state.cards.forEach { card ->
+                            PlaceCardView(card)
+
+                            if (card != state.cards.lastOrNull()) {
+                                CustomDivider()
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

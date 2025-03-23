@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.alextos.cashback.core.domain.models.Place
+import com.alextos.cashback.core.domain.repository.CardRepository
 import com.alextos.cashback.core.domain.repository.PlaceRepository
 import com.alextos.cashback.core.domain.services.AnalyticsEvent
 import com.alextos.cashback.core.domain.services.AnalyticsService
@@ -13,9 +14,12 @@ import com.alextos.cashback.core.domain.services.AppInstallationSource
 import com.alextos.cashback.core.domain.settings.SettingsManager
 import com.alextos.cashback.features.category.CategoryMediator
 import com.alextos.cashback.features.places.PlacesRoute
+import com.alextos.cashback.features.places.scenes.place_detail.components.PlaceCard
+import com.alextos.cashback.features.places.scenes.place_detail.components.PlaceCardView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -27,7 +31,8 @@ class PlaceDetailViewModel(
     private val placeRepository: PlaceRepository,
     private val analyticsService: AnalyticsService,
     private val categoryMediator: CategoryMediator,
-    private val settingsManager: SettingsManager
+    private val settingsManager: SettingsManager,
+    private val cardRepository: CardRepository
 ): ViewModel() {
     private val placeId = savedStateHandle.toRoute<PlacesRoute.PlaceDetails>().placeId
 
@@ -71,6 +76,17 @@ class PlaceDetailViewModel(
                 .collect { isEnabled ->
                     _state.update { it.copy(isAdVisible = isEnabled) }
                 }
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            _state.collect { state ->
+                state.category?.let { category ->
+                    val cards = cardRepository.getCards(category).map { card ->
+                        PlaceCard(card = card, cashback = card.cashback.first { it.category == category })
+                    }
+                    _state.update { it.copy(cards = cards) }
+                }
+            }
         }
     }
 
