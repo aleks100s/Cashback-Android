@@ -2,6 +2,7 @@ package com.alextos.cashback.core.data.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
+import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Upsert
@@ -23,4 +24,16 @@ interface PlaceDao {
 
     @Delete
     suspend fun delete(place: PlaceEntity)
+
+    @Query("DELETE FROM places")
+    suspend fun deleteAll()
+
+    @Insert
+    suspend fun insertAll(places: List<PlaceEntity>)
+
+    @Transaction
+    suspend fun replaceAll(places: List<PlaceEntity>) {
+        deleteAll()
+        insertAll(places)
+    }
 }

@@ -26,4 +26,8 @@ class PlaceRepositoryImpl(val placeDao: PlaceDao): PlaceRepository {
     override suspend fun createOrUpdate(place: Place) {
         placeDao.upsert(place.toEntity())
     }
+
+    override suspend fun replaceAll(places: List<Place>) {
+        placeDao.replaceAll(places.map { it.toEntity() })
+    }
 }

@@ -8,4 +8,5 @@ interface PlaceRepository {
     fun getPlace(id: String): Flow<Place?>
     suspend fun deletePlace(place: Place)
     suspend fun createOrUpdate(place: Place)
+    suspend fun replaceAll(places: List<Place>)
 }

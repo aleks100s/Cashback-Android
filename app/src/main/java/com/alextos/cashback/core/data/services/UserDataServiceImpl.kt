@@ -9,6 +9,7 @@ import com.alextos.cashback.core.data.dto.mappers.toDomain
 import com.alextos.cashback.core.data.dto.mappers.toDto
 import com.alextos.cashback.core.domain.repository.CardRepository
 import com.alextos.cashback.core.domain.repository.CategoryRepository
+import com.alextos.cashback.core.domain.repository.PlaceRepository
 import com.alextos.cashback.core.domain.services.UserDataDelegate
 import com.alextos.cashback.core.domain.services.UserDataFileProvider
 import com.alextos.cashback.core.domain.services.UserDataService
@@ -18,7 +19,8 @@ import java.io.File
 class UserDataServiceImpl(
     private val context: Context,
     private val categoryRepository: CategoryRepository,
-    private val cardRepository: CardRepository
+    private val cardRepository: CardRepository,
+    private val placeRepository: PlaceRepository
 ): UserDataService {
     override var delegate: UserDataDelegate? = null
     override var provider: UserDataFileProvider? = null
@@ -71,6 +73,7 @@ class UserDataServiceImpl(
         val data: UserData = Json.decodeFromString(json)
         categoryRepository.replaceAll(data.categories.map { it.toDomain() })
         cardRepository.replaceAll(data.cards.map { it.toDomain() })
+        placeRepository.replaceAll(data.places.map { it.toDomain() })
         delegate?.userDataServiceDidFinishImport()
     }
 }

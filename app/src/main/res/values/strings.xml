@@ -63,8 +63,6 @@
     <string name="card_detail_in_favourites">В избранном</string>
     <string name="card_detail_add_to_favourites">Добавить в избранное</string>
     <string name="card_detail_cashback_currency">Выплата кэшбэка</string>
-    <string name="card_detail_for_brave_users">Для отважных пользователей</string>
-    <string name="card_detail_this_action_cannot_be_undone">Эти действия нельзя отменить</string>
     <string name="card_detail_delete_all_cashback">Удалить все кэшбэки с карты</string>
     <string name="card_detail_all_cashback_deleted">Все кэшбэки удалены</string>
     <string name="card_detail_delete_card">Удалить карту</string>
@@ -158,4 +156,5 @@
     <string name="add_place_title">Новое место</string>
     <string name="add_place_select_category">Выбрать категорию</string>
     <string name="place_detail_no_cards">Не найдены подходящие карты</string>
+    <string name="place_detail_delete">Удалить место</string>
 </resources>

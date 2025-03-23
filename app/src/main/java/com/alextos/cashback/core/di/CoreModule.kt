@@ -55,7 +55,7 @@ val coreModule = module {
     factory<ToastService> { ToastServiceImpl(androidContext()) }
     factory<ShareService> { ShareServiceImpl(androidContext()) }
     factory<AppInfoService> { AppInfoServiceImpl(androidContext()) }
-    single<UserDataService> { UserDataServiceImpl(androidContext(), get(), get()) }
+    single<UserDataService> { UserDataServiceImpl(androidContext(), get(), get(), get()) }
     factory<AnalyticsService> { AnalyticsServiceImpl() }
     factory<WidgetUpdateService> { WidgetUpdateServiceImpl(androidContext()) }
 }
