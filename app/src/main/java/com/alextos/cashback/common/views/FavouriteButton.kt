@@ -53,7 +53,7 @@ fun FavouriteButton(
                 onFavouriteToggle()
                 haptic.performHapticFeedback(HapticFeedbackType.LongPress)
             }
-            .size(32.dp),
+            .size(28.dp),
         imageVector = if (isFavourite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
         contentDescription = stringResource(R.string.cards_list_item_favourite),
         tint = if (isFavourite) Color.Red else Color.Gray

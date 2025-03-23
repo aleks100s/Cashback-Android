@@ -81,8 +81,10 @@ class PlaceDetailViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             _state.collect { state ->
                 state.category?.let { category ->
-                    val cards = cardRepository.getCards(category).map { card ->
-                        PlaceCard(card = card, cashback = card.cashback.first { it.category == category })
+                    val cards = cardRepository.getCards(category).mapNotNull { card ->
+                        card.cashback.firstOrNull { it.category == category }?.let {
+                            PlaceCard(card = card, cashback = it)
+                        }
                     }
                     _state.update { it.copy(cards = cards) }
                 }

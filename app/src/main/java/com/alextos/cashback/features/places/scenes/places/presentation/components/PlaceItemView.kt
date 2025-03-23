@@ -5,8 +5,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -30,38 +30,52 @@ fun PlaceItemView(
     val color = MaterialTheme.colorScheme.primary
     Row(
         modifier = modifier.padding(vertical = 2.dp).fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Box(
-            modifier = Modifier
-                .size(48.dp)
-                .background(
-                    brush = Brush.verticalGradient(
-                        colors = listOf(
-                            color.copy(red = color.red * 0.75f, green = color.green * 0.75f, blue = color.blue * 0.75f),
-                            color.copy(red = color.red * 0.5f, green = color.green * 0.5f, blue = color.blue * 0.5f)
-                        )
-                    ),
-                    shape = CircleShape
-                ),
-            contentAlignment = Alignment.Center
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = place.name.uppercase().firstOrNull().toString(),
-                color = MaterialTheme.colorScheme.onPrimary,
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold
-            )
+            Box(
+                modifier = Modifier
+                    .size(48.dp)
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                color.copy(
+                                    red = color.red * 0.75f,
+                                    green = color.green * 0.75f,
+                                    blue = color.blue * 0.75f
+                                ),
+                                color.copy(
+                                    red = color.red * 0.5f,
+                                    green = color.green * 0.5f,
+                                    blue = color.blue * 0.5f
+                                )
+                            )
+                        ),
+                        shape = CircleShape
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = place.name.uppercase().firstOrNull().toString(),
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            Column(horizontalAlignment = Alignment.Start) {
+                Text(text = place.name)
+
+                Text(
+                    text = place.category.name,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                )
+            }
         }
-
-        Column(horizontalAlignment = Alignment.Start) {
-            Text(text = place.name)
-
-            Text(text = place.category.name, color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f))
-        }
-
-        Spacer(modifier = Modifier.fillMaxWidth())
 
         FavouriteButton(
             isFavourite = place.isFavourite,
