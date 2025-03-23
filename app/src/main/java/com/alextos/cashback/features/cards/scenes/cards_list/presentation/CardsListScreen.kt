@@ -52,6 +52,7 @@ import com.alextos.cashback.features.cards.scenes.cards_list.presentation.compon
 import com.alextos.cashback.common.views.SearchBar
 import com.alextos.cashback.common.views.FilterItemView
 import com.alextos.cashback.common.views.CustomLabel
+import com.alextos.cashback.common.views.EmptySearchView
 import com.alextos.cashback.common.views.EmptyView
 import com.alextos.cashback.features.cards.scenes.cards_list.presentation.components.CardsSettingsSheet
 
@@ -159,13 +160,17 @@ private fun CardsListView(
     val focusManager = LocalFocusManager.current
     if (state.isLoading) {
         Box(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator()
         }
     } else if (state.allCards.isEmpty()) {
-        EmptyView(title = stringResource(R.string.cards_list_empty))
+        EmptyView(
+            modifier = modifier,
+            title = stringResource(R.string.cards_list_empty),
+            painter = painterResource(R.drawable.credit_card)
+        )
     } else {
         val scrollState: LazyListState = rememberLazyListState()
 
@@ -209,7 +214,7 @@ private fun CardsListView(
 
             if (state.filteredCards.isEmpty()) {
                 item {
-                    EmptyView(title = stringResource(R.string.cards_list_no_search_results))
+                    EmptySearchView(title = stringResource(R.string.cards_list_no_search_results))
                 }
             } else {
                 items(state.filteredCards, key = { it.id }) { card ->

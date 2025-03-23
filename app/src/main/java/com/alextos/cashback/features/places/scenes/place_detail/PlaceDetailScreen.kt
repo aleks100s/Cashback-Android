@@ -27,6 +27,7 @@ import com.alextos.cashback.common.ads.AdBannerView
 import com.alextos.cashback.common.views.CustomButton
 import com.alextos.cashback.common.views.CustomDivider
 import com.alextos.cashback.common.views.CustomLabel
+import com.alextos.cashback.common.views.EmptySearchView
 import com.alextos.cashback.common.views.EmptyView
 import com.alextos.cashback.common.views.FavouriteButton
 import com.alextos.cashback.common.views.Screen
@@ -181,7 +182,7 @@ private fun PlaceDetailView(
 
         if (!state.isEditMode && !state.isCreateMode) {
             if (state.cards.isEmpty()) {
-                EmptyView(title = stringResource(R.string.place_detail_no_cards))
+                EmptySearchView(title = stringResource(R.string.place_detail_no_cards))
             } else {
                 SectionView(title = stringResource(R.string.place_detail_cards)) {
                     Column(Modifier.fillMaxWidth()) {

@@ -32,6 +32,7 @@ import com.alextos.cashback.R
 import com.alextos.cashback.common.UiText
 import com.alextos.cashback.common.views.ContextMenuItem
 import com.alextos.cashback.common.views.CustomLabel
+import com.alextos.cashback.common.views.EmptySearchView
 import com.alextos.cashback.common.views.EmptyView
 import com.alextos.cashback.common.views.RoundedList
 import com.alextos.cashback.common.views.Screen
@@ -84,31 +85,17 @@ private fun PlacesView(
 ) {
     if (state.isLoading) {
         Box(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator()
         }
     } else if (state.allPlaces.isEmpty()) {
-        Box(
-            modifier = Modifier
-                .padding(horizontal = 32.dp)
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Icon(
-                    imageVector = Icons.Default.LocationOn,
-                    contentDescription = stringResource(R.string.places_empty_view_title),
-                    tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
-                )
-
-                Text(
-                    text = stringResource(R.string.places_empty_view_title),
-                    textAlign = TextAlign.Center
-                )
-            }
-        }
+        EmptyView(
+            modifier = modifier,
+            title = stringResource(R.string.places_empty_view_title),
+            imageVector = Icons.Default.LocationOn
+        )
     } else {
         val scrollState: LazyListState = rememberLazyListState()
 
@@ -141,7 +128,7 @@ private fun PlacesView(
                 }
             },
             emptyView = {
-                EmptyView(title = stringResource(R.string.places_empty_view_title))
+                EmptySearchView(title = stringResource(R.string.places_empty_view_title))
             },
             onItemClick = {
                 onAction(PlacesAction.PlaceSelected(it))

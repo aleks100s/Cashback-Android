@@ -30,6 +30,7 @@ import com.alextos.cashback.common.views.SearchBar
 import com.alextos.cashback.core.presentation.views.CategoryItemView
 import com.alextos.cashback.common.UiText
 import com.alextos.cashback.common.views.CustomLabel
+import com.alextos.cashback.common.views.EmptySearchView
 import com.alextos.cashback.common.views.EmptyView
 
 @Composable
@@ -112,7 +113,7 @@ private fun CategoryListView(
             }
         },
         emptyView = {
-            EmptyView(
+            EmptySearchView(
                 title = stringResource(R.string.category_list_no_search_results),
                 button = {
                     Button(onClick = {
