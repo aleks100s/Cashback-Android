@@ -43,7 +43,7 @@ fun ApplicationRoot(
     val tabs by viewModel.tabs.collectAsStateWithLifecycle()
     val currentTab by viewModel.currentTab.collectAsStateWithLifecycle()
 
-    LaunchedEffect(deepLinkIntent) {
+    LaunchedEffect(Unit) {
         deepLinkIntent?.data?.let { uri ->
             if (uri.path?.startsWith("/card/") == true) {
                 // Switch to Cards tab first

@@ -4,6 +4,8 @@ import android.content.Intent
 import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -27,13 +29,15 @@ fun CardsRoot(
 ) {
     val navController = rememberNavController()
 
-    LaunchedEffect(deepLinkIntent) {
-        deepLinkIntent?.data?.let { uri ->
-            val cardId = uri.lastPathSegment
-            // Small delay to ensure tab switch is complete
-            delay(100)
-            // Navigate to card detail
-            navController.navigate(CardsRoute.CardDetail(cardId ?: ""))
+val deepLinkProcessed = rememberSaveable { mutableStateOf(false) }
+    LaunchedEffect(Unit) {
+        if (!deepLinkProcessed.value) {
+            deepLinkIntent?.data?.let { uri ->
+                val cardId = uri.lastPathSegment
+                delay(100)
+                navController.navigate(CardsRoute.CardDetail(cardId ?: ""))
+                deepLinkProcessed.value = true
+            }
         }
     }
 
