@@ -17,7 +17,6 @@ import androidx.lifecycle.lifecycleScope
 import com.alextos.cashback.app.navigation.ApplicationRoot
 import com.alextos.cashback.app.notifications.MonthlyNotificationScheduler
 import com.alextos.cashback.app.theme.CashbackTheme
-import com.alextos.cashback.core.AppConstants
 import com.alextos.cashback.core.domain.services.UserDataFileProvider
 import com.alextos.cashback.core.domain.services.UserDataService
 import com.alextos.cashback.core.domain.settings.SettingsManager
