@@ -128,7 +128,7 @@ private fun PlacesView(
                 }
             },
             emptyView = {
-                EmptySearchView(title = stringResource(R.string.places_empty_view_title))
+                EmptySearchView(title = stringResource(R.string.places_no_search_results))
             },
             onItemClick = {
                 onAction(PlacesAction.PlaceSelected(it))

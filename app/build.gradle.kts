@@ -14,8 +14,8 @@ android {
         applicationId = "com.alextos.cashback"
         minSdk = 28
         targetSdk = 35
-        versionCode = 19
-        versionName = "1.11.1"
+        versionCode = 20
+        versionName = "1.11.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

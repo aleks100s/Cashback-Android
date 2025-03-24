@@ -1,8 +1,10 @@
 package com.alextos.cashback.app.widget.views
 
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
@@ -26,6 +28,7 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.glance.ColorFilter
+import androidx.glance.appwidget.action.actionStartActivity
 import androidx.glance.layout.size
 import androidx.glance.unit.ColorProvider
 import com.alextos.cashback.R
@@ -80,7 +83,28 @@ fun WidgetCardListView(
             LazyColumn {
                 items(cards) { card ->
                     Column(modifier = GlanceModifier.fillMaxWidth()) {
-                        WidgetCardItemView(card = card)
+                        WidgetCardItemView(
+                            modifier = GlanceModifier.clickable {
+                                val pendingIntent = context.packageManager
+                                    .getLaunchIntentForPackage(context.packageName)
+                                    ?.let { launchIntent ->
+                                        launchIntent.apply {
+                                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                                                    Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                                                    Intent.FLAG_ACTIVITY_SINGLE_TOP
+                                            data = Uri.parse("app://com.alextos.cashback/card/${card.id}")
+                                        }
+                                        PendingIntent.getActivity(
+                                            context,
+                                            0,
+                                            launchIntent,
+                                            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                                        )
+                                    }
+                                pendingIntent?.send()
+                            },
+                            card = card
+                        )
 
                         if (card != cards.lastOrNull()) {
                             Spacer(modifier = GlanceModifier.padding(4.dp))

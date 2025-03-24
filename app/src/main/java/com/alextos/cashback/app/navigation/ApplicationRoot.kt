@@ -1,5 +1,7 @@
 package com.alextos.cashback.app.navigation
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,13 +9,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -27,17 +27,34 @@ import com.alextos.cashback.features.cards.CardsRoot
 import com.alextos.cashback.features.category.CategoryRoot
 import com.alextos.cashback.features.places.PlacesRoot
 import com.alextos.cashback.features.settings.SettingsRoot
+import kotlinx.coroutines.delay
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ApplicationRoot(viewModel: ApplicationViewModel = koinViewModel()) {
+fun ApplicationRoot(
+    viewModel: ApplicationViewModel = koinViewModel(),
+    deepLinkIntent: Intent? = null
+) {
     val navController = rememberNavController()
     val focusManager = LocalFocusManager.current
     val isOnboardingShown by viewModel.isOnboardingShown.collectAsStateWithLifecycle()
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val tabs by viewModel.tabs.collectAsStateWithLifecycle()
     val currentTab by viewModel.currentTab.collectAsStateWithLifecycle()
+
+    LaunchedEffect(deepLinkIntent) {
+        deepLinkIntent?.data?.let { uri ->
+            if (uri.path?.startsWith("/card/") == true) {
+                // Switch to Cards tab first
+                viewModel.onTabChange(TabBarItem.Cards)
+                // Small delay to ensure tab switch is complete
+                delay(100)
+                // Navigate to card detail
+                navController.navigate(TabBarItem.Cards)
+            }
+        }
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize()
@@ -57,7 +74,7 @@ fun ApplicationRoot(viewModel: ApplicationViewModel = koinViewModel()) {
             startDestination = currentTab
         ) {
             composable<TabBarItem.Cards> {
-                CardsRoot()
+                CardsRoot(deepLinkIntent = deepLinkIntent)
             }
 
             composable<TabBarItem.Settings> {

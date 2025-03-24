@@ -7,4 +7,6 @@ object AppConstants {
     const val HUAWEI_APP_GALLERY_LINK = "https://appgallery.huawei.com"
 
     const val COLOR_HEX_DEFAULT = "#FF0000"
+
+    const val WIDGET_CARD_ID = "widget_card_id"
 }
