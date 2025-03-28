@@ -14,10 +14,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Button
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -30,7 +28,6 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -215,10 +212,10 @@ private fun SettingsView(
                 CustomDivider()
 
                 FeatureToggle(
-                    stringResource(R.string.settings_tabs_categories),
-                    checked = state.isCategoriesTabEnabled,
+                    stringResource(R.string.settings_tabs_payments),
+                    checked = state.isPaymentsTabEnabled,
                 ) {
-                    onAction(SettingsAction.ToggleCategoriesTab)
+                    onAction(SettingsAction.TogglePaymentsTab)
                 }
 
                 CustomDivider()
@@ -228,6 +225,15 @@ private fun SettingsView(
                     checked = state.isPlacesTabEnabled,
                 ) {
                     onAction(SettingsAction.TogglePlacesTab)
+                }
+
+                CustomDivider()
+
+                FeatureToggle(
+                    stringResource(R.string.settings_tabs_categories),
+                    checked = state.isCategoriesTabEnabled,
+                ) {
+                    onAction(SettingsAction.ToggleCategoriesTab)
                 }
             }
         }
@@ -360,13 +366,5 @@ private fun FeatureToggle(
                 onCheckedChange()
             }
         )
-    }
-}
-
-@Preview(backgroundColor = 0xFF03A9F4)
-@Composable
-fun SettingsPreview() {
-    Surface {
-        SettingsView(state = SettingsState(appVersion = "1.2.3", buildVersion = 777)) { }
     }
 }

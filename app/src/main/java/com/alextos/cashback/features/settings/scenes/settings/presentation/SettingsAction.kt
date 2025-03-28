@@ -19,4 +19,5 @@ sealed interface SettingsAction {
     data object ToggleCardsTab: SettingsAction
     data object ToggleCategoriesTab: SettingsAction
     data object TogglePlacesTab: SettingsAction
+    data object TogglePaymentsTab: SettingsAction
 }

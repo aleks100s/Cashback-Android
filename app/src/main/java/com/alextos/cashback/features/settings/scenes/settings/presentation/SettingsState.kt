@@ -11,4 +11,5 @@ data class SettingsState(
     val isCardsTabEnabled: Boolean = true,
     val isCategoriesTabEnabled: Boolean = true,
     val isPlacesTabEnabled: Boolean = true,
+    val isPaymentsTabEnabled: Boolean = true
 )

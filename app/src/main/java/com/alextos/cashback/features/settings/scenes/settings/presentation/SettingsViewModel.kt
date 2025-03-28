@@ -84,6 +84,13 @@ class SettingsViewModel(
                     _state.update { it.copy(isPlacesTabEnabled = isEnabled) }
                 }
         }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            settingsManager.isPaymentsTabEnabled
+                .collect { isEnabled ->
+                    _state.update { it.copy(isPaymentsTabEnabled = isEnabled) }
+                }
+        }
     }
 
     fun onAction(action: SettingsAction) {
@@ -171,6 +178,13 @@ class SettingsViewModel(
                     settingsManager.setPlacesTab(!state.value.isPlacesTabEnabled)
                 }
                 toastService.showToast(if (!state.value.isPlacesTabEnabled) UiText.StringResourceId(R.string.settings_tab_enabled) else UiText.StringResourceId(R.string.settings_tab_disabled))
+            }
+            is SettingsAction.TogglePaymentsTab -> {
+                analyticsService.logEvent(AnalyticsEvent.SettingsTogglePaymentsFeature)
+                viewModelScope.launch(Dispatchers.IO) {
+                    settingsManager.setPaymentsTab(!state.value.isPaymentsTabEnabled)
+                }
+                toastService.showToast(if (!state.value.isPaymentsTabEnabled) UiText.StringResourceId(R.string.settings_tab_enabled) else UiText.StringResourceId(R.string.settings_tab_disabled))
             }
         }
     }

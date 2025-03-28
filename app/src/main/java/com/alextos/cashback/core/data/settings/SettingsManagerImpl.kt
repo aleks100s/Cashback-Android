@@ -20,6 +20,7 @@ class SettingsManagerImpl(
         private val CARDS_TAB_ENABLED = booleanPreferencesKey("is_cards_tab_enabled")
         private val CATEGORIES_TAB_ENABLED = booleanPreferencesKey("is_categories_tab_enabled")
         private val PLACES_TAB_ENABLED = booleanPreferencesKey("is_places_tab_enabled")
+        private val PAYMENTS_TAB_ENABLED = booleanPreferencesKey("is_payments_tab_enabled")
         private val COMPACT_CARD_VIEW = booleanPreferencesKey("is_compact_card_view_enabled")
     }
 
@@ -88,6 +89,17 @@ class SettingsManagerImpl(
     override suspend fun setPlacesTab(enabled: Boolean) {
         dataStore.edit { preferences ->
             preferences[PLACES_TAB_ENABLED] = enabled
+        }
+    }
+
+    override val isPaymentsTabEnabled: Flow<Boolean>
+        get() = dataStore.data.map { preferences ->
+            preferences[PAYMENTS_TAB_ENABLED] ?: true
+        }
+
+    override suspend fun setPaymentsTab(enabled: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[PAYMENTS_TAB_ENABLED] = enabled
         }
     }
 
