@@ -37,7 +37,7 @@ val coreModule = module {
             androidApplication(),
             AppDatabase::class.java, AppDatabase.DB_NAME
         )
-            .addCallback(DatabaseSeeder(androidContext()))
+            .addCallback(DatabaseSeeder())
             .build()
     }
 

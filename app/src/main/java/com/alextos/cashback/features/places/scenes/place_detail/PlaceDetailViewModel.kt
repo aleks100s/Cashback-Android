@@ -26,7 +26,6 @@ class PlaceDetailViewModel(
     private val placeRepository: PlaceRepository,
     private val analyticsService: AnalyticsService,
     private val categoryMediator: CategoryMediator,
-    private val settingsManager: SettingsManager,
     private val cardRepository: CardRepository
 ): ViewModel() {
     private val placeId = savedStateHandle.toRoute<PlacesRoute.PlaceDetails>().placeId
@@ -125,6 +124,7 @@ class PlaceDetailViewModel(
             }
 
             is PlaceDetailAction.DeletePlace -> {
+                analyticsService.logEvent(AnalyticsEvent.PlaceDetailDelete)
                 viewModelScope.launch(Dispatchers.IO) {
                     makePlace()?.let {
                         placeRepository.deletePlace(it)

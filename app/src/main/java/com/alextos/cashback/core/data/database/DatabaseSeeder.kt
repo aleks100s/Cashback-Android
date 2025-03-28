@@ -1,6 +1,5 @@
 package com.alextos.cashback.core.data.database
 
-import android.content.Context
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.alextos.cashback.BuildConfig
@@ -19,7 +18,7 @@ import java.time.LocalDate
 import java.util.concurrent.Executors
 import kotlin.random.Random
 
-class DatabaseSeeder(private val context: Context) : RoomDatabase.Callback() {
+class DatabaseSeeder : RoomDatabase.Callback() {
     override fun onCreate(db: SupportSQLiteDatabase) {
         super.onCreate(db)
 
