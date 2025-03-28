@@ -8,12 +8,14 @@ import com.alextos.cashback.core.data.entities.mappers.toEntity
 import com.alextos.cashback.core.domain.models.Card
 import com.alextos.cashback.core.domain.models.Cashback
 import com.alextos.cashback.core.domain.models.Category
+import com.alextos.cashback.core.domain.models.Payment
 import com.alextos.cashback.core.domain.models.Place
 import com.alextos.cashback.core.domain.models.predefined.PredefinedCategory
 import com.alextos.cashback.core.domain.models.predefined.emoji
 import com.alextos.cashback.core.domain.models.predefined.info
 import com.alextos.cashback.core.domain.models.predefined.localization
 import com.alextos.cashback.core.domain.models.predefined.synonyms
+import java.time.LocalDate
 import java.util.concurrent.Executors
 import kotlin.random.Random
 
@@ -57,13 +59,14 @@ class DatabaseSeeder(private val context: Context) : RoomDatabase.Callback() {
 //                Card(name = "Газпром", color = "#FF0088"),
 //                Card(name = "Яндекс", color = "#FF0000"),
 //                Card(name = "Озон", color = "#0000FF"),
-            ).map { it.toEntity() }
-            val cardCommand = cards.joinToString(separator = ", ") { entity ->
+            )
+            val cardEntities = cards.map { it.toEntity() }
+            val cardCommand = cardEntities.joinToString(separator = ", ") { entity ->
                 "('${entity.id}', '${entity.name}', '${entity.color}', 0, ${if (entity.isFavourite) 1 else 0}, '${entity.currency}', '${entity.currencySymbol}')"
             }
             db.execSQL("INSERT INTO cards (id, name, color, isArchived, isFavourite, currency, currencySymbol) VALUES $cardCommand;")
 
-            cards.forEach { card ->
+            cardEntities.forEach { card ->
                 val cashback = listOf(
                     Cashback(category = categories.random(), percent = Random.nextInt(1, 5).toDouble() / 100, order = 0),
                     Cashback(category = categories.random(), percent = Random.nextInt(1, 5).toDouble() / 100, order = 1),
@@ -85,6 +88,22 @@ class DatabaseSeeder(private val context: Context) : RoomDatabase.Callback() {
             places.forEach { place ->
                 val placeCommand = "('${place.id}', '${place.name}', '${place.category.id}', ${if (place.isFavourite) 1 else 0})"
                 db.execSQL("INSERT INTO places (id, name, categoryId, isFavourite) VALUES $placeCommand;")
+            }
+
+            val payments = listOf(
+                Payment(amount = Random.nextInt(100, 1000), date = LocalDate.of(2024, Random.nextInt(1, 12), Random.nextInt(1, 28)), card = cards.random()),
+                Payment(amount = Random.nextInt(100, 1000), date = LocalDate.now(), card = cards.random()),
+                Payment(amount = Random.nextInt(100, 1000), date = LocalDate.of(2024, Random.nextInt(1, 12), Random.nextInt(1, 28)), card = cards.random()),
+                Payment(amount = Random.nextInt(100, 1000), date = LocalDate.now(), card = cards.random()),
+                Payment(amount = Random.nextInt(100, 1000), date = LocalDate.of(2024, Random.nextInt(1, 12), Random.nextInt(1, 28)), card = cards.random()),
+                Payment(amount = Random.nextInt(100, 1000), date = LocalDate.now(), card = cards.random()),
+                Payment(amount = Random.nextInt(100, 1000), date = LocalDate.of(2024, Random.nextInt(1, 12), Random.nextInt(1, 28)), card = cards.random()),
+                Payment(amount = Random.nextInt(100, 1000), date = LocalDate.now(), card = cards.random()),
+                Payment(amount = Random.nextInt(100, 1000), date = LocalDate.of(2025, Random.nextInt(1, 3), Random.nextInt(1, 28)), card = cards.random())
+            ).map { it.toEntity() }
+            payments.forEach { payment ->
+                val paymentCommand = "('${payment.id}', ${payment.amount}, ${payment.date}, '${payment.cardId}')"
+                db.execSQL("INSERT INTO payments (id, amount, date, cardId) VALUES $paymentCommand;")
             }
         }
     }
