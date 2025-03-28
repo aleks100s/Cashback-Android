@@ -6,7 +6,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
 import com.alextos.cashback.common.transitions.horizontalComposableTransition
 import com.alextos.cashback.features.category.CategoryRoot
 import com.alextos.cashback.features.places.scenes.place_detail.PlaceDetailScreen

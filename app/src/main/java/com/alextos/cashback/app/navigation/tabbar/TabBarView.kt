@@ -23,6 +23,7 @@ fun TabBarView(
                 is TabBarItem.Settings -> currentRoute == TabBarItem.Settings.javaClass.canonicalName
                 is TabBarItem.Categories -> currentRoute == TabBarItem.Categories.javaClass.canonicalName
                 is TabBarItem.Places -> currentRoute == TabBarItem.Places.javaClass.canonicalName
+                is TabBarItem.Payments -> currentRoute == TabBarItem.Payments.javaClass.canonicalName
             }
             if (isActive) {
                 onTabChange(tab)
@@ -37,6 +38,7 @@ fun TabBarView(
                 is TabBarItem.Settings -> currentRoute == TabBarItem.Settings.javaClass.canonicalName
                 is TabBarItem.Categories -> currentRoute == TabBarItem.Categories.javaClass.canonicalName
                 is TabBarItem.Places -> currentRoute == TabBarItem.Places.javaClass.canonicalName
+                is TabBarItem.Payments -> currentRoute == TabBarItem.Payments.javaClass.canonicalName
             }
 
             TabBarItemView(tab, isActive) {

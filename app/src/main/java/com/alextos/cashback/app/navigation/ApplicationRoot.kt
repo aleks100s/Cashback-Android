@@ -1,7 +1,6 @@
 package com.alextos.cashback.app.navigation
 
 import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,6 +24,7 @@ import com.alextos.cashback.app.navigation.tabbar.TabBarView
 import com.alextos.cashback.app.onboarding.OnboardingScreen
 import com.alextos.cashback.features.cards.CardsRoot
 import com.alextos.cashback.features.category.CategoryRoot
+import com.alextos.cashback.features.payments.PaymentsRoot
 import com.alextos.cashback.features.places.PlacesRoot
 import com.alextos.cashback.features.settings.SettingsRoot
 import kotlinx.coroutines.delay
@@ -87,6 +87,10 @@ fun ApplicationRoot(
 
             composable<TabBarItem.Places> {
                 PlacesRoot()
+            }
+
+            composable<TabBarItem.Payments> {
+                PaymentsRoot()
             }
         }
     }

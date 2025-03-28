@@ -6,6 +6,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarItem
@@ -31,6 +32,7 @@ fun RowScope.TabBarItemView(
                     is TabBarItem.Settings -> Icons.Default.Settings
                     is TabBarItem.Categories -> Icons.Default.List
                     is TabBarItem.Places -> Icons.Default.LocationOn
+                    is TabBarItem.Payments -> Icons.Default.ShoppingCart
                 },
                 contentDescription = tab.title.asString()
             )

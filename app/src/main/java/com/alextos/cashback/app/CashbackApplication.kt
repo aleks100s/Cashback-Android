@@ -4,6 +4,7 @@ import android.app.Application
 import com.alextos.cashback.core.di.coreModule
 import com.alextos.cashback.features.cards.di.cardsModule
 import com.alextos.cashback.features.category.di.categoryModule
+import com.alextos.cashback.features.payments.di.paymentsModule
 import com.alextos.cashback.features.places.di.placesModule
 import com.alextos.cashback.features.settings.di.settingsModule
 import io.appmetrica.analytics.AppMetrica
@@ -17,7 +18,7 @@ class CashbackApplication: Application() {
         AppMetrica.activate(this, AppMetricaConfig.newConfigBuilder("d3b3d6f5-c58f-4b1f-b4cd-debdeb274ffd").build())
         startKoin {
             androidContext(this@CashbackApplication)
-            modules(appModule, coreModule, categoryModule, cardsModule, settingsModule, placesModule)
+            modules(appModule, coreModule, categoryModule, cardsModule, settingsModule, placesModule, paymentsModule)
         }
     }
 }

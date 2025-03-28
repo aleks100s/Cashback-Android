@@ -24,7 +24,13 @@ class ApplicationViewModel(
     private val _isOnboardingShown = MutableStateFlow(false)
     val isOnboardingShown = _isOnboardingShown.asStateFlow()
 
-    private val _tabs = MutableStateFlow(listOf(TabBarItem.Cards, TabBarItem.Places, TabBarItem.Categories, TabBarItem.Settings))
+    private val _tabs = MutableStateFlow(listOf(
+        TabBarItem.Cards,
+        TabBarItem.Payments,
+        TabBarItem.Places,
+        TabBarItem.Categories,
+        TabBarItem.Settings
+    ))
     val tabs = _tabs.asStateFlow()
 
     private val _currentTab = MutableStateFlow<TabBarItem>(TabBarItem.Cards)
@@ -54,12 +60,14 @@ class ApplicationViewModel(
             combine(
                 settingsManager.isCardsTabEnabled,
                 settingsManager.isCategoriesTabEnabled,
-                settingsManager.isPlacesTabEnabled
-            ) { isCardsTabEnabled, isCategoriesTabEnabled, isPlacesTabEnabled ->
+                settingsManager.isPlacesTabEnabled,
+                settingsManager.isPaymentsTabEnabled
+            ) { isCardsTabEnabled, isCategoriesTabEnabled, isPlacesTabEnabled, isPaymentsTabEnabled ->
                 listOfNotNull(
                     if (isCardsTabEnabled) TabBarItem.Cards else null,
-                    if (isCategoriesTabEnabled) TabBarItem.Categories else null,
+                    if (isPaymentsTabEnabled) TabBarItem.Payments else null,
                     if (isPlacesTabEnabled) TabBarItem.Places else null,
+                    if (isCategoriesTabEnabled) TabBarItem.Categories else null,
                     TabBarItem.Settings
                 )
             }.collect { list ->
@@ -87,6 +95,9 @@ class ApplicationViewModel(
             }
             TabBarItem.Places -> {
                 analyticsService.logEvent(AnalyticsEvent.PlacesAppear)
+            }
+            TabBarItem.Payments -> {
+                analyticsService.logEvent(AnalyticsEvent.PaymentsAppear)
             }
         }
     }
