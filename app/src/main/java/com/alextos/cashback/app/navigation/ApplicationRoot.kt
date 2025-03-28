@@ -3,7 +3,10 @@ package com.alextos.cashback.app.navigation
 import android.content.Intent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
@@ -15,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -22,6 +26,7 @@ import androidx.navigation.compose.rememberNavController
 import com.alextos.cashback.app.navigation.tabbar.TabBarItem
 import com.alextos.cashback.app.navigation.tabbar.TabBarView
 import com.alextos.cashback.app.onboarding.OnboardingScreen
+import com.alextos.cashback.common.ads.AdBannerView
 import com.alextos.cashback.features.cards.CardsRoot
 import com.alextos.cashback.features.category.CategoryRoot
 import com.alextos.cashback.features.payments.PaymentsRoot
@@ -42,6 +47,7 @@ fun ApplicationRoot(
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val tabs by viewModel.tabs.collectAsStateWithLifecycle()
     val currentTab by viewModel.currentTab.collectAsStateWithLifecycle()
+    val isAdVisible by viewModel.isAdVisible.collectAsStateWithLifecycle(initialValue = false)
 
     LaunchedEffect(Unit) {
         deepLinkIntent?.data?.let { uri ->
@@ -65,7 +71,15 @@ fun ApplicationRoot(
                 focusManager.clearFocus()
             },
         bottomBar = {
-            TabBarView(navController, tabs = tabs, onTabChange = viewModel::onTabChange)
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(0.dp)
+            ) {
+                if (isAdVisible) {
+                    AdBannerView(viewModel.bannerId)
+                }
+                TabBarView(navController, tabs = tabs, onTabChange = viewModel::onTabChange)
+            }
         }
     ) { innerPadding ->
         NavHost(

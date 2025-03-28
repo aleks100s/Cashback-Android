@@ -48,11 +48,6 @@ fun PlaceDetailScreen(
         modifier = modifier,
         title = if (state.isCreateMode) stringResource(R.string.add_place_title) else state.placeName,
         goBack = goBack,
-        bannerView = {
-            if (state.isAdVisible) {
-                AdBannerView(id = viewModel.bannerId)
-            }
-        },
         actions = {
             if (!state.isCreateMode) {
                 CustomButton(

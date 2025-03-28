@@ -14,10 +14,7 @@ import com.alextos.cashback.common.UiText
 import com.alextos.cashback.core.domain.models.currency.Currency
 import com.alextos.cashback.core.domain.services.AnalyticsEvent
 import com.alextos.cashback.core.domain.services.AnalyticsService
-import com.alextos.cashback.core.domain.services.AppInfoService
-import com.alextos.cashback.core.domain.services.AppInstallationSource
 import com.alextos.cashback.core.domain.services.WidgetUpdateService
-import com.alextos.cashback.core.domain.settings.SettingsManager
 import com.alextos.cashback.features.cards.scenes.card_detail.domain.DeleteCashbackUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,13 +25,11 @@ import kotlinx.coroutines.withContext
 
 class CardDetailViewModel(
     savedStateHandle: SavedStateHandle,
-    appInfoService: AppInfoService,
     private val deleteCardUseCase: DeleteCardUseCase,
     private val deleteAllCashbackUseCase: DeleteAllCashbackUseCase,
     private val deleteCashbackUseCase: DeleteCashbackUseCase,
     private val repository: CardRepository,
     private val toastService: ToastService,
-    private val settingsManager: SettingsManager,
     private val analyticsService: AnalyticsService,
     private val widgetUpdateService: WidgetUpdateService
 ): ViewModel() {
@@ -42,12 +37,6 @@ class CardDetailViewModel(
 
     private val _state = MutableStateFlow(CardDetailState())
     val state = _state.asStateFlow()
-
-    val bannerId: String = when (appInfoService.installationSource) {
-        AppInstallationSource.GOOGLE_PLAY -> "R-M-14460024-1"
-        AppInstallationSource.HUAWEI -> "demo-banner-yandex"
-        AppInstallationSource.RU_STORE -> "R-M-14164420-1"
-    }
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -62,13 +51,6 @@ class CardDetailViewModel(
                             color = card?.color ?: "#E7E7E7"
                         )
                     }
-                }
-        }
-
-        viewModelScope.launch(Dispatchers.IO) {
-            settingsManager.isAdEnabled
-                .collect { isEnabled ->
-                    _state.update { it.copy(isAdVisible = isEnabled) }
                 }
         }
     }

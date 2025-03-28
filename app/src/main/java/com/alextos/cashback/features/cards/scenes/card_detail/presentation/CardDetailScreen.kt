@@ -19,7 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
@@ -88,10 +87,7 @@ fun CardDetailScreen(
                 haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                 viewModel.onAction(CardDetailAction.ToggleEditMode)
             }
-        },
-        bannerView = if (state.isAdVisible) {
-            { AdBannerView(viewModel.bannerId) }
-        } else null
+        }
     ) {
         if (state.isEditMode) {
             EditCardView(

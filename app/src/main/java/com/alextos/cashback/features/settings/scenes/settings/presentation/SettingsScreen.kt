@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
-import com.alextos.cashback.common.ads.AdBannerView
 import com.alextos.cashback.common.views.CustomButton
 import com.alextos.cashback.common.views.CustomDivider
 import com.alextos.cashback.common.views.CustomWideButton
@@ -51,10 +50,7 @@ fun SettingsScreen(
 
     Screen(
         modifier = modifier,
-        title = stringResource(R.string.settings_title),
-        bannerView = if (state.isAdVisible) {
-            { AdBannerView(viewModel.bannerId) }
-        } else null
+        title = stringResource(R.string.settings_title)
     ) {
         SettingsView(
             modifier = it,

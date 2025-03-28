@@ -9,8 +9,6 @@ import com.alextos.cashback.core.domain.repository.CardRepository
 import com.alextos.cashback.core.domain.repository.PlaceRepository
 import com.alextos.cashback.core.domain.services.AnalyticsEvent
 import com.alextos.cashback.core.domain.services.AnalyticsService
-import com.alextos.cashback.core.domain.services.AppInfoService
-import com.alextos.cashback.core.domain.services.AppInstallationSource
 import com.alextos.cashback.core.domain.settings.SettingsManager
 import com.alextos.cashback.features.category.CategoryMediator
 import com.alextos.cashback.features.places.PlacesRoute
@@ -25,7 +23,6 @@ import java.util.UUID
 
 class PlaceDetailViewModel(
     savedStateHandle: SavedStateHandle,
-    appInfoService: AppInfoService,
     private val placeRepository: PlaceRepository,
     private val analyticsService: AnalyticsService,
     private val categoryMediator: CategoryMediator,
@@ -36,12 +33,6 @@ class PlaceDetailViewModel(
 
     private val _state = MutableStateFlow(PlaceDetailState(isEditMode = savedStateHandle.toRoute<PlacesRoute.PlaceDetails>().isEditMode))
     val state = _state.asStateFlow()
-
-    val bannerId = when (appInfoService.installationSource) {
-        AppInstallationSource.GOOGLE_PLAY -> "R-M-14460024-3"
-        AppInstallationSource.HUAWEI -> "demo-banner-yandex"
-        AppInstallationSource.RU_STORE -> "R-M-14164420-3"
-    }
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -66,13 +57,6 @@ class PlaceDetailViewModel(
             categoryMediator.selectedCategory
                 .collect { category ->
                     onAction(PlaceDetailAction.CategorySelected(category))
-                }
-        }
-
-        viewModelScope.launch(Dispatchers.IO) {
-            settingsManager.isAdEnabled
-                .collect { isEnabled ->
-                    _state.update { it.copy(isAdVisible = isEnabled) }
                 }
         }
 

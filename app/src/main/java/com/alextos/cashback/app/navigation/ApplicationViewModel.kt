@@ -7,6 +7,8 @@ import com.alextos.cashback.app.navigation.tabbar.TabBarItem
 import com.alextos.cashback.app.notifications.MonthlyNotificationScheduler
 import com.alextos.cashback.core.domain.services.AnalyticsEvent
 import com.alextos.cashback.core.domain.services.AnalyticsService
+import com.alextos.cashback.core.domain.services.AppInfoService
+import com.alextos.cashback.core.domain.services.AppInstallationSource
 import com.alextos.cashback.core.domain.settings.SettingsManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +21,8 @@ import kotlinx.coroutines.launch
 class ApplicationViewModel(
     application: Application,
     private val settingsManager: SettingsManager,
-    private val analyticsService: AnalyticsService
+    private val analyticsService: AnalyticsService,
+    private val appInfoService: AppInfoService
 ): AndroidViewModel(application) {
     private val _isOnboardingShown = MutableStateFlow(false)
     val isOnboardingShown = _isOnboardingShown.asStateFlow()
@@ -35,6 +38,14 @@ class ApplicationViewModel(
 
     private val _currentTab = MutableStateFlow<TabBarItem>(TabBarItem.Cards)
     val currentTab = _currentTab.asStateFlow()
+
+    val isAdVisible = settingsManager.isAdEnabled
+
+    val bannerId = when (appInfoService.installationSource) {
+        AppInstallationSource.GOOGLE_PLAY -> "R-M-14460024-1"
+        AppInstallationSource.HUAWEI -> "demo-banner-yandex"
+        AppInstallationSource.RU_STORE -> "R-M-14164420-1"
+    }
 
     init {
         viewModelScope.launch(Dispatchers.IO) {

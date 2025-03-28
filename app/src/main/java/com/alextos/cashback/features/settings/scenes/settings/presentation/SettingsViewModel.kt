@@ -8,7 +8,6 @@ import com.alextos.cashback.core.AppConstants
 import com.alextos.cashback.core.domain.services.AnalyticsEvent
 import com.alextos.cashback.core.domain.services.AnalyticsService
 import com.alextos.cashback.core.domain.services.AppInfoService
-import com.alextos.cashback.core.domain.services.AppInstallationSource
 import com.alextos.cashback.core.domain.settings.SettingsManager
 import com.alextos.cashback.core.domain.services.PasteboardService
 import com.alextos.cashback.core.domain.services.ShareService
@@ -33,12 +32,6 @@ class SettingsViewModel(
     private val _state = MutableStateFlow(SettingsState())
     val state = _state.asStateFlow()
 
-    val bannerId = when (appInfoService.installationSource) {
-        AppInstallationSource.GOOGLE_PLAY -> "R-M-14460024-2"
-        AppInstallationSource.HUAWEI -> "demo-banner-yandex"
-        AppInstallationSource.RU_STORE -> "R-M-14164420-2"
-    }
-
     private var counter = 0
 
     init {
@@ -54,13 +47,6 @@ class SettingsViewModel(
             settingsManager.isNotificationEnabled
                 .collect { isEnabled ->
                     _state.update { it.copy(isNotificationsEnabled = isEnabled) }
-                }
-        }
-
-        viewModelScope.launch(Dispatchers.IO) {
-            settingsManager.isAdEnabled
-                .collect { isEnabled ->
-                    _state.update { it.copy(isAdVisible = isEnabled) }
                 }
         }
 

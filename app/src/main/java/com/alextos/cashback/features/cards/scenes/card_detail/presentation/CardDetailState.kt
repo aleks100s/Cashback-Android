@@ -10,6 +10,5 @@ data class CardDetailState(
     val color: String = "#E7E7E7",
     val isFavourite: Boolean = false,
     val currency: Currency = Currency.RUBLE,
-    val isDeleteCardDialogShown: Boolean = false,
-    val isAdVisible: Boolean = true
+    val isDeleteCardDialogShown: Boolean = false
 )

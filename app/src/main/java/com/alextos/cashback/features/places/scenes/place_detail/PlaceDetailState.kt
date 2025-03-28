@@ -8,7 +8,6 @@ data class PlaceDetailState(
     val placeName: String = "",
     val category: Category? = null,
     val isFavourite: Boolean = false,
-    val isAdVisible: Boolean = false,
     val isEditMode: Boolean = false,
     val isCreateMode: Boolean = false,
     val cards: List<PlaceCard> = emptyList()
