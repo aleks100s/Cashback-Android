@@ -65,7 +65,7 @@
     <string name="card_detail_cashback_currency">Выплата кэшбэка</string>
     <string name="card_detail_delete_all_cashback">Удалить все кэшбэки с карты</string>
     <string name="card_detail_all_cashback_deleted">Все кэшбэки удалены</string>
-    <string name="card_detail_delete_card">Удалить карту</string>
+    <string name="card_detail_delete_card">Удалить карту и все выплаты</string>
     <string name="card_detail_card_deleted">Карта удалена</string>
     <string name="common_are_you_sure">Вы уверены?</string>
     <string name="card_detail_delete_card_warning">Удаленную карту можно востановить в разделе Настроек</string>

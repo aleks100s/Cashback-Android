@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Upsert
+import com.alextos.cashback.core.data.entities.CardEntity
 import com.alextos.cashback.core.data.entities.combined_entities.PaymentWithCard
 import com.alextos.cashback.core.data.entities.PaymentEntity
 import kotlinx.coroutines.flow.Flow
@@ -23,4 +24,7 @@ interface PaymentDao {
 
     @Delete
     suspend fun delete(payment: PaymentEntity)
+
+    @Query("DELETE FROM payments WHERE cardId = :cardId")
+    suspend fun deletePayments(cardId: String)
 }

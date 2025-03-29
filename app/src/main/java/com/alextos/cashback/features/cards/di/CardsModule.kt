@@ -19,7 +19,7 @@ val cardsModule = module {
     factory { FilterCardsUseCase() }
     factory { ValidateCashbackUseCase() }
     factory { DeleteAllCashbackUseCase(get()) }
-    factory { DeleteCardUseCase(get()) }
+    factory { DeleteCardUseCase(get(), get()) }
     factory { CreateCashbackUseCase(get()) }
     factory { DeleteCashbackUseCase(get()) }
 }
