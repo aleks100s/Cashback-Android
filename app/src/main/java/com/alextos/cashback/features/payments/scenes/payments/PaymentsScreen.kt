@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -12,7 +14,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alextos.cashback.R
+import com.alextos.cashback.common.UiText
+import com.alextos.cashback.common.views.ContextMenuItem
+import com.alextos.cashback.common.views.EmptyView
+import com.alextos.cashback.common.views.RoundedList
 import com.alextos.cashback.common.views.Screen
+import com.alextos.cashback.features.payments.scenes.payments.components.PaymentItemView
 
 @Composable
 fun PaymentsScreen(
@@ -36,13 +43,27 @@ private fun PaymentsView(
     state: PaymentsState,
     onAction: (PaymentsAction) -> Unit
 ) {
-    LazyColumn(
-        modifier = modifier
-            .padding(horizontal = 16.dp)
-            .fillMaxSize()
-    ) {
-        items(state.payments, key = { it.id }) { payment ->
-            Text(text = "${payment.date.year}-${payment.date.month}-${payment.date.dayOfMonth}")
-        }
-    }
+    RoundedList(
+        modifier = modifier.padding(horizontal = 16.dp),
+        list = state.payments,
+        itemView = { modifier, payment ->
+            PaymentItemView(modifier, payment)
+        },
+        emptyView = {
+            EmptyView(
+                title = stringResource(R.string.payments_empty_period),
+                imageVector = Icons.Default.ShoppingCart
+            )
+        },
+        contextMenuActions = { element ->
+            listOf(
+                ContextMenuItem(
+                    title = UiText.StringResourceId(R.string.common_remove),
+                    isDestructive = true,
+                    action = {}
+                )
+            )
+        },
+        allowSwipe = false
+    )
 }

@@ -1,15 +1,16 @@
 package com.alextos.cashback.core.domain.models
 
+import com.alextos.cashback.common.views.ListElement
 import java.time.LocalDate
 import java.util.UUID
 import kotlin.random.Random
 
 data class Payment(
-    val id: String = UUID.randomUUID().toString(),
+    override val id: String = UUID.randomUUID().toString(),
     val amount: Int,
     val date: LocalDate,
     val card: Card?
-)
+): ListElement
 
 fun generateMockPayment(card: Card? = null): Payment {
     return Payment(
