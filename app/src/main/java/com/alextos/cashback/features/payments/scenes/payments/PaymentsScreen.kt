@@ -1,10 +1,21 @@
 package com.alextos.cashback.features.payments.scenes.payments
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
@@ -18,7 +29,10 @@ import com.alextos.cashback.common.views.CustomButton
 import com.alextos.cashback.common.views.EmptyView
 import com.alextos.cashback.common.views.RoundedList
 import com.alextos.cashback.common.views.Screen
+import com.alextos.cashback.common.views.SectionView
 import com.alextos.cashback.features.payments.scenes.payments.components.PaymentItemView
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 @Composable
 fun PaymentsScreen(
@@ -55,11 +69,55 @@ private fun PaymentsView(
     state: PaymentsState,
     onAction: (PaymentsAction) -> Unit
 ) {
+    val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale("ru_RU"))
+
     RoundedList(
         modifier = modifier.padding(horizontal = 16.dp),
-        list = state.payments,
+        list = if (state.isAllTimePeriod) state.allPayments else  state.periodPayments,
         topView = {
+            if (!state.isAllTimePeriod) {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                SectionView {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                                tint = MaterialTheme.colorScheme.primary,
+                                contentDescription = stringResource(R.string.payments_preiod_previous),
+                                modifier = Modifier.padding(start = 16.dp).size(24.dp)
+                            )
 
+                            CustomButton(stringResource(R.string.payments_preiod_previous)) {
+                                onAction(PaymentsAction.PreviousMonth)
+                            }
+                        }
+
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            CustomButton(stringResource(R.string.payments_period_next)) {
+                                onAction(PaymentsAction.NextMonth)
+                            }
+
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Default.ArrowForward,
+                                tint = MaterialTheme.colorScheme.primary,
+                                contentDescription = stringResource(R.string.payments_period_next),
+                                modifier = Modifier.padding(end = 16.dp).size(24.dp)
+                            )
+                        }
+                    }
+                }
+            }
+
+                Text(
+                    text = stringResource(R.string.paymnets_period_dates, formatter.format(state.startPeriod), formatter.format(state.endPeriod))
+                )
+            }
         },
         itemView = { modifier, payment ->
             PaymentItemView(modifier, payment)

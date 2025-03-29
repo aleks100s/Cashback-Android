@@ -18,6 +18,9 @@ interface PaymentDao {
 
     @Transaction
     @Query("SELECT * FROM payments")
+    fun getAllFlow(): Flow<List<PaymentWithCard>>
+
+    @Query("SELECT * FROM payments")
     suspend fun getAll(): List<PaymentWithCard>
 
     @Query("SELECT * FROM payments WHERE date > :from AND date < :to")

@@ -8,6 +8,7 @@ import com.alextos.cashback.core.domain.services.AnalyticsService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -19,9 +20,24 @@ class PaymentsViewModel(
     private val _state = MutableStateFlow(PaymentsState())
     val state = _state.asStateFlow()
 
+    private val period = MutableStateFlow(Period(LocalDate.now(), LocalDate.now()))
+
     init {
         setupCurrentMonthPeriod()
-        fetchPeriod()
+
+        viewModelScope.launch(Dispatchers.IO) {
+            period.collect { period ->
+                val payments = paymentRepository.getPeriodPayments(period.start, period.end)
+                _state.update { it.copy(periodPayments = payments, startPeriod = period.start, endPeriod = period.end) }
+            }
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            paymentRepository.getAllPaymentsFlow()
+                .collect { payments ->
+                    _state.update { it.copy(allPayments = payments) }
+                }
+        }
     }
 
     fun onAction(action: PaymentsAction) {
@@ -34,12 +50,15 @@ class PaymentsViewModel(
             }
             is PaymentsAction.TogglePeriodMode -> {
                 analyticsService.logEvent(AnalyticsEvent.PaymentsTogglePeriodButtonTapped)
-                if (state.value.isAllTimePeriod) {
-                    fetchPeriod()
-                } else {
-                    fetchAll()
-                }
                 _state.update { it.copy(isAllTimePeriod = !it.isAllTimePeriod) }
+            }
+            is PaymentsAction.PreviousMonth -> {
+                analyticsService.logEvent(AnalyticsEvent.PaymentsPreviousButtonTapped)
+                previousMonth()
+            }
+            is PaymentsAction.NextMonth -> {
+                analyticsService.logEvent(AnalyticsEvent.PaymentsPreviousButtonTapped)
+                nextMonth()
             }
         }
     }
@@ -48,22 +67,19 @@ class PaymentsViewModel(
         val now = LocalDate.now()
         val startOfMonth = now.withDayOfMonth(1)
         val endOfMonth = now.withDayOfMonth(now.lengthOfMonth())
-        _state.update { it.copy(startPeriod = startOfMonth, endPeriod = endOfMonth) }
+        period.update { it.copy(start = startOfMonth, end = endOfMonth) }
     }
 
-    private fun fetchAll() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val payments = paymentRepository.getAllPayments()
-            _state.update { it.copy(payments = payments) }
-        }
+    private fun previousMonth() {
+        period.update { it.copy(start = it.start.plusMonths(1), end = it.end.plusMonths(1)) }
     }
 
-    private fun fetchPeriod() {
-        val start = state.value.startPeriod
-        val end = state.value.endPeriod
-        viewModelScope.launch(Dispatchers.IO) {
-            val payments = paymentRepository.getPeriodPayments(start, end)
-            _state.update { it.copy(payments = payments) }
-        }
+    private fun nextMonth() {
+        period.update { it.copy(start = it.start.minusMonths(1), end = it.end.minusMonths(1)) }
     }
 }
+
+data class Period(
+    val start: LocalDate,
+    val end: LocalDate
+)

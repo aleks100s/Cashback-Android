@@ -98,7 +98,8 @@ class DatabaseSeeder : RoomDatabase.Callback() {
                 Payment(amount = Random.nextInt(100, 1000), date = LocalDate.now(), card = cards.random()),
                 Payment(amount = Random.nextInt(100, 1000), date = LocalDate.of(2024, Random.nextInt(1, 12), Random.nextInt(1, 28)), card = cards.random()),
                 Payment(amount = Random.nextInt(100, 1000), date = LocalDate.now(), card = cards.random()),
-                Payment(amount = Random.nextInt(100, 1000), date = LocalDate.of(2025, Random.nextInt(1, 3), Random.nextInt(1, 28)), card = cards.random())
+                Payment(amount = Random.nextInt(100, 1000), date = LocalDate.of(2025, 1, Random.nextInt(1, 28)), card = cards.random()),
+                Payment(amount = Random.nextInt(100, 1000), date = LocalDate.of(2025, 3, Random.nextInt(1, 28)), card = cards.random())
             ).map { it.toEntity() }
             payments.forEach { payment ->
                 val paymentCommand = "('${payment.id}', ${payment.amount}, ${payment.date}, '${payment.cardId}')"

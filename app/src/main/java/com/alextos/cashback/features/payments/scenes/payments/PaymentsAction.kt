@@ -5,4 +5,6 @@ import com.alextos.cashback.core.domain.models.Payment
 sealed interface PaymentsAction {
     data class DeletePayment(val payment: Payment): PaymentsAction
     data object TogglePeriodMode: PaymentsAction
+    data object NextMonth: PaymentsAction
+    data object PreviousMonth: PaymentsAction
 }
