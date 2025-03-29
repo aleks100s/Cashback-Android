@@ -17,21 +17,17 @@ class PaymentRepositoryImpl(
     private val paymentDao: PaymentDao,
     private val cashbackDao: CashbackDao
 ): PaymentRepository {
-    override fun getAllPayments(): Flow<List<Payment>> {
-        return paymentDao.getAll().map { list ->
-            list.map { entity ->
-                constructPayment(entity)
-            }
+    override suspend fun getAllPayments(): List<Payment> {
+        return paymentDao.getAll().map { entity ->
+            constructPayment(entity)
         }
     }
 
-    override fun getPeriodPayments(from: LocalDate, to: LocalDate): Flow<List<Payment>> {
+    override suspend fun getPeriodPayments(from: LocalDate, to: LocalDate): List<Payment> {
         val start = from.atStartOfDay(ZoneId.systemDefault()).toEpochSecond()
         val end = to.atStartOfDay(ZoneId.systemDefault()).toEpochSecond()
-        return paymentDao.getPeriod(start, end).map { list ->
-            list.map { entity ->
-                constructPayment(entity)
-            }
+        return paymentDao.getPeriod(start, end).map { entity ->
+            constructPayment(entity)
         }
     }
 

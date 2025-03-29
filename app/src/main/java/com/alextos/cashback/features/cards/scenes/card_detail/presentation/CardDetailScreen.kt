@@ -32,7 +32,6 @@ import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.common.views.ContextMenuItem
 import com.alextos.cashback.features.cards.scenes.card_detail.presentation.components.CashbackView
 import com.alextos.cashback.common.UiText
-import com.alextos.cashback.common.ads.AdBannerView
 import com.alextos.cashback.common.makeColor
 import com.alextos.cashback.common.views.ColorPicker
 import com.alextos.cashback.common.views.CustomButton

@@ -159,6 +159,8 @@
     <string name="place_detail_no_cards">Не найдены подходящие для оплаты карты</string>
     <string name="place_detail_delete">Удалить место</string>
     <string name="tab_bar_payments">Выплаты</string>
-    <string name="payments_title">Выплаты</string>
+    <string name="payments_title">Выплаты кэшбэка</string>
     <string name="payments_empty_period">Нет транзакци за данный период</string>
+    <string name="payments_month_mode">По месяцам</string>
+    <string name="payments_all_time_mode">Все время</string>
 </resources>

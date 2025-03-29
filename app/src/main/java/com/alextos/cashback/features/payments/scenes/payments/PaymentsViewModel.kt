@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 class PaymentsViewModel(
     private val paymentRepository: PaymentRepository,
@@ -19,12 +20,8 @@ class PaymentsViewModel(
     val state = _state.asStateFlow()
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
-            paymentRepository.getAllPayments()
-                .collect { payments ->
-                    _state.update { it.copy(payments = payments) }
-                }
-        }
+        setupCurrentMonthPeriod()
+        fetchPeriod()
     }
 
     fun onAction(action: PaymentsAction) {
@@ -35,6 +32,38 @@ class PaymentsViewModel(
                     paymentRepository.delete(payment = action.payment)
                 }
             }
+            is PaymentsAction.TogglePeriodMode -> {
+                analyticsService.logEvent(AnalyticsEvent.PaymentsTogglePeriodButtonTapped)
+                if (state.value.isAllTimePeriod) {
+                    fetchPeriod()
+                } else {
+                    fetchAll()
+                }
+                _state.update { it.copy(isAllTimePeriod = !it.isAllTimePeriod) }
+            }
+        }
+    }
+
+    private fun setupCurrentMonthPeriod() {
+        val now = LocalDate.now()
+        val startOfMonth = now.withDayOfMonth(1)
+        val endOfMonth = now.withDayOfMonth(now.lengthOfMonth())
+        _state.update { it.copy(startPeriod = startOfMonth, endPeriod = endOfMonth) }
+    }
+
+    private fun fetchAll() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val payments = paymentRepository.getAllPayments()
+            _state.update { it.copy(payments = payments) }
+        }
+    }
+
+    private fun fetchPeriod() {
+        val start = state.value.startPeriod
+        val end = state.value.endPeriod
+        viewModelScope.launch(Dispatchers.IO) {
+            val payments = paymentRepository.getPeriodPayments(start, end)
+            _state.update { it.copy(payments = payments) }
         }
     }
 }
