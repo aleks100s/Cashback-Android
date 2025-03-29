@@ -26,7 +26,7 @@ class PlacesViewModel(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            placeRepository.getPlaces()
+            placeRepository.getPlacesFlow()
                 .collect { list ->
                     _state.update {
                         it.copy(allPlaces = list, filteredPlaces = filterUseCase.execute(list, it.searchQuery))

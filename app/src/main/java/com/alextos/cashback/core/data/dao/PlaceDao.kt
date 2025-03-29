@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.Flow
 interface PlaceDao {
     @Transaction
     @Query("SELECT * FROM places ORDER BY isFavourite DESC")
-    fun getAll(): Flow<List<PlaceWithCategory>>
+    fun getAllFlow(): Flow<List<PlaceWithCategory>>
 
     @Query("SELECT * FROM places WHERE id = :id")
     fun getPlace(id: String): Flow<PlaceWithCategory?>
@@ -36,4 +36,7 @@ interface PlaceDao {
         deleteAll()
         insertAll(places)
     }
+
+    @Query("SELECT * FROM places ORDER BY isFavourite DESC")
+    suspend fun getAll(): List<PlaceWithCategory>
 }

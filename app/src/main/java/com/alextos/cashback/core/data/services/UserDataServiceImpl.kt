@@ -9,6 +9,7 @@ import com.alextos.cashback.core.data.dto.mappers.toDomain
 import com.alextos.cashback.core.data.dto.mappers.toDto
 import com.alextos.cashback.core.domain.repository.CardRepository
 import com.alextos.cashback.core.domain.repository.CategoryRepository
+import com.alextos.cashback.core.domain.repository.PaymentRepository
 import com.alextos.cashback.core.domain.repository.PlaceRepository
 import com.alextos.cashback.core.domain.services.UserDataDelegate
 import com.alextos.cashback.core.domain.services.UserDataFileProvider
@@ -20,7 +21,8 @@ class UserDataServiceImpl(
     private val context: Context,
     private val categoryRepository: CategoryRepository,
     private val cardRepository: CardRepository,
-    private val placeRepository: PlaceRepository
+    private val placeRepository: PlaceRepository,
+    private val paymentRepository: PaymentRepository
 ): UserDataService {
     override var delegate: UserDataDelegate? = null
     override var provider: UserDataFileProvider? = null
@@ -35,11 +37,13 @@ class UserDataServiceImpl(
     private suspend fun prepareData(): UserData {
         val categories = categoryRepository.getAllCategories()
         val cards = cardRepository.getAllCards()
+        val places = placeRepository.getPlaces()
+        val payments = paymentRepository.getAllPayments()
         val data = UserData(
             categories = categories.map { it.toDto() },
             cards = cards.map { it.toDto() },
-            places = emptyList(),
-            payments = emptyList()
+            places = places.map { it.toDto() },
+            payments = payments.map { it.toDto() }
         )
         return data
     }
@@ -74,6 +78,7 @@ class UserDataServiceImpl(
         categoryRepository.replaceAll(data.categories.map { it.toDomain() })
         cardRepository.replaceAll(data.cards.map { it.toDomain() })
         placeRepository.replaceAll(data.places.map { it.toDomain() })
+        paymentRepository.replaceAll(data.payments.map { it.toDomain() })
         delegate?.userDataServiceDidFinishImport()
     }
 }

@@ -2,6 +2,7 @@ package com.alextos.cashback.core.data.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
+import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Upsert
@@ -27,4 +28,16 @@ interface PaymentDao {
 
     @Query("DELETE FROM payments WHERE cardId = :cardId")
     suspend fun deletePayments(cardId: String)
+
+    @Query("DELETE FROM payments")
+    suspend fun deleteAll()
+
+    @Insert
+    suspend fun insertAll(payments: List<PaymentEntity>)
+
+    @Transaction
+    suspend fun replaceAll(payments: List<PaymentEntity>) {
+        deleteAll()
+        insertAll(payments)
+    }
 }
