@@ -1,6 +1,7 @@
 package com.alextos.cashback.core.data.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Upsert
@@ -19,4 +20,7 @@ interface PaymentDao {
 
     @Query("SELECT * FROM payments WHERE date > :from AND date < :to")
     fun getPeriod(from: Long, to: Long): Flow<List<PaymentWithCard>>
+
+    @Delete
+    suspend fun delete(payment: PaymentEntity)
 }

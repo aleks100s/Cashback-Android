@@ -4,6 +4,7 @@ import com.alextos.cashback.core.data.dao.CashbackDao
 import com.alextos.cashback.core.data.dao.PaymentDao
 import com.alextos.cashback.core.data.entities.combined_entities.PaymentWithCard
 import com.alextos.cashback.core.data.entities.mappers.toDomain
+import com.alextos.cashback.core.data.entities.mappers.toEntity
 import com.alextos.cashback.core.domain.models.Payment
 import com.alextos.cashback.core.domain.repository.PaymentRepository
 import kotlinx.coroutines.flow.Flow
@@ -31,6 +32,10 @@ class PaymentRepositoryImpl(
                 constructPayment(entity)
             }
         }
+    }
+
+    override suspend fun delete(payment: Payment) {
+        paymentDao.delete(payment.toEntity())
     }
 
     private suspend fun constructPayment(entity: PaymentWithCard): Payment {

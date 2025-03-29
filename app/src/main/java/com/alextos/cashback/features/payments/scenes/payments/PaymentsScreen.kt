@@ -1,12 +1,8 @@
 package com.alextos.cashback.features.payments.scenes.payments
 
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -60,7 +56,9 @@ private fun PaymentsView(
                 ContextMenuItem(
                     title = UiText.StringResourceId(R.string.common_remove),
                     isDestructive = true,
-                    action = {}
+                    action = {
+                        onAction(PaymentsAction.DeletePayment(element))
+                    }
                 )
             )
         },

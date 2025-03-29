@@ -1,4 +1,7 @@
 package com.alextos.cashback.features.payments.scenes.payments
 
+import com.alextos.cashback.core.domain.models.Payment
+
 sealed interface PaymentsAction {
+    data class DeletePayment(val payment: Payment): PaymentsAction
 }
