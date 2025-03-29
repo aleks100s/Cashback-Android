@@ -17,10 +17,10 @@ interface PaymentDao {
     suspend fun insert(payment: PaymentEntity)
 
     @Transaction
-    @Query("SELECT * FROM payments")
+    @Query("SELECT * FROM payments ORDER BY date ASC")
     fun getAllFlow(): Flow<List<PaymentWithCard>>
 
-    @Query("SELECT * FROM payments")
+    @Query("SELECT * FROM payments ORDER BY date ASC")
     suspend fun getAll(): List<PaymentWithCard>
 
     @Query("SELECT * FROM payments WHERE date > :from AND date < :to")

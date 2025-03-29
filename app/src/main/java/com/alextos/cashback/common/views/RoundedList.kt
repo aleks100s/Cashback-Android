@@ -64,11 +64,11 @@ fun <Element: ListElement> RoundedList(
             Spacer(modifier = Modifier.height(16.dp))
         }
 
-        if (list.isNotEmpty()) {
-            item {
-                topView()
-            }
+        item {
+            topView()
+        }
 
+        if (list.isNotEmpty()) {
             items(items = list, key = { it.id }) { item ->
                 val topCornersShape = if (item == list.firstOrNull()) {
                     RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)

@@ -30,7 +30,6 @@ fun EmptyView(
 ) {
     Box(
         modifier = modifier
-            .padding(16.dp)
             .clip(RoundedCornerShape(16.dp))
             .background(MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp))
             .padding(32.dp)

@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -75,47 +77,17 @@ private fun PaymentsView(
         modifier = modifier.padding(horizontal = 16.dp),
         list = if (state.isAllTimePeriod) state.allPayments else  state.periodPayments,
         topView = {
-            if (!state.isAllTimePeriod) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                SectionView {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                                tint = MaterialTheme.colorScheme.primary,
-                                contentDescription = stringResource(R.string.payments_preiod_previous),
-                                modifier = Modifier.padding(start = 16.dp).size(24.dp)
-                            )
-
-                            CustomButton(stringResource(R.string.payments_preiod_previous)) {
-                                onAction(PaymentsAction.PreviousMonth)
-                            }
-                        }
-
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            CustomButton(stringResource(R.string.payments_period_next)) {
-                                onAction(PaymentsAction.NextMonth)
-                            }
-
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Default.ArrowForward,
-                                tint = MaterialTheme.colorScheme.primary,
-                                contentDescription = stringResource(R.string.payments_period_next),
-                                modifier = Modifier.padding(end = 16.dp).size(24.dp)
-                            )
-                        }
-                    }
+                if (!state.isAllTimePeriod) {
+                    Buttons(state, onAction)
                 }
-            }
 
                 Text(
-                    text = stringResource(R.string.paymnets_period_dates, formatter.format(state.startPeriod), formatter.format(state.endPeriod))
+                    text = stringResource(R.string.paymnets_period_dates, formatter.format(state.startPeriod), formatter.format(state.endPeriod)),
+                    color = MaterialTheme.colorScheme.secondary
                 )
             }
         },
@@ -141,4 +113,49 @@ private fun PaymentsView(
         },
         allowSwipe = false
     )
+}
+
+@Composable
+private fun Buttons(
+    state: PaymentsState,
+    onAction: (PaymentsAction) -> Unit
+) {
+    SectionView {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Default.KeyboardArrowLeft,
+                    tint = if (state.isPreviousButtonEnabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
+                    contentDescription = stringResource(R.string.payments_preiod_previous),
+                    modifier = Modifier.padding(start = 16.dp).size(24.dp)
+                )
+
+                CustomButton(
+                    title = stringResource(R.string.payments_preiod_previous),
+                    enabled = state.isPreviousButtonEnabled
+                ) {
+                    onAction(PaymentsAction.PreviousMonth)
+                }
+            }
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                CustomButton(
+                    title = stringResource(R.string.payments_period_next),
+                    enabled = state.isNextButtonEnabled
+                ) {
+                    onAction(PaymentsAction.NextMonth)
+                }
+
+                Icon(
+                    imageVector = Icons.AutoMirrored.Default.KeyboardArrowRight,
+                    tint = if (state.isNextButtonEnabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
+                    contentDescription = stringResource(R.string.payments_period_next),
+                    modifier = Modifier.padding(end = 16.dp).size(24.dp)
+                )
+            }
+        }
+    }
 }

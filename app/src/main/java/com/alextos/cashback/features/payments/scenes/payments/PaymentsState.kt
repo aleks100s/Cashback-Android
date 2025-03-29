@@ -8,5 +8,7 @@ data class PaymentsState(
     val periodPayments: List<Payment> = listOf(),
     val isAllTimePeriod: Boolean = false,
     val startPeriod: LocalDate = LocalDate.now(),
-    val endPeriod: LocalDate = LocalDate.now()
+    val endPeriod: LocalDate = LocalDate.now(),
+    val isNextButtonEnabled: Boolean = true,
+    val isPreviousButtonEnabled: Boolean = true
 )

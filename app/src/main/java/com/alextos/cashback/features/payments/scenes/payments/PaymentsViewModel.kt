@@ -8,7 +8,6 @@ import com.alextos.cashback.core.domain.services.AnalyticsService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -21,6 +20,8 @@ class PaymentsViewModel(
     val state = _state.asStateFlow()
 
     private val period = MutableStateFlow(Period(LocalDate.now(), LocalDate.now()))
+    private var firstDate = LocalDate.now()
+    private var lastDate = LocalDate.now()
 
     init {
         setupCurrentMonthPeriod()
@@ -36,6 +37,9 @@ class PaymentsViewModel(
             paymentRepository.getAllPaymentsFlow()
                 .collect { payments ->
                     _state.update { it.copy(allPayments = payments) }
+                    firstDate = payments.firstOrNull()?.date ?: LocalDate.now()
+                    lastDate = payments.lastOrNull()?.date ?: LocalDate.now()
+                    updateButtons()
                 }
         }
     }
@@ -68,14 +72,28 @@ class PaymentsViewModel(
         val startOfMonth = now.withDayOfMonth(1)
         val endOfMonth = now.withDayOfMonth(now.lengthOfMonth())
         period.update { it.copy(start = startOfMonth, end = endOfMonth) }
+        updateButtons()
     }
 
     private fun previousMonth() {
-        period.update { it.copy(start = it.start.plusMonths(1), end = it.end.plusMonths(1)) }
+        val end = period.value.end.minusMonths(1)
+        period.update { it.copy(start = it.start.minusMonths(1), end = end.withDayOfMonth(end.lengthOfMonth())) }
+        updateButtons()
     }
 
     private fun nextMonth() {
-        period.update { it.copy(start = it.start.minusMonths(1), end = it.end.minusMonths(1)) }
+        val end = period.value.end.plusMonths(1)
+        period.update { it.copy(start = it.start.plusMonths(1), end = end.withDayOfMonth(end.lengthOfMonth())) }
+        updateButtons()
+    }
+
+    private fun updateButtons() {
+        _state.update { state ->
+            state.copy(
+                isNextButtonEnabled = period.value.end <= lastDate,
+                isPreviousButtonEnabled = period.value.start > firstDate
+            )
+        }
     }
 }
 

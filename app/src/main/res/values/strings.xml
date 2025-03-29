@@ -160,7 +160,7 @@
     <string name="place_detail_delete">Удалить место</string>
     <string name="tab_bar_payments">Выплаты</string>
     <string name="payments_title">Выплаты кэшбэка</string>
-    <string name="payments_empty_period">Нет транзакциq за данный период</string>
+    <string name="payments_empty_period">Нет транзакций за данный период</string>
     <string name="payments_month_mode">По месяцам</string>
     <string name="payments_all_time_mode">Все время</string>
     <string name="paymnets_period_dates">C %s по %s</string>
