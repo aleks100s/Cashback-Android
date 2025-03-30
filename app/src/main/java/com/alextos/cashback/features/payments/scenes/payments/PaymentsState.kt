@@ -14,7 +14,11 @@ data class PaymentsState(
     val isPreviousButtonEnabled: Boolean = true,
     val chartData: List<ChartData> = emptyList(),
     val currencyData: CurrencyData = CurrencyData()
-)
+) {
+    fun isChartVisible(): Boolean {
+        return if (isAllTimePeriod) allPayments.count() > 1 else periodPayments.count() > 1
+    }
+}
 
 data class ChartData(
     val card: Card,

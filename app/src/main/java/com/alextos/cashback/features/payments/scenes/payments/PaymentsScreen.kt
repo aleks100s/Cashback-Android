@@ -1,8 +1,15 @@
 package com.alextos.cashback.features.payments.scenes.payments
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -39,6 +46,7 @@ import com.alextos.cashback.common.views.RoundedList
 import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.common.views.SectionView
 import com.alextos.cashback.core.domain.models.Payment
+import com.alextos.cashback.core.domain.models.currency.Currency
 import com.alextos.cashback.features.payments.scenes.payments.components.PaymentItemView
 import io.github.dautovicharis.charts.PieChart
 import io.github.dautovicharis.charts.model.toChartDataSet
@@ -110,10 +118,16 @@ private fun PaymentsView(
             )
 
             Column(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .padding(bottom = 16.dp)
+                    .fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                ChartView(state, title)
+                if (state.isChartVisible()) {
+                    ChartView(state, title)
+                }
+
+                CurrencyDataView(state)
 
                 if (!state.isAllTimePeriod) {
                     PeriodView(state, title, onAction)
@@ -148,64 +162,65 @@ private fun PaymentsView(
 }
 
 @Composable
+private fun CurrencyDataView(state: PaymentsState) {
+    SectionView {
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = stringResource(R.string.rubles, state.currencyData.rubles))
+
+            Text(text = stringResource(R.string.common_rubles), color = MaterialTheme.colorScheme.secondary)
+        }
+
+        CustomDivider()
+
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = stringResource(R.string.miles, state.currencyData.miles))
+
+            Text(text = stringResource(R.string.common_miles), color = MaterialTheme.colorScheme.secondary)
+        }
+
+        CustomDivider()
+
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = stringResource(R.string.points, state.currencyData.points))
+
+            Text(text = stringResource(R.string.common_points), color = MaterialTheme.colorScheme.secondary)
+        }
+    }
+}
+
+@Composable
 private fun ChartView(state: PaymentsState, title: String) {
-    Column(modifier = Modifier.padding(bottom = 16.dp)) {
-        val payments = state.chartData
-        if (payments.count() > 1) {
-            val pieColors = payments.map { makeColor(it.card.color) }
+    val payments = state.chartData
+    val pieColors = payments.map { makeColor(it.card.color) }
+    val style = PieChartDefaults.style(
+        pieColor = Color.Transparent,
+        borderColor = Color.Transparent,
+        donutPercentage = 60f,
+        borderWidth = 6f,
+        pieColors = pieColors,
+        chartViewStyle = ChartViewDefaults.style(
+            shadow = 0.dp,
+            outerPadding = 0.dp,
+            innerPadding = 0.dp
+        )
+    )
 
-            val style = PieChartDefaults.style(
-                pieColor = Color.Transparent,
-                borderColor = Color.Transparent,
-                donutPercentage = 40f,
-                borderWidth = 6f,
-                pieColors = pieColors,
-                chartViewStyle = ChartViewDefaults.style(
-                    backgroundColor = Color.Transparent,
-                    shadow = 0.dp,
-                )
-            )
+    val dataSet = payments.map { it.totalAmount }.toChartDataSet(title = if (state.isAllTimePeriod)  stringResource(R.string.chart_all_time) else title)
 
-            val dataSet = payments.map { it.totalAmount }.toChartDataSet(title = title)
-
-            PieChart(dataSet = dataSet, style = style)
-        }
-
-        SectionView {
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = stringResource(R.string.rubles, state.currencyData.rubles))
-
-                Text(text = stringResource(R.string.common_rubles), color = MaterialTheme.colorScheme.secondary)
-            }
-
-            CustomDivider()
-
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = stringResource(R.string.miles, state.currencyData.miles))
-
-                Text(text = stringResource(R.string.common_miles), color = MaterialTheme.colorScheme.secondary)
-            }
-
-            CustomDivider()
-
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = stringResource(R.string.points, state.currencyData.points))
-
-                Text(text = stringResource(R.string.common_points), color = MaterialTheme.colorScheme.secondary)
-            }
-        }
+    Box {
+        PieChart(dataSet = dataSet, style = style)
     }
 }
 
