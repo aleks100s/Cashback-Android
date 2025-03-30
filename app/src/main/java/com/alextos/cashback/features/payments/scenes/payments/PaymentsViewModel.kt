@@ -42,7 +42,7 @@ class PaymentsViewModel(
                 job?.cancelAndJoin()
                 job = viewModelScope.launch(Dispatchers.IO) {
                     paymentRepository.getPeriodPayments(period.start, period.end).collect { payments ->
-                        _state.update { it.copy(periodPayments = payments, startPeriod = period.start, endPeriod = period.end) }
+                        _state.update { it.copy(periodPayments = payments.sortedBy { it.date }, startPeriod = period.start, endPeriod = period.end) }
                         updatePeriodPaymentsChart()
                     }
                 }
@@ -99,20 +99,22 @@ class PaymentsViewModel(
     private fun setupCurrentMonthPeriod() {
         val now = LocalDate.now()
         val startOfMonth = now.withDayOfMonth(1)
-        val endOfMonth = now.withDayOfMonth(now.lengthOfMonth())
+        val endOfMonth = startOfMonth.plusMonths(1)
         period.update { it.copy(start = startOfMonth, end = endOfMonth) }
         updateButtons()
     }
 
     private fun previousMonth() {
-        val end = period.value.end.minusMonths(1)
-        period.update { it.copy(start = it.start.minusMonths(1), end = end.withDayOfMonth(end.lengthOfMonth())) }
+        val start = period.value.start.minusMonths(1)
+        val end = start.plusDays(start.lengthOfMonth().toLong())
+        period.update { it.copy(start = start, end = end) }
         updateButtons()
     }
 
     private fun nextMonth() {
-        val end = period.value.end.plusMonths(1)
-        period.update { it.copy(start = it.start.plusMonths(1), end = end.withDayOfMonth(end.lengthOfMonth())) }
+        val start = period.value.start.plusMonths(1)
+        val end = start.plusDays(start.lengthOfMonth().toLong())
+        period.update { it.copy(start = start, end = end) }
         updateButtons()
     }
 
