@@ -7,7 +7,7 @@ import java.time.LocalDate
 
 interface PaymentRepository {
     fun getAllPaymentsFlow(): Flow<List<Payment>>
-    suspend fun getPeriodPayments(from: LocalDate, to: LocalDate): List<Payment>
+    fun getPeriodPayments(from: LocalDate, to: LocalDate): Flow<List<Payment>>
     suspend fun delete(payment: Payment)
     suspend fun deleteAllPayments(card: Card)
     suspend fun replaceAll(payments: List<Payment>)

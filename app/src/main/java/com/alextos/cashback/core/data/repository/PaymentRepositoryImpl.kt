@@ -25,11 +25,13 @@ class PaymentRepositoryImpl(
         }
     }
 
-    override suspend fun getPeriodPayments(from: LocalDate, to: LocalDate): List<Payment> {
+    override fun getPeriodPayments(from: LocalDate, to: LocalDate): Flow<List<Payment>> {
         val start = from.atStartOfDay(ZoneId.systemDefault()).toEpochSecond()
         val end = to.atStartOfDay(ZoneId.systemDefault()).toEpochSecond()
-        return paymentDao.getPeriod(start, end).map { entity ->
-            constructPayment(entity)
+        return paymentDao.getPeriod(start, end).map { list ->
+            list.map { entity ->
+                constructPayment(entity)
+            }
         }
     }
 

@@ -24,7 +24,7 @@ interface PaymentDao {
     suspend fun getAll(): List<PaymentWithCard>
 
     @Query("SELECT * FROM payments WHERE date > :from AND date < :to")
-    suspend fun getPeriod(from: Long, to: Long): List<PaymentWithCard>
+    fun getPeriod(from: Long, to: Long): Flow<List<PaymentWithCard>>
 
     @Delete
     suspend fun delete(payment: PaymentEntity)

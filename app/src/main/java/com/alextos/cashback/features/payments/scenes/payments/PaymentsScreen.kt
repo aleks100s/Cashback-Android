@@ -95,18 +95,22 @@ private fun PaymentsView(
         modifier = modifier.padding(horizontal = 16.dp),
         list = if (state.isAllTimePeriod) state.allPayments else  state.periodPayments,
         topView = {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                if (!state.isAllTimePeriod) {
+            if (!state.isAllTimePeriod) {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
                     Buttons(state, onAction)
-                }
 
-                Text(
-                    text = stringResource(R.string.paymnets_period_dates, formatter.format(state.startPeriod), formatter.format(state.endPeriod)),
-                    color = MaterialTheme.colorScheme.secondary
-                )
+                    Text(
+                        text = stringResource(
+                            R.string.paymnets_period_dates,
+                            formatter.format(state.startPeriod),
+                            formatter.format(state.endPeriod)
+                        ),
+                        color = MaterialTheme.colorScheme.secondary
+                    )
+                }
             }
         },
         itemView = { modifier, payment ->

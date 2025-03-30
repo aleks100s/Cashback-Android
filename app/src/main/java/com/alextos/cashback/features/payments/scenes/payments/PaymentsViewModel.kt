@@ -6,6 +6,8 @@ import com.alextos.cashback.core.domain.repository.PaymentRepository
 import com.alextos.cashback.core.domain.services.AnalyticsEvent
 import com.alextos.cashback.core.domain.services.AnalyticsService
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -23,13 +25,19 @@ class PaymentsViewModel(
     private var firstDate = LocalDate.now()
     private var lastDate = LocalDate.now()
 
+    private var job: Job? = null
+
     init {
         setupCurrentMonthPeriod()
 
         viewModelScope.launch(Dispatchers.IO) {
             period.collect { period ->
-                val payments = paymentRepository.getPeriodPayments(period.start, period.end)
-                _state.update { it.copy(periodPayments = payments, startPeriod = period.start, endPeriod = period.end) }
+                job?.cancelAndJoin()
+                job = viewModelScope.launch(Dispatchers.IO) {
+                    paymentRepository.getPeriodPayments(period.start, period.end).collect { payments ->
+                        _state.update { it.copy(periodPayments = payments, startPeriod = period.start, endPeriod = period.end) }
+                    }
+                }
             }
         }
 
