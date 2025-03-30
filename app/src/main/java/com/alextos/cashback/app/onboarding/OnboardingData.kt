@@ -13,4 +13,5 @@ val onboardingPages = listOf(
     OnboardingData(R.drawable.onboarding_04),
     OnboardingData(R.drawable.onboarding_05),
     OnboardingData(R.drawable.onboarding_06),
+    OnboardingData(R.drawable.onboarding_07),
 )
