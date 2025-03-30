@@ -2,6 +2,8 @@ package com.alextos.cashback.features.payments.scenes.payments
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.alextos.cashback.core.domain.models.Card
+import com.alextos.cashback.core.domain.models.currency.Currency
 import com.alextos.cashback.core.domain.repository.PaymentRepository
 import com.alextos.cashback.core.domain.services.AnalyticsEvent
 import com.alextos.cashback.core.domain.services.AnalyticsService
@@ -25,6 +27,11 @@ class PaymentsViewModel(
     private var firstDate = LocalDate.now()
     private var lastDate = LocalDate.now()
 
+    private var allPaymentsChart: List<ChartData> = emptyList()
+    private var periodChart: List<ChartData> = emptyList()
+    private var allCurrencyData = CurrencyData()
+    private var periodCurrencyData = CurrencyData()
+
     private var job: Job? = null
 
     init {
@@ -36,6 +43,7 @@ class PaymentsViewModel(
                 job = viewModelScope.launch(Dispatchers.IO) {
                     paymentRepository.getPeriodPayments(period.start, period.end).collect { payments ->
                         _state.update { it.copy(periodPayments = payments, startPeriod = period.start, endPeriod = period.end) }
+                        updatePeriodPaymentsChart()
                     }
                 }
             }
@@ -48,6 +56,7 @@ class PaymentsViewModel(
                     firstDate = payments.firstOrNull()?.date ?: LocalDate.now()
                     lastDate = payments.lastOrNull()?.date ?: LocalDate.now()
                     updateButtons()
+                    updateAllPaymentsChart()
                 }
         }
     }
@@ -62,7 +71,13 @@ class PaymentsViewModel(
             }
             is PaymentsAction.TogglePeriodMode -> {
                 analyticsService.logEvent(AnalyticsEvent.PaymentsTogglePeriodButtonTapped)
-                _state.update { it.copy(isAllTimePeriod = !it.isAllTimePeriod) }
+                _state.update { state ->
+                    state.copy(
+                        isAllTimePeriod = !state.isAllTimePeriod,
+                        chartData = if (!state.isAllTimePeriod) allPaymentsChart else periodChart,
+                        currencyData = if (!state.isAllTimePeriod) allCurrencyData else periodCurrencyData,
+                    )
+                }
             }
             is PaymentsAction.PreviousMonth -> {
                 analyticsService.logEvent(AnalyticsEvent.PaymentsPreviousButtonTapped)
@@ -107,6 +122,58 @@ class PaymentsViewModel(
                 isNextButtonEnabled = period.value.end <= lastDate,
                 isPreviousButtonEnabled = period.value.start > firstDate
             )
+        }
+    }
+
+    private fun updateAllPaymentsChart() {
+        val payments = state.value.allPayments
+        val data = mutableMapOf<Card, Int>()
+        payments.forEach { payment ->
+            val card = payment.card ?: return@forEach
+
+            data[card] = (data[card] ?: 0) + payment.amount
+        }
+        val chartData = data.map { ChartData(card = it.key, totalAmount = it.value) }.sortedBy { it.totalAmount }
+        val currencyData = chartData.groupBy({ it.card.currency }, { it.totalAmount })
+        allCurrencyData = CurrencyData(
+            rubles = currencyData[Currency.RUBLE]?.sum() ?: 0,
+            miles = currencyData[Currency.MILES]?.sum() ?: 0,
+            points = currencyData[Currency.POINTS]?.sum() ?: 0
+        )
+        allPaymentsChart = chartData
+        if (state.value.isAllTimePeriod) {
+            _state.update { state ->
+                state.copy(
+                    chartData = allPaymentsChart,
+                    currencyData = allCurrencyData
+                )
+            }
+        }
+    }
+
+    private fun updatePeriodPaymentsChart() {
+        val payments = state.value.periodPayments
+        val data = mutableMapOf<Card, Int>()
+        payments.forEach { payment ->
+            val card = payment.card ?: return@forEach
+
+            data[card] = (data[card] ?: 0) + payment.amount
+        }
+        val chartData = data.map { ChartData(card = it.key, totalAmount = it.value) }.sortedBy { it.totalAmount }
+        val currencyData = chartData.groupBy({ it.card.currency }, { it.totalAmount })
+        periodCurrencyData = CurrencyData(
+            rubles = currencyData[Currency.RUBLE]?.sum() ?: 0,
+            miles = currencyData[Currency.MILES]?.sum() ?: 0,
+            points = currencyData[Currency.POINTS]?.sum() ?: 0
+        )
+        periodChart = chartData
+        if (!state.value.isAllTimePeriod) {
+            _state.update { state ->
+                state.copy(
+                    chartData = periodChart,
+                    currencyData = periodCurrencyData
+                )
+            }
         }
     }
 }

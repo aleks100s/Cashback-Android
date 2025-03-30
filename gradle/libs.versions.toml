@@ -1,6 +1,7 @@
 [versions]
 agp = "8.8.2"
 analytics = "7.7.0"
+charts = "2.0.0"
 colorpickerCompose = "1.1.2"
 datastorePreferences = "1.1.3"
 glanceAppwidget = "1.1.1"
@@ -31,6 +32,8 @@ androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-ru
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomKtx" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomKtx" }
+charts = { module = "io.github.dautovicharis:charts", version.ref = "charts" }
+charts-android = { module = "io.github.dautovicharis:charts-android", version.ref = "charts" }
 colorpicker-compose = { module = "com.github.skydoves:colorpicker-compose", version.ref = "colorpickerCompose" }
 jetbrains-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJsonVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
