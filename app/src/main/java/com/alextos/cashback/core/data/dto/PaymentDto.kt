@@ -7,5 +7,5 @@ data class PaymentDto(
     val id: String,
     val amount: Int,
     val date: Double,
-    val source: CardDto? = null
+    val source: CardDto?
 )

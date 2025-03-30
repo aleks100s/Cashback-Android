@@ -7,9 +7,9 @@ data class CategoryDto(
     val id: String,
     val name: String,
     val emoji: String,
-    val synonyms: String? = null,
-    var priority: Int = 0,
-    var isArchived: Boolean = false,
-    val info: String? = null,
-    val isNative: Boolean = true
+    val synonyms: String?,
+    var priority: Int,
+    var isArchived: Boolean,
+    val info: String?,
+    val isNative: Boolean
 )
