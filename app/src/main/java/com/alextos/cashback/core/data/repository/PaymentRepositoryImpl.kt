@@ -53,6 +53,12 @@ class PaymentRepositoryImpl(
         paymentDao.upsert(payment.toEntity())
     }
 
+    override fun getPayment(id: String): Flow<Payment?> {
+        return paymentDao.getPayment(id).map { list ->
+            list.map { constructPayment(it) }.firstOrNull()
+        }
+    }
+
     private suspend fun constructPayment(entity: PaymentWithCard): Payment {
         val cashback = cashbackDao.getAllBy(entity.card.id)
             .map { it.toDomain() }

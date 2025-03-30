@@ -9,7 +9,8 @@ data class PaymentDetailState(
     val amount: String = "0",
     val availableCards: List<Card> = emptyList(),
     val selectedCard: Card? = null,
-    val date: LocalDate = LocalDate.now()
+    val date: LocalDate = LocalDate.now(),
+    val isEditMode: Boolean = false
 ) {
     fun isEnabled(): Boolean {
         return (amount.toIntOrNull() ?: 0) > 0 && selectedCard != null

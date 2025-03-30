@@ -13,4 +13,5 @@ interface PaymentRepository {
     suspend fun replaceAll(payments: List<Payment>)
     suspend fun getAllPayments(): List<Payment>
     suspend fun save(payment: Payment)
+    fun getPayment(id: String): Flow<Payment?>
 }

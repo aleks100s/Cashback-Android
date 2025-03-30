@@ -7,4 +7,6 @@ sealed interface PaymentsAction {
     data object TogglePeriodMode: PaymentsAction
     data object NextMonth: PaymentsAction
     data object PreviousMonth: PaymentsAction
+    data class PaymentSelected(val payment: Payment): PaymentsAction
+    data object AddButtonTapped: PaymentsAction
 }

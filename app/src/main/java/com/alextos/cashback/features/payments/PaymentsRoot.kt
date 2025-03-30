@@ -26,12 +26,15 @@ fun PaymentsRoot(modifier: Modifier = Modifier) {
                 PaymentsScreen(
                     viewModel = koinViewModel(),
                     onCreatePayment = {
-                        navController.navigate(PaymentsRoute.CreatePayment)
+                        navController.navigate(PaymentsRoute.PaymentDetail(null))
+                    },
+                    onEditPayment = {
+                        navController.navigate(PaymentsRoute.PaymentDetail(it.id))
                     }
                 )
             }
 
-            composable<PaymentsRoute.CreatePayment> {
+            composable<PaymentsRoute.PaymentDetail> {
                 PaymentDetailScreen(
                     viewModel = koinViewModel(),
                     goBack = {

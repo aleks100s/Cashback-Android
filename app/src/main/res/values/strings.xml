@@ -167,10 +167,12 @@
     <string name="payments_preiod_previous">предыдущий</string>
     <string name="payments_period_next">следующий</string>
     <string name="add_payment_title">Добавить выплату</string>
+    <string name="edit_payment_title">Редактировать выплату</string>
     <string name="payments_add_button_title">Добавить выплату</string>
     <string name="payment_detail_source_section_title">Источник выплаты кэшбэка</string>
     <string name="payment_detail_date_section_title">Дата выплаты</string>
     <string name="payment_detail_amount_section_title">Сумма выплаты в рублях/милях/баллах</string>
     <string name="common_not_selected">Не выбрано</string>
     <string name="add_payment_save_success">Выплата успешно добавлена</string>
+    <string name="add_payment_edit_success">Выплата успешно изменена</string>
 </resources>

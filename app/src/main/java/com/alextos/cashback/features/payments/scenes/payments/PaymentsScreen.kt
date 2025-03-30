@@ -33,6 +33,7 @@ import com.alextos.cashback.common.views.EmptyView
 import com.alextos.cashback.common.views.RoundedList
 import com.alextos.cashback.common.views.Screen
 import com.alextos.cashback.common.views.SectionView
+import com.alextos.cashback.core.domain.models.Payment
 import com.alextos.cashback.features.payments.scenes.payments.components.PaymentItemView
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -40,7 +41,8 @@ import java.util.Locale
 @Composable
 fun PaymentsScreen(
     viewModel: PaymentsViewModel,
-    onCreatePayment: () -> Unit
+    onCreatePayment: () -> Unit,
+    onEditPayment: (Payment) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val haptic = LocalHapticFeedback.current
@@ -73,6 +75,10 @@ fun PaymentsScreen(
     ) { modifier ->
         PaymentsView(modifier = modifier, state = state) { action ->
             viewModel.onAction(action)
+            when (action) {
+                is PaymentsAction.PaymentSelected -> onEditPayment(action.payment)
+                else -> {}
+            }
         }
     }
 }
@@ -105,6 +111,9 @@ private fun PaymentsView(
         },
         itemView = { modifier, payment ->
             PaymentItemView(modifier, payment)
+        },
+        onItemClick = {
+            onAction(PaymentsAction.PaymentSelected(it))
         },
         emptyView = {
             EmptyView(

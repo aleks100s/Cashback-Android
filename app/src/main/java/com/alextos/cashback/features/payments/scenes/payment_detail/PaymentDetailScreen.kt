@@ -37,7 +37,7 @@ fun PaymentDetailScreen(
 
     Screen(
         modifier = Modifier,
-        title = stringResource(R.string.add_payment_title),
+        title = if (state.isEditMode) stringResource(R.string.edit_payment_title) else stringResource(R.string.add_payment_title),
         goBack = goBack,
         floatingActionButton = {
             Button(onClick = {

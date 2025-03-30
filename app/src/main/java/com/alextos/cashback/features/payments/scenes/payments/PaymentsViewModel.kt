@@ -61,8 +61,14 @@ class PaymentsViewModel(
                 previousMonth()
             }
             is PaymentsAction.NextMonth -> {
-                analyticsService.logEvent(AnalyticsEvent.PaymentsPreviousButtonTapped)
+                analyticsService.logEvent(AnalyticsEvent.PaymentsNextButtonTapped)
                 nextMonth()
+            }
+            is PaymentsAction.PaymentSelected -> {
+                analyticsService.logEvent(AnalyticsEvent.PaymentsSelect)
+            }
+            is PaymentsAction.AddButtonTapped -> {
+                analyticsService.logEvent(AnalyticsEvent.PaymentsAddPaymentButtonTapped)
             }
         }
     }

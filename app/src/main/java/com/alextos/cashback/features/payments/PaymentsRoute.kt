@@ -10,8 +10,5 @@ sealed interface PaymentsRoute {
     data object Payments: PaymentsRoute
 
     @Serializable
-    data object PaymentDetail: PaymentsRoute
-
-    @Serializable
-    data object CreatePayment: PaymentsRoute
+    data class PaymentDetail(val paymentId: String?): PaymentsRoute
 }

@@ -43,4 +43,7 @@ interface PaymentDao {
         deleteAll()
         insertAll(payments)
     }
+
+    @Query("SELECT * FROM payments WHERE id = :id LIMIT 1")
+    fun getPayment(id: String): Flow<List<PaymentWithCard>>
 }
