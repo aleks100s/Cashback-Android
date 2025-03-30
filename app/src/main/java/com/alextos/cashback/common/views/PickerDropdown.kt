@@ -1,6 +1,7 @@
 package com.alextos.cashback.common.views
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
@@ -11,18 +12,25 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import com.alextos.cashback.R
+
+interface PickerElement {
+    val pickerText: String
+}
 
 @Composable
-fun <E>PickerDropdown(
+fun <E: PickerElement>PickerDropdown(
     modifier: Modifier = Modifier,
-    selected: E,
+    selected: E?,
     options: List<E>,
     onSelect: (E) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
 
-    Box(modifier = modifier) {
-        CustomButton(selected.toString()) {
+    Box(modifier = modifier.padding(vertical = 4.dp)) {
+        CustomButton(selected?.pickerText ?: stringResource(R.string.common_not_selected)) {
             expanded = true
         }
 
@@ -37,7 +45,7 @@ fun <E>PickerDropdown(
                     DropdownMenuItem(
                         text = {
                             Text(
-                                text = it.toString(),
+                                text = it.pickerText,
                                 color = MaterialTheme.colorScheme.secondary
                             )
                         },

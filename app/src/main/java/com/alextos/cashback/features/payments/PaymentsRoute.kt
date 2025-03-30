@@ -11,4 +11,7 @@ sealed interface PaymentsRoute {
 
     @Serializable
     data object PaymentDetail: PaymentsRoute
+
+    @Serializable
+    data object CreatePayment: PaymentsRoute
 }

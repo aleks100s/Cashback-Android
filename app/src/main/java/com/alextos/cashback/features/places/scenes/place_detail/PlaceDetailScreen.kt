@@ -70,7 +70,7 @@ fun PlaceDetailScreen(
                         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                         onSave()
                     },
-                    enabled = state.placeName.isNotEmpty() && state.category != null
+                    enabled = state.isEnabled()
                 ) {
                     CustomLabel(
                         title = stringResource(R.string.common_save),

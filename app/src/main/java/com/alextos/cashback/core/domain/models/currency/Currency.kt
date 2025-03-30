@@ -1,9 +1,14 @@
 package com.alextos.cashback.core.domain.models.currency
 
-enum class Currency {
+import com.alextos.cashback.common.views.PickerElement
+
+enum class Currency: PickerElement {
     RUBLE,
     MILES,
     POINTS;
+
+    override val pickerText: String
+        get() = localization
 
     override fun toString(): String {
         return localization

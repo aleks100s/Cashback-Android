@@ -49,6 +49,10 @@ class PaymentRepositoryImpl(
         return paymentDao.getAll().map { constructPayment(it) }
     }
 
+    override suspend fun save(payment: Payment) {
+        paymentDao.upsert(payment.toEntity())
+    }
+
     private suspend fun constructPayment(entity: PaymentWithCard): Payment {
         val cashback = cashbackDao.getAllBy(entity.card.id)
             .map { it.toDomain() }

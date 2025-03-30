@@ -11,4 +11,8 @@ data class PlaceDetailState(
     val isEditMode: Boolean = false,
     val isCreateMode: Boolean = false,
     val cards: List<PlaceCard> = emptyList()
-)
+) {
+    fun isEnabled(): Boolean {
+        return placeName.isNotEmpty() && category != null
+    }
+}

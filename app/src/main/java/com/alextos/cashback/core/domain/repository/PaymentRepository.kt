@@ -12,4 +12,5 @@ interface PaymentRepository {
     suspend fun deleteAllPayments(card: Card)
     suspend fun replaceAll(payments: List<Payment>)
     suspend fun getAllPayments(): List<Payment>
+    suspend fun save(payment: Payment)
 }

@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PaymentDao {
     @Upsert
-    suspend fun insert(payment: PaymentEntity)
+    suspend fun upsert(payment: PaymentEntity)
 
     @Transaction
     @Query("SELECT * FROM payments ORDER BY date ASC")

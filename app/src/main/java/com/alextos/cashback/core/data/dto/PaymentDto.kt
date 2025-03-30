@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 data class PaymentDto(
     val id: String,
     val amount: Int,
-    val date: Double,
+    val date: Long,
     val source: CardDto? = null
 )

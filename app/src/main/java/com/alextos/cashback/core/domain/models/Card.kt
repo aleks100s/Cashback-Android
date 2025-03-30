@@ -1,6 +1,7 @@
 package com.alextos.cashback.core.domain.models
 
 import com.alextos.cashback.common.views.ListElement
+import com.alextos.cashback.common.views.PickerElement
 import com.alextos.cashback.core.domain.models.currency.Currency
 import java.util.UUID
 import kotlin.random.Random
@@ -13,7 +14,10 @@ data class Card(
     var isArchived: Boolean = false,
     var isFavourite: Boolean = false,
     var currency: Currency = Currency.RUBLE
-): ListElement {
+): ListElement, PickerElement {
+    override val pickerText: String
+        get() = name
+
     override fun toString(): String {
         if (isEmpty()) {
             return "Нет кэшбэка"

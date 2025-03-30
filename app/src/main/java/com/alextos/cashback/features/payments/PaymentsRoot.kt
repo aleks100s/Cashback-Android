@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.alextos.cashback.features.payments.scenes.payment_detail.PaymentDetailScreen
 import com.alextos.cashback.features.payments.scenes.payments.PaymentsScreen
 import org.koin.androidx.compose.koinViewModel
 
@@ -22,7 +23,21 @@ fun PaymentsRoot(modifier: Modifier = Modifier) {
             startDestination = PaymentsRoute.Payments
         ) {
             composable<PaymentsRoute.Payments> {
-                PaymentsScreen(koinViewModel())
+                PaymentsScreen(
+                    viewModel = koinViewModel(),
+                    onCreatePayment = {
+                        navController.navigate(PaymentsRoute.CreatePayment)
+                    }
+                )
+            }
+
+            composable<PaymentsRoute.CreatePayment> {
+                PaymentDetailScreen(
+                    viewModel = koinViewModel(),
+                    goBack = {
+                        navController.popBackStack()
+                    }
+                )
             }
         }
     }
