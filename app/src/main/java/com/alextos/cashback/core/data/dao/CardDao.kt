@@ -7,7 +7,6 @@ import androidx.room.Transaction
 import androidx.room.Upsert
 import com.alextos.cashback.core.data.entities.CardEntity
 import com.alextos.cashback.core.data.entities.CashbackEntity
-import com.alextos.cashback.core.domain.models.Category
 import kotlinx.coroutines.flow.Flow
 
 @Dao

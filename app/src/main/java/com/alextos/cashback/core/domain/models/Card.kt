@@ -20,7 +20,7 @@ data class Card(
 
     override fun toString(): String {
         if (isEmpty()) {
-            return "Нет кэшбэка"
+            return "Нет кешбэка"
         }
 
         return sortedCashback().joinToString(separator = ", ") { it.toString() }

@@ -49,7 +49,7 @@ class UserDataServiceImpl(
     }
 
     private fun createJsonFile(jsonString: String): File {
-        val file = File(context.getExternalFilesDir(null), "Кэшбэк")
+        val file = File(context.getExternalFilesDir(null), "Кешбэк")
         file.writeText(jsonString)
         return file
     }
@@ -59,7 +59,7 @@ class UserDataServiceImpl(
 
         val intent = Intent(Intent.ACTION_SEND).apply {
             type = "application/json"
-            putExtra(Intent.EXTRA_TITLE, "Кэшбэк")
+            putExtra(Intent.EXTRA_TITLE, "Кешбэк")
             putExtra(Intent.EXTRA_STREAM, uri)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
